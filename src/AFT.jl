@@ -6,16 +6,8 @@ Neural Computing and Applications 34, no. 1 (2022): 409-455.
 
 function AFT(noThieves, itemax, lb, ub, dim, fobj)
 
-    # Convergence curve
     ccurve = zeros(1, itemax)
 
-    # Initialize positions of thieves
-    # xth = zeros(noThieves, dim)
-    # for i in 1:noThieves
-    #     for j in 1:dim
-    #         xth[i, j] = lb[j] - rand() * (lb[j] - ub[j])  # Position of the thieves in the space
-    #     end
-    # end
     xth = lb .- rand(noThieves, dim) .* (lb .- ub)  # Position of the thieves in the space
 
     # Evaluate fitness of the initial population
@@ -28,12 +20,9 @@ function AFT(noThieves, itemax, lb, ub, dim, fobj)
     fitness = fit
     sorted_indexes = sortperm(fit)
     sorted_thieves_fitness = fit[sorted_indexes]
-    # sorted_thieves_fitness, sorted_indexes = sort(fit)
-
-    ##println(sorted_indexes)
-
-    Sorted_thieves = xth[sorted_indexes, :]  # Sort based on fitness
-    gbest = Sorted_thieves[1, :]  # Global best position
+    
+    Sorted_thieves = xth[sorted_indexes, :]  
+    gbest = Sorted_thieves[1, :]  
     fit0 = sorted_thieves_fitness[1]
 
     best = xth  # Best positions of thieves
@@ -41,49 +30,36 @@ function AFT(noThieves, itemax, lb, ub, dim, fobj)
 
     # Start the AFT main loop
     for ite in 1:itemax
-        Pp = 0.1 * log(2.75 * (ite / itemax)^0.1)  # Perception potential
-        Td = 2 * exp(-2 * (ite / itemax)^2)       # Tracking distance
+        Pp = 0.1 * log(2.75 * (ite / itemax)^0.1)  
+        Td = 2 * exp(-2 * (ite / itemax)^2)       
 
-        # Generate random candidate followers (thieves)
-        # a = ceil.((noThieves - 1) .* rand(noThieves))'
         a = Int.(ceil.((noThieves - 1) .* rand(noThieves))')
-        # a = rand(1:ceil(Int, noThieves - 1), noThieves)
-
-        # Generate new positions for the thieves
+        
         for i in 1:noThieves
-            if rand() >= 0.5  # Thieves know where to search
+            if rand() >= 0.5  
                 if rand() > Pp
-                    # println(i)
-                    # println(gbest .+ (Td .* (best[i, :] .- xab[i, :]) .* rand() .+ Td .* (xab[i, :] .- best[a[i], :]) .* rand()) .* sign(rand() - 0.50))
                     xth[i, :] = gbest .+ (Td .* (best[i, :] .- xab[i, :]) .* rand() .+ Td .* (xab[i, :] .- best[a[i], :]) .* rand()) .* sign(rand() - 0.50)
                 else
-                    # for j in 1:dim
-                    #     println(ub, "  "size(ub))
-                    #     xth[i, j] = Td * ((ub[j] - lb[j]) * rand() + lb[j])  # Case 3
-                    # end
                     xth[i, :] .= Td * ((ub .- lb) .* rand(dim) .+ lb)  # Case 3
                 end
-            else  # Thieves guess based on Marjaneh's astute plans
+            else  
                 for j in 1:dim
                     xth[i, j] = gbest[j] .- (Td .* (best[i, j] .- xab[i, j]) .* rand() .+ Td .* (xab[i, j] .- best[a[i], j]) .* rand()) .* sign(rand() - 0.50)
                 end
             end
         end
 
-        # Update global and best positions of the thieves and Ali Baba
         for i in 1:noThieves
             fit[i] = fobj(xth[i, :])
 
-            # Boundary conditions
             if all(xth[i, :] .>= lb) && all(xth[i, :] .<= ub)
-                xab[i, :] = xth[i, :]  # Update Ali Baba's position
+                xab[i, :] = xth[i, :] 
                 
                 if fit[i] < fitness[i]
-                    best[i, :] = xth[i, :]  # Update best position
-                    fitness[i] = fit[i]     # Update fitness
+                    best[i, :] = xth[i, :]  
+                    fitness[i] = fit[i]     
                 end
 
-                # Update global best position
                 if fitness[i] < fit0
                     fit0 = fitness[i]
                     gbest = best[i, :]
@@ -91,11 +67,9 @@ function AFT(noThieves, itemax, lb, ub, dim, fobj)
             end
         end
 
-        # Store the best found value in the convergence curve
         ccurve[ite] = fit0
     end
 
-    # Final solution
     bestThieves = findall(x -> x == minimum(fitness), fitness)
     gbestSol = best[bestThieves[1], :]
     fitness = fobj(gbestSol)

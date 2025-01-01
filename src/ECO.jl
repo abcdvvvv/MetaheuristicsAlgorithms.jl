@@ -9,9 +9,8 @@ using LinearAlgebra
 
 function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
 
-    # Choosing the Nearest School
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
-        m = copy(X[1, :])  # Initialize m with the first school's position
+        m = copy(X[1, :])  
     
         if G == 1
             for s in 1:G1Number
@@ -31,10 +30,9 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         return m
     end
 
-    # Logistic chaotic mapping initialization
     function initializationLogistic(pop::Int, dim::Int, ub::Union{Int, AbstractVector}, lb::Union{Int, AbstractVector})
-        Boundary_no = length(ub)  # Number of boundaries
-        Positions = zeros(Float64, pop, dim)  # Initialize positions matrix
+        Boundary_no = length(ub)  
+        Positions = zeros(Float64, pop, dim)  
     
         for i in 1:pop
             for j in 1:dim
@@ -58,13 +56,12 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                         Positions[i, j] = lb[j]
                     end
                 end
-                x0 = x  # Update x0 for the next iteration (this line is optional)
+                x0 = x  
             end
         end
         return Positions
     end
 
-    # Levy search strategy
     function Levy(d::Int)
         beta = 1.5
         sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
@@ -74,27 +71,22 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         return step
     end
 
-    H = 0.5  # Learning habit boundary
-    G1 = 0.2  # Proportion of primary school (Stage 1)
-    G2 = 0.1  # Proportion of middle school (Stage 2)
+    H = 0.5  
+    G1 = 0.2  
+    G2 = 0.1  
 
-    # Number of G1 and G2
     G1Number = round(Int, N * G1)
     G2Number = round(Int, N * G2)
 
-    # Extend lb and ub if they are scalars
     if length(ub) == 1
-        # ub .= fill(ub[1], dim)
         ub = fill(ub[1], dim)
-        # lb .= fill(lb[1], dim)
         lb = fill(lb[1], dim)
     end
 
-    # Initialization
-    X0 = initializationLogistic(N, dim, ub, lb)  # Logistic Chaos Mapping Initialization
+    
+    X0 = initializationLogistic(N, dim, ub, lb)  
     X = copy(X0)
 
-    # Compute initial fitness values
     fitness = zeros(Float64, N)
     fitness_new = zeros(Float64, N)
     for i in 1:N
@@ -104,7 +96,7 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
     index = sortperm(fitness)  
     fitness = sort(fitness)     
 
-    GBestF = fitness[1]  # Global best fitness value
+    GBestF = fitness[1]  
 
     for i in 1:N
         X[i, :] = X0[index[i], :]
@@ -114,17 +106,12 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
     Best_score = Inf
     Best_pos = zeros(dim)
 
-    GBestX = X[1, :]  # Global best position
-    GWorstX = X[end, :]  # Global worst position
+    GBestX = X[1, :]  
+    GWorstX = X[end, :]  
     X_new = copy(X)
 
 
-    # Start search
     for i in 1:Max_iter
-        # if i % 100 == 0
-        #     println("At iteration $i the fitness is $(curve[i - 1])")
-        # end
-        
         R1 = rand()
         R2 = rand()
         P = 4 * randn() * (1 - i / Max_iter)
@@ -132,17 +119,15 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         w = 0.1 * log(2 - (i / Max_iter))
 
         for j in 1:N
-            # Stage 1: Primary school competition
             if i % 3 == 1
-                if j >= 1 && j <= G1Number  # Primary school site selection strategies
+                if j >= 1 && j <= G1Number  
                     X_new[j, :] = X[j, :] .+ w * (mean(X[j, :]) .- X[j, :]) .* Levy(dim)
-                else  # Competitive strategies for students (Stage 1)
+                else  
                     X_new[j, :] = X[j, :] .+ w * (close(X[j, :], 1, X) .- X[j, :]) .* randn()
                 end
             
-            # Stage 2: Middle school competition
             elseif i % 3 == 2
-                if j >= 1 && j <= G2Number  # Middle school site selection strategies
+                if j >= 1 && j <= G2Number  
                     X_new[j, :] = X[j, :] .+ (GBestX .- mean(X, dims=1)') * exp(i / Max_iter - 1) .* Levy(dim)
                 else
                     if R1 < H
@@ -152,11 +137,10 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                     end
                 end
             
-            # Stage 3: High school competition
             else
-                if j >= 1 && j <= G2Number  # High school site selection strategies
+                if j >= 1 && j <= G2Number  
                     X_new[j, :] = X[j, :] .+ (GBestX .- X[j, :]) .* randn() .- (GBestX .- X[j, :]) .* randn()
-                else  # Competitive strategies for students (Stage 3)
+                else  
                     if R2 < H
                         X_new[j, :] = GBestX .- P * (E * GBestX .- X[j, :])
                     else
@@ -165,12 +149,10 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                 end
             end
 
-            # Boundary control
             Flag4ub = X_new[j, :] .> ub
             Flag4lb = X_new[j, :] .< lb
             X_new[j, :] = (X_new[j, :] .* .!(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            # Finding the best location so far
             fitness_new[j] = fobj(X_new[j, :])
             if fitness_new[j] > fitness[j]
                 fitness_new[j] = fitness[j]
@@ -189,8 +171,6 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         Best_pos = GBestX
         Best_score = curve[end]
 
-        # Sorting and updating
-
         index = sortperm(fitness)  
         fitness = fitness[index]    
         for j in 1:N
@@ -199,6 +179,5 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         X = copy(X0)
     end
     
-    # return avg_fitness_curve, Best_pos, Best_score, curve, search_history, fitness_history
     return Best_score, Best_pos, curve
 end

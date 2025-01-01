@@ -4,38 +4,28 @@ Henry gas solubility optimization: A novel physics-based algorithm.
 Future Generation Computer Systems, 101, pp.646-667.
 """
 
-function HGSO(var_n_gases, var_niter, var_down, var_up, dim, objfunc)#(objfunc, dim, var_down, var_up, var_niter, var_n_gases, var_n_types)
-    # Default parameters if fewer arguments are provided
-    # if nargin < 5
-    #     var_n_gases, var_n_types, var_niter = fun_getDefaultOptions()
-    # end
+function HGSO(var_n_gases, var_niter, var_down, var_up, dim, objfunc)
     var_n_types = 5
 
-    # Constants in eq (7)
     l1 = 5e-3
     l2 = 100
     l3 = 1e-2
 
-    # Constants in eq (10)
     alpha = 1
     beta = 1
 
-    # Constants in eq (11)
     M1 = 0.1
     M2 = 0.2
 
-    # Parameters setting in eq (7)
     K = l1 * rand(var_n_types)
     P = l2 * rand(var_n_gases)
     C = l3 * rand(var_n_types)
 
-    # Randomly initializes the position of agents in the search space
+
     X = var_down .+ rand(var_n_gases, dim) .* (var_up - var_down)
 
-    # The population agents are divided into equal clusters with the same Henry's constant value
     Group = Create_Groups(var_n_gases, var_n_types, X)
 
-    # Compute cost of each agent
     best_fit = zeros(var_n_types)
     best_pos = Vector{Any}(undef, var_n_types)
 
@@ -51,8 +41,6 @@ function HGSO(var_n_gases, var_niter, var_down, var_up, dim, objfunc)#(objfunc, 
     for var_iter in 1:var_niter
         S = update_variables(var_iter, var_niter, K, P, C, var_n_types, var_n_gases)
         Groupnew = update_positions(Group, best_pos, vec_Xbest, S, var_n_gases, var_n_types, var_Gbest, alpha, beta, dim)
-        # Groupnew = fun_checkpositions(dim, Groupnew, var_n_gases, var_n_types, var_down, var_up)
-        # (dim, Group, var_n_gases, var_n_types, var_down, var_up)
         Groupnew = fun_checkpoisions(dim, Groupnew, var_n_gases, var_n_types, var_down, var_up)
 
         for i in 1:var_n_types
@@ -73,17 +61,16 @@ function HGSO(var_n_gases, var_niter, var_down, var_up, dim, objfunc)#(objfunc, 
 end
 
 function Create_Groups(var_n_gases, var_n_types, X)
-    N = div(var_n_gases, var_n_types)  # Number of gases per group
-    Group = Vector{Dict{Symbol, Any}}(undef, var_n_types)  # Initialize Group as a vector of dictionaries
+    N = div(var_n_gases, var_n_types)  
+    Group = Vector{Dict{Symbol, Any}}(undef, var_n_types)  
 
     i = 1
     for j in 1:var_n_types
-        Group[j] = Dict(:Position => X[i:i+N-1, :])  # Assign positions to the group
-        # println("This is a message with a number: ", size(Group[j][:Position]))
+        Group[j] = Dict(:Position => X[i:i+N-1, :])  
         
-        i = j * N + 1  # Update index
+        i = j * N + 1  
         if i + N > var_n_gases
-            i = j * N  # Prevent out-of-bounds indexing
+            i = j * N  
         end
     end
 
@@ -91,20 +78,17 @@ function Create_Groups(var_n_gases, var_n_types, X)
 end
 
 function Evaluate(objfunc, var_n_types, var_n_gases, X, Xnew, init_flag)
-    N = div(var_n_gases, var_n_types)  # Number of agents per type
+    N = div(var_n_gases, var_n_types)  
 
-    # Initialize the :fitness key if it doesn't exist
     if !haskey(X, :fitness)
-        X[:fitness] = zeros(N)  # Initialize fitness as a zero vector with N elements
+        X[:fitness] = zeros(N)  
     end
 
     if init_flag == 1
-        # Compute the fitness for all agents
         for j in 1:N
             X[:fitness][j] = objfunc(X[:Position][j, :])
         end
     else
-        # Compare and update fitness
         for j in 1:N
             temp_fit = objfunc(Xnew[:Position][j, :])
             if temp_fit < X[:fitness][j]
@@ -114,7 +98,6 @@ function Evaluate(objfunc, var_n_types, var_n_gases, X, Xnew, init_flag)
         end
     end
 
-    # Find the best fitness and its corresponding position
     best_fit, index_best = findmin(X[:fitness])
     best_pos = X[:Position][index_best, :]
 
@@ -122,22 +105,21 @@ function Evaluate(objfunc, var_n_types, var_n_gases, X, Xnew, init_flag)
 end
 
 function update_variables(var_iter, var_niter, K, P, C, var_n_types, var_n_gases)
-    T = exp(-var_iter / var_niter)  # Temperature factor
-    T0 = 298.15  # Reference temperature
-    N = div(var_n_gases, var_n_types)  # Number of agents per type
-    S = zeros(var_n_gases, size(P, 2))  # Initialize the matrix S with appropriate size
+    T = exp(-var_iter / var_niter)  
+    T0 = 298.15  
+    N = div(var_n_gases, var_n_types)  
+    S = zeros(var_n_gases, size(P, 2))  
 
     i = 1
     for j in 1:var_n_types
-        # Update K based on the temperature
         K[j] = K[j] * exp(-C[j] * (1 / T - 1 / T0))
         
-        # Calculate the contribution of P and K
-        S[i:i+N-1, :] .= P[i:i+N-1, :] * K[j]  # Element-wise multiplication and assignment
         
-        i = j * N + 1  # Update index for the next block
+        S[i:i+N-1, :] .= P[i:i+N-1, :] * K[j]  
+        
+        i = j * N + 1  
         if i + N > var_n_gases
-            i = j * N  # Prevent out-of-bounds indexing
+            i = j * N  
         end
     end
     
@@ -145,19 +127,15 @@ function update_variables(var_iter, var_niter, K, P, C, var_n_types, var_n_gases
 end
 
 function update_positions(Group, best_pos, vec_Xbest, S, var_n_gases, var_n_types, var_Gbest, alpha, beta, var_nvars)
-    vec_flag = [1, -1]  # Flag for direction
+    vec_flag = [1, -1]  
 
     for i in 1:var_n_types
         for j in 1:div(var_n_gases, var_n_types)
-            # Calculate gama
             gama = beta * exp(-(var_Gbest + 0.05) / (Group[i][:fitness][j] + 0.05))
             
-            # Random flag index selection (1 or -1)
-            # flag_index = floor(2 * rand() + 1)
             flag_index = Int(floor(2 * rand() + 1))
             var_flag = vec_flag[flag_index]
 
-            # Update position of the agent
             for k in 1:var_nvars
                 Group[i][:Position][j, k] += var_flag * rand() * gama * (best_pos[i][k] - Group[i][:Position][j, k]) + rand() * alpha * var_flag * (S[i] * vec_Xbest[k] - Group[i][:Position][j, k])
             end
@@ -168,23 +146,20 @@ function update_positions(Group, best_pos, vec_Xbest, S, var_n_gases, var_n_type
 end
 
 function fun_checkpoisions(dim, Group, var_n_gases, var_n_types, var_down, var_up)
-    Lb = ones(dim) * var_down  # Lower bounds (1D vector)
-    Ub = ones(dim) * var_up    # Upper bounds (1D vector)
+    Lb = ones(dim) * var_down  
+    Ub = ones(dim) * var_up    
 
     for j in 1:var_n_types
         for i in 1:div(var_n_gases, var_n_types)
-            # Extract the position of agent i from the dictionary
-            pos = Group[j][:Position][i, :]  # Get the position from the dictionary
+            pos = Group[j][:Position][i, :]  
 
-            # Check if the position is below the lower bound
             isBelow1 = pos .< Lb
-            # Check if the position is above the upper bound
             isAboveMax = pos .> Ub
 
             if any(isBelow1)
-                Group[j][:Position][i, :] .= Lb  # Set position to lower bound
+                Group[j][:Position][i, :] .= Lb  
             elseif any(isAboveMax)
-                Group[j][:Position][i, :] .= Ub  # Set position to upper bound
+                Group[j][:Position][i, :] .= Ub  
             end
         end
     end
@@ -193,26 +168,19 @@ function fun_checkpoisions(dim, Group, var_n_gases, var_n_types, var_down, var_u
 end
 
 function worst_agents(X, M1, M2, dim, G_max, G_min, var_n_gases, var_n_types)
-    # Sort the fitness in descending order and get the indices
-    # X_sort, X_index = sortperm(X[:fitness], rev=true)
-
+    
     X_index = sortperm(X[:fitness], rev=true)
     X_sort = X[:fitness][X_index]
     
-    # Calculate M1N and M2N
     M1N = M1 * var_n_gases / var_n_types
     M2N = M2 * var_n_gases / var_n_types
     
-    # Randomly choose the number of worst agents to replace
     Nw = round(Int, (M2N - M1N) * rand() + M1N)
     
-    # Replace the positions of the worst agents with random positions within the bounds
     for k in 1:Nw
-        idx = X_index[k]  # Get the index of the worst agent from the sorted indices
-        # Update the position of the worst agent (we use idx to access X[:Position])
+        idx = X_index[k]  
         X[:Position][idx, :] .= G_min .+ rand(dim) .* (G_max .- G_min)
     end
     
-    # Return the updated dictionary X
     return X
 end

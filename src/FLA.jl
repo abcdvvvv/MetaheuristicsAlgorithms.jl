@@ -6,7 +6,7 @@ Knowledge-Based Systems 260 (2023): 110146.
 
 using Statistics
 using LinearAlgebra
-function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, dim, lb, ub) # 
+function FLA(NoMolecules, T, lb, ub, dim, objfunc) 
     
     C1 = 0.5
     C2 = 2
@@ -14,10 +14,9 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, di
     c4 = 0.2
     c5 = 2
     D = 0.01
-    X = lb .+ rand(NoMolecules, dim) .* (ub .- lb)  # initial positions
+    X = lb .+ rand(NoMolecules, dim) .* (ub .- lb) 
     X1new = zeros(NoMolecules,dim)
     X2new = zeros(NoMolecules,dim)
-    # CNVG = zeros(1,T)
     CNVG=zeros(T,1)
     FS = zeros(NoMolecules)
     TF = zeros(T)
@@ -79,7 +78,7 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, di
                     Xm2 = mean(X2)
                     Xm1 = mean(X1)
                     J = -D * (Xm2 - Xm1) / (norm(Xeo2 - X1[u, :]) + eps())
-                    X1new[u, :] = Xeo2 .+ rand(dim) .* DFg .* DOF .* (J .* Xeo2 - X1[u, :]) #DFg .* DOF .* rand(1, dim) .* (J .* Xeo2 .- X1[u, :])
+                    X1new[u, :] = Xeo2 .+ rand(dim) .* DFg .* DOF .* (J .* Xeo2 - X1[u, :])
                 end
                 
                 for u in NT12+1:n1
@@ -192,7 +191,7 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, di
         for j in 1:n1
             FU = X1new[j, :] .> ub
             FL = X1new[j, :] .< lb
-            X1new[j, :] = max.(min.( X2new[j, :], ub), lb) #X1new[j, :] .* (~ (FU .+ FL)) .+ ub .* FU .+ lb .* FL
+            X1new[j, :] = max.(min.( X2new[j, :], ub), lb) 
             v = objfunc(X1new[j, :])
             if v < FS1[j]
                 FS1[j] = v
@@ -203,7 +202,7 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, di
         for j in 1:n2
             FU = X2new[j, :] .> ub
             FL = X2new[j, :] .< lb
-            X2new[j, :] = max.(min.( X2new[j, :], ub), lb) #X2new[j, :] .* (~ (FU .+ FL)) .+ ub .* FU .+ lb .* FL
+            X2new[j, :] = max.(min.( X2new[j, :], ub), lb) 
             v = objfunc(X2new[j, :])
             if v < FS2[j]
                 FS2[j] = v
@@ -231,7 +230,6 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc) #(NoMolecules, T, objfunc, di
             BestF = FSss
             Xss = YSol
         end
-        # println("Iteration $t: Best Cost Bw = $BestF")  
     end
     return BestF, Xss, CNVG
 end

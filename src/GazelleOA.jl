@@ -6,11 +6,11 @@ Neural Computing and Applications 35, no. 5 (2023): 4099-4131.
 
 using Random
 using Distributions
-using SpecialFunctions  # for gamma function
+using SpecialFunctions 
 
 
 function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
-    # Top_gazelle_pos = zeros(1, dim)
+    
     Top_gazelle_pos = zeros(dim)
     Top_gazelle_fit = Inf
 
@@ -30,7 +30,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
     S = 0.88
 
     while Iter < Max_iter
-        # Evaluate top gazelle
         for i in 1:SearchAgents_no
             Flag4ub = gazelle[i, :] .> ub
             Flag4lb = gazelle[i, :] .< lb
@@ -44,7 +43,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        # Update fitness values and positions
         if Iter == 0
             fit_old = copy(fitness)
             Prey_old = copy(gazelle)
@@ -57,23 +55,12 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
         fit_old .= fitness
         Prey_old .= gazelle
 
-        # Calculate Elite and CF
-        # Elite = repeat([Top_gazelle_pos], SearchAgents_no) .* ones(SearchAgents_no, dim)
-        # Elite = repeat([Top_gazelle_pos], SearchAgents_no, 1)
-        # Elite = repeat([Top_gazelle_pos'], 1, SearchAgents_no)
-        # Elite = (Top_gazelle_pos .* ones(SearchAgents_no, length(Top_gazelle_pos)))'
         Elite = ones(SearchAgents_no, 1) * Top_gazelle_pos'
-        # Elite = hcat([Top_gazelle_pos for _ in 1:SearchAgents_no]...)
-        # Elite = Top_gazelle_pos .* ones(SearchAgents_no, dim)
-        # println("Top_gazelle_pos ", size(Top_gazelle_pos))
-        # println("Elite ", size(Elite))
         CF = (1 - Iter / Max_iter)^(2 * Iter / Max_iter)
 
         RL = 0.05 * levy(SearchAgents_no, dim, 1.5)  # Levy random number vector
-        # println("RLLLL ", size(RL))
         RB = randn(SearchAgents_no, dim)            # Brownian random number vector
 
-        # Exploitation and Exploration
         for i in 1:SearchAgents_no
             for j in 1:dim
                 R = rand()
@@ -81,7 +68,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
                 mu = ifelse(mod(Iter, 2) == 0, -1, 1)
 
                 if r > 0.5
-                    # stepsize[i, j] = RB[i, j] * (Elite[i, j] - RB[i, j] * gazelle[i, j])
                     stepsize[i, j] = RB[i, j] * (Elite[i, j] .- RB[i, j] .* gazelle[i, j])
                     gazelle[i, j] += rand() * R * stepsize[i, j]
                 else
@@ -89,7 +75,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
                         stepsize[i, j] = RB[i, j] * (RL[i, j] * Elite[i, j] - gazelle[i, j])
                         gazelle[i, j] = Elite[i, j] + S * mu * CF * stepsize[i, j]
                     else
-                        # stepsize[i, j] = RL[i, j] * (Elite[i, j] - RL[i, j] * gazelle[i, j])
                         stepsize[i, j] = RL[i, j] * (Elite[i, j] .- RL[i, j] .* gazelle[i, j])
                         gazelle[i, j] += S * mu * R * stepsize[i, j]
                     end
@@ -97,7 +82,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        # Update fitness and positions after adjustment
         for i in 1:SearchAgents_no
             Flag4ub = gazelle[i, :] .> ub
             Flag4lb = gazelle[i, :] .< lb
@@ -111,7 +95,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        # Update fitness values and prey positions
         Inx = fit_old .< fitness
         gazelle .= Inx .* Prey_old .+ .~Inx .* gazelle
         fitness .= Inx .* fit_old .+ .~Inx .* fitness
@@ -119,7 +102,6 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
         fit_old .= fitness
         Prey_old .= gazelle
 
-        # Apply PSRs
         if rand() < PSRs
             U = rand(SearchAgents_no, dim) .< PSRs
             gazelle .= gazelle .+ CF * ((Xmin .+ rand(SearchAgents_no, dim) .* (Xmax .- Xmin)) .* U)
@@ -140,22 +122,16 @@ function GazelleOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
 end
 
 function levy(n, m, beta)
-    # Numerator for sigma_u calculation
     num = gamma(1 + beta) * sin(pi * beta / 2)
     
-    # Denominator for sigma_u calculation
     den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
 
-    # Standard deviation
     sigma_u = (num / den)^(1 / beta)
 
-    # Generate u from Normal distribution with mean 0 and std sigma_u
     u = rand(Normal(0, sigma_u), n, m)
 
-    # Generate v from Normal distribution with mean 0 and std 1
     v = rand(Normal(0, 1), n, m)
 
-    # Levy random number
     z = u ./ abs.(v).^(1 / beta)
 
     return z

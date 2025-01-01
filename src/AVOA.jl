@@ -143,10 +143,7 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
         current_iter += 1
         convergence_curve[current_iter] = Best_vulture1_F
 
-        # X = boundaryCheck(X, lower_bound, upper_bound)
         X = clamp.(X, lower_bound, upper_bound)
-
-        #println("Iteration $current_iter, best estimation of the global optimum is $Best_vulture1_F")
     end
 
     return Best_vulture1_F, Best_vulture1_X, convergence_curve

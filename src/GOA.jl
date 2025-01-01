@@ -13,13 +13,11 @@ end
 function S_func(r)
     f = 0.5
     l = 1.5
-    o = f * exp(-r / l) - exp(-r)  # Eq. (2.3) in the paper
+    o = f * exp(-r / l) - exp(-r)  
     return o
 end
 
 function GOA(N, Max_iter, lb, ub, dim, fobj)
-
-    # println("GOA is now estimating the global optimum for your problem...")
 
     flag = false
     if length(ub) == 1
@@ -34,7 +32,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
         flag = true
     end
 
-    # Initialize the population of grasshoppers
     GrassHopperPositions = initialization(N, dim, ub, lb)
     GrassHopperFitness = zeros(N)
 
@@ -46,7 +43,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
     cMax = 1.0
     cMin = 0.00004
 
-    # Calculate the fitness of initial grasshoppers
     for i in 1:N
         if flag
             GrassHopperFitness[i] = fobj(GrassHopperPositions[i, 1:end-1])
@@ -64,7 +60,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
     TargetPosition = Sorted_grasshopper[1, :]
     TargetFitness = GrassHopperFitness[sorted_indexes[1]]
 
-    # Main loop
     for l in 2:Max_iter
         c = cMax - l * ((cMax - cMin) / Max_iter)
 
@@ -86,7 +81,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
                 end
                 S_i_total[k:k+1] = S_i
             end
-            # X_new = c * S_i_total' + TargetPosition
             X_new = c * vec(S_i_total') + TargetPosition
 
             GrassHopperPositions_temp[i, :] = X_new'
@@ -95,10 +89,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
         GrassHopperPositions = GrassHopperPositions_temp
 
         for i in 1:N
-            # Tp = GrassHopperPositions[i, :] .> ub'
-            # Tm = GrassHopperPositions[i, :] .< lb'
-            # GrassHopperPositions[i, :] = GrassHopperPositions[i, :] .* .~(Tp .+ Tm) .+ ub' .* Tp .+ lb' .* Tm
-            # GrassHopperPositions[i, :] = max.(min.(GrassHopperPositions[i, :], ub'), lb')
             GrassHopperPositions[i, :] = max.(min.(GrassHopperPositions[i, :], ub), lb)
 
             if flag
@@ -118,7 +108,6 @@ function GOA(N, Max_iter, lb, ub, dim, fobj)
         end
 
         Convergence_curve[l] = TargetFitness
-        # println("In iteration #", l, ", target's objective = ", TargetFitness)
     end
 
     if flag

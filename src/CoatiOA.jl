@@ -7,13 +7,13 @@ Neural computing and applications 33, no. 7 (2021): 2515-2547.
 using Statistics
 function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fitness)
 
-    lowerbound = ones(dimension) .* lowerbound  # Lower limit for variables
-    upperbound = ones(dimension) .* upperbound  # Upper limit for variables
+    lowerbound = ones(dimension) .* lowerbound  
+    upperbound = ones(dimension) .* upperbound  
 
     # INITIALIZATION
     X = zeros(SearchAgents, dimension)
     for i = 1:dimension
-        X[:, i] = lowerbound[i] .+ rand(SearchAgents) .* (upperbound[i] - lowerbound[i])  # Initial population
+        X[:, i] = lowerbound[i] .+ rand(SearchAgents) .* (upperbound[i] - lowerbound[i])  
     end
 
     fit = [fitness(X[i, :]) for i = 1:SearchAgents]
@@ -23,16 +23,13 @@ function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension
 
     best_so_far = 0
 
-    # Main Loop
     for t = 1:Max_iterations
-        # Update the best candidate solution
         best, location = findmin(fit)
         if t == 1 || best < fbest
             fbest = best
             Xbest = X[location, :]
         end
 
-        # Phase 1: Hunting and attacking strategy on iguana (Exploration Phase)
         X_P1 = zeros(SearchAgents, dimension)
         F_P1 = zeros(SearchAgents)
         for i = 1:div(SearchAgents, 2)
@@ -41,7 +38,6 @@ function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension
             X_P1[i, :] = X[i, :] .+ rand() .* (iguana - I .* X[i, :])  # Eq. (4)
             X_P1[i, :] = clamp.(X_P1[i, :], lowerbound, upperbound)
 
-            # Update position based on Eq (7)
             L = X_P1[i, :]
             F_P1[i] = fitness(L)
             if F_P1[i] < fit[i]
@@ -62,7 +58,6 @@ function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension
             end
             X_P1[i, :] = clamp.(X_P1[i, :], lowerbound, upperbound)
 
-            # Update position based on Eq (7)
             L = X_P1[i, :]
             F_P1[i] = fitness(L)
             if F_P1[i] < fit[i]
@@ -71,17 +66,15 @@ function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension
             end
         end
 
-        # Phase 2: The process of escaping from predators (Exploitation Phase)
         X_P2 = zeros(SearchAgents, dimension)
         F_P2 = zeros(SearchAgents)
         for i = 1:SearchAgents
-            LO_LOCAL = lowerbound ./ t  # Eq (9)
-            HI_LOCAL = upperbound ./ t  # Eq (10)
+            LO_LOCAL = lowerbound ./ t 
+            HI_LOCAL = upperbound ./ t  
 
             X_P2[i, :] = X[i, :] .+ (1 - 2 .* rand()) .* (LO_LOCAL .+ rand() .* (HI_LOCAL - LO_LOCAL))  # Eq. (8)
             X_P2[i, :] = clamp.(X_P2[i, :], LO_LOCAL, HI_LOCAL)
 
-            # Update position based on Eq (11)
             L = X_P2[i, :]
             F_P2[i] = fitness(L)
             if F_P2[i] < fit[i]

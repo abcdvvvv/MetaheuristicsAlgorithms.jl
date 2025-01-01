@@ -5,23 +5,17 @@ Advances in engineering software 83 (2015): 80-98.
 """
 
 function Random_walk_around_antlion(Dim, max_iter, lb, ub, antlion, current_iter)
-    # Check if the bounds are scalar and convert them to vectors
-
+    
     if length(lb) == 1 && length(ub) == 1
-        # lb = ones(Dim) * lb
-        # ub = ones(Dim) * ub
-        
         lb = fill(lb, Dim)
         ub = fill(ub, Dim)
     end
 
-    # Ensure boundary vectors are horizontal
     if size(lb, 1) > size(lb, 2)
         lb = lb'
         ub = ub'
     end
 
-    # I is the ratio in Equations (2.10) and (2.11)
     I = 1.0
 
     if current_iter > max_iter / 10
@@ -57,10 +51,8 @@ function Random_walk_around_antlion(Dim, max_iter, lb, ub, antlion, current_iter
     end
 
     if rand() >= 0.5
-        # ub .= ub .+ antlion   # Equation (2.9) in the paper
         ub = ub .+ antlion   # Equation (2.9) in the paper
     else
-        # ub .= -ub .+ antlion
         ub = -ub .+ antlion
     end
 
@@ -102,13 +94,10 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
     antlions_fitness = zeros(N)
     ants_fitness = zeros(N)
 
-    # Calculate the fitness of initial antlions and sort them
-    # for i in 1:size(antlion_position, 1)
     for i in axes(antlion_position, 1)
         antlions_fitness[i] = fobj(antlion_position[i, :])
     end
 
-    # sorted_antlion_fitness, sorted_indexes = sort(antlions_fitness)
     sorted_indexes = sortperm(antlions_fitness)
     sorted_antlion_fitness = antlions_fitness[sorted_indexes]
 
@@ -124,7 +113,6 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
     Current_iter = 2
     while Current_iter <= Max_iter
         # Simulate random walks
-        # for i in 1:size(ant_position, 1)
         for i in axes(antlion_position, 1)
             # Select ant lions based on their fitness
             Rolette_index = RouletteWheelSelection(1 ./ sorted_antlion_fitness)
@@ -138,9 +126,7 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
             ant_position[i, :] = (RA[Current_iter, :] + RE[Current_iter, :]) / 2
         end
         
-        # for i in 1:size(ant_position, 1)
         for i in axes(ant_position, 1)
-            # Boundary checking
             Flag4ub = ant_position[i, :] .> ub
             Flag4lb = ant_position[i, :] .< lb
             ant_position[i, :] = (ant_position[i, :] .* .!(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
@@ -152,7 +138,6 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
         double_population = vcat(Sorted_antlions, ant_position)
         double_fitness = vcat(sorted_antlion_fitness, ants_fitness)
         
-        # double_fitness_sorted, I = sort(double_fitness)
         I = sortperm(double_fitness)
         double_fitness_sorted = double_fitness[I]
 
@@ -162,7 +147,6 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
         antlions_fitness .= double_fitness_sorted[1:N]
         Sorted_antlions .= double_sorted_population[1:N, :]
 
-        # Update the position of elite if any antlion becomes fitter
         if antlions_fitness[1] < Elite_antlion_fitness
             Elite_antlion_position .= Sorted_antlions[1, :]
             Elite_antlion_fitness = antlions_fitness[1]

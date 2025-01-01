@@ -4,8 +4,7 @@ Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H
 Computer methods in applied mechanics and engineering 376 (2021): 113609.
 """
 function AOArithmetic(N, M_Iter, LB, UB, Dim, F_obj) # AOArithmetic(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-    # println("AOA Working")
-
+    
     # Two variables to keep the positions and the fitness value of the best-obtained solution
     Best_P = zeros(Dim)
     Best_FF = Inf
@@ -78,12 +77,7 @@ function AOArithmetic(N, M_Iter, LB, UB, Dim, F_obj) # AOArithmetic(SearchAgents
             # Check boundaries
             Flag_UB = Xnew[i, :] .> UB  # Check if they exceed upper boundaries
             Flag_LB = Xnew[i, :] .< LB  # Check if they exceed lower boundaries
-            # Xnew[i, :] = (Xnew[i, :] .* .!((Flag_UB .+ Flag_LB))) .+ UB .* Flag_UB .+ LB .* Flag_LB
             Xnew[i, :] = max.(min.(Xnew[i, :], UB), LB) # (Xnew[i, :] .* .!((Flag_UB .+ Flag_LB))) .+ UB .* Flag_UB .+ LB .* Flag_LB
-
-            # FU = X2new[j, :] .> ub
-            # FL = X2new[j, :] .< lb
-            # X2new[j, :] = max.(min.( X2new[j, :], ub), lb) #X2new[j, :] .* (~ (FU .+ FL)) .+ ub .* FU .+ lb .* FL
 
             Ffun_new[i] = F_obj(Xnew[i, :])  # Calculate Fitness function
             if Ffun_new[i] < Ffun[i]

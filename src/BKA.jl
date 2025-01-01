@@ -15,13 +15,11 @@ function BKA(pop, T, lb, ub, dim, fobj)
     Best_Fitness_BKA = Inf
     Best_Pos_BKA = zeros(dim)
 
-    # Start iteration
     for t in 1:T
         sorted_indexes = sortperm(XFit)
         XLeader_Pos = XPos[sorted_indexes[1], :]
         XLeader_Fit = XFit[sorted_indexes[1]]
 
-        # Attacking behavior
         for i in 1:pop
             n = 0.05 * exp(-2 * (t / T)^2)
             if p < r
@@ -31,14 +29,12 @@ function BKA(pop, T, lb, ub, dim, fobj)
             end
             XPosNew = clamp.(XPosNew, lb, ub) # Boundary checking
 
-            # Select the optimal fitness value
             XFit_New = fobj(XPosNew)
             if XFit_New < XFit[i]
                 XPos[i, :] = XPosNew
                 XFit[i] = XFit_New
             end
 
-            # Migration behavior
             m = 2 * sin(r + π / 2)
             s = rand(1:30)
             r_XFitness = XFit[s]
@@ -50,9 +46,8 @@ function BKA(pop, T, lb, ub, dim, fobj)
             else
                 XPosNew = XPos[i, :] .+ cauchy_value .* (XLeader_Pos .- m .* XPos[i, :])
             end
-            XPosNew = clamp.(XPosNew, lb, ub) # Boundary checking
+            XPosNew = clamp.(XPosNew, lb, ub) 
 
-            # Select the optimal fitness value
             XFit_New = fobj(XPosNew)
             if XFit_New < XFit[i]
                 XPos[i, :] = XPosNew
@@ -60,7 +55,6 @@ function BKA(pop, T, lb, ub, dim, fobj)
             end
         end
 
-        # Update the optimal Black-winged Kite
         if minimum(XFit) < XLeader_Fit
             Best_Fitness_BKA = minimum(XFit)
             Best_Pos_BKA = XPos[argmin(XFit), :]
@@ -69,7 +63,6 @@ function BKA(pop, T, lb, ub, dim, fobj)
             Best_Pos_BKA = XLeader_Pos
         end
         Convergence_curve[t] = Best_Fitness_BKA
-        # println("It $t ",Best_Fitness_BKA)
     end
 
     return Best_Fitness_BKA, Best_Pos_BKA, Convergence_curve

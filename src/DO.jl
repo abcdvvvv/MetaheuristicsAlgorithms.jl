@@ -15,17 +15,14 @@ function levy(Popsize, Dim, beta)
 end
 
 function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
-    # Initialize variables
     dandelions = rand(Popsize, Dim) .* (UB - LB) .+ LB
     dandelionsFitness = zeros(Popsize)
     Convergence_curve = zeros(Maxiteration)
-    
-    # Calculate fitness of initial population
+
     for i in 1:Popsize
         dandelionsFitness[i] = Fobj(dandelions[i, :])
     end
     
-    # Sort and get the best fitness and position
     sorted_indexes = sortperm(dandelionsFitness)
     Best_position = dandelions[sorted_indexes[1], :]
     Best_fitness = dandelionsFitness[sorted_indexes[1]]
@@ -34,7 +31,6 @@ function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
     t = 2
     
     while t <= Maxiteration
-        # Rising stage
         beta = randn(Popsize, Dim)
         alpha = rand() * ((1 / Maxiteration^2) * t^2 - 2 / Maxiteration * t + 1)
         a = 1 / (Maxiteration^2 - 2 * Maxiteration + 1)
@@ -62,7 +58,6 @@ function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
         dandelions .= dandelions_1
         dandelions = clamp.(dandelions, LB, UB)
         
-        # Decline stage
         dandelions_mean = sum(dandelions, dims=1) ./ Popsize
         dandelions_2 = copy(dandelions)
         for i in 1:Popsize
@@ -73,7 +68,6 @@ function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
         dandelions .= dandelions_2
         dandelions = clamp.(dandelions, LB, UB)
         
-        # Landing stage
         Step_length = levy(Popsize, Dim, 1.5)
         Elite = repeat(Best_position', Popsize, 1)
         dandelions_3 = copy(dandelions)
@@ -85,17 +79,15 @@ function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
         dandelions .= dandelions_3
         dandelions = clamp.(dandelions, LB, UB)
         
-        # Calculate fitness for all dandelions
         for i in 1:Popsize
             dandelionsFitness[i] = Fobj(dandelions[i, :])
         end
-        
-        # Sort dandelions by fitness
+
         sorted_indexes = sortperm(dandelionsFitness)
         dandelions = dandelions[sorted_indexes, :]
         SortfitbestN = dandelionsFitness[sorted_indexes]
         
-        # Update the best solution
+
         if SortfitbestN[1] < Best_fitness
             Best_position = dandelions[1, :]
             Best_fitness = SortfitbestN[1]

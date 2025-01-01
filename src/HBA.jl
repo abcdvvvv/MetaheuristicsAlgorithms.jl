@@ -3,36 +3,30 @@ Hashim, Fatma A., Essam H. Houssein, Kashif Hussain, Mai S. Mabrouk, and Walid A
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
-function HBA(N, tmax, lb, ub, dim, objfunc) #(objfunc, dim, lb, ub, tmax, N)
-    beta = 6                      # the ability of HB to get the food Eq.(4)
-    C = 2                         # constant in Eq. (3)
+function HBA(N, tmax, lb, ub, dim, objfunc) 
+    beta = 6                      
+    C = 2                         
     vec_flag = [1.0, -1.0]
 
-    # Initialization
-    # X = initialization(N, dim, ub, lb)
     X = lb .+ rand(N, dim) .* (ub .- lb)
     fitness = ones(N) * Inf
     
-    # Evaluation
-    # fitness = fun_calcobjfunc(objfunc, X)
     for i in 1:N
         fitness[i] = objfunc(vec(X[i,:]'))
     end
     
     GYbest, gbest = findmin(fitness)
-    # println("GYbest ",GYbest)
     Xprey = X[gbest, :]
     Xnew = zeros(N, dim)
 
-    CNVG = zeros(Float64, tmax)  # Preallocate CNVG to store convergence values
+    CNVG = zeros(Float64, tmax)  
 
     for t in 1:tmax
-        alpha = C * exp(-t / tmax)  # Density factor in Eq. (3)
-        I = Intensity(N, Xprey, X)   # Intensity in Eq. (2)
+        alpha = C * exp(-t / tmax)  
+        I = Intensity(N, Xprey, X)   
 
         for i in 1:N
             r = rand()
-            # F = vec_flag[floor(Int(2 * rand())) + 1]
             F = vec_flag[Int(floor(2 * rand())) + 1]
 
             for j in 1:dim
@@ -54,24 +48,16 @@ function HBA(N, tmax, lb, ub, dim, objfunc) #(objfunc, dim, lb, ub, tmax, N)
                 end
             end
 
-            # Boundary Check
-            # FU = Xnew[i, :] .> ub
-            # FL = Xnew[i, :] .< lb
-            # Xnew[i, :] = (Xnew[i, :] .* .! (FU .| FL)) .+ ub .* FU .+ lb .* FL
             Xnew[i, :] = clamp.(Xnew[i, :], lb, ub)
 
 
-            # tempFitness = fun_calcobjfunc(objfunc, Xnew[i, :])
-            # tempFitness = objfunc(X[i, :])
             tempFitness = objfunc(vec(Xnew[i,:]'))
-            # println("tempFitness ",objfunc(vec(X[i,:]')))
             if tempFitness < fitness[i]
                 fitness[i] = tempFitness
                 X[i, :] = Xnew[i, :]
             end
         end
 
-        # Boundary Check for X
         FU = X .> ub
         FL = X .< lb
         X = (X .* .! (FU .| FL)) .+ ub .* FU .+ lb .* FL
@@ -82,7 +68,6 @@ function HBA(N, tmax, lb, ub, dim, objfunc) #(objfunc, dim, lb, ub, tmax, N)
             GYbest = Ybest
             Xprey = X[index, :]
         end
-        # println("$t ", GYbest)
     end
     
 
@@ -90,22 +75,21 @@ function HBA(N, tmax, lb, ub, dim, objfunc) #(objfunc, dim, lb, ub, tmax, N)
 end
 
 function fun_calcobjfunc(func, X)
-    N = size(X, 1)               # Number of rows in X
-    Y = zeros(Float64, N)        # Preallocate Y to store the results
+    N = size(X, 1)               
+    Y = zeros(Float64, N)        
 
     for i in 1:N
-        # Y[i] = func(X[i, :])     # Apply func to each row of X
         Y[i] = func(vec(X[i, :]'))
     end
 
-    return Y                     # Return the results
+    return Y                     
 end
 
 function Intensity(N, Xprey, X)
-    di = zeros(Float64, N)       # Preallocate di array
-    S = zeros(Float64, N)        # Preallocate S array
-    I = zeros(Float64, N)        # Preallocate I array
-    eps = 1e-10                   # A small value to avoid division by zero
+    di = zeros(Float64, N)       
+    S = zeros(Float64, N)        
+    I = zeros(Float64, N)        
+    eps = 1e-10                   
 
     for i in 1:N-1
         di[i] = norm(X[i, :] - Xprey .+ eps)^2
@@ -120,5 +104,5 @@ function Intensity(N, Xprey, X)
         I[i] = r2 * S[i] / (4 * π * di[i])
     end
     
-    return I                       # Return the intensity values
+    return I                      
 end

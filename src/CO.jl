@@ -19,54 +19,47 @@ function CO(n, MaxIt, lb, ub, D, fobj)
 
 
     if length(lb) == 1
-        ub = ub .* ones(D)    # Lower Bound of Decision Variables
-        lb = lb .* ones(D)    # Upper Bound of Decision Variables
+        ub = ub .* ones(D)    
+        lb = lb .* ones(D)    
     end
 
-    # Generate initial population of cheetahs
     for i in 1:n
         pop[i].Position = lb .+ rand(D) .* (ub .- lb)
         pop[i].Cost = fobj(pop[i].Position)
         if pop[i].Cost < BestSol.Cost
-            BestSol = pop[i]  # Initial leader position
+            BestSol = pop[i]  
         end
     end
 
-    pop1 = copy(pop)        # Population's initial home position
-    BestCost = Float64[]    # Leader fitness value in a current hunting period
-    # X_best = copy(BestSol)  # Prey solution so far
+    pop1 = copy(pop)        
+    BestCost = Float64[]    
     X_best = deepcopy(BestSol)
-    Globest = Float64[]     # Prey fitness value so far
+    Globest = Float64[]     
 
-    t = 0                    # Hunting time counter
-    it = 1                   # Iteration counter
-    T = ceil(Int, D / 10) * 60  # Hunting time
-    FEs = 0                  # Counter for function evaluations
+    t = 0                    
+    it = 1                   
+    T = ceil(Int, D / 10) * 60  
+    FEs = 0                  
 
-    # Main loop
     while FEs <= MaxEEs
-        # m = rand(1:n)        # Select a random member of cheetahs
-        m = rand(2:n)        # Select a random member of cheetahs
-        i0 = rand(1:n, m)  # Select m random members of cheetahs (Algorithm 1, L#9)
-        for k in 1:m         # Algorithm 1, L#10
+        m = rand(2:n)        
+        i0 = rand(1:n, m)  
+        for k in 1:m         
             i = rand(1:n)
             i = i0[k]
 
-            # Neighbor agent selection
             if k == length(i0) && k != 1
-                a = i0[k - 1]  # If k is the last element, select the previous one
+                a = i0[k - 1]  
             else
-                a = i0[k + 1]  # Otherwise, select the next one
+                a = i0[k + 1]  
             end
 
-            X = pop[i].Position    # The current position of i-th cheetah
-            X1 = pop[a].Position    # The neighbor position
-            Xb = BestSol.Position    # The leader position
-            Xbest = X_best.Position  # The prey position
+            X = pop[i].Position    
+            X1 = pop[a].Position    
+            Xb = BestSol.Position    
+            Xbest = X_best.Position  
 
             kk = 0
-            # Uncomment the following statements, it may improve the performance of CO
-            # if i <= 2 && t > 2 && t > ceil(0.2 * T + 1) && abs(BestCost[t - 2] - BestCost[t - ceil(0.2 * T + 1)]) <= 0.0001 * Globest[t - 1]
             if i <= 2 && t > 2 && t > Int(ceil(0.2 * T + 1)) && abs(BestCost[t - 2] - BestCost[t - Int(ceil(0.2 * T + 1))]) <= 0.0001 * Globest[t - 1]
                 X = X_best.Position
                 kk = 0
@@ -83,14 +76,14 @@ function CO(n, MaxIt, lb, ub, D, fobj)
 
             Z = copy(X)
 
-            for j in xd  # Select arbitrary set of arrangements
-                r_Hat = randn()  # Randomization parameter
+            for j in xd  
+                r_Hat = randn()  
                 r1 = rand()
                 alpha = (k == 1) ? 0.0001 * t / T * (ub[j] - lb[j]) : 0.0001 * t / T * abs(Xb[j] - X[j]) + 0.001 * round(rand() > 0.9)
 
                 r = randn()
-                r_Check = abs(r)^exp(r / 2) * sin(2 * π * r)  # Turning factor
-                beta = X1[j] - X[j]  # Interaction factor
+                r_Check = abs(r)^exp(r / 2) * sin(2 * π * r)  
+                beta = X1[j] - X[j]  
 
                 h0 = exp(2 - 2 * t / T)
                 H = abs(2 * r1 * h0 - h0)
@@ -98,23 +91,20 @@ function CO(n, MaxIt, lb, ub, D, fobj)
                 r2 = rand()
                 r3 = kk + rand()
 
-                # Strategy selection mechanism
                 if r2 <= r3
                     r4 = 3 * rand()
                     if H > r4
-                        Z[j] = X[j] + r_Hat^-1 * alpha  # Search
+                        Z[j] = X[j] + r_Hat^-1 * alpha  
                     else
-                        Z[j] = Xbest[j] + r_Check * beta  # Attack
+                        Z[j] = Xbest[j] + r_Check * beta  
                     end
                 else
-                    Z[j] = X[j]  # Sit & wait
+                    Z[j] = X[j]  
                 end
             end
 
-            # Check the limits
             Z = clamp.(Z, lb, ub)
 
-            # Evaluate the new position
             NewSol = Individual(Z, fobj(Z))
             if NewSol.Cost < pop[i].Cost
                 pop[i] = NewSol
@@ -125,40 +115,33 @@ function CO(n, MaxIt, lb, ub, D, fobj)
             FEs += 1
         end
 
-        t += 1  # Increment hunting time
+        t += 1  
 
-        # Leave the prey and go back home
         if t > T && t - round(T) - 1 >= 1 && t > 2
             if abs(BestCost[t - 1] - BestCost[t - round(T) - 1]) <= abs(0.01 * BestCost[t - 1])
                 best = X_best.Position
                 j0 = rand(1:D, ceil(Int, D / 10 * rand()))
                 best[j0] = lb[j0] .+ rand(length(j0)) .* (ub[j0] .- lb[j0])
                 BestSol.Cost = fobj(best)
-                BestSol.Position = best  # Leader's new position
+                BestSol.Position = best  
                 FEs += 1
 
                 i0 = rand(1:n, round(1 * n))
-                # Go back home
-                pop[i0[n - m + 1:n]] = pop1[i0[1:m]]  # Some members back to their initial positions
+                pop[i0[n - m + 1:n]] = pop1[i0[1:m]]  
 
-                pop[i] = X_best  # Substitute the member i by the prey
-                t = 1  # Reset the hunting time
+                pop[i] = X_best  
+                t = 1  
             end
         end
 
-        it += 1  # Increment iteration counter
-
-        # Update the prey (global best) position
+        it += 1  
+        
         if BestSol.Cost < X_best.Cost
             X_best = BestSol
         end
         push!(BestCost, BestSol.Cost)
         push!(Globest, X_best.Cost)
 
-        # Display
-        # if it % 500 == 0
-        #     println(" FEs>> ", FEs, "   BestCost = ", Globest[end])
-        # end
     end
 
     return X_best.Cost, X_best.Position, BestCost

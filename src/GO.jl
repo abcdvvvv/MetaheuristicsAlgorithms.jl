@@ -3,15 +3,14 @@ Zhang, Qingke, Hao Gao, Zhi-Hui Zhan, Junqing Li, and Huaxiang Zhang.
 "Growth Optimizer: A powerful metaheuristic algorithm for solving continuous and discrete global optimization problems." 
 Knowledge-Based Systems 261 (2023): 110206.
 """
-function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension, xmax, xmin, MaxFEs, Func, FuncId)
-    # Parameter setting
+function GO(popsize, MaxIter, xmin, xmax, dimension, Func) 
+
     FEs = 0
     P1 = 5
     P2 = 0.001
     P3 = 0.3
     MaxFEs = MaxIter * popsize
     
-    # Initialization
     x = xmin .+ rand(popsize, dimension) .* (xmax - xmin)
     gbestX = zeros(dimension)
     gbestfitness = Inf
@@ -19,7 +18,6 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
     gbesthistory = []
 
     for i in 1:popsize
-        # fitness[i] = Func(x[i, :], FuncId)
         fitness[i] = Func(x[i, :])
         FEs += 1
         if gbestfitness > fitness[i]
@@ -27,18 +25,15 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
             gbestX = x[i, :]
         end
         push!(gbesthistory, gbestfitness)
-        # println("FEs: $FEs, fitness error: $(gbestfitness)")
     end
 
     while true
         ind = sortperm(fitness)
         Best_X = x[ind[1], :]
 
-        # Learning phase
         for i in 1:popsize
             Worst_X = x[ind[rand(popsize-P1+1:popsize)], :]
             Better_X = x[ind[rand(2:P1)], :]
-            # random = setdiff(1:popsize, [i])
             random = selectID(popsize, i, 2)
             L1, L2 = random[rand(1:length(random), 2)]
 
@@ -67,11 +62,9 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
             newx = x[i, :] + KA1 + KA2 + KA3 + KA4
             newx = clamp.(newx, xmin, xmax)
 
-            # newfitness = Func(newx, FuncId)
             newfitness = Func(newx)
             FEs += 1
 
-            # Update
             if fitness[i] > newfitness
                 fitness[i] = newfitness
                 x[i, :] = newx
@@ -86,14 +79,12 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
             end
 
             push!(gbesthistory, gbestfitness)
-            # println("FEs: $FEs, fitness error: $(gbestfitness)")
         end
 
         if FEs >= MaxFEs
             break
         end
 
-        # Reflection phase
         for i in 1:popsize
             newx = x[i, :]
 
@@ -110,7 +101,6 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
             end
 
             newx = clamp.(newx, xmin, xmax)
-            # newfitness = Func(newx, FuncId)
             newfitness = Func(newx)
             FEs += 1
 
@@ -128,7 +118,6 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
             end
 
             push!(gbesthistory, gbestfitness)
-            # println("FEs: $FEs, fitness error: $(gbestfitness)")
         end
 
         if FEs >= MaxFEs
@@ -136,7 +125,6 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
         end
     end
 
-    # Adjust gbesthistory size if necessary
     if FEs < MaxFEs
         append!(gbesthistory, fill(gbestfitness, MaxFEs - FEs))
     elseif FEs > MaxFEs
@@ -147,15 +135,14 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func) #(popsize, dimension,
 end
 
 function selectID(popsize, i, k)
-    # Generate k random integer values within [1, popsize] that do not include i and do not repeat each other
     if k <= popsize
-        vecc = vcat(1:i-1, i+1:popsize)  # Create vector excluding i
-        r = zeros(Int, k)  # Initialize array to store results
+        vecc = vcat(1:i-1, i+1:popsize)  
+        r = zeros(Int, k)  
         for kkk in 1:k
             n = popsize - kkk
-            t = rand(1:n)  # Generate random index
+            t = rand(1:n)  
             r[kkk] = vecc[t]
-            vecc = deleteat!(vecc, t)  # Remove selected element from vecc
+            vecc = deleteat!(vecc, t)  
         end
         return r
     else

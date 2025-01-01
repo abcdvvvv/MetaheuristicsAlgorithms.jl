@@ -8,38 +8,31 @@ using Random
 
 
 function ChOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
-    # Initialize Attacker, Barrier, Chaser, and Driver
     Attacker_pos = zeros(dim)
-    Attacker_score = Inf  # Change to -Inf for maximization problems
+    Attacker_score = Inf  
 
     Barrier_pos = zeros(dim)
-    Barrier_score = Inf  # Change to -Inf for maximization problems
+    Barrier_score = Inf  
 
     Chaser_pos = zeros(dim)
-    Chaser_score = Inf  # Change to -Inf for maximization problems
+    Chaser_score = Inf  
 
     Driver_pos = zeros(dim)
-    Driver_score = Inf  # Change to -Inf for maximization problems
+    Driver_score = Inf  
 
-    # Initialize the positions of search agents
     Positions = initialization(SearchAgents_no, dim, ub, lb)
 
     Convergence_curve = zeros(Max_iter)
-    l = 0  # Loop counter
+    l = 0  
 
-    # Main loop
     while l < Max_iter
-        # for i in 1:size(Positions, 1)
         for i in axes(Positions, 1)
-            # Return back the search agents that go beyond the boundaries of the search space
             Flag4ub = Positions[i, :] .> ub
             Flag4lb = Positions[i, :] .< lb
             Positions[i, :] = (Positions[i, :] .* .~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            # Calculate objective function for each search agent
             fitness = fobj(Positions[i, :])
 
-            # Update Attacker, Barrier, Chaser, and Driver
             if fitness < Attacker_score
                 Attacker_score = fitness
                 Attacker_pos = Positions[i, :]
@@ -55,9 +48,8 @@ function ChOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        f = 2 - l * (2 / Max_iter)  # a decreases linearly from 2 to 0
+        f = 2 - l * (2 / Max_iter)  
 
-        # Dynamic Coefficient of f Vector as in Table 1
         C1G1 = 1.95 - ((2 * l^(1/3)) / (Max_iter^(1/3)))
         C2G1 = (2 * l^(1/3)) / (Max_iter^(1/3)) + 0.5
 
@@ -70,8 +62,6 @@ function ChOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
         C1G4 = (-2 * (l^3) / (Max_iter^3)) + 2.5
         C2G4 = (2 * (l^3) / (Max_iter^3)) + 0.5
 
-        # Update the position of search agents
-        # for i in 1:size(Positions, 1)
         for i in axes(Positions, 1)
             for j in 1:dim
                 r11 = C1G1 * rand()
@@ -90,34 +80,24 @@ function ChOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
                 C1 = 2 * r12
 
                 m = chaos(3, 1, 1)
-                # println("size(m) ", size(m))
-                # println("size(C1) ", size(C1))
-                # println("size(A1) ", size(A1))
-                # D_Attacker = abs(C1 * Attacker_pos[j] - m * Positions[i, j])
                 D_Attacker = abs.(C1 * Attacker_pos[j] .- m * Positions[i, j])
                 X1 = Attacker_pos[j] .- A1 * D_Attacker
 
                 A2 = 2 * f * r21 - f
                 C2 = 2 * r22
-                # D_Barrier = abs(C2 * Barrier_pos[j] - m * Positions[i, j])
                 D_Barrier = abs.(C2 * Barrier_pos[j] .- m * Positions[i, j])
                 X2 = Barrier_pos[j] .- A2 * D_Barrier
 
                 A3 = 2 * f * r31 - f
                 C3 = 2 * r32
-                # D_Chaser = abs(C3 * Chaser_pos[j] - m * Positions[i, j])
                 D_Chaser = abs.(C3 * Chaser_pos[j] .- m * Positions[i, j])
                 X3 = Chaser_pos[j] .- A3 * D_Chaser
 
                 A4 = 2 * f * r41 - f
                 C4 = 2 * r42
-                # D_Driver = abs(C4 * Driver_pos[j] - m * Positions[i, j])
                 D_Driver = abs.(C4 * Driver_pos[j] .- m * Positions[i, j])
                 X4 = Driver_pos[j] .- A4 * D_Driver
 
-                # println("X1 ", X1)
-
-                # Positions[i, j] = (X1 + X2 + X3 + X4) / 4  # Update position
                 Positions[i, j] = ((X1 + X2 + X3 + X4) / 4)[1]  # Update position
             end
         end
@@ -135,13 +115,11 @@ function chaos(index, max_iter, Value)
     x[1] = 0.7
 
     if index == 1
-        # Chebyshev map
         for i in 1:max_iter
             x[i + 1] = cos(i * acos(x[i]))
             O[i] = ((x[i] + 1) * Value) / 2
         end
     elseif index == 2
-        # Circle map
         a = 0.5
         b = 0.2
         for i in 1:max_iter
@@ -149,7 +127,6 @@ function chaos(index, max_iter, Value)
             O[i] = x[i] * Value
         end
     elseif index == 3
-        # Gauss/mouse map
         for i in 1:max_iter
             if x[i] == 0
                 x[i + 1] = 0
@@ -159,21 +136,18 @@ function chaos(index, max_iter, Value)
             O[i] = x[i] * Value
         end
     elseif index == 4
-        # Iterative map
         a = 0.7
         for i in 1:max_iter
             x[i + 1] = sin((a * π) / x[i])
             O[i] = ((x[i] + 1) * Value) / 2
         end
     elseif index == 5
-        # Logistic map
         a = 4
         for i in 1:max_iter
             x[i + 1] = a * x[i] * (1 - x[i])
             O[i] = x[i] * Value
         end
     elseif index == 6
-        # Piecewise map
         P = 0.4
         for i in 1:max_iter
             if 0 <= x[i] < P
@@ -188,26 +162,22 @@ function chaos(index, max_iter, Value)
             O[i] = x[i] * Value
         end
     elseif index == 7
-        # Sine map
         for i in 1:max_iter
             x[i + 1] = sin(π * x[i])
             O[i] = x[i] * Value
         end
     elseif index == 8
-        # Singer map
         u = 1.07
         for i in 1:max_iter
             x[i + 1] = u * (7.86 * x[i] - 23.31 * (x[i]^2) + 28.75 * (x[i]^3) - 13.302875 * (x[i]^4))
             O[i] = x[i] * Value
         end
     elseif index == 9
-        # Sinusoidal map
         for i in 1:max_iter
             x[i + 1] = 2.3 * x[i]^2 * sin(π * x[i])
             O[i] = x[i] * Value
         end
     elseif index == 10
-        # Tent map
         x[1] = 0.6
         for i in 1:max_iter
             if x[i] < 0.7

@@ -18,8 +18,6 @@ function AEFA(N, max_it, lb, ub, D, benchmark)#(func_num, N, max_it, FCheck, tag
     Fbest = Inf 
     Lbest = zeros(D)  
 
-    # Dimension, lower and upper bounds
-    # lb, ub, D = benchmark_range(func_num)
 
     # Random initialization of charge population
     X = rand(N, D) .* (ub - lb) .+ lb
@@ -34,7 +32,6 @@ function AEFA(N, max_it, lb, ub, D, benchmark)#(func_num, N, max_it, FCheck, tag
 
         # Evaluate fitness of charged particles
         for i in 1:N
-            # fitness[i] = benchmark(X[i, :], func_num, D)
             fitness[i] = benchmark(X[i, :])
         end
 

@@ -6,8 +6,6 @@ Engineering Applications of Artificial Intelligence 114 (2022): 105082.
 
 function ARO(nPop, MaxIt, Low, Up, Dim, F_index)#(F_index, MaxIt, nPop)
 
-    # Get function range and initialize population
-    # Low, Up, Dim = FunRange(F_index)
     PopPos = [rand(Dim) .* (Up - Low) .+ Low for _ in 1:nPop]
     PopFit = [F_index(PopPos[i]) for i in 1:nPop]
 

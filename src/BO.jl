@@ -7,11 +7,11 @@ Applied Intelligence 52, no. 3 (2022): 2942-2974.
 using Distributions
 
 function BO(N, max_it, Var_min, Var_max, d, CostFunction)
-    p_xgm_initial = 0.001 # Initial probability for extra-group mating (generally 1/d for higher dimensions)
-    scab = 1.25 # %Sharing cofficient for alpha bonobo (Generally 1-2)
-    scsb = 1.3 # Sharing coefficient for selected bonobo(Generally 1-2)
-    rcpp = 0.0035 # Rate of change in phase probability (Generally 1e-3 to 1e-2)
-    tsgs_factor_max = 0.05 # Max. value of temporary sub-group size factor
+    p_xgm_initial = 0.001 
+    scab = 1.25 
+    scsb = 1.3 
+    rcpp = 0.0035 
+    tsgs_factor_max = 0.05 
     if length(Var_min) == 1
         Var_min = Var_min * ones(d)
     end
@@ -26,39 +26,36 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
     bonobo = zeros(N, d)
     convergence = zeros(max_it)
     for i in 1:N
-        # bonobo[i, :] = rand(Uniform.(Var_min, Var_max), d)  # Using Uniform distribution
         bonobo[i, :] = [rand(Uniform(Var_min[j], Var_max[j])) for j in 1:d]
         cost[i] = CostFunction(bonobo[i, :])
     end
 
     bestcost, ID = findmin(cost)
-    alphabonobo = bonobo[ID, :]  # Best solution found in the population
-    pbestcost = bestcost  # Initialization of previous best cost
+    alphabonobo = bonobo[ID, :]  
+    pbestcost = bestcost  
 
     # Initialization of other parameters
-    npc = 0  # Negative phase count
-    ppc = 0  # Positive phase count
-    p_xgm = p_xgm_initial  # Probability for extra-group mating
-    tsgs_factor_initial = 0.5 * tsgs_factor_max  # Initial value for temporary sub-group size factor
-    tsgs_factor = tsgs_factor_initial  # Temporary sub-group size factor
-    p_p = 0.5  # Phase probability
-    p_d = 0.5  # Directional probability
+    npc = 0  
+    ppc = 0  
+    p_xgm = p_xgm_initial  
+    tsgs_factor_initial = 0.5 * tsgs_factor_max  
+    tsgs_factor = tsgs_factor_initial  
+    p_p = 0.5  
+    p_d = 0.5  
     it = 1
 
     # Main Loop of BO
     while it <= max_it
-        tsgs_max = max(2, ceil(Int, N * tsgs_factor))  # Maximum size of the temporary sub-group
+        tsgs_max = max(2, ceil(Int, N * tsgs_factor))  
         
         for i in 1:N
             newbonobo = zeros(1, d)
             B = collect(1:N)
             deleteat!(B, i)  # Exclude the current index
             
-            # Determining the actual size of the temporary sub-group
-            tsg = rand(2:tsgs_max)  # Random size of the temporary sub-group
+            tsg = rand(2:tsgs_max)  
             
-            # Selection of pth Bonobo using fission-fusion social strategy & flag value determination
-            q = rand(B, tsg)  # Random sample from B
+            q = rand(B, tsg)  
             temp_cost = cost[q]
             _, ID1 = findmin(temp_cost)
             p = q[ID1]
@@ -72,12 +69,12 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
             
             # Creation of newbonobo
             if rand() <= p_p
-                r1 = rand(1, d)  # Promiscuous or restrictive mating strategy
+                r1 = rand(1, d)  
                 newbonobo = bonobo[i, :] .+ scab * r1 .* (alphabonobo .- bonobo[i, :]) .+ flag * scsb * (1 .- r1) .* (bonobo[i, :] .- bonobo[p, :])
             else
                 for j in 1:d
                     if rand() <= p_xgm
-                        rand_var = rand()  # Extra group mating strategy
+                        rand_var = rand()  
                         
                         if alphabonobo[1, j] >= bonobo[i, j]
                             if rand() <= p_d
@@ -97,7 +94,7 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
                             end
                         end
                     else
-                        if (flag == 1) || (rand() <= p_d)  # Consortship mating strategy
+                        if (flag == 1) || (rand() <= p_d)  
                             newbonobo[1, j] = bonobo[i, j] + flag * exp(-rand()) * (bonobo[i, j] - bonobo[p, j])
                         else
                             newbonobo[1, j] = bonobo[p, j]
@@ -106,10 +103,6 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
                 end
             end
             
-            # Clipping
-            # println("size(newbonobo, 1) ", size(newbonobo,1))
-            # println("size(newbonobo, 2) ", size(newbonobo,2))
-            # println("size(vec(newbonobo)) ", size(vec(newbonobo')))
             for j in 1:d
                 if newbonobo[1, j] > Var_max[j]
                     newbonobo[1, j] = Var_max[j]
@@ -120,7 +113,6 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
             
             newcost = CostFunction(newbonobo[1,:])  # New cost evaluation
             
-            # New bonobo acceptance criteria
             if (newcost < cost[i]) || (rand() <= p_xgm)
                 cost[i] = newcost
                 bonobo[i, :] = newbonobo[1,:]  # Update bonobo
@@ -132,7 +124,6 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
             end
         end
         
-        # Parameters updation
         if bestcost < pbestcost
             npc = 0  # Positive phase
             ppc += 1
@@ -143,7 +134,7 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
             p_d = p_p
             tsgs_factor = min(tsgs_factor_max, tsgs_factor_initial + ppc * (rcpp^2))
         else
-            npc += 1  # Negative phase
+            npc += 1  
             ppc = 0
             cp = -(min(0.5, npc * rcpp))
             p_xgm = min(0.5, p_xgm_initial + npc * (rcpp^2))
@@ -156,8 +147,6 @@ function BO(N, max_it, Var_min, Var_max, d, CostFunction)
         it += 1
     end
 
-    # println("Best Cost: ", bestcost)
-    # println("Best solution: ", alphabonobo)
     return bestcost, alphabonobo, convergence
 
 end

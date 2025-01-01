@@ -4,14 +4,12 @@ Luan, Tran Minh, Samir Khatir, Minh Thi Tran, Bernard De Baets, and Thanh Cuong-
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.
 """
 function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
-    # Initialization
     Destination_position = zeros(Dim)
     Destination_fitness = Inf
     Destination_position_second = zeros(Dim)
     Convergence_curve = zeros(Max_Iter)
     Position_sort = zeros(N, Dim)
     
-    # ETO parameters
     b = 1.55
     CE = floor(Int, 1 + Max_Iter / b)
     T = floor(Int, 1.2 + Max_Iter / 2.25)
@@ -20,11 +18,9 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
     UB_2 = UB
     LB_2 = LB
     
-    # Initialize the set of random solutions
     X = initialization(N, Dim, UB, LB)
     Objective_values = zeros(N)
-    
-    # Calculate the fitness of the first set and find the best one
+
     for i in 1:N
         Objective_values[i] = Fobj(X[i, :])
         if Objective_values[i] < Destination_fitness
@@ -35,18 +31,15 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
     Convergence_curve[1] = Destination_fitness
     t = 2
 
-    # Main loop
     while t <= Max_Iter
-        for i in 1:N  # i-th solution
-            for j in 1:Dim  # j-th dimension
-                
-                # Update A by using Eq. (17)
+        for i in 1:N  
+            for j in 1:Dim  
+
                 d1 = 0.1 * exp(-0.01 * t) * cos(0.5 * Max_Iter * (1 - t / Max_Iter))
                 d2 = -0.1 * exp(-0.01 * t) * cos(0.5 * Max_Iter * (1 - t / Max_Iter))
                 
                 CM = (sqrt(t / Max_Iter)^tan(d1 / d2)) * rand() * 0.01
 
-                # Enter the bounded search strategy
                 if t == CEi
                     UB_2 = Destination_position[j] + (1 - t / Max_Iter) * abs(rand() * Destination_position[j] - Destination_position_second[j]) * rand()
                     LB_2 = Destination_position[j] - (1 - t / Max_Iter) * abs(rand() * Destination_position[j] - Destination_position_second[j]) * rand()
@@ -63,7 +56,6 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
                     CEi = 0
                 end
 
-                # First phase of exploration and exploitation
                 if t <= T
                     q1, q3, q4, q5 = rand(), rand(), rand(), rand()
 
@@ -89,7 +81,6 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
                         end
                     end
                 else
-                    # Second phase of exploration and exploitation
                     q2, q6 = rand(), rand()
                     alpha_2 = q6 * exp(tanh(1.5 * (-t / Max_Iter - 0.75) - q6))
                     
@@ -109,7 +100,6 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
             CEi = CEi_temp
         end
 
-        # Boundary condition
         for i in 1:N
             X[i, :] = clamp.(X[i, :], LB_2, UB_2)
             Objective_values[i] = Fobj(X[i, :])
@@ -120,14 +110,12 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
             end
         end
 
-        # Second solution
         if t == CE
             CEi = CE + 1
             CE += floor(Int, 2 - t * 2 / (Max_Iter - CE * 4.6) / 1)
             temp = zeros(Dim)
             temp2 = zeros(N, Dim)
 
-            # Sorting
             for i in 1:(N - 1)
                 for j in 1:(N - 1 - i)
                     if Objective_values[j] > Objective_values[j + 1]
@@ -140,7 +128,7 @@ function ETO(N, Max_Iter, LB, UB, Dim, Fobj)
                     end
                 end
             end
-            Destination_position_second .= Position_sort[2, :]  # The second solution
+            Destination_position_second .= Position_sort[2, :]  
         end
         
         Convergence_curve[t] = Destination_fitness
