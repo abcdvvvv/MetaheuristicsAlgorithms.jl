@@ -105,7 +105,8 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
 
     while current_iter < max_iter
         # Evaluate the fitness of the population
-        for i in 1:size(X, 1)
+        # for i in 1:size(X, 1)
+        for i in axes(X, 1)
             current_vulture_X = X[i, :]
             current_vulture_F = fobj(current_vulture_X)
 
@@ -122,18 +123,16 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
         a = rand(-2:0.001:2) * ((sin((π / 2) * (current_iter / max_iter))^gamma) + cos((π / 2) * (current_iter / max_iter)) - 1)
         P1 = (2 * rand() + 1) * (1 - (current_iter / max_iter)) + a
 
-        # Update the location
-        for i in 1:size(X, 1)
+
+        for i in axes(X, 1)
             current_vulture_X = X[i, :]
             F = P1 * (2 * rand() - 1)
 
             random_vulture_X = random_select(Best_vulture1_X, Best_vulture2_X, alpha, betha)
 
             if abs(F) >= 1
-                # Exploration
                 current_vulture_X = exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lower_bound)
             else
-                # Exploitation
                 current_vulture_X = exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, variables_no, upper_bound, lower_bound)
             end
 
