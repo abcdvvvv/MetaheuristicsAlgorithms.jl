@@ -3,7 +3,7 @@ Rao, R. Venkata, Vimal J. Savsani, and Dipakkumar P. Vakharia.
 "Teaching–learning-based optimization: a novel method for constrained mechanical design optimization problems." 
 Computer-aided design 43, no. 3 (2011): 303-315.
 """
-mutable struct Individual
+mutable struct individual
     Position::Vector{Float64}
     Cost::Float64
 end
@@ -11,11 +11,11 @@ end
 function TLBO(nPop, MaxIt,VarMin, VarMax, nVar, CostFunction)
     VarSize = (nVar) 
 
-    pop = [Individual(rand(VarSize) * (VarMax - VarMin) .+ VarMin, 
+    pop = [individual(rand(VarSize) * (VarMax - VarMin) .+ VarMin, 
                     CostFunction(vec(rand(VarSize) .* (VarMax - VarMin) .+ VarMin))) for _ in 1:nPop]
 
 
-    BestSol = Individual([], Inf)  
+    BestSol = individual([], Inf)  
 
     for i in 1:nPop
         pop[i].Cost = CostFunction(vec(pop[i].Position))
@@ -38,7 +38,7 @@ function TLBO(nPop, MaxIt,VarMin, VarMax, nVar, CostFunction)
         end
         
         for i in 1:nPop
-            newsol = Individual(zeros(VarSize), 0.0)
+            newsol = individual(zeros(VarSize), 0.0)
             
             TF = rand(1:2)
             
@@ -66,7 +66,7 @@ function TLBO(nPop, MaxIt,VarMin, VarMax, nVar, CostFunction)
                 Step .= -Step
             end
             
-            newsol = Individual(zeros(VarSize), 0.0)
+            newsol = individual(zeros(VarSize), 0.0)
             
             newsol.Position = pop[i].Position .+ rand(VarSize) .* Step
             
