@@ -18,6 +18,9 @@ MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia pac
 - **<u>Arithmetic Optimization Algorithm</u>**: Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 - **<u>Artificial Protozoa Optimizer</u>**: Wang, Xiaopeng, Václav Snášel, Seyedali Mirjalili, Jeng-Shyang Pan, Lingping Kong, and Hisham A. Shehadeh. "Artificial Protozoa Optimizer (APO): A novel bio-inspired metaheuristic algorithm for engineering optimization." Knowledge-Based Systems 295 (2024): 111737.
 - **<u>Artificial Rabbits Optimization</u>**: Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
+- Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, Zongda Wu, and Huiling Chen. 
+"Artemisinin optimization based on malaria therapy: Algorithm and applications to medical image segmentation." 
+Displays 84 (2024): 102740.
 - **<u>African vultures optimization algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. Computers & Industrial Engineering, 158, 107408.
 ### B
 - **<u>bald eagle search</u>**: Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. "Novel meta-heuristic bald eagle search optimisation algorithm." Artificial Intelligence Review 53 (2020): 2237-2264.
@@ -31,7 +34,9 @@ Applied Intelligence 52, no. 3 (2022): 2942-2974.
 "Butterfly optimization algorithm: a novel approach for global optimization." 
 Soft computing 23 (2019): 715-734.
 ### C
+- Braik, Malik, Alaa Sheta, and Heba Al-Hiary. "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." Neural computing and applications 33, no. 7 (2021): 2515-2547.
 - **<u>Chernobyl disaster optimizer</u>**: Shehadeh, Hisham A. "Chernobyl disaster optimizer (CDO): A novel meta-heuristic method for global optimization." Neural Computing and Applications 35, no. 15 (2023): 10733-10749.
+- **<u>Chameleon Swarm Algorithm</u>**: Braik, Malik Shehadeh. "Chameleon Swarm Algorithm: A bio-inspired optimizer for solving engineering design problems." Expert Systems with Applications 174 (2021): 114685.
 - **<u>Chimp optimization algorithm</u>**: Khishe, Mohammad, and Mohammad Reza Mosavi. 
 "Chimp optimization algorithm." 
 Expert systems with applications 149 (2020): 113338.

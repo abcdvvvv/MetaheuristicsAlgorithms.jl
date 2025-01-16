@@ -8,12 +8,14 @@ include("ALO.jl")
 include("AOArithmetic.jl")
 include("APO.jl")
 include("ARO.jl")
+include("ArtemisininO.jl")
 include("AVOA.jl")
 include("BES.jl")
 include("BKA.jl")
 include("BO.jl")
 include("BOA.jl")
 include("CDO.jl")
+include("ChameleonSA.jl")
 include("ChOA.jl")
 include("CO.jl")
 include("CoatiOA.jl")
@@ -101,9 +103,9 @@ include("initialization.jl")
 ##
 
 ##
-using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .AVOA
+using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
 using .BES, .BKA, .BO, .BOA
-using .ChOA, .CO, .CoatiOA, .COOT, .CSBO
+using .CDO, .Chameleon, .ChOA, .CO, .CoatiOA, .COOT, .CSBO
 using .DBO, .DDAO, .DMOA, .DO, .DSO
 using .ECO, .EDO, .ElkHO, .EO, .ETO
 using .FLA, .FLoodA, .FOX
