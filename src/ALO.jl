@@ -72,7 +72,7 @@ function Random_walk_around_antlion(Dim, max_iter, lb, ub, antlion, current_iter
     return RWs
 end
 
-function RouletteWheelSelection(weights)
+function RouletteWheelSelectionF(weights)
     accumulation = cumsum(weights)  # Cumulative sum of weights
     p = rand() * accumulation[end]   # Random threshold based on the total weight
     chosen_index = findfirst(x -> x > p, accumulation)  # Find first index where accumulation exceeds p
@@ -115,7 +115,7 @@ function ALO(N, Max_iter, lb, ub, dim, fobj)
         # Simulate random walks
         for i in axes(antlion_position, 1)
             # Select ant lions based on their fitness
-            Rolette_index = RouletteWheelSelection(1 ./ sorted_antlion_fitness)
+            Rolette_index = RouletteWheelSelectionF(1 ./ sorted_antlion_fitness)
             Rolette_index = Rolette_index == -1 ? 1 : Rolette_index
 
             RA = Random_walk_around_antlion(dim, Max_iter, lb, ub, Sorted_antlions[Rolette_index, :], Current_iter)

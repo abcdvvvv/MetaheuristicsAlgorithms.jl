@@ -40,7 +40,7 @@ function GEA(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
             p = [Costs[ii] / ImpFitness for ii in 1:Nc]
             ImpFitness = ImpFitness == 0 ? 1e-320 : ImpFitness
 
-            i1 = sum(p) == 0 ? 1 : RouletteWheelSelection(p)
+            i1 = sum(p) == 0 ? 1 : RouletteWheelSelectionFun(p)
 
             flag = 0
             newsol_Position = Positions[j1,:] .+ rand(nVar) .* (Positions[i1,:] - Positions[j1,:]) .+ rand(nVar) .* (Positions[i1,:] - Positions[i,:])
@@ -64,7 +64,7 @@ function GEA(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
             BestCosts[it] = BestCost
 
             if flag == 0
-                i2 = RouletteWheelSelection(1 .- p)  
+                i2 = RouletteWheelSelectionFun(1 .- p)  
                 newsol_Position = Positions[i2,:] .+ rand() * (P_i - rand()) .* rand(nVar) * (VarMax - VarMin) .+ VarMin
                 newsol_Position = max.(newsol_Position, VarMin)
                 newsol_Position = min.(newsol_Position, VarMax)
@@ -90,7 +90,7 @@ function GEA(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
     return BestCost, BestPosition, BestCosts
 end
 
-function RouletteWheelSelection(p)
+function RouletteWheelSelectionFun(p)
     c = cumsum(p)           
     r = rand()              
     i = findfirst(x -> x >= r, c)  

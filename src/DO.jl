@@ -6,7 +6,7 @@ Engineering Applications of Artificial Intelligence 114 (2022): 105075.
 
 using Distributions
 
-function levy(Popsize, Dim, beta)
+function levyF(Popsize, Dim, beta)
     sigma_u = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
     u = randn(Popsize, Dim) * sigma_u
     v = randn(Popsize, Dim)
@@ -68,7 +68,7 @@ function DO(Popsize, Maxiteration, LB, UB, Dim, Fobj)
         dandelions .= dandelions_2
         dandelions = clamp.(dandelions, LB, UB)
         
-        Step_length = levy(Popsize, Dim, 1.5)
+        Step_length = levyF(Popsize, Dim, 1.5)
         Elite = repeat(Best_position', Popsize, 1)
         dandelions_3 = copy(dandelions)
         for i in 1:Popsize
