@@ -17,9 +17,5 @@ MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia pac
 - **<u>ant lion optimizer</u>**: Mirjalili, Seyedali. "The ant lion optimizer." Advances in engineering software 83 (2015): 80-98.
 - **<u>Arithmetic Optimization Algorithm</u>**: Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 - **<u>Artificial Protozoa Optimizer</u>**: Wang, Xiaopeng, Václav Snášel, Seyedali Mirjalili, Jeng-Shyang Pan, Lingping Kong, and Hisham A. Shehadeh. "Artificial Protozoa Optimizer (APO): A novel bio-inspired metaheuristic algorithm for engineering optimization." Knowledge-Based Systems 295 (2024): 111737.
-- **<u>Artificial Rabbits Optimization</u>**: Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. 
-"Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." 
-Engineering Applications of Artificial Intelligence 114 (2022): 105082.
-- **<u>African vultures optimization algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). 
-African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. 
-Computers & Industrial Engineering, 158, 107408.
+- **<u>Artificial Rabbits Optimization</u>**: Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
+- **<u>African vultures optimization algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. Computers & Industrial Engineering, 158, 107408.
