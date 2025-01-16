@@ -20,32 +20,31 @@ MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia pac
 - **<u>Artificial Rabbits Optimization</u>**: Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
 - **<u>African vultures optimization algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. Computers & Industrial Engineering, 158, 107408.
 ### B
-- Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. 
-"Novel meta-heuristic bald eagle search optimisation algorithm." 
-Artificial Intelligence Review 53 (2020): 2237-2264.
-- Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang. 
+- **<u>bald eagle search</u>**: Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. "Novel meta-heuristic bald eagle search optimisation algorithm." Artificial Intelligence Review 53 (2020): 2237-2264.
+- **<u>Black-winged kite algorithm</u>**: Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang. 
 "Black-winged kite algorithm: a nature-inspired meta-heuristic for solving benchmark functions and engineering problems." 
 Artificial Intelligence Review 57, no. 4 (2024): 98.
-- Das, Amit Kumar, and Dilip Kumar Pratihar. 
+- **<u>Bonobo optimizer</u>**: Das, Amit Kumar, and Dilip Kumar Pratihar. 
 "Bonobo optimizer (BO): an intelligent heuristic with self-adjusting parameters over continuous spaces and its applications to engineering problems." 
 Applied Intelligence 52, no. 3 (2022): 2942-2974.
-- Arora, Sankalap, and Satvir Singh. 
+- **<u>Butterfly optimization algorithm</u>**: Arora, Sankalap, and Satvir Singh. 
 "Butterfly optimization algorithm: a novel approach for global optimization." 
 Soft computing 23 (2019): 715-734.
 ### C
-- Khishe, Mohammad, and Mohammad Reza Mosavi. 
+- **<u>Chernobyl disaster optimizer</u>**: Shehadeh, Hisham A. "Chernobyl disaster optimizer (CDO): A novel meta-heuristic method for global optimization." Neural Computing and Applications 35, no. 15 (2023): 10733-10749.
+- **<u>Chimp optimization algorithm</u>**: Khishe, Mohammad, and Mohammad Reza Mosavi. 
 "Chimp optimization algorithm." 
 Expert systems with applications 149 (2020): 113338.
-- Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. 
+- **<u>cheetah optimizer</u>**: Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. 
 "The cheetah optimizer: A nature-inspired metaheuristic algorithm for large-scale optimization problems." 
 Scientific reports 12, no. 1 (2022): 10953.
-- Braik, Malik, Alaa Sheta, and Heba Al-Hiary. 
+- **<u>capuchin search algorithm</u>**: Braik, Malik, Alaa Sheta, and Heba Al-Hiary. 
 "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." 
 Neural computing and applications 33, no. 7 (2021): 2515-2547.
-- Naruei, Iraj, and Farshid Keynia. 
+- **<u>COOT bird</u>**: Naruei, Iraj, and Farshid Keynia. 
 "A new optimization method based on COOT bird natural life model." 
 Expert Systems with Applications 183 (2021): 115352.
-- Ghasemi, Mojtaba, Mohammad-Amin Akbari, Changhyun Jun, Sayed M. Bateni, Mohsen Zare, Amir Zahedi, Hao-Ting Pai, 
+- **<u>Circulatory System Based Optimization</u>**: Ghasemi, Mojtaba, Mohammad-Amin Akbari, Changhyun Jun, Sayed M. Bateni, Mohsen Zare, Amir Zahedi, Hao-Ting Pai, 
 Shahab S. Band, Massoud Moslehpour, and Kwok-Wing Chau. 
 "Circulatory System Based Optimization (CSBO): an expert multilevel biologically inspired meta-heuristic algorithm." 
 Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
