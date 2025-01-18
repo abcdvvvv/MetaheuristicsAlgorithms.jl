@@ -68,6 +68,8 @@ include("OOA.jl")
 include("ParrotO.jl")
 include("PDO.jl")
 include("PKO.jl")
+include("PLO.jl")
+include("POA.jl")
 include("PoliticalO.jl")
 include("PRO.jl")
 include("PumaO.jl")
@@ -78,6 +80,7 @@ include("RSO.jl")
 include("RUN.jl")
 include("SBO.jl")
 include("SBOA.jl")
+include("SCA.jl")
 include("SCHO.jl")
 include("SeaHO.jl")
 include("SHO.jl")
@@ -116,10 +119,10 @@ using .Jaya, .JS
 using .LCA, .LFD, .LPO
 using .MossGO, .MountainGO, .MPA, .MRFO, .MVO
 using .OOA
-using .ParrotO, .PDO, .PKO, .PoliticalO, .PRO, .PumaO
+using .ParrotO, .PDO, .PKO, .PLO, .POA, .PoliticalO, .PRO, .PumaO
 using .QIO
 using .ROA, .RSA, .RSO, .RUN
-using .SBO, .SBOA, .SCHO, .SeaHO, .SHO, .SMA, .SnowOA, .SO, .SparrowSA, .SSA, .STOA, .SupplyDO
+using .SBO, .SBOA, .SCA, .SCHO, .SeaHO, .SHO, .SMA, .SnowOA, .SO, .SparrowSA, .SSA, .STOA, .SupplyDO
 using .TLBO, .TLCO, .TSA, .TTAO
 using .WHO, .WO, .WOA, .WSO
 using .YDSE
@@ -141,7 +144,7 @@ using .ZOA
 # tlt = "Chung Reynolds"
 # i = 1
 ##
-# BestPosition, BestValue, ConvergenceCurve = FPA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-# println("BestValue: ", BestPosition)
+BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+println("BestValue: ", BestPosition)
 
 end

@@ -65,6 +65,8 @@ include("OOA.jl")
 include("ParrotO.jl")
 include("PDO.jl")
 include("PKO.jl")
+include("PLO.jl")
+include("POA.jl")
 include("PoliticalO.jl")
 include("PumaO.jl")
 include("QIO.jl")
@@ -105,5 +107,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = ZOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = PLO(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)

@@ -210,6 +210,8 @@ Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 - Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien. 
 "Pied kingfisher optimizer: a new bio-inspired algorithm for solving numerical optimization and industrial engineering problems." 
 Neural Computing and Applications (2024): 1-59.
+- Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen. "Polar lights optimizer: Algorithm and applications in image segmentation and feature selection." Neurocomputing 607 (2024): 128427.
+- Trojovský, Pavel, and Mohammad Dehghani. "Pelican optimization algorithm: A novel nature-inspired algorithm for engineering applications." Sensors 22, no. 3 (2022): 855.
 - Askari, Qamar, Irfan Younas, and Mehreen Saeed. 
 "Political Optimizer: A novel socio-inspired meta-heuristic for global optimization." 
 Knowledge-based systems 195 (2020): 105709.
@@ -224,6 +226,7 @@ Cluster Computing (2024): 1-49.
 "Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
 ### R
+- Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, and Huiling Chen. "RIME: A physics-based optimization." Neurocomputing 532 (2023): 183-214.
 - Jia, Heming, Xiaoxu Peng, and Chunbo Lang. 
 "Remora optimization algorithm." 
 Expert Systems with Applications 185 (2021): 115665.
@@ -243,6 +246,7 @@ Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 - Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He. 
 "Secretary bird optimization algorithm: a new metaheuristic for solving global optimization problems." 
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
+- **<u>Sine Cosine Algorithm</u>**: Mirjalili, Seyedali. "SCA: a sine cosine algorithm for solving optimization problems."Knowledge-based systems 96 (2016): 120-133.
 - Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abualigah, and Magd Abdel Wahab. 
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
@@ -261,6 +265,7 @@ Expert Systems with Applications 225 (2023): 120069.
 - Hashim, Fatma A., and Abdelazim G. Hussien. 
 "Snake Optimizer: A novel meta-heuristic optimization algorithm." 
 Knowledge-Based Systems 242 (2022): 108320.
+- Dhiman, Gaurav, and Vijay Kumar. "Seagull optimization algorithm: Theory and its applications for large-scale industrial engineering problems." Knowledge-based systems 165 (2019): 169-196.
 - Jiankai Xue & Bo Shen 
 A novel swarm intelligence optimization approach: sparrow search algorithm
 Systems Science & Control Engineering, 8:1, 22-34, 
