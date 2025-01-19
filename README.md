@@ -88,6 +88,9 @@ Knowledge-based systems 191 (2020): 105190.
 "Exponential-trigonometric optimization algorithm for solving complicated engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.
 ### F
+- Qi, Ailiang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen. 
+"FATA: an efficient optimization method based on geophysics." 
+Neurocomputing 607 (2024): 128289. https://doi.org/10.1016/j.neucom.2024.128289 
 - Hashim, Fatma A., Reham R. Mostafa, Abdelazim G. Hussien, Seyedali Mirjalili, and Karam M. Sallam. 
 "Fick’s Law Algorithm: A physical law-based algorithm for numerical optimization." 
 Knowledge-Based Systems 260 (2023): 110146.
@@ -135,6 +138,7 @@ Advances in engineering software 69 (2014): 46-61.
 - Hashim, Fatma A., Essam H. Houssein, Kashif Hussain, Mai S. Mabrouk, and Walid Al-Atabany. 
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
+- Lian, Junbo, and Guohua Hui. "Human evolutionary optimization algorithm." Expert Systems with Applications 241 (2024): 122638.
 - Askari, Qamar, Mehreen Saeed, and Irfan Younas. 
 "Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
 Expert Systems with Applications 161 (2020): 113702.

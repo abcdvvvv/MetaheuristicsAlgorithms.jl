@@ -42,6 +42,7 @@ include("GTO.jl")
 include("GWO.jl")
 include("HBA.jl")
 include("HBO.jl")
+include("HEOA.jl")
 include("HGS.jl")
 include("HGSO.jl")
 include("HHO.jl")
@@ -107,5 +108,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = PLO(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = HEOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)

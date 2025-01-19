@@ -31,6 +31,7 @@ include("EDO.jl")
 include("ElkHO.jl")
 include("EO.jl")
 include("ETO.jl")
+include("FATA.jl")
 include("FLA.jl")
 include("FLoodA.jl")
 include("FOX.jl")
@@ -46,6 +47,7 @@ include("GTO.jl")
 include("GWO.jl")
 include("HBA.jl")
 include("HBO.jl")
+include("HEOA.jl")
 include("HGS.jl")
 include("HGSO.jl")
 include("HHO.jl")
@@ -111,9 +113,9 @@ using .BES, .BKA, .BO, .BOA
 using .CDO, .Chameleon, .ChOA, .CO, .CoatiOA, .COOT, .CSBO
 using .DBO, .DDAO, .DMOA, .DO, .DSO
 using .ECO, .EDO, .ElkHO, .EO, .ETO
-using .FLA, .FLoodA, .FOX
+using .FATA, .FLA, .FLoodA, .FOX
 using .GazelleOA, .GBO, .GEA, .GGO, .GJO, .GKSO, .GNDO, .GO, .GOA, .GTO, .GWO
-using .HBA, .HBO, .HGS, .HGSO, .HikingOA, .HO, .HorseOA
+using .HBA, .HBO, .HEOA, .HGS, .HGSO, .HikingOA, .HO, .HorseOA
 using .INFO, .IVYA
 using .Jaya, .JS
 using .LCA, .LFD, .LPO
