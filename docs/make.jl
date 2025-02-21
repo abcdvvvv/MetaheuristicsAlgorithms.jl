@@ -11,10 +11,14 @@ makedocs(;
         canonical="https://abdelazimhussien.github.io/MetaheuristicsAlgorithms.jl",
         edit_link="main",
         assets=String[],
+        prettyurls=false
+        # prettyurls = get(ENV, "CI", "false") == "true"
     ),
     pages=[
         "Home" => "index.md",
         "Reference" => "reference.md",
+        "List" => "AlgList.md",
+        "Examples" => "example.md"
     ],
 )
 
