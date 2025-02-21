@@ -146,7 +146,7 @@ using .ZOA
 # tlt = "Chung Reynolds"
 # i = 1
 ##
-BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-println("BestValue: ", BestPosition)
+# BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+# println("BestValue: ", BestPosition)
 
 end
