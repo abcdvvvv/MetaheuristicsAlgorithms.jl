@@ -3,7 +3,7 @@ CurrentModule = MetaheuristicsAlgorithms
 ```
 
 ```@index
-Pages = ["reference.md"]
+Pages = ["reference.md"] 
 ```
 
 
