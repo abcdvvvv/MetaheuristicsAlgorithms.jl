@@ -27,6 +27,7 @@ makedocs(;
 #     devbranch="main",
 # )
 
+
 deploydocs(
     repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
     devbranch="main",
