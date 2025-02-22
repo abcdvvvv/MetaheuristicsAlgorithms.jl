@@ -104,6 +104,7 @@ include("WSO.jl")
 include("YDSE.jl")
 include("ZOA.jl")
 ##
+include("Chung_Reynolds.jl")
 include("initialization.jl")
 ##
 
@@ -130,23 +131,23 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
-# export AEFA,AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
-# export BES, BKA, BO, BOA
-# export ChOA, CO, CoatiOA, COOT, CSBO
-# export DBO, DDAO, DMOA, DO, DSO
-# export ECO, EDO, ElkHO, EO, ETO
-# export FLA, FLoodA, FOX
-# export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
+export AEFA,AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+export BES, BKA, BO, BOA
+export ChOA, CO, CoatiOA, COOT, CSBO
+export DBO, DDAO, DMOA, DO, DSO
+export ECO, EDO, ElkHO, EO, ETO
+export FLA, FLoodA, FOX
+export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
 ##
-# dim = 30
-# Max_iteration = 1000
-# SearchAgents_no = 50
-# lb = -100
-# ub = 100
-# tlt = "Chung Reynolds"
-# i = 1
+dim = 30
+Max_iteration = 1000
+SearchAgents_no = 50
+lb = -100
+ub = 100
+tlt = "Chung Reynolds"
+i = 1
 ##
-# BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-# println("BestValue: ", BestPosition)
+BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+println("BestValue: ", BestPosition)
 
 end
