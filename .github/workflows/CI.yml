@@ -2,8 +2,8 @@ name: CI
 on:
   push:
     branches:
-      # - master
-      - main
+      - master
+      # - main  
     tags: ['*']
   pull_request:
   workflow_dispatch:
@@ -78,4 +78,4 @@ jobs:
           using Documenter: DocMeta, doctest
           using MetaheuristicsAlgorithms
           DocMeta.setdocmeta!(MetaheuristicsAlgorithms, :DocTestSetup, :(using MetaheuristicsAlgorithms); recursive=true)
-          doctest(MetaheuristicsAlgorithms)
+          doctest(MetaheuristicsAlgorithms)  
