@@ -30,6 +30,7 @@ makedocs(;
 
 deploydocs(
     repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
-    devbranch="main",
+    devbranch="master",
     branch="gh-pages"  # Explicitly set the target branch
 )
+
