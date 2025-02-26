@@ -22,15 +22,15 @@ makedocs(;
     ],
 )
 
-# deploydocs(;
-#     repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
-#     devbranch="main",
-# )
-
-
-deploydocs(
+deploydocs(;
     repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
     devbranch="master",
-    branch="gh-pages"  # Explicitly set the target branch
 )
+
+
+# deploydocs(
+#     repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
+#     devbranch="master",
+#     branch="gh-pages"  # Explicitly set the target branch
+# )
 
