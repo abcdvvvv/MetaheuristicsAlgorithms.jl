@@ -23,8 +23,10 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
-    devbranch="master",
+    # repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
+    # devbranch="master",
+    repo="github.com/AbdelazimHussien/MetaheuristicsAlgorithms.jl",
+    devbranch="main",
 )
 
 
