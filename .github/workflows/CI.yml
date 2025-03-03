@@ -2,8 +2,8 @@ name: CI
 on:
   push:
     branches:
-      - master  
-      # - main  
+      # - master  
+      - main       
     tags: ['*'] 
   pull_request:
   workflow_dispatch:
