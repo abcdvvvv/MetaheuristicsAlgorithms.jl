@@ -1,5 +1,3 @@
-using Pkg
-Pkg.activate(".")
 using MetaheuristicsAlgorithms
 using Test
 using Random
