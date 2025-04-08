@@ -92,6 +92,7 @@ include("SO.jl")
 include("SparrowSA.jl")
 include("SSA.jl")
 include("STOA.jl")
+include("SuperbFOA.jl")
 include("SupplyDO.jl")
 include("TLBO.jl")
 include("TLCO.jl")
@@ -148,7 +149,7 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 ##
-BestPosition, BestValue, ConvergenceCurve = POA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = SuperbFOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
 
 end

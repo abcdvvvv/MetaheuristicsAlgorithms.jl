@@ -254,6 +254,9 @@ Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 - Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abualigah, and Magd Abdel Wahab. 
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
+- **<u>Starfish Optimization Algorithm (SFOA)</u>**: Zhong, C., Li, G., Meng, Z., Li, H., Yildiz, A. R., & Mirjalili, S. (2025). 
+"Starfish optimization algorithm (SFOA): a bio-inspired metaheuristic algorithm for global optimization compared with 100 optimizers. "
+Neural Computing and Applications, 37(5), 3641-3683.
 - Özbay, Feyza Altunbey. 
 "A modified seahorse optimization algorithm based on chaotic maps for solving global optimization and engineering problems." 
 Engineering Science and Technology, an International Journal 41 (2023): 101408.
@@ -281,6 +284,9 @@ Advances in engineering software 114 (2017): 163-191.
 - Dhiman, Gaurav, and Amandeep Kaur. 
 "STOA: a bio-inspired based optimization algorithm for industrial engineering problems." 
 Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
+- **<u>Superb Fairy-wren Optimization Algorithm (SuperbFOA)</u>** Jia, Heming, et al. 
+"Superb Fairy-wren Optimization Algorithm: a novel metaheuristic algorithm for solving feature selection problems." 
+Cluster Computing 28.4 (2025): 246.
 - Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. 
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.

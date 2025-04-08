@@ -11,6 +11,7 @@ include("BES.jl")
 include("BKA.jl")
 include("BO.jl")
 include("BOA.jl")
+include("CFOA.jl")
 include("ChOA.jl")
 include("CO.jl")
 include("CoatiOA.jl")
@@ -79,6 +80,7 @@ include("SBO.jl")
 include("SBOA.jl")
 include("SCHO.jl")
 include("SeaHO.jl")
+include("SFOA.jl")
 include("SHO.jl")
 include("SMA.jl")
 include("SnowOA.jl")
@@ -108,5 +110,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = HEOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = CFOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
