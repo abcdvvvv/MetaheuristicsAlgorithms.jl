@@ -30,6 +30,7 @@ mutable struct AEFA
     gbest::Vector{Float64}
     gbest_val::Vector{Float64}
     mean_val::Vector{Float64}
+    
     function AEFA(npop::Integer, maxiters::Integer, lb::AbstractVector, ub::AbstractVector)
         Rnorm = 2
         FCheck = 1

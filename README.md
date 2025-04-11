@@ -81,6 +81,9 @@ Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 Elk herd optimizer: a novel nature-inspired metaheuristic algorithm. 
 Artif Intell Rev 57, 48 (2024). 
 https://doi.org/10.1007/s10462-023-10680-4
+- **<u>Escape Algorithm (ESC) </u>**: "Ouyang, K., Fu, S., Chen, Y., Cai, Q., Heidari, A. A., & Chen, H. (2024). 
+Escape: an optimization method based on crowd evacuation behaviors. 
+Artificial Intelligence Review, 58(1), 19."
 - Faramarzi, Afshin, Mohammad Heidarinejad, Brent Stephens, and Seyedali Mirjalili. 
 "Equilibrium optimizer: A novel optimization algorithm." 
 Knowledge-based systems 191 (2020): 105190.
@@ -230,6 +233,9 @@ Cluster Computing (2024): 1-49.
 "Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
 ### R
+- **<u>Red-billed blue magpie optimizer (RBMO)</u>**: Fu, Shengwei, et al. 
+"Red-billed blue magpie optimizer: a novel metaheuristic algorithm for 2D/3D UAV path planning and engineering design problems." 
+Artificial Intelligence Review 57.6 (2024): 134.
 - Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, and Huiling Chen. "RIME: A physics-based optimization." Neurocomputing 532 (2023): 183-214.
 - Jia, Heming, Xiaoxu Peng, and Chunbo Lang. 
 "Remora optimization algorithm." 
