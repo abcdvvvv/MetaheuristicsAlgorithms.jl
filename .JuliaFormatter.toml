@@ -1,5 +1,5 @@
 # See https://domluna.github.io/JuliaFormatter.jl/stable/ for a list of options
-margin = 100
+margin = 200
 remove_extra_newlines = true
 trailing_zero = false
 join_lines_based_on_source = true

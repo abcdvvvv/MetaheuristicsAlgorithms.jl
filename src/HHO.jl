@@ -8,19 +8,14 @@ using Random
 using SpecialFunctions  # For gamma function
 using Statistics
 
-function Levy(d::Int)
-    beta = 1.5
-    sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-    
-    u = randn(d) * sigma
-    v = randn(d)
-    
-    step = u ./ abs.(v).^(1 / beta)
-    return step
-end
-
-function HHO(N::Int, T::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
-
+function HHO(
+    N::Int,
+    T::Int,
+    lb::Union{Int,AbstractVector},
+    ub::Union{Int,AbstractVector},
+    dim::Int,
+    fobj::Function,
+)
     Rabbit_Location = zeros(dim)
     Rabbit_Energy = Inf
 
@@ -31,25 +26,24 @@ function HHO(N::Int, T::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, Abst
     t = 0  # Loop counter
 
     while t < T
-        for i in 1:N
+        for i = 1:N
             FU = X[i, :] .> ub
             FL = X[i, :] .< lb
             X[i, :] = (X[i, :] .* .~(FU .+ FL)) .+ ub .* FU .+ lb .* FL
 
-
             fitness = fobj(X[i, :])
-            
+
             if fitness < Rabbit_Energy
                 Rabbit_Energy = fitness
                 Rabbit_Location = copy(X[i, :])
             end
         end
 
-        E1 = 2 * (1 - (t / T))  
+        E1 = 2 * (1 - (t / T))
 
-        for i in 1:N
-            E0 = 2 * rand() - 1  
-            Escaping_Energy = E1 * E0  
+        for i = 1:N
+            E0 = 2 * rand() - 1
+            Escaping_Energy = E1 * E0
 
             if abs(Escaping_Energy) >= 1
                 q = rand()
@@ -58,38 +52,53 @@ function HHO(N::Int, T::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, Abst
                 if q < 0.5
                     X[i, :] = X_rand - rand() * abs.(X_rand - 2 * rand() * X[i, :])
                 else
-                    X[i, :] = (Rabbit_Location .- vec(mean(X, dims=1))) .- rand() * ((ub - lb) * rand() + lb)
+                    X[i, :] =
+                        (Rabbit_Location .- vec(mean(X, dims=1))) .-
+                        rand() * ((ub - lb) * rand() + lb)
                 end
 
             elseif abs(Escaping_Energy) < 1
-                r = rand()  
+                r = rand()
 
-                if r >= 0.5 && abs(Escaping_Energy) < 0.5  
+                if r >= 0.5 && abs(Escaping_Energy) < 0.5
                     X[i, :] = Rabbit_Location - Escaping_Energy * abs.(Rabbit_Location - X[i, :])
-                elseif r >= 0.5 && abs(Escaping_Energy) >= 0.5  
+                elseif r >= 0.5 && abs(Escaping_Energy) >= 0.5
                     Jump_strength = 2 * (1 - rand())
-                    X[i, :] = (Rabbit_Location - X[i, :]) - Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :])
-                elseif r < 0.5 && abs(Escaping_Energy) >= 0.5  
+                    X[i, :] =
+                        (Rabbit_Location - X[i, :]) -
+                        Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :])
+                elseif r < 0.5 && abs(Escaping_Energy) >= 0.5
                     Jump_strength = 2 * (1 - rand())
-                    X1 = Rabbit_Location - Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :])
+                    X1 =
+                        Rabbit_Location -
+                        Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :])
 
                     if fobj(X1) < fobj(X[i, :])
                         X[i, :] = X1
                     else
-                        X2 = Rabbit_Location - Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :]) .+ rand(dim) .* Levy(dim)
+                        X2 =
+                            Rabbit_Location -
+                            Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :]) .+
+                            rand(dim) .* Levy(dim)
                         if fobj(X2) < fobj(X[i, :])
                             X[i, :] = X2
                         end
                     end
-                elseif r < 0.5 && abs(Escaping_Energy) < 0.5  
+                elseif r < 0.5 && abs(Escaping_Energy) < 0.5
                     Jump_strength = 2 * (1 - rand())
-                    X1 = Rabbit_Location .- Escaping_Energy * abs.(Jump_strength * Rabbit_Location .- vec(mean(X, dims=1)))
-
+                    X1 =
+                        Rabbit_Location .-
+                        Escaping_Energy *
+                        abs.(Jump_strength * Rabbit_Location .- vec(mean(X, dims=1)))
 
                     if fobj(X1) < fobj(X[i, :])
                         X[i, :] = X1
                     else
-                        X2 = Rabbit_Location - Escaping_Energy * abs.(Jump_strength * Rabbit_Location - vec(mean(X, dims=1))) .+ rand(dim) .* Levy(dim)
+                        X2 =
+                            Rabbit_Location -
+                            Escaping_Energy *
+                            abs.(Jump_strength * Rabbit_Location - vec(mean(X, dims=1))) .+
+                            rand(dim) .* Levy(dim)
                         if fobj(X2) < fobj(X[i, :])
                             X[i, :] = X2
                         end

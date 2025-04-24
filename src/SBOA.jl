@@ -81,12 +81,3 @@ function SBOA(N, T, lb, ub, dim, fitness)
     Best_pos = Bast_P
     return Best_score, Best_pos, SBOA_curve
 end
-
-function Levy(d)
-    β = 1.5
-    σ = (gamma(1 + β) * sin(π * β / 2) / (gamma((1 + β) / 2) * β * 2^((β - 1) / 2)))^(1 / β)
-    u = randn(d) * σ
-    v = randn(d)
-    step = u ./ abs.(v).^(1 / β)
-    return step
-end
