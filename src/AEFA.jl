@@ -4,12 +4,6 @@ Yadav, Anupam.
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 
-using Statistics
-using LinearAlgebra
-
-get_population!(x, lb, ub) = x .= (ub .- lb) .* rand!(x) .+ lb
-get_population(dims, lb, ub) = (ub .- lb) .* rand(Float64, dims) .+ lb
-
 mutable struct AEFA
     npop::Int
     i::Int

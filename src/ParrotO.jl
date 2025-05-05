@@ -102,13 +102,3 @@ function ParrotO(N, Max_iter, lb, ub, dim, fobj)
     
     return Best_score, Best_pos, curve 
 end
-
-
-function Levy(d)
-    beta = 1.5
-    sigma = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-    u = randn(d) * sigma
-    v = randn(d)
-    step = u ./ abs(v) .^ (1 / beta)
-    return step
-end

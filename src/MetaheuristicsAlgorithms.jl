@@ -108,6 +108,12 @@ include("ZOA.jl")
 include("Chung_Reynolds.jl")
 include("initialization.jl")
 ##
+using SpecialFunctions: gamma
+
+include("utils.jl")
+include("Chung_Reynolds.jl")
+include("initialization.jl")
+# addpath(joinpath(@__DIR__, "algorithms"))
 
 ##
 # using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
@@ -132,7 +138,7 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
-export AEFA,AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export ChOA, CO, CoatiOA, COOT, CSBO
 export DBO, DDAO, DMOA, DO, DSO
@@ -149,7 +155,8 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 ##
-BestPosition, BestValue, ConvergenceCurve = SuperbFOA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-println("BestValue: ", BestPosition)
+# BestPosition, BestValue, ConvergenceCurve = SuperbFOA(SearchAgents_no, Max_iteration, lb, ub, dim,
+#     Chung_Reynolds)
+# println("BestValue: ", BestPosition)
 
 end
