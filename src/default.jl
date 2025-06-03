@@ -74,6 +74,7 @@ include("PoliticalO.jl")
 include("PumaO.jl")
 include("QIO.jl")
 include("RBMO.jl")
+include("RFO.jl")
 include("ROA.jl")
 include("RSA.jl")
 include("RSO.jl")
@@ -98,6 +99,7 @@ include("WHO.jl")
 include("WO.jl")
 include("WOA.jl")
 include("WSO.jl")
+include("WUTP.jl")
 include("YDSE.jl")
 include("ZOA.jl")
 ##
@@ -112,5 +114,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = ESC(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = RFO(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)

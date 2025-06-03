@@ -21,9 +21,9 @@ MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia pac
 - Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, Zongda Wu, and Huiling Chen. 
 "Artemisinin optimization based on malaria therapy: Algorithm and applications to medical image segmentation." 
 Displays 84 (2024): 102740.
-- **<u>African vultures optimization algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. Computers & Industrial Engineering, 158, 107408.
+- **<u>African Vultures Optimization Algorithm</u>**: Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. Computers & Industrial Engineering, 158, 107408.
 ### B
-- **<u>bald eagle search</u>**: Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. "Novel meta-heuristic bald eagle search optimisation algorithm." Artificial Intelligence Review 53 (2020): 2237-2264.
+- **<u>Bald Eagle Search</u>**: Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. "Novel meta-heuristic bald eagle search optimisation algorithm." Artificial Intelligence Review 53 (2020): 2237-2264.
 - **<u>Black-winged kite algorithm</u>**: Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang. 
 "Black-winged kite algorithm: a nature-inspired meta-heuristic for solving benchmark functions and engineering problems." 
 Artificial Intelligence Review 57, no. 4 (2024): 98.
@@ -40,10 +40,10 @@ Soft computing 23 (2019): 715-734.
 - **<u>Chimp optimization algorithm</u>**: Khishe, Mohammad, and Mohammad Reza Mosavi. 
 "Chimp optimization algorithm." 
 Expert systems with applications 149 (2020): 113338.
-- **<u>cheetah optimizer</u>**: Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. 
+- **<u>Cheetah Optimizer</u>**: Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. 
 "The cheetah optimizer: A nature-inspired metaheuristic algorithm for large-scale optimization problems." 
 Scientific reports 12, no. 1 (2022): 10953.
-- **<u>capuchin search algorithm</u>**: Braik, Malik, Alaa Sheta, and Heba Al-Hiary. 
+- **<u>Capuchin Search Algorithm</u>**: Braik, Malik, Alaa Sheta, and Heba Al-Hiary. 
 "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." 
 Neural computing and applications 33, no. 7 (2021): 2515-2547.
 - **<u>COOT bird</u>**: Naruei, Iraj, and Farshid Keynia. 
@@ -54,20 +54,20 @@ Shahab S. Band, Massoud Moslehpour, and Kwok-Wing Chau.
 "Circulatory System Based Optimization (CSBO): an expert multilevel biologically inspired meta-heuristic algorithm." 
 Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
 ### D
-- Xue J, Shen B. 
+- **<u>Dung Beetle Optimizer</u>**: Xue J, Shen B. 
 Dung beetle optimizer: A new meta-heuristic algorithm for global optimization. 
 The Journal of Supercomputing. 
 2023 May;79(7):7305-36.
-- Ghafil, H. N., & Jármai, K. (2020). 
+- **<u>Dynamic Differential Annealed Optimization</u>**: Ghafil, H. N., & Jármai, K. (2020). 
 Dynamic differential annealed optimization: New metaheuristic optimization algorithm for engineering applications. 
 Applied Soft Computing, 93, 106392.
-- Agushaka, Jeffrey O., Absalom E. Ezugwu, and Laith Abualigah. 
+- **<u>Dwarf Mongoose Optimization Algorithm</u>**: Agushaka, Jeffrey O., Absalom E. Ezugwu, and Laith Abualigah. 
 "Dwarf mongoose optimization algorithm." 
 Computer methods in applied mechanics and engineering 391 (2022): 114570.
-- Zhao, Shijie, Tianran Zhang, Shilin Ma, and Miao Chen. 
+- **<u>Dandelion Optimizer</u>**: Zhao, Shijie, Tianran Zhang, Shilin Ma, and Miao Chen. 
 "Dandelion Optimizer: A nature-inspired metaheuristic algorithm for engineering applications." 
 Engineering Applications of Artificial Intelligence 114 (2022): 105075.
-- Oladejo, Sunday O., Stephen O. Ekwe, Lateef A. Akinyemi, and Seyedali A. Mirjalili. 
+-  **<u>Deep Sleep Optimiser</u>**: Oladejo, Sunday O., Stephen O. Ekwe, Lateef A. Akinyemi, and Seyedali A. Mirjalili. 
 "The deep sleep optimiser: A human-based metaheuristic approach." 
 IEEE Access (2023).
 ### E
@@ -323,6 +323,9 @@ Advances in engineering software 95 (2016): 51-67.
 - Braik, Malik, Abdelaziz Hammouri, Jaffar Atwan, Mohammed Azmi Al-Betar, and Mohammed A. Awadallah. 
 "White Shark Optimizer: A novel bio-inspired meta-heuristic algorithm for global optimization problems." 
 Knowledge-Based Systems 243 (2022): 108457.
+- Braik, M., & Al-Hiary, H. (2025). 
+A novel meta-heuristic optimization algorithm inspired by water uptake and transport in plants. 
+Neural Computing and Applications, 1-82.
 ### Y
 - Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 "Young’s double-slit experiment optimizer: A novel metaheuristic optimization algorithm for global and constraint optimization problems." 
