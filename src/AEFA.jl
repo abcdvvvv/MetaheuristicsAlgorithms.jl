@@ -24,8 +24,9 @@ mutable struct AEFA
     gbest::Vector{Float64}
     gbest_val::Vector{Float64}
     mean_val::Vector{Float64}
-    
-    function AEFA(npop::Integer, maxiters::Integer, lb::AbstractVector, ub::AbstractVector)
+    #(nPop, MaxIt, Low, Up, Dim, F_index) fitness
+    # function AEFA(npop::Integer, maxiters::Integer, lb::AbstractVector, ub::AbstractVector)
+    function AEFA(npop::Integer, maxiters::Integer, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, fitness)
         Rnorm = 2
         FCheck = 1
         Rpower = 1

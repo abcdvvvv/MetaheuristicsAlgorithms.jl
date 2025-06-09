@@ -114,5 +114,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = RFO(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = AEFA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
