@@ -94,6 +94,7 @@ include("STOA.jl")
 include("SupplyDO.jl")
 include("TLBO.jl")
 include("TLCO.jl")
+include("TOC.jl")
 include("TSA.jl")
 include("TTAO.jl")
 include("WHO.jl")
@@ -115,5 +116,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = ALA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = TOC(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
