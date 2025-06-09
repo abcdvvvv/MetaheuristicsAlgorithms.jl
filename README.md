@@ -293,7 +293,7 @@ Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
 - **<u>Superb Fairy-wren Optimization Algorithm (SuperbFOA)</u>** Jia, Heming, et al. 
 "Superb Fairy-wren Optimization Algorithm: a novel metaheuristic algorithm for solving feature selection problems." 
 Cluster Computing 28.4 (2025): 246.
-- Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. 
+- **<u>Supply-demand-based optimization (SDO)</u>**  Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. 
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 ### T

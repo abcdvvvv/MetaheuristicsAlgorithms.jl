@@ -11,11 +11,6 @@ MetaheuristicsAlgorithms.jl is a cutting-edge Julia package that provides one of
 
 It includes a wide range of **Swarm-based Algorithms**, **Physical-based Algorithms**, and **Evolutionary-based Algorithms** , covering the most recent algorithms.
 
-<!-- - Global search optimization
-- Iterative learning algorithms
-- Continuous optimization
-- Derivative-free / gradient-free optimization
-- Zeroth-order and random search methods -->
 
 These algorithms belongs to the category of **Population-based Algorithms**, which are among the most common algorithms in the field of metaheuristic due to many reasons such as  
 - Simplicity
