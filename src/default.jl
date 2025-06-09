@@ -2,6 +2,7 @@ include("AEFA.jl")
 include("AEO.jl")
 include("AFT.jl")
 include("AHA.jl")
+include("ALA.jl")
 include("ALO.jl")
 include("AOArithmetic.jl")
 include("APO.jl")
@@ -114,5 +115,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = AEFA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = ALA(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)

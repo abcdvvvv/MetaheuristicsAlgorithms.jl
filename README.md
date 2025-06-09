@@ -14,6 +14,9 @@ MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia pac
 - **<u>Artificial Ecosystem-based Optimization</u>**: Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.  "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
 - **<u>Ali Baba and the Forty Thieves</u>**: Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
 - **<u>Artificial Hummingbird Algorithm</u>**: Zhao, Weiguo, Liying Wang, and Seyedali Mirjalili. "Artificial hummingbird algorithm: A new bio-inspired optimizer with its engineering applications." Computer Methods in Applied Mechanics and Engineering 388 (2022): 114194.
+- **<u>Artificial lemming algorithm </u>**: Xiao, Y., Cui, H., Khurma, R. A., & Castillo, P. A. (2025). 
+Artificial lemming algorithm: a novel bionic meta-heuristic technique for solving real-world engineering optimization problems. 
+Artificial Intelligence Review, 58(3), 84.
 - **<u>ant lion optimizer</u>**: Mirjalili, Seyedali. "The ant lion optimizer." Advances in engineering software 83 (2015): 80-98.
 - **<u>Arithmetic Optimization Algorithm</u>**: Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 - **<u>Artificial Protozoa Optimizer</u>**: Wang, Xiaopeng, Václav Snášel, Seyedali Mirjalili, Jeng-Shyang Pan, Lingping Kong, and Hisham A. Shehadeh. "Artificial Protozoa Optimizer (APO): A novel bio-inspired metaheuristic algorithm for engineering optimization." Knowledge-Based Systems 295 (2024): 111737.

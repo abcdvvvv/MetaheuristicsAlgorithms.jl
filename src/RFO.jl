@@ -4,240 +4,337 @@ Rüppell’s fox optimizer: A novel meta-heuristic approach for solving global o
 Cluster Computing, 28(5), 1-77.
 """
 
-function RFO(rupplefoxes, itemax, lb, ub, dim, fobj)
-    # Convergence curve
+# function RFO(rupplefoxes::Int, itemax::Int, lb::Real, ub::Real, dim::Int, fobj::Function)
+#     # Initialize variables
+#     ccurve = zeros(itemax)
+#     vec_flag = [1, -1]
+#     beta = 1e-10
+#     L = 100
+
+#     # Initialize population
+#     fposition = initialization(rupplefoxes, dim, ub, lb)
+#     x = copy(fposition)
+#     fit = [fobj(fposition[i, :]) for i in 1:rupplefoxes]
+#     fitness = copy(fit)
+
+#     fmin0, index = findmin(fit)
+#     pbest = copy(fposition)
+#     fbest = copy(pbest[index, :])
+
+#     for ite in 1:itemax
+#         h = 1 / (1 + exp((ite - itemax / 2) / L))
+#         s = 1 / (1 + exp((itemax / 2 - ite) / L))
+#         tmp = 2 / (1 + exp((itemax / 2 - ite) / 100))
+#         # smell = 0.1 / abs(acos(min(pi, max(-pi, tmp))))
+#         smell = 0.1 / abs(acos(clamp(tmp, -1.0, 1.0)))
+
+#         if rand() >= 0.5
+#             # Daylight
+#             for i in 1:rupplefoxes
+#                 # ds = ceil.(Int, rupplefoxes * rand(rupplefoxes))
+#                 ds = rand(1:rupplefoxes, rupplefoxes)
+#                 if s >= h
+#                     if rand() >= 0.25
+#                         X_randm = pbest[ds[i], :]
+#                         rand_index = floor(Int, 4 * rand() + 1) * rand()
+#                         fposition[i, :] .= x[i, :] .+ rand_index .* (X_randm .- x[i, :]) .+ rand_index .* (fbest .- x[i, :])
+#                         theta = rand() * 260 * 2 * pi / 360
+#                         fposition[i, :] .= frotate(fposition[i, :], X_randm, theta, dim)
+#                     else
+#                         Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                         X_randm = pbest[ds[i], :]
+#                         fposition[i, :] .= X_randm .+ beta * randn(dim) * Flag
+#                     end
+#                 else
+#                     if rand() >= 0.75
+#                         X_randm = pbest[ds[i], :]
+#                         rand_index = floor(Int, 4 * rand() + 1) * rand()
+#                         fposition[i, :] .= x[i, :] .+ rand_index .* (X_randm .- x[i, :]) .+ rand_index .* (fbest .- x[i, :])
+#                         theta = rand() * 150 * pi / 180
+#                         fposition[i, :] .= frotate(fposition[i, :], X_randm, theta, dim)
+#                     else
+#                         Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                         fposition[i, :] .= pbest[ds[i], :] .+ beta * randn(dim) * Flag
+#                     end
+#                 end
+#             end
+#         else
+#             # Night
+#             for i in 1:rupplefoxes
+#                 dr = floor.(Int, rupplefoxes * rand(rupplefoxes)) .+ 1
+#                 if h >= s
+#                     if rand() >= 0.25
+#                         X_randm = pbest[dr[i], :]
+#                         rand_index = floor(Int, 4 * rand() + 1) * rand()
+#                         fposition[i, :] .= x[i, :] .+ rand_index .* (X_randm .- x[i, :]) .+ rand_index .* (fbest .- x[i, :])
+#                         theta = rand() * 150 * pi / 360
+#                         fposition[i, :] .= frotate(fposition[i, :], X_randm, theta, dim)
+#                     else
+#                         Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                         fposition[i, :] .= pbest[dr[i], :] .+ beta * randn(dim) * Flag
+#                     end
+#                 else
+#                     if rand() >= 0.75
+#                         X_randm = pbest[dr[i], :]
+#                         rand_index = floor(Int, 4 * rand() + 1) * rand()
+#                         fposition[i, :] .= x[i, :] .+ rand_index .* (X_randm .- x[i, :]) .+ rand_index .* (fbest .- x[i, :])
+#                         theta = rand() * 260 * 2 * pi / 180
+#                         fposition[i, :] .= frotate(fposition[i, :], X_randm, theta, dim)
+#                     else
+#                         Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                         fposition[i, :] .= pbest[dr[i], :] .+ beta * randn(dim) * Flag
+#                     end
+#                 end
+#             end
+#         end
+
+#         # Smell behavior
+#         for i in 1:rupplefoxes
+#             if rand() >= smell
+#                 ss = floor.(Int, rand(rupplefoxes) .* 1) .+ 1
+#                 X_randm1 = pbest[ss[i], :]
+#                 xr = 2 + rand() * (4 - 2)
+#                 eps = abs(4 * rand() - (1 * rand() + rand())) / xr
+#                 fposition[i, :] .= x[i, :] .+ (X_randm1 .- x[i, :]) * eps .+ eps .* (fbest .- x[i, :])
+#             else
+#                 Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                 ss = floor.(Int, rand(rupplefoxes) .* 1) .+ 1
+#                 fposition[i, :] .= pbest[ss[i], :] .+ beta * randn(dim) * Flag
+#             end
+#         end
+
+#         # Animal behavior
+#         for i in 1:rupplefoxes
+#             ab = floor.(Int, rupplefoxes * rand(rupplefoxes)) .+ 1
+#             if rand() >= h
+#                 fposition[i, :] .= pbest[ab[i], :] .+ beta * randn(dim)
+#             else
+#                 X_randp = pbest[ab[i], :]
+#                 Dista = 2 .* (fbest .- fposition[i, :]) * rand()
+#                 Distb = 3.0 .* (X_randp .- pbest[i, :]) * rand()
+#                 Flag = vec_flag[floor(Int, 2 * rand() + 1)]
+#                 if i == 1
+#                     fposition[i, :] .= fposition[i, :] .+ Dista .+ Distb * Flag
+#                 else
+#                     fPos_i = fposition[i, :] .+ Dista .+ Distb * Flag
+#                     fposition[i, :] .= (fPos_i .+ fposition[i - 1, :]) ./ 2
+#                 end
+#             end
+#         end
+
+#         # Worst case exploration
+#         for i in 1:rupplefoxes
+#             if vec_flag[floor(Int, 2 * rand() + 1)] == 1
+#                 _, gworst = findmax(fitness)
+#                 fposition[gworst, :] .= fposition[gworst, :] .+ beta * randn(dim)
+#             end
+#         end
+
+#         # Bound handling
+#         for i in 1:rupplefoxes
+#             fposition[i, :] .= clamp.(fposition[i, :], lb, ub)
+#         end
+
+#         # Fitness update
+#         for i in 1:rupplefoxes
+#             if all(fposition[i, :] .>= lb) && all(fposition[i, :] .<= ub)
+#                 x[i, :] .= fposition[i, :]
+#                 fit[i] = fobj(fposition[i, :])
+#                 if fit[i] < fitness[i]
+#                     pbest[i, :] .= fposition[i, :]
+#                     fitness[i] = fit[i]
+#                 end
+#                 if fitness[i] < fmin0
+#                     fmin0 = fitness[i]
+#                     fbest .= pbest[i, :]
+#                 end
+#             end
+#         end
+
+#         println("Iteration# $ite  Fitness= $fmin0")
+#         ccurve[ite] = fmin0
+#     end
+
+#     return fmin0, fbest, ccurve
+# end
+
+function RFO(rupplefoxes::Int, itemax::Int,
+    lb::AbstractVector{<:Real}, ub::AbstractVector{<:Real},
+    dim::Int, fobj::Function)
+    # Preallocate
     ccurve = zeros(itemax)
+    vec_flag = [1, -1]
+    beta = 1e-10
+    L = 100.0
 
-    # f1 = plot(title = "Convergence characteristic curve",
-    #         xlabel = L"Iteration",
-    #         ylabel = L"fitness value",
-    #         legend = false,
-    #         grid = true,
-    #         background_color = :white,
-    #         fontfamily = "Times",
-    #         guidefontsize = 10)
-
-    # Generate initial solutions (position of rupple foxes)
+    # Initialize population
     fposition = initialization(rupplefoxes, dim, ub, lb)
+    x = copy(fposition)
 
-    # Initialize fitness arrays
-    fPos = zeros(rupplefoxes, dim)
+    # Evaluate initial fitness
     fit = zeros(rupplefoxes)
-
     for i in 1:rupplefoxes
-        fit[i] = fobj(fposition[i, :])
+    fit[i] = fobj(view(fposition, i, :))
     end
-
-    # Initial fitness of the random position of the rupple foxes
     fitness = copy(fit)
 
-    # Find best initial solution
-    fmin0, index = findmin(fit)
-
-    # Initialize personal best and global best
+    # Initialize bests
+    fmin0, idx = findmin(fit)
     pbest = copy(fposition)
-    fbest = copy(pbest[index, :])
-    x = copy(pbest)
+    fbest = copy(pbest[idx, :])
 
-    # Parameters
-    L = 100
-    beta = 1e-10  # Constant for walk rate update
-    vec_flag = [1, -1]
-
-
+    # Main loop
     for ite in 1:itemax
+    # Adaptive parameters
+    h = 1.0 / (1 + exp((ite - itemax/2) / L))
+    s = 1.0 / (1 + exp((itemax/2 - ite) / L))
+    tmp = 2.0 / (1 + exp((itemax/2 - ite) / 100))
+    smell = 0.1 / abs(acos(clamp(tmp, -1.0, 1.0)))
 
-        h = 1 / (1 + exp((ite - itemax / 2) / L))  # eyesight decreasing
-        s = 1 / (1 + exp((itemax / 2 - ite) / L))  # hearing increasing
-        # smell = 0.1 / abs(acos(2 / (1 + exp((itemax / 2 - ite) / 100))))  # smell variation
-        smell = 0.1 / abs(acos(clamp(2 / (1 + exp((itemax / 2 - ite) / 100)), -1.0, 1.0)))
-
-    
-        if rand() >= 0.5  # Daylight
-            for i in 1:rupplefoxes
-                ds = ceil.(Int, rupplefoxes * rand(rupplefoxes))
-    
-                if s >= h  # Eyesight > Hearing
-                    if rand() >= 0.25
-                        # First phase (sight dominates) - exploration
-                        X_randm = pbest[ds[i], :]
-                        rand_index = floor(Int, 4 * rand()) + 1
-                        r_val = rand()
-                        
-                        fposition[i, :] = x[i, :] + rand_index * r_val * (X_randm - x[i, :]) + rand_index * r_val * (fbest - x[i, :])
-                        
-                        theta = rand() * 260 * 2 * π / 360
-                        fposition[i, :] = frotate(fposition[i, :], X_randm, theta, dim)
-                    else
-                        # Second phase
-                        flag_index = floor(Int, 2 * rand()) + 1
-                        Flag = vec_flag[flag_index]
-                        X_randm = pbest[ds[i], :]
-                        fposition[i, :] = X_randm + beta * randn(1, dim)[1, :] * Flag
-                    end
-                else
-                    # Hearing > Sight
-                    if rand() >= 0.75
-                        X_randm = pbest[ds[i], :]
-                        rand_index = floor(Int, 4 * rand()) + 1
-                        r_val = rand()
-                        
-                        fposition[i, :] = x[i, :] + rand_index * r_val * (X_randm - x[i, :]) + rand_index * r_val * (fbest - x[i, :])
-                        
-                        theta = rand() * 150 * π / 180
-                        fposition[i, :] = frotate(fposition[i, :], X_randm, theta, dim)
-                    else
-                        flag_index = floor(Int, 2 * rand()) + 1
-                        Flag = vec_flag[flag_index]
-                        fposition[i, :] = pbest[ds[i], :] + beta * randn(1, dim)[1, :] * Flag
-                    end
-                end
-            end
-        else
-            # Night
-            for i in 1:rupplefoxes
-                dr = floor.(Int, rupplefoxes * rand(rupplefoxes)) .+ 1
-    
-                if h >= s
-                    if rand() >= 0.25
-                        # First phase
-                        X_randm = pbest[dr[i], :]
-                        rand_index = floor(Int, 4 * rand()) + 1
-                        r_val = rand()
-                        
-                        fposition[i, :] = x[i, :] + rand_index * r_val * (X_randm - x[i, :]) + rand_index * r_val * (fbest - x[i, :])
-                        
-                        theta = rand() * 150 * π / 360
-                        fposition[i, :] = frotate(fposition[i, :], X_randm, theta, dim)
-                    else
-                        flag_index = floor(Int, 2 * rand()) + 1
-                        Flag = vec_flag[flag_index]
-                        fposition[i, :] = pbest[dr[i], :] + beta * randn(1, dim)[1, :] * Flag
-                    end
-                else
-                    # Hearing > Sight
-                    if rand() >= 0.75
-                        X_randm = pbest[dr[i], :]
-                        rand_index = floor(Int, 4 * rand()) + 1
-                        r_val = rand()
-                        
-                        fposition[i, :] = x[i, :] + rand_index * r_val * (X_randm - x[i, :]) + rand_index * r_val * (fbest - x[i, :])
-                        
-                        theta = rand() * 260 * 2 * π / 180
-                        fposition[i, :] = frotate(fposition[i, :], X_randm, theta, dim)
-                    else
-                        flag_index = floor(Int, 2 * rand()) + 1
-                        Flag = vec_flag[flag_index]
-                        fposition[i, :] = pbest[dr[i], :] + beta * randn(1, dim)[1, :] * Flag
-                    end
-                end
-            end
-        end
-    end
-
+    # Daylight vs Night
+    if rand() >= 0.5
+    # Daylight
+    ds = rand(1:rupplefoxes, rupplefoxes)
     for i in 1:rupplefoxes
-        if rand() >= smell
-            ss = rand(1:rupplefoxes)
-            X_randm1 = pbest[ss, :]
-    
-            xmin, xmax = 2, 4
-            xr = xmin + rand() * (xmax - xmin)
-            eps = abs((4 * rand()) - (rand() + rand())) / xr
-    
-            fposition[i, :] = x[i, :] .+ (X_randm1 .- x[i, :]) .* eps .+ eps .* (fbest .- x[i, :])
-        else
-            flag_index = rand(1:2)
-            Flag = vec_flag[flag_index]
-            ss = rand(1:rupplefoxes)
-            fposition[i, :] = pbest[ss, :] .+ beta * randn(dim) * Flag
-        end
-    end
-    
-    # Animal behavior
-    for i in 1:rupplefoxes
-        if rand() >= h
-            ab = rand(1:rupplefoxes)
-            fposition[i, :] = pbest[ab, :] .+ beta * randn(dim)
-        else
-            ab = rand(1:rupplefoxes)
-            X_randp = pbest[ab, :]
-            Dista = 2 * (fbest .- fposition[i, :]) * rand()
-            Distb = 3.0 * (X_randp .- pbest[i, :]) * rand()
-            flag_index = rand(1:2)
-            Flag = vec_flag[flag_index]
-            if i == 1
-                fposition[i, :] = fposition[i, :] .+ Dista .+ Distb * Flag
+        if s >= h
+            if rand() >= 0.25
+                Xr = view(pbest, ds[i], :)
+                ri = floor(Int, 4*rand() + 1)
+                r = rand()
+                fposition[i, :] .= x[i, :] .+ ri*r*(Xr .- x[i, :]) .+ ri*r*(fbest .- x[i, :])
+                θ = rand()*260*π/180
+                fposition[i, :] .= frotate(fposition[i, :], x[i, :], θ, dim)
             else
-                fPos[i, :] = fposition[i, :] .+ Dista .+ Distb * Flag
-                fposition[i, :] = (fPos[i, :] .+ fposition[i-1, :]) ./ 2
+                Flag = vec_flag[rand(1:2)]
+                Xr = view(pbest, ds[i], :)
+                fposition[i, :] .= Xr .+ beta*randn(dim)*Flag
+            end
+        else
+            if rand() >= 0.75
+                Xr = view(pbest, ds[i], :)
+                ri = floor(Int, 4*rand() + 1)
+                r = rand()
+                fposition[i, :] .= x[i, :] .+ ri*r*(Xr .- x[i, :]) .+ ri*r*(fbest .- x[i, :])
+                θ = rand()*150*π/180
+                fposition[i, :] .= frotate(fposition[i, :], x[i, :], θ, dim)
+            else
+                Flag = vec_flag[rand(1:2)]
+                fposition[i, :] .= view(pbest, ds[i], :) .+ beta*randn(dim)*Flag
             end
         end
     end
-    
-    # Worst-case exploration
+    else
+    # Night
+    dr = rand(1:rupplefoxes, rupplefoxes)
     for i in 1:rupplefoxes
-        flag_index = rand(1:2)
-        fox = vec_flag[flag_index]
-        if fox == 1
-            _, gworst = findmax(fitness)
-            fposition[gworst, :] .+= beta * randn(dim)
-        end
-    end
-    
-    # Handling boundary violations
-    for i in 1:rupplefoxes
-        fposition[i, :] = clamp.(fposition[i, :], lb, ub)
-    end
-    
-    # Update bests and fitness
-    for i in 1:rupplefoxes
-        if all(fposition[i, :] .>= lb) && all(fposition[i, :] .<= ub)
-            x[i, :] = fposition[i, :]
-    
-            ub_ = fposition[i, :] .> ub
-            lb_ = fposition[i, :] .< lb
-            fposition[i, :] = fposition[i, :] .* .!(ub_ .| lb_) .+ ub .* ub_ .+ lb .* lb_
-    
-            fit[i] = fobj(fposition[i, :])
-    
-            if fit[i] < fitness[i]
-                pbest[i, :] = fposition[i, :]
-                fitness[i] = fit[i]
+        if h >= s
+            if rand() >= 0.25
+                Xr = view(pbest, dr[i], :)
+                ri = floor(Int, 4*rand() + 1)
+                r = rand()
+                fposition[i, :] .= x[i, :] .+ ri*r*(Xr .- x[i, :]) .+ ri*r*(fbest .- x[i, :])
+                θ = rand()*150*π/180
+                fposition[i, :] .= frotate(fposition[i, :], x[i, :], θ, dim)
+            else
+                Flag = vec_flag[rand(1:2)]
+                fposition[i, :] .= view(pbest, dr[i], :) .+ beta*randn(dim)*Flag
             end
-    
-            if fitness[i] < fmin0
-                fmin0 = fitness[i]
-                fbest = pbest[i, :]
+        else
+            if rand() >= 0.75
+                Xr = view(pbest, dr[i], :)
+                ri = floor(Int, 4*rand() + 1)
+                r = rand()
+                fposition[i, :] .= x[i, :] .+ ri*r*(Xr .- x[i, :]) .+ ri*r*(fbest .- x[i, :])
+                θ = rand()*260*π/180
+                fposition[i, :] .= frotate(fposition[i, :], x[i, :], θ, dim)
+            else
+                Flag = vec_flag[rand(1:2)]
+                fposition[i, :] .= view(pbest, dr[i], :) .+ beta*randn(dim)*Flag
             end
         end
     end
-    
-    println("Iteration# $ite  Fitness= $fmin0")
-    ccurve[ite] = fmin0    
-    
+    end
+
+    # Smell behavior
+    ss = rand(1:rupplefoxes, rupplefoxes)
+    for i in 1:rupplefoxes
+    if rand() >= smell
+        Xr1 = view(pbest, ss[i], :)
+        xr = 2 + rand()*(4 - 2)
+        eps = abs(4*rand() - (rand() + rand()))/xr
+        fposition[i, :] .= x[i, :] .+ eps*(Xr1 .- x[i, :]) .+ eps*(fbest .- x[i, :])
+    else
+        Flag = vec_flag[rand(1:2)]
+        fposition[i, :] .= view(pbest, ss[i], :) .+ beta*randn(dim)*Flag
+    end
+    end
+
+    # Animal behavior
+    ab = rand(1:rupplefoxes, rupplefoxes)
+    for i in 1:rupplefoxes
+    if rand() >= h
+        fposition[i, :] .= view(pbest, ab[i], :) .+ beta*randn(dim)
+    else
+        Xrp = view(pbest, ab[i], :)
+        Dista = 2*(fbest .- fposition[i, :])*rand()
+        Distb = 3*(Xrp .- view(pbest, i, :))*rand()
+        Flag = vec_flag[rand(1:2)]
+        if i == 1
+            fposition[i, :] .= fposition[i, :] .+ Dista .+ Distb*Flag
+        else
+            tmpv = fposition[i, :] .+ Dista .+ Distb*Flag
+            fposition[i, :] .= (tmpv .+ fposition[i-1, :])/2
+        end
+    end
+    end
+
+    # Worst-case & boundary
+    for i in 1:rupplefoxes
+    if vec_flag[rand(1:2)] == 1
+        _, gw = findmax(fitness)
+        fposition[gw, :] .+= beta*randn(dim)
+    end
+    fposition[i, :] .= clamp.(fposition[i, :], lb, ub)
+    end
+
+    # Update fitness & bests
+    for i in 1:rupplefoxes
+    x[i, :] .= fposition[i, :]
+    fit[i] = fobj(view(fposition, i, :))
+    if fit[i] < fitness[i]
+        pbest[i, :] .= fposition[i, :]
+        fitness[i] = fit[i]
+    end
+    if fitness[i] < fmin0
+        fmin0 = fitness[i]
+        fbest .= pbest[i, :]
+    end
+    end
+
+    ccurve[ite] = fmin0
+    end
+
+    return fmin0, fbest, ccurve
 end
 
+function frotate(x::Vector{T}, y::Vector{T}, θ::T, dim::Int) where T<:Real
+    # center index
+    cent = ceil(Int, dim/2)
 
-function frotate(x::Vector{Float64}, y::Vector{Float64}, theta::Float64, dim::Int)
-    cent = ceil(Int, dim / 2)
+    # build 2×N matrix of points (each column is a point)
+    v = [x'; y']  # 2×N
 
-    # Create 2×N matrix of the points to rotate
-    v = hcat(x, y)'  # 2×N matrix
+    # center of rotation
+    x0, y0 = x[cent], y[cent]
+    center = repeat([x0; y0], 1, length(x))  # 2×N
 
-    # Rotation center coordinates
-    x_center = x[cent]
-    y_center = y[cent]
+    # 2×2 rotation matrix
+    R = [cos(θ)  -sin(θ);
+         sin(θ)   cos(θ)]
 
-    # Repeat the center as a 2×N matrix
-    center = repeat([x_center, y_center], 1, length(x))
+    # apply rotation: shift to origin, rotate, shift back
+    vo = R * (v .- center) .+ center
 
-    # Rotation matrix
-    R = [cos(theta) -sin(theta); sin(theta) cos(theta)]
-
-    # Apply the rotation
-    s = v .- center             # shift to origin
-    so = R * s                  # rotate
-    vo = so .+ center           # shift back
-
-    return vec(vo[1, :])        # return rotated x-coordinates as a vector
+    # return the first row (rotated x-coordinates)
+    return vec(vo[1, :])  
 end
