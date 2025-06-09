@@ -25,8 +25,9 @@ makedocs(;
 deploydocs(;
     # repo="github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl",
     # devbranch="master",
-    repo="github.com/AbdelazimHussien/MetaheuristicsAlgorithms.jl",
+    repo="github.com/AbdelazimHussien/MetaheuristicsAlgorithms.jl.git",
     devbranch="main",  
+    branch="gh-pages"
 )
 
 

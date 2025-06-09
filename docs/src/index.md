@@ -2,9 +2,6 @@
 CurrentModule = MetaheuristicsAlgorithms
 ```
 
-<!-- # MetaheuristicsAlgorithms
-
-Documentation for [MetaheuristicsAlgorithms](https://github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl). -->
 # MetaheuristicsAlgorithms.jl
 
 MetaheuristicsAlgorithms.jl is a cutting-edge Julia package that provides one of the most comprehensive collections of modern metaheuristic optimization algorithms.
