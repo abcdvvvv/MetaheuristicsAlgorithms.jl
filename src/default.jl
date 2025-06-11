@@ -1,4 +1,5 @@
 include("AEFA.jl")
+include("AEFA_1.jl")
 include("AEO.jl")
 include("AFT.jl")
 include("AHA.jl")
@@ -116,5 +117,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = TOC(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = AEFA_1(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
