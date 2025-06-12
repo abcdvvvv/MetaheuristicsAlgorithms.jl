@@ -20,7 +20,7 @@ function CDO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
     l = 0  
 
     while l < Max_iter
-        for i in 1:size(Positions, 1)
+        for i in 1:axes(Positions, 1)
             Flag4ub = Positions[i, :] .> ub
             Flag4lb = Positions[i, :] .< lb
             Positions[i, :] .= Positions[i, :].*(.~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
@@ -45,8 +45,8 @@ function CDO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
         a2 = log10((270000 - 1) * rand() + 270000)
         a3 = log10((300000 - 1) * rand() + 300000)
 
-        for i in 1:size(Positions, 1)
-            for j in 1:size(Positions, 2)
+        for i in 1:axes(Positions, 1)
+            for j in 1:axes(Positions, 2)
                 r1, r2 = rand(), rand()
                 pa = pi * r1^2 / (0.25 * a1) - a * rand()
                 C1 = r2^2 * pi

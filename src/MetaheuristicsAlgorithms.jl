@@ -1,6 +1,6 @@
 module MetaheuristicsAlgorithms
 
-include("AEFA.jl")
+# include("AEFA.jl")
 include("AEO.jl")
 include("AFT.jl")
 include("AHA.jl")
@@ -96,6 +96,7 @@ include("SuperbFOA.jl")
 include("SupplyDO.jl")
 include("TLBO.jl")
 include("TLCO.jl")
+include("TOC.jl")
 include("TSA.jl")
 include("TTAO.jl")
 include("WHO.jl")
@@ -105,8 +106,8 @@ include("WSO.jl")
 include("YDSE.jl")
 include("ZOA.jl")
 ##
-include("Chung_Reynolds.jl")
-include("initialization.jl")
+# include("Chung_Reynolds.jl")
+# include("initialization.jl")
 ##
 using SpecialFunctions: gamma
 
@@ -138,7 +139,8 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
-export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+# export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export ChOA, CO, CoatiOA, COOT, CSBO
 export DBO, DDAO, DMOA, DO, DSO
