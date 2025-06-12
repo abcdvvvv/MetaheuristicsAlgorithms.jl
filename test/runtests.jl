@@ -9,7 +9,7 @@ include("benchmark.jl")
         Random.seed!(1)
         lb = [-512, -512]
         ub = [512, 512]
-        algo = AEO(100, 300, lb, ub)
+        algo = AEFA(100, 300, lb, ub)
 
         while algo.update
             y = benchmark(algo.x; funNo=1)

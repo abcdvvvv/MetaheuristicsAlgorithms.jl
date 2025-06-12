@@ -1,6 +1,6 @@
 module MetaheuristicsAlgorithms
 
-# include("AEFA.jl")
+include("AEFA.jl")
 include("AEO.jl")
 include("AFT.jl")
 include("AHA.jl")
@@ -139,7 +139,7 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
-# export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export ChOA, CO, CoatiOA, COOT, CSBO
