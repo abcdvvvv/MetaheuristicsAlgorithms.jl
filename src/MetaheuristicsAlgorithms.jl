@@ -1,5 +1,8 @@
 module MetaheuristicsAlgorithms
 
+abstract type OptimizationResult end 
+export OptimizationResult
+
 include("AEFA.jl")
 include("AEO.jl")
 include("AFT.jl")

@@ -1,13 +1,42 @@
-"""
-Oladejo, Sunday O., Stephen O. Ekwe, Lateef A. Akinyemi, and Seyedali A. Mirjalili. 
-"The deep sleep optimiser: A human-based metaheuristic approach." 
-IEEE Access (2023).
-"""
+struct DSOResult <: OptimizationResult
+    Best_Cost::Float64
+    Best_Position::Vector{Float64}
+    Best_iteration::Vector{Float64}
+end
 
-function DSO(search_agent, run, LB, UB, dim, ObjFun)
+"""
+    DSO(search_agent, run, LB, UB, dim, ObjFun)
+
+The Deep Sleep Optimiser (DSO) is a human-inspired metaheuristic optimization algorithm that mimics the sleep patterns of humans to find optimal solutions in various optimization problems.
+
+# Arguments:
+
+- `search_agent`: Number of search agents (population size).
+- `run`: Number of iterations (generations).
+- `LB`: Lower bounds of the search space.
+- `UB`: Upper bounds of the search space.
+- `ObjFun`: Objective function to be minimized.
+
+# Returns: 
+
+- `::DSOResult`: A struct containing:
+  - `Best_Cost`: The best cost found during the optimization.
+  - `Best_Position`: The position corresponding to the best cost.
+  - `Best_iteration`: A vector of best costs at each iteration.
+
+# References:
+
+- Oladejo, Sunday O., Stephen O. Ekwe, Lateef A. Akinyemi, and Seyedali A. Mirjalili, The deep sleep optimiser: A human-based metaheuristic approach., IEEE Access (2023).
+"""
+function DSO(search_agent, run, LB, UB, ObjFun)::DSOResult
 
     prob = ObjFun                
-    nVar = dim                   
+    
+    if length(UB) != length(LB)
+        throw(ArgumentError("LB and UB must have the same length as dim."))
+    end                   
+
+    nVar = length(LB)
     lb = LB                      
     ub = UB                      
     nPop = search_agent          
@@ -66,5 +95,8 @@ function DSO(search_agent, run, LB, UB, dim, ObjFun)
     Best_Cost, idx = findmin(fit)
     Best_Position = Pop[idx]
 
-    return Best_Cost, Best_Position, Best_iteration
+    return DSOResult(
+        Best_Cost, 
+        Best_Position, 
+        Best_iteration)
 end
