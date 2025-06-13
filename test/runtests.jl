@@ -4,6 +4,9 @@ using Random
 
 include("benchmark.jl")
 
+include("testbenchmark.jl")
+include("testdso.jl")
+
 @testset "MetaheuristicsAlgorithms.jl" begin
     @testset "AEFA on Eggholder function" begin
         Random.seed!(1)
