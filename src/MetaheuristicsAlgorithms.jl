@@ -151,17 +151,6 @@ export ECO, EDO, ElkHO, EO, ETO
 export FLA, FLoodA, FOX
 export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
 export update_state!
-##
-dim = 30
-Max_iteration = 1000
-SearchAgents_no = 50
-lb = -100
-ub = 100
-tlt = "Chung Reynolds"
-i = 1
-##
-# BestPosition, BestValue, ConvergenceCurve = SuperbFOA(SearchAgents_no, Max_iteration, lb, ub, dim,
-#     Chung_Reynolds)
-# println("BestValue: ", BestPosition)
+
 
 end
