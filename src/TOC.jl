@@ -5,7 +5,7 @@ function TOC(n, max_it, lb, ub, dim, fobj, nto=4, nt=3)
 
     # Initialization
     y = initialization(n, dim, ub, lb)
-    fit = [fobj(y[i, :]) for i in 1:size(y, 1)]
+    fit = [fobj(y[i, :]) for i in 1:axes(y, 1)]
     sorted_idx = sortperm(fit)
 
     To = nto - nt
