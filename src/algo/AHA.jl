@@ -135,5 +135,9 @@ function AHA(nPop, MaxIt, Low, Up, FunIndex)::AHAResult
         HisBestFit[It] = BestF
     end
 
-    return  BestF, BestX,HisBestFit
+    # return  BestF, BestX,HisBestFit
+    return AHAResult(
+        BestF, 
+        BestX, 
+        HisBestFit)
 end
