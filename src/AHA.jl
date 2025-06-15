@@ -1,13 +1,38 @@
-"""
-Zhao, Weiguo, Liying Wang, and Seyedali Mirjalili. 
-"Artificial hummingbird algorithm: A new bio-inspired optimizer with its engineering applications." 
-Computer Methods in Applied Mechanics and Engineering 388 (2022): 114194.
+
+struct AHAResult <: OptimizationResult 
+    BestF
+    BestX
+    HisBestFit
+end
+
 """
 
-using Random
+    AHA(nPop, MaxIt, Low, Up, FunIndex)
 
-function AHA(nPop, MaxIt, Low, Up, Dim, FunIndex)#(FunIndex, MaxIt, nPop)
+The Artificial Hummingbird Algorithm (AHA) is a meta-heuristic optimization algorithm inspired by the foraging behavior of hummingbirds. It is designed to solve numerical optimization problems by simulating the way hummingbirds search for food.
+
+# Arguments:
+
+- `nPop`: Number of hummingbirds (population size).
+- `MaxIt`: Maximum number of iterations.
+- `Low`: Lower bounds for the search space.
+- `Up`: Upper bounds for the search space.
+- `FunIndex`: Objective function to evaluate the fitness of solutions.
+
+# Returns:
+- `AHAResult`: A struct containing:
+  - `BestF`: The best fitness value found.
+  - `BestX`: The position corresponding to the best fitness.
+  - `HisBestFit`: A vector of best fitness values at each iteration.
+
+# References: 
+
+- Zhao, Weiguo, Liying Wang, and Seyedali Mirjalili. "Artificial hummingbird algorithm: A new bio-inspired optimizer with its engineering applications." Computer Methods in Applied Mechanics and Engineering 388 (2022): 114194.
+"""
+function AHA(nPop, MaxIt, Low, Up, FunIndex)::AHAResult
     
+    Dim = length(Low)
+
     PopPos = rand(nPop, Dim) .* (Up .- Low) .+ Low
     PopFit = zeros(nPop)
 
