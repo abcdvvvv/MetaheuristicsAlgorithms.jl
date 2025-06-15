@@ -1,8 +1,6 @@
 # Algorithms
 
-```@docs
-MetaheuristicsAlgorithms.DSO
-```
+
 
 ```@docs 
 MetaheuristicsAlgorithms.AEO
@@ -82,4 +80,24 @@ MetaheuristicsAlgorithms.COOT
 
 ```@docs
 MetaheuristicsAlgorithms.CSBO
+```
+
+```@docs
+MetaheuristicsAlgorithms.DBO
+```
+
+```@docs
+MetaheuristicsAlgorithms.DDAO
+```
+
+```@docs
+MetaheuristicsAlgorithms.DMOA
+```
+
+```@docs
+MetaheuristicsAlgorithms.DO
+```
+
+```@docs
+MetaheuristicsAlgorithms.DSO
 ```
