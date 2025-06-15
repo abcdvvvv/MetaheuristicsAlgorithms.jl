@@ -1,10 +1,36 @@
-"""
-Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. 
-"Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." 
-Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
-"""
+struct AEOResult <: OptimizationResult
+    BestF
+    BestX
+    HisBestFit
+end 
 
-function AEO(nPop, MaxIt, Low, Up, Dim, F_index)
+"""
+    AEO(nPop, MaxIt, Low, Up, F_index)
+
+    Artificial Ecosystem-based Optimization (AEO) algorithm implementation in Julia.
+
+# Arguments:
+
+- `nPop`: Number of individuals in the population.
+- `MaxIt`: Maximum number of iterations.
+- `Low`: Lower bounds for the search space.
+- `Up`: Upper bounds for the search space.
+- `F_index`: Function to evaluate the fitness of individuals.
+
+# Returns:
+
+- `AEOResult`: A struct containing:
+  - `BestF`: The best fitness value found.
+  - `BestX`: The position corresponding to the best fitness.
+  - `HisBestFit`: A vector of best fitness values at each iteration.
+
+# References: 
+
+- Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
+"""
+function AEO(nPop::Int, MaxIt::Int, Low::Vector, Up::Vector, F_index)::AEOResult
+
+    Dim = length(Low)
     PopPos = zeros(nPop, Dim)
     PopFit = zeros(nPop)
 
@@ -85,5 +111,9 @@ function AEO(nPop, MaxIt, Low, Up, Dim, F_index)
         HisBestFit[It] = BestF
     end
 
-    return BestF, BestX, HisBestFit
+    #return BestF, BestX, HisBestFit
+    return AEOResult(
+        BestF, 
+        BestX, 
+        HisBestFit)
 end
