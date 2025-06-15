@@ -68,4 +68,3 @@ function TOC(n, max_it, lb, ub, dim, fobj, nto=4, nt=3)
 
     return TornadoCost, Tornadoposition, ccurve
 end
-
