@@ -27,6 +27,7 @@ include("algo/BO.jl")
 include("algo/BOA.jl")
 include("algo/CDO.jl")
 include("algo/ChameleonSA.jl")
+include("algo/CapSA.jl")
 include("algo/ChOA.jl")
 include("algo/CO.jl")
 include("algo/CoatiOA.jl")
@@ -150,7 +151,7 @@ include("initialization.jl")
 export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
-export ChOA, CO, CoatiOA, COOT, CSBO
+export CapSA, ChOA, CO, CoatiOA, COOT, CSBO
 export DBO, DDAO, DMOA, DO, DSO
 export ECO, EDO, ElkHO, EO, ETO
 export FLA, FLoodA, FOX
