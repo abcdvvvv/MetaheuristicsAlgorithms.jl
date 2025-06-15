@@ -10,3 +10,11 @@ MetaheuristicsAlgorithms.DSO
 MetaheuristicsAlgorithms.AEO
 ```
 
+```@docs 
+MetaheuristicsAlgorithms.AFT
+```
+
+
+```@docs 
+MetaheuristicsAlgorithms.AHA
+```
