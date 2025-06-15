@@ -1,10 +1,3 @@
-"""
-Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). 
-African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems. 
-Computers & Industrial Engineering, 158, 107408.
-"""
-
-
 
 function exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lower_bound)
     if rand() < p1
@@ -78,6 +71,14 @@ function rouletteWheelSelection(x)
     return index
 end
 
+
+
+"""
+# References:
+
+- Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems.  Computers & Industrial Engineering, 158, 107408.
+
+"""
 function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
 
     # Initialize Best vultures

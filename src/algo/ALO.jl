@@ -1,9 +1,9 @@
 """
-Mirjalili, Seyedali. 
-"The ant lion optimizer." 
-Advances in engineering software 83 (2015): 80-98.
-"""
+# References:
 
+- Mirjalili, Seyedali. "The ant lion optimizer." Advances in engineering software 83 (2015): 80-98.
+
+"""
 function Random_walk_around_antlion(Dim, max_iter, lb, ub, antlion, current_iter)
     
     if length(lb) == 1 && length(ub) == 1
