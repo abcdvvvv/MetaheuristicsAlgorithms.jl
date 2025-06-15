@@ -15,6 +15,7 @@ include("algo/AEFA.jl")
 include("algo/AEO.jl")
 include("algo/AFT.jl")
 include("algo/AHA.jl")
+include("algo/ALA.jl")
 include("algo/ALO.jl")
 include("algo/AOArithmetic.jl")
 include("algo/APO.jl")
@@ -148,7 +149,7 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
-export AEFA, AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
+export AEFA, AEO, AFT, AHA, ALA, ALO, AOArithmetic, APO, ARO, AVOA
 export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export CapSA, ChOA, CO, CoatiOA, COOT, CSBO
