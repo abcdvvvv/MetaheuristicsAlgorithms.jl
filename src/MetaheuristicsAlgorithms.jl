@@ -149,6 +149,10 @@ include("initialization.jl")
 # using .YDSE
 # using .ZOA
 
+
+# This list of exports include 
+# repeated items and should be cleaned up.
+# some of the algorithms are missing and didn't get exported.
 export AEFA, AEO, AFT, AHA, ALA, ALO, AOArithmetic, APO, ARO, AVOA
 export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
