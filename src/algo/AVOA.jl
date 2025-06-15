@@ -5,8 +5,6 @@ Computers & Industrial Engineering, 158, 107408.
 """
 
 
-using Random
-using SpecialFunctions  # For the gamma function
 
 function exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lower_bound)
     if rand() < p1

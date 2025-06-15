@@ -1,5 +1,13 @@
 module MetaheuristicsAlgorithms
 
+using Random, 
+      Dates, 
+      SpecialFunctions,
+      Distributions,
+      Statistics,
+      LinearAlgebra,
+      Printf
+
 abstract type OptimizationResult end 
 export OptimizationResult
 

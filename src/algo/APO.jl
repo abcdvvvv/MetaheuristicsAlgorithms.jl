@@ -4,8 +4,6 @@ Wang, Xiaopeng, Václav Snášel, Seyedali Mirjalili, Jeng-Shyang Pan, Lingping 
 Knowledge-Based Systems 295 (2024): 111737.
 """
 
-using Random
-using Dates
 
 function APO(pop_size, iter_max, Xmin, Xmax, dim, fhd)#(fhd, dim, pop_size, iter_max, Xmin, Xmax, Fid::Int, runid::Int)
     # Random seeds

@@ -4,7 +4,6 @@ Braik, Malik, Alaa Sheta, and Heba Al-Hiary.
 Neural computing and applications 33, no. 7 (2021): 2515-2547.
 """
 
-using Statistics
 function CoatiOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fitness)
 
     lowerbound = ones(dimension) .* lowerbound  

@@ -4,7 +4,6 @@ Zhao, Shijie, Tianran Zhang, Shilin Ma, and Miao Chen.
 Engineering Applications of Artificial Intelligence 114 (2022): 105075.
 """
 
-using Distributions
 
 function levyF(Popsize, Dim, beta)
     sigma_u = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)

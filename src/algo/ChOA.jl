@@ -4,8 +4,6 @@ Khishe, Mohammad, and Mohammad Reza Mosavi.
 Expert systems with applications 149 (2020): 113338.
 """
 
-using Random
-
 
 function ChOA(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
     Attacker_pos = zeros(dim)

@@ -4,8 +4,6 @@ Dynamic differential annealed optimization: New metaheuristic optimization algor
 Applied Soft Computing, 93, 106392.
 """
 
-using Random
-
 function DDAO(Npop, MaxIt, L_limit, U_limit, Nvar, CostFunction)
     VarLength = Nvar       
     
