@@ -46,4 +46,11 @@ MetaheuristicsAlgorithms.ArtemisininO
 MetaheuristicsAlgorithms.AVOA
 ```
 
+```@docs
+MetaheuristicsAlgorithms.BO
+```
+
+```@docs
+MetaheuristicsAlgorithms.BOA
+```
 
