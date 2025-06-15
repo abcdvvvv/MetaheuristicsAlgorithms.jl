@@ -5,3 +5,8 @@
 ```@docs
 MetaheuristicsAlgorithms.DSO
 ```
+
+```@docs 
+MetaheuristicsAlgorithms.AEO
+```
+
