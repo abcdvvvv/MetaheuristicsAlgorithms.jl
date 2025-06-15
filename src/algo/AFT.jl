@@ -1,10 +1,36 @@
-"""
-Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. 
-"A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." 
-Neural Computing and Applications 34, no. 1 (2022): 409-455.
-"""
+struct AFTResult <: OptimizationResult
+    fitness
+    gbest
+    ccurve
+end 
 
-function AFT(noThieves, itemax, lb, ub, dim, fobj)
+"""
+    AFT(noThieves, itemax, lb, ub, fobj)
+
+The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimization algorithm inspired by the story of Ali Baba and the Forty Thieves. It is designed to solve numerical optimization problems by simulating the behavior of thieves searching for treasures.
+
+# Arguments:
+
+- `noThieves`: Number of thieves in the algorithm.
+- `itemax`: Maximum number of iterations.
+- `lb`: Lower bounds for the search space.
+- `ub`: Upper bounds for the search space.
+- `fobj`: Objective function to evaluate the fitness of solutions.
+
+# Returns: 
+
+- `AFTResult`: A struct containing:
+  - `fitness`: The best fitness value found.
+  - `gbest`: The position corresponding to the best fitness.
+  - `ccurve`: A vector of best fitness values at each iteration.
+
+# References:
+
+- Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
+"""
+function AFT(noThieves, itemax, lb, ub, fobj)
+
+    dim = length(lb)  # Dimension of the problem
 
     ccurve = zeros(1, itemax)
 
@@ -74,5 +100,9 @@ function AFT(noThieves, itemax, lb, ub, dim, fobj)
     gbestSol = best[bestThieves[1], :]
     fitness = fobj(gbestSol)
 
-    return fitness, gbest, ccurve
+    #return fitness, gbest, ccurve
+    return AFTResult(
+        fitness, 
+        gbestSol, 
+        ccurve)
 end
