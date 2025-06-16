@@ -4,34 +4,34 @@ Dehghani, Mohammad, and Pavel Trojovský.
 Frontiers in Mechanical Engineering 8 (2023): 1126450.
 """
 
-function OOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fitness)
+function OOA(npop, max_iter, lb, ub, dim, objfun)
     # Lower limit for variables
-    lowerbound = ones(dimension) .* lowerbound
+    lb = ones(dim) .* lb
     # Upper limit for variables
-    upperbound = ones(dimension) .* upperbound
+    ub = ones(dim) .* ub
 
     # INITIALIZATION
-    X = zeros(SearchAgents, dimension)  # Initialize the population matrix
-    for i in 1:dimension
-        X[:, i] = lowerbound[i] .+ rand(SearchAgents) .* (upperbound[i] - lowerbound[i])  # Initial population
+    X = zeros(npop, dim)  # Initialize the population matrix
+    for i = 1:dim
+        X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])  # Initial population
     end
 
-    fit = zeros(SearchAgents)  # Initialize fitness array
-    for i in 1:SearchAgents
+    fit = zeros(npop)  # Initialize fitness array
+    for i = 1:npop
         L = X[i, :]
-        fit[i] = fitness(L)  # Compute fitness for each individual
+        fit[i] = objfun(L)  # Compute fitness for each individual
     end
 
-    best_so_far = zeros(Max_iterations)  # Array to store best scores
-    average = zeros(Max_iterations)  # Array to store average scores
+    best_so_far = zeros(max_iter)  # Array to store best scores
+    average = zeros(max_iter)  # Array to store average scores
     fbest = Inf
-    xbest = zeros(dimension)
+    xbest = zeros(dim)
 
     # Main loop for iterations
-    for t in 1:Max_iterations
+    for t = 1:max_iter
         # Update: BEST proposed solution
         Fbest, blocation = findmin(fit)  # Get the minimum fitness value and its index
-        
+
         # Update best solution found
         if t == 1
             xbest = X[blocation, :]  # Optimal location
@@ -42,10 +42,10 @@ function OOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fi
         end
 
         # Loop through each search agent
-        for i in 1:SearchAgents
+        for i = 1:npop
             # PHASE 1: POSITION IDENTIFICATION AND HUNTING THE FISH (EXPLORATION)
             fish_position = findall(x -> x < fit[i], fit)  # Get indices of fitter fish
-            
+
             if isempty(fish_position)
                 selected_fish = xbest
             else
@@ -59,25 +59,25 @@ function OOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fi
 
             I = round(Int, 1 + rand())  # Randomly choose 1 or 2
             X_new_P1 = X[i, :] + rand() * (selected_fish .- I * X[i, :])  # Eq(5)
-            X_new_P1 = max.(X_new_P1, lowerbound)  # Clip to lower bound
-            X_new_P1 = min.(X_new_P1, upperbound)  # Clip to upper bound
+            X_new_P1 = max.(X_new_P1, lb)  # Clip to lower bound
+            X_new_P1 = min.(X_new_P1, ub)  # Clip to upper bound
 
             # Update position based on Eq (6)
             L = X_new_P1
-            fit_new_P1 = fitness(L)
+            fit_new_P1 = objfun(L)
             if fit_new_P1 < fit[i]
                 X[i, :] = X_new_P1
                 fit[i] = fit_new_P1
             end
 
             # PHASE 2: CARRYING THE FISH TO THE SUITABLE POSITION (EXPLOITATION)
-            X_new_P1 = X[i, :] + (lowerbound .+ rand() * (upperbound .- lowerbound)) / t  # Eq(7)
-            X_new_P1 = max.(X_new_P1, lowerbound)  # Clip to lower bound
-            X_new_P1 = min.(X_new_P1, upperbound)  # Clip to upper bound
+            X_new_P1 = X[i, :] + (lb .+ rand() * (ub .- lb)) / t  # Eq(7)
+            X_new_P1 = max.(X_new_P1, lb)  # Clip to lower bound
+            X_new_P1 = min.(X_new_P1, ub)  # Clip to upper bound
 
             # Update position based on Eq (8)
             L = X_new_P1
-            fit_new_P1 = fitness(L)
+            fit_new_P1 = objfun(L)
             if fit_new_P1 < fit[i]
                 X[i, :] = X_new_P1
                 fit[i] = fit_new_P1

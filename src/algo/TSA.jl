@@ -3,21 +3,21 @@ Kaur, Satnam, Lalit K. Awasthi, Amrit Lal Sangal, and Gaurav Dhiman.
 "Tunicate Swarm Algorithm: A new bio-inspired based metaheuristic paradigm for global optimization." 
 Engineering Applications of Artificial Intelligence 90 (2020): 103541.
 """
-function TSA(Search_Agents, Max_iterations, Lowerbound, Upperbound, dimensions, objective)
+function TSA(npop, max_iter, Lowerbound, Upperbound, dimensions, objfun)
     Score = Inf
     Position = zeros(dimensions)
-    Positions = initialization(Search_Agents, dimensions, Upperbound, Lowerbound)
-    Convergence = zeros(Max_iterations)
+    Positions = initialization(npop, dimensions, Upperbound, Lowerbound)
+    Convergence = zeros(max_iter)
 
     t = 0
 
-    while t < Max_iterations
+    while t < max_iter
         for i in axes(Positions, 1)
             Flag4Upperbound = Positions[i, :] .> Upperbound
             Flag4Lowerbound = Positions[i, :] .< Lowerbound
             Positions[i, :] = (Positions[i, :] .* .~(Flag4Upperbound .+ Flag4Lowerbound)) .+ Upperbound .* Flag4Upperbound .+ Lowerbound .* Flag4Lowerbound
 
-            fitness = objective(Positions[i, :])
+            fitness = objfun(Positions[i, :])
 
             if fitness < Score
                 Score = fitness

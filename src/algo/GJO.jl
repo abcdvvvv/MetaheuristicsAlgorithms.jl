@@ -3,25 +3,25 @@ Chopra, Nitish, and Muhammad Mohsin Ansari.
 "Golden jackal optimization: A novel nature-inspired optimizer for engineering applications." 
 Expert Systems with Applications 198 (2022): 116924.
 """
-function GJO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
+function GJO(npop, max_iter, lb, ub, dim, objfun)
     Male_Jackal_pos = zeros(1, dim)
     Male_Jackal_score = Inf
     Female_Jackal_pos = zeros(1, dim)
     Female_Jackal_score = Inf
 
-    Positions = initialization(SearchAgents_no, dim, ub, lb)
+    Positions = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(Max_iter)
+    Convergence_curve = zeros(max_iter)
 
-    l = 0  
+    l = 0
 
-    while l < Max_iter
+    while l < max_iter
         for i in axes(Positions, 1)
             Flag4ub = Positions[i, :] .> ub
             Flag4lb = Positions[i, :] .< lb
             Positions[i, :] = min.(max.(Positions[i, :], lb), ub)
 
-            fitness = fobj(Positions[i, :])
+            fitness = objfun(Positions[i, :])
 
             if fitness < Male_Jackal_score
                 Male_Jackal_score = fitness
@@ -33,17 +33,17 @@ function GJO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        E1 = 1.5 * (1 - (l / Max_iter))
-        RL = 0.05 * levy(SearchAgents_no, dim, 1.5)
+        E1 = 1.5 * (1 - (l / max_iter))
+        RL = 0.05 * levy(npop, dim, 1.5)
 
-        Male_Positions = zeros(SearchAgents_no, dim)
-        Female_Positions = zeros(SearchAgents_no, dim)
+        Male_Positions = zeros(npop, dim)
+        Female_Positions = zeros(npop, dim)
 
         for i in axes(Positions, 1)
             for j in axes(Positions, 2)
-                r1 = rand()  
+                r1 = rand()
                 E0 = 2 * r1 - 1
-                E = E1 * E0  
+                E = E1 * E0
 
                 if abs(E) < 1
                     D_male_jackal = abs((RL[i, j] * Male_Jackal_pos[j] - Positions[i, j]))

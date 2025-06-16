@@ -3,84 +3,83 @@ Zhao, Weiguo, Zhenxing Zhang, and Liying Wang.
 "Manta ray foraging optimization: An effective bio-inspired optimizer for engineering applications." 
 Engineering Applications of Artificial Intelligence 87 (2020): 103300.
 """
-function MRFO(nPop, MaxIt, Low, Up, Dim, F_index)#(F_index, MaxIt, nPop)
-    
-    PopPos = [rand(Dim) .* (Up - Low) .+ Low for _ in 1:nPop]
-    PopFit = [F_index(PopPos[i]) for i in 1:nPop]
+function MRFO(npop, max_iter, lb, ub, dim, objfun)#(objfun, max_iter, npop)
+    PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
+    PopFit = [objfun(PopPos[i]) for i = 1:npop]
 
     BestF = Inf
     BestX = []
 
-    for i in 1:nPop
+    for i = 1:npop
         if PopFit[i] <= BestF
             BestF = PopFit[i]
             BestX = PopPos[i]
         end
     end
 
-    HisBestFit = zeros(MaxIt)
+    HisBestFit = zeros(max_iter)
 
-    for It in 1:MaxIt
-        Coef = It / MaxIt
-        
+    for It = 1:max_iter
+        Coef = It / max_iter
+
         if rand() < 0.5
             r1 = rand()
-            Beta = 2 * exp(r1 * ((MaxIt - It + 1) / MaxIt)) * sin(2 * pi * r1)
+            Beta = 2 * exp(r1 * ((max_iter - It + 1) / max_iter)) * sin(2 * pi * r1)
             if Coef > rand()
-                newPopPos1 = BestX .+ rand(Dim) .* (BestX .- PopPos[1]) .+ Beta .* (BestX .- PopPos[1])  # Equation (4)
+                newPopPos1 = BestX .+ rand(dim) .* (BestX .- PopPos[1]) .+ Beta .* (BestX .- PopPos[1])  # Equation (4)
             else
-                IndivRand = rand(Dim) .* (Up - Low) .+ Low
-                newPopPos1 = IndivRand .+ rand(Dim) .* (IndivRand .- PopPos[1]) .+ Beta .* (IndivRand .- PopPos[1])  # Equation (7)
+                IndivRand = rand(dim) .* (ub - lb) .+ lb
+                newPopPos1 = IndivRand .+ rand(dim) .* (IndivRand .- PopPos[1]) .+ Beta .* (IndivRand .- PopPos[1])  # Equation (7)
             end
         else
-            Alpha = 2 * rand(Dim) .* (-log.(rand(Dim))).^0.5
-            newPopPos1 = PopPos[1] .+ rand(Dim) .* (BestX .- PopPos[1]) .+ Alpha .* (BestX .- PopPos[1])  # Equation (1)
+            Alpha = 2 * rand(dim) .* (-log.(rand(dim))) .^ 0.5
+            newPopPos1 = PopPos[1] .+ rand(dim) .* (BestX .- PopPos[1]) .+ Alpha .* (BestX .- PopPos[1])  # Equation (1)
         end
-        
-        newPopPos = [zeros(Dim) for _ in 1:nPop]
+
+        newPopPos = [zeros(dim) for _ = 1:npop]
         newPopPos[1] = newPopPos1
 
-        for i in 2:nPop
+        for i = 2:npop
             if rand() < 0.5
                 r1 = rand()
-                Beta = 2 * exp(r1 * ((MaxIt - It + 1) / MaxIt)) * sin(2 * pi * r1)
+                Beta = 2 * exp(r1 * ((max_iter - It + 1) / max_iter)) * sin(2 * pi * r1)
                 if Coef > rand()
-                    newPopPos[i] = BestX .+ rand(Dim) .* (PopPos[i - 1] .- PopPos[i]) .+ Beta .* (BestX .- PopPos[i])  # Equation (4)
+                    newPopPos[i] = BestX .+ rand(dim) .* (PopPos[i-1] .- PopPos[i]) .+ Beta .* (BestX .- PopPos[i])  # Equation (4)
                 else
-                    IndivRand = rand(Dim) .* (Up - Low) .+ Low
-                    newPopPos[i] = IndivRand .+ rand(Dim) .* (PopPos[i - 1] .- PopPos[i]) .+ Beta .* (IndivRand .- PopPos[i])  # Equation (7)
+                    IndivRand = rand(dim) .* (ub - lb) .+ lb
+                    newPopPos[i] = IndivRand .+ rand(dim) .* (PopPos[i-1] .- PopPos[i]) .+ Beta .* (IndivRand .- PopPos[i])  # Equation (7)
                 end
             else
-                Alpha = 2 * rand(Dim) .* (-log.(rand(Dim))).^0.5
-                newPopPos[i] = PopPos[i] .+ rand(Dim) .* (PopPos[i - 1] .- PopPos[i]) .+ Alpha .* (BestX .- PopPos[i])  # Equation (1)
+                Alpha = 2 * rand(dim) .* (-log.(rand(dim))) .^ 0.5
+                newPopPos[i] = PopPos[i] .+ rand(dim) .* (PopPos[i-1] .- PopPos[i]) .+ Alpha .* (BestX .- PopPos[i])  # Equation (1)
             end
         end
-        
-        newPopFit = zeros(nPop)
-        for i in 1:nPop
-            newPopPos[i] = max.(min.(newPopPos[i], Up), Low)
-            newPopFit[i] = F_index(newPopPos[i])
+
+        newPopFit = zeros(npop)
+        for i = 1:npop
+            newPopPos[i] = max.(min.(newPopPos[i], ub), lb)
+            newPopFit[i] = objfun(newPopPos[i])
             if newPopFit[i] < PopFit[i]
                 PopFit[i] = newPopFit[i]
                 PopPos[i] = newPopPos[i]
             end
         end
-        
+
         S = 2
-        for i in 1:nPop
+        for i = 1:npop
             newPopPos[i] = PopPos[i] .+ S * (rand() * BestX .- rand() * PopPos[i])  # Equation (8)
         end
 
-        for i in 1:nPop
-            newPopPos[i] = max.(min.(newPopPos[i], Up), Low)
-            newPopFit[i] = F_index(newPopPos[i])
+        for i = 1:npop
+            newPopPos[i] = max.(min.(newPopPos[i], ub), lb)
+            newPopFit[i] = objfun(newPopPos[i])
             if newPopFit[i] < PopFit[i]
                 PopFit[i] = newPopFit[i]
                 PopPos[i] = newPopPos[i]
             end
         end
 
-        for i in 1:nPop
+        for i = 1:npop
             if PopFit[i] < BestF
                 BestF = PopFit[i]
                 BestX = PopPos[i]

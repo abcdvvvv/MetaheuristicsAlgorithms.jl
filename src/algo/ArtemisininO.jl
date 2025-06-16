@@ -1,6 +1,6 @@
 
 function Mutation(z, x, b, dim)
-    for j in 1:dim
+    for j = 1:dim
         if rand() < 0.05
             z[j] = x[j]
         end
@@ -12,7 +12,7 @@ function Mutation(z, x, b, dim)
 end
 
 function Transborder_reset(z, ub, lb, dim, best)
-    for j in 1:dim
+    for j = 1:dim
         if z[j] > ub || z[j] < lb
             z[j] = best[j]
         end
@@ -26,19 +26,19 @@ end
 - Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, Zongda Wu, and Huiling Chen. "Artemisinin optimization based on malaria therapy: Algorithm and applications to medical image segmentation." Displays 84 (2024): 102740.
 
 """
-function ArtemisininO(N, MaxIter, lb, ub, dim, fobj) # (fobj, lb, ub, dim, N, MaxFEs)
+function ArtemisininO(N, max_iter, lb, ub, dim, objfun) # (objfun, lb, ub, dim, N, MaxFEs)
     # Initialization parameters
     FEs = 0
     it = 1
-    MaxFEs = N * MaxIter
+    MaxFEs = N * max_iter
 
     # Initialization of the solution set
     pop = initialization(N, dim, ub, lb)
-    
+
     # Calculate the fitness value of the initial solution set
     Fitness = zeros(N)
-    for i in 1:N
-        Fitness[i] = fobj(pop[i, :])
+    for i = 1:N
+        Fitness[i] = objfun(pop[i, :])
         FEs += 1
     end
     fmin, x = findmin(Fitness)
@@ -54,13 +54,13 @@ function ArtemisininO(N, MaxIter, lb, ub, dim, fobj) # (fobj, lb, ub, dim, N, Ma
 
     # Main loop
     while FEs < MaxFEs
-        K = 1 - (FEs^(1/6) / MaxFEs^(1/6))
+        K = 1 - (FEs^(1 / 6) / MaxFEs^(1 / 6))
         E = exp(-4 * (FEs / MaxFEs))
 
-        for i in 1:N
+        for i = 1:N
             Fitnorm[i] = (Fitness[i] - minimum(Fitness)) / (maximum(Fitness) - minimum(Fitness))
 
-            for j in 1:dim
+            for j = 1:dim
                 if rand() < K
                     if rand() < 0.5
                         New_pop[i, j] = pop[i, j] + E * pop[i, j] * (-1)^FEs
@@ -83,7 +83,7 @@ function ArtemisininO(N, MaxIter, lb, ub, dim, fobj) # (fobj, lb, ub, dim, N, Ma
             New_pop[i, :] = Transborder_reset(New_pop[i, :], ub, lb, dim, best)
 
             # Evaluate new fitness
-            tFitness = fobj(New_pop[i, :])
+            tFitness = objfun(New_pop[i, :])
             println("FEs $FEs, tFitness $tFitness")
             FEs += 1
 

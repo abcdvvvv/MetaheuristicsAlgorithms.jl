@@ -4,29 +4,29 @@
 - Shehadeh, Hisham A. "Chernobyl disaster optimizer (CDO): A novel meta-heuristic method for global optimization."  Neural Computing and Applications 35, no. 15 (2023): 10733-10749.
 
 """
-function CDO(SearchAgents_no, Max_iter, lb, ub, dim, fobj) 
+function CDO(npop, max_iter, lb, ub, dim, objfun)
     Alpha_pos = zeros(Float64, dim)
-    Alpha_score = Inf  
+    Alpha_score = Inf
 
     Beta_pos = zeros(Float64, dim)
-    Beta_score = Inf  
+    Beta_score = Inf
 
     Gamma_pos = zeros(Float64, dim)
-    Gamma_score = Inf  
+    Gamma_score = Inf
 
-    Positions = initialization(SearchAgents_no, dim, ub, lb)
+    Positions = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(Float64, Max_iter)
+    Convergence_curve = zeros(Float64, max_iter)
 
-    l = 0  
+    l = 0
 
-    while l < Max_iter
-        for i in 1:axes(Positions, 1)
+    while l < max_iter
+        for i = 1:axes(Positions, 1)
             Flag4ub = Positions[i, :] .> ub
             Flag4lb = Positions[i, :] .< lb
-            Positions[i, :] .= Positions[i, :].*(.~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
+            Positions[i, :] .= Positions[i, :] .* (.~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness = fobj(Positions[i, :])
+            fitness = objfun(Positions[i, :])
 
             if fitness < Alpha_score
                 Alpha_score = fitness
@@ -40,14 +40,14 @@ function CDO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        a = 3 - l * (3 / Max_iter)
+        a = 3 - l * (3 / max_iter)
 
         a1 = log10((16000 - 1) * rand() + 16000)
         a2 = log10((270000 - 1) * rand() + 270000)
         a3 = log10((300000 - 1) * rand() + 300000)
 
-        for i in 1:axes(Positions, 1)
-            for j in 1:axes(Positions, 2)
+        for i = 1:axes(Positions, 1)
+            for j = 1:axes(Positions, 2)
                 r1, r2 = rand(), rand()
                 pa = pi * r1^2 / (0.25 * a1) - a * rand()
                 C1 = r2^2 * pi

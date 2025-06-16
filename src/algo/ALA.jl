@@ -1,12 +1,11 @@
 
-
 function levy(d)
     beta = 1.5
     sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
              (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
     u = randn(d) * sigma
     v = randn(d)
-    step = u ./ abs.(v).^(1 / beta)
+    step = u ./ abs.(v) .^ (1 / beta)
     return step
 end
 
@@ -16,16 +15,16 @@ end
 - Xiao, Y., Cui, H., Khurma, R. A., & Castillo, P. A. (2025). Artificial lemming algorithm: a novel bionic meta-heuristic technique for solving real-world engineering optimization problems. Artificial Intelligence Review, 58(3), 84.
 
 """
-function ALA(N, Max_iter, lb, ub, dim, fobj)
+function ALA(N, max_iter, lb, ub, dim, objfun)
     X = initialization(N, dim, ub, lb)
     Position = zeros(dim)
     Score = Inf
     fitness = zeros(N)
-    Convergence_curve = zeros(Max_iter)
+    Convergence_curve = zeros(max_iter)
     vec_flag = [1, -1]
 
-    for i in 1:N
-        fitness[i] = fobj(X[i, :])
+    for i = 1:N
+        fitness[i] = objfun(X[i, :])
         if fitness[i] < Score
             Position = copy(X[i, :])
             Score = fitness[i]
@@ -33,13 +32,13 @@ function ALA(N, Max_iter, lb, ub, dim, fobj)
     end
 
     Iter = 1
-    while Iter <= Max_iter
+    while Iter <= max_iter
         RB = randn(N, dim)
         F = vec_flag[rand(1:2)]
-        theta = 2 * atan(1 - Iter / Max_iter)
+        theta = 2 * atan(1 - Iter / max_iter)
         Xnew = similar(X)
 
-        for i in 1:N
+        for i = 1:N
             E = 2 * log(1 / rand()) * theta
             if E > 1
                 if rand() < 0.3
@@ -58,15 +57,15 @@ function ALA(N, Max_iter, lb, ub, dim, fobj)
                     spiral = radius * (sin(2 * pi * r3) + cos(2 * pi * r3))
                     Xnew[i, :] = Position .+ F .* X[i, :] .* spiral * rand()
                 else
-                    G = 2 * sign(rand() - 0.5) * (1 - Iter / Max_iter)
+                    G = 2 * sign(rand() - 0.5) * (1 - Iter / max_iter)
                     Xnew[i, :] = Position .+ F .* G .* levy(dim) .* (Position .- X[i, :])
                 end
             end
         end
 
-        for i in 1:N
+        for i = 1:N
             Xnew[i, :] = clamp.(Xnew[i, :], lb, ub)
-            newPopfit = fobj(Xnew[i, :])
+            newPopfit = objfun(Xnew[i, :])
             if newPopfit < fitness[i]
                 X[i, :] = Xnew[i, :]
                 fitness[i] = newPopfit

@@ -4,7 +4,7 @@
 - Naruei, Iraj, and Farshid Keynia. "A new optimization method based on COOT bird natural life model." Expert Systems with Applications 183 (2021): 115352.
 
 """
-function COOT(N, Max_iter, lb, ub, dim, fobj)
+function COOT(N, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb
@@ -12,7 +12,7 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
 
     NLeader = ceil(Int, 0.1 * N)
     Ncoot = N - NLeader
-    Convergence_curve = zeros(Max_iter)
+    Convergence_curve = zeros(max_iter)
     gBest = zeros(dim)
     gBestScore = Inf
 
@@ -22,16 +22,16 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
     LeaderPos = rand(NLeader, dim) .* (ub - lb)' .+ lb'
     LeaderFit = zeros(NLeader)
 
-    for i in 1:Ncoot
-        CootFitness[i] = fobj(CootPos[i, :])
+    for i = 1:Ncoot
+        CootFitness[i] = objfun(CootPos[i, :])
         if gBestScore > CootFitness[i]
             gBestScore = CootFitness[i]
             gBest = CootPos[i, :]
         end
     end
 
-    for i in 1:NLeader
-        LeaderFit[i] = fobj(LeaderPos[i, :])
+    for i = 1:NLeader
+        LeaderFit[i] = objfun(LeaderPos[i, :])
         if gBestScore > LeaderFit[i]
             gBestScore = LeaderFit[i]
             gBest = LeaderPos[i, :]
@@ -39,13 +39,13 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
     end
 
     Convergence_curve[1] = gBestScore
-    l = 2  
+    l = 2
 
-    while l <= Max_iter
-        B = 2 - l * (1 / Max_iter)
-        A = 1 - l * (1 / Max_iter)
+    while l <= max_iter
+        B = 2 - l * (1 / max_iter)
+        A = 1 - l * (1 / max_iter)
 
-        for i in 1:Ncoot
+        for i = 1:Ncoot
             R = rand() < 0.5 ? -1 + 2 * rand() : (-1 .+ 2 * rand(dim))
             R1 = rand() < 0.5 ? rand() : rand(dim)
             k = 1 + mod(i - 1, NLeader)
@@ -54,9 +54,9 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
                 CootPos[i, :] = 2 * R1 .* cos.(2 * π * R) .* (LeaderPos[k, :] - CootPos[i, :]) + LeaderPos[k, :]
             else
                 if rand() < 0.5 && i != 1
-                    CootPos[i, :] = (CootPos[i, :] + CootPos[i - 1, :]) / 2
+                    CootPos[i, :] = (CootPos[i, :] + CootPos[i-1, :]) / 2
                 else
-                    Q = rand(dim) .* (ub - lb) .+ lb  
+                    Q = rand(dim) .* (ub - lb) .+ lb
                     CootPos[i, :] = CootPos[i, :] .+ A .* R1 .* (Q .- CootPos[i, :])
                 end
             end
@@ -64,8 +64,8 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
             CootPos[i, :] = max.(min.(CootPos[i, :], ub), lb)
         end
 
-        for i in 1:Ncoot
-            CootFitness[i] = fobj(CootPos[i, :])
+        for i = 1:Ncoot
+            CootFitness[i] = objfun(CootPos[i, :])
             k = 1 + mod(i - 1, NLeader)
 
             if CootFitness[i] < LeaderFit[k]
@@ -78,7 +78,7 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        for i in 1:NLeader
+        for i = 1:NLeader
             R = rand() < 0.5 ? fill(-1 + 2 * rand(), dim) : -1 .+ 2 * rand(dim)
             R3 = rand() < 0.5 ? rand() : rand(dim)
 
@@ -90,7 +90,7 @@ function COOT(N, Max_iter, lb, ub, dim, fobj)
 
             Temp = max.(min.(Temp, ub), lb)
 
-            TempFit = fobj(Temp)
+            TempFit = objfun(Temp)
 
             if gBestScore > TempFit
                 LeaderFit[i] = gBestScore

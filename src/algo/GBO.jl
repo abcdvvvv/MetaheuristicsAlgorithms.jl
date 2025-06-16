@@ -4,71 +4,71 @@ Ahmadianfar, Iman, Omid Bozorg-Haddad, and Xuefeng Chu.
 Information Sciences 540 (2020): 131-159.
 
 """
-function GBO(nP, MaxIt, lb, ub, dim, fobj)
-    nV = dim                        
-    pr = 0.5                        
-    lb = ones(dim) .* lb            
-    ub = ones(dim) .* ub            
-    Cost = zeros(nP)
-    X = initialization(nP, nV, ub, lb) 
-    Convergence_curve = zeros(MaxIt)
+function GBO(npop, max_iter, lb, ub, dim, objfun)
+    nV = dim
+    pr = 0.5
+    lb = ones(dim) .* lb
+    ub = ones(dim) .* ub
+    Cost = zeros(npop)
+    X = initialization(npop, nV, ub, lb)
+    Convergence_curve = zeros(max_iter)
 
-    for i in 1:nP
-        Cost[i] = fobj(X[i, :])      
+    for i = 1:npop
+        Cost[i] = objfun(X[i, :])
     end
 
     sort_idx = sortperm(Cost)
-    Best_Cost = Cost[sort_idx[1]]    
-    Best_X = X[sort_idx[1], :]       
-    Worst_Cost = Cost[sort_idx[end]] 
-    Worst_X = X[sort_idx[end], :]    
+    Best_Cost = Cost[sort_idx[1]]
+    Best_X = X[sort_idx[1], :]
+    Worst_Cost = Cost[sort_idx[end]]
+    Worst_X = X[sort_idx[end], :]
 
-    for it in 1:MaxIt
-        beta = 0.2 + (1.2 - 0.2) * (1 - (it / MaxIt)^3)^2   
-        alpha = abs(beta * sin(3 * π / 2 + sin(3 * π / 2 * beta))) 
+    for it = 1:max_iter
+        beta = 0.2 + (1.2 - 0.2) * (1 - (it / max_iter)^3)^2
+        alpha = abs(beta * sin(3 * π / 2 + sin(3 * π / 2 * beta)))
 
-        for i in 1:nP
-            A1 = rand(1:nP, 4)      
-            r1, r2, r3, r4 = A1     
+        for i = 1:npop
+            A1 = rand(1:npop, 4)
+            r1, r2, r3, r4 = A1
 
-            Xm = (X[r1, :] + X[r2, :] + X[r3, :] + X[r4, :]) / 4 
+            Xm = (X[r1, :] + X[r2, :] + X[r3, :] + X[r4, :]) / 4
             ro = alpha * (2 * rand() - 1)
             ro1 = alpha * (2 * rand() - 1)
-            eps = 5e-3 * rand()      
+            eps = 5e-3 * rand()
 
             DM = rand() * ro * (Best_X - X[r1, :])
             Flag = 1
             GSR = GradientSearchRule(ro1, Best_X, Worst_X, X[i, :], X[r1, :], DM, eps, Xm, Flag)
             DM = rand() * ro * (Best_X - X[r1, :])
-            X1 = X[i, :] - GSR + DM  
+            X1 = X[i, :] - GSR + DM
 
             DM = rand() * ro * (X[r1, :] - X[r2, :])
             Flag = 2
             GSR = GradientSearchRule(ro1, Best_X, Worst_X, X[i, :], X[r1, :], DM, eps, Xm, Flag)
             DM = rand() * ro * (X[r1, :] - X[r2, :])
-            X2 = Best_X - GSR + DM  
+            X2 = Best_X - GSR + DM
 
             Xnew = zeros(nV)
-            for j in 1:nV
+            for j = 1:nV
                 ro = alpha * (2 * rand() - 1)
                 X3 = X[i, j] - ro * (X2[j] - X1[j])
                 ra, rb = rand(), rand()
-                Xnew[j] = ra * (rb * X1[j] + (1 - rb) * X2[j]) + (1 - ra) * X3 
+                Xnew[j] = ra * (rb * X1[j] + (1 - rb) * X2[j]) + (1 - ra) * X3
             end
 
             if rand() < pr
-                k = rand(1:nP)
+                k = rand(1:npop)
                 f1 = -1 + 2 * rand()
                 f2 = -1 + 2 * rand()
                 ro = alpha * (2 * rand() - 1)
-                Xk = lb .+ (ub - lb) .* rand(nV) 
+                Xk = lb .+ (ub - lb) .* rand(nV)
 
                 L1 = rand() < 0.5
                 u1 = L1 * 2 * rand() + (1 - L1)
                 u2 = L1 * rand() + (1 - L1)
                 u3 = L1 * rand() + (1 - L1)
                 L2 = rand() < 0.5
-                Xp = (1 - L2) * X[k, :] + L2 * Xk 
+                Xp = (1 - L2) * X[k, :] + L2 * Xk
 
                 if u1 < 0.5
                     Xnew = Xnew + f1 * (u1 * Best_X - u2 * Xp) + f2 * ro * (u3 * (X2 - X1) + u2 * (X[r1, :] - X[r2, :])) / 2
@@ -80,7 +80,7 @@ function GBO(nP, MaxIt, lb, ub, dim, fobj)
             Flag4ub = Xnew .> ub
             Flag4lb = Xnew .< lb
             Xnew = (Xnew .* (Flag4ub .+ Flag4lb .== 0)) .+ ub .* Flag4ub .+ lb .* Flag4lb
-            Xnew_Cost = fobj(Xnew)
+            Xnew_Cost = objfun(Xnew)
 
             if Xnew_Cost < Cost[i]
                 X[i, :] = Xnew
@@ -105,20 +105,20 @@ end
 
 function GradientSearchRule(ro1, Best_X, Worst_X, X, Xr1, DM, eps, Xm, Flag)
     nV = length(X)
-    Delta = 2 .* rand(nV) .* abs.(Xm - X)           
-    Step = ((Best_X - Xr1) + Delta) / 2            
-    DelX = rand(nV) .* abs.(Step)                   
+    Delta = 2 .* rand(nV) .* abs.(Xm - X)
+    Step = ((Best_X - Xr1) + Delta) / 2
+    DelX = rand(nV) .* abs.(Step)
 
-    GSR = randn() .* ro1 .* (2 .* DelX .* X) ./ (Best_X - Worst_X .+ eps) 
+    GSR = randn() .* ro1 .* (2 .* DelX .* X) ./ (Best_X - Worst_X .+ eps)
     if Flag == 1
-        Xs = X - GSR + DM    
+        Xs = X - GSR + DM
     else
         Xs = Best_X - GSR + DM
     end
 
-    yp = rand() .* (0.5 .* (Xs + X) .+ rand() .* DelX) 
-    yq = rand() .* (0.5 .* (Xs + X) .- rand() .* DelX) 
-    GSR = randn() .* ro1 .* (2 .* DelX .* X) ./ (yp - yq .+ eps) 
+    yp = rand() .* (0.5 .* (Xs + X) .+ rand() .* DelX)
+    yq = rand() .* (0.5 .* (Xs + X) .- rand() .* DelX)
+    GSR = randn() .* ro1 .* (2 .* DelX .* X) ./ (yp - yq .+ eps)
 
     return GSR
 end

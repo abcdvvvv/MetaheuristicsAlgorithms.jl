@@ -4,18 +4,17 @@ Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien.
 Neural Computing and Applications (2024): 1-59.
 """
 
-function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
-
-    BF = 8  
+function PKO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+    BF = 8
     Crest_angles = 2 * π * rand()
-    
+
     X = initialization(N, dim, ub, lb)
-    
+
     Fitness = zeros(N)
-    Convergence_curve = zeros(Max_iter,1)
-    
-    for i in 1:N
-        Fitness[i] = fobj(X[i, :])
+    Convergence_curve = zeros(max_iter, 1)
+
+    for i = 1:N
+        Fitness[i] = objfun(X[i, :])
     end
 
     sorted_indexes = sortperm(Fitness)
@@ -27,11 +26,11 @@ function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
     PEmax = 0.5
     PEmin = 0
 
-    while t < Max_iter + 1
-        o = exp(-t / Max_iter)^2
-        
-        for i in 1:N
-            if rand() < 0.8  
+    while t < max_iter + 1
+        o = exp(-t / max_iter)^2
+
+        for i = 1:N
+            if rand() < 0.8
                 j = i
                 while i == j
                     seed = randperm(N)
@@ -42,13 +41,13 @@ function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                 alpha = 2 * randn(dim) .- 1
 
                 if rand() < 0.5
-                    T = beatingRate - (t^(1 / BF) / Max_iter^(1 / BF))
+                    T = beatingRate - (t^(1 / BF) / max_iter^(1 / BF))
                     X_1 = X[i, :] + alpha .* T .* (X[j, :] - X[i, :])
                 else
-                    T = (exp(1) - exp(((t - 1) / Max_iter)^(1 / BF))) * cos(Crest_angles)
+                    T = (exp(1) - exp(((t - 1) / max_iter)^(1 / BF))) * cos(Crest_angles)
                     X_1 = X[i, :] + alpha .* T .* (X[j, :] - X[i, :])
                 end
-            else  
+            else
                 alpha = 2 * randn(dim) .- 1
                 b = X[i, :] + o^2 * randn() .* Best_position
                 HuntingAbility = rand() * (Fitness[i]) / Best_fitness
@@ -58,8 +57,8 @@ function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
             FU = X_1 .> ub
             FL = X_1 .< lb
             X_1 = (X_1 .* .~(FU .+ FL)) + ub .* FU + lb .* FL
-            
-            fitnessn = fobj(X_1)
+
+            fitnessn = objfun(X_1)
 
             if fitnessn < Fitness[i]
                 Fitness[i] = fitnessn
@@ -72,9 +71,9 @@ function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
             end
         end
 
-        PE = PEmax - (PEmax - PEmin) * (t / Max_iter)
+        PE = PEmax - (PEmax - PEmin) * (t / max_iter)
 
-        for i in 1:N
+        for i = 1:N
             alpha = 2 * randn(dim) .- 1
             if rand() > (1 - PE)
                 X_1 = X[rand(1:N), :] + o * alpha .* abs.(X[i, :] - X[rand(1:N), :])
@@ -85,8 +84,8 @@ function PKO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
             FU = X_1 .> ub
             FL = X_1 .< lb
             X_1 = (X_1 .* .~(FU .+ FL)) + ub .* FU + lb .* FL
-            
-            fitnessn = fobj(X_1)
+
+            fitnessn = objfun(X_1)
 
             if fitnessn < Fitness[i]
                 Fitness[i] = fitnessn

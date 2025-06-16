@@ -5,15 +5,15 @@
 - Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 
 """
-function AOArithmetic(N, M_Iter, LB, UB, Dim, F_obj) # AOArithmetic(SearchAgents_no, Max_iteration, lb, ub, dim, Chung_Reynolds)
-    
+function AOArithmetic(N, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+
     # Two variables to keep the positions and the fitness value of the best-obtained solution
-    Best_P = zeros(Dim)
+    Best_P = zeros(dim)
     Best_FF = Inf
-    Conv_curve = zeros(M_Iter)
+    Conv_curve = zeros(max_iter)
 
     # Initialize the positions of solution
-    X = initialization(N, Dim, UB, LB)
+    X = initialization(N, dim, ub, lb)
     Xnew = copy(X)
     Ffun = zeros(N)  # (fitness values)
     Ffun_new = zeros(N)  # (fitness values)
@@ -24,36 +24,36 @@ function AOArithmetic(N, M_Iter, LB, UB, Dim, F_obj) # AOArithmetic(SearchAgents
     Alpha = 5
     Mu = 0.499
 
-    for i in 1:N
-        Ffun[i] = F_obj(X[i, :])  # Calculate the fitness values of solutions
+    for i = 1:N
+        Ffun[i] = objfun(X[i, :])  # Calculate the fitness values of solutions
         if Ffun[i] < Best_FF
             Best_FF = Ffun[i]
             Best_P = X[i, :]
         end
     end
 
-    while C_Iter <= M_Iter  # Main loop
-        MOP = 1 - ((C_Iter)^(1/Alpha) / (M_Iter)^(1/Alpha))  # Probability Ratio
-        MOA = MOP_Min + C_Iter * ((MOP_Max - MOP_Min) / M_Iter)  # Accelerated function
+    while C_Iter <= max_iter  # Main loop
+        MOP = 1 - ((C_Iter)^(1 / Alpha) / (max_iter)^(1 / Alpha))  # Probability Ratio
+        MOA = MOP_Min + C_Iter * ((MOP_Max - MOP_Min) / max_iter)  # Accelerated function
 
         # Update the Position of solutions
-        for i in 1:N
-            for j in 1:Dim
+        for i = 1:N
+            for j = 1:dim
                 r1 = rand()
-                if length(LB) == 1
+                if length(lb) == 1
                     if r1 < MOA
                         r2 = rand()
                         if r2 > 0.5
-                            Xnew[i, j] = Best_P[j] / (MOP + eps()) * ((UB - LB) * Mu + LB)
+                            Xnew[i, j] = Best_P[j] / (MOP + eps()) * ((ub - lb) * Mu + lb)
                         else
-                            Xnew[i, j] = Best_P[j] * MOP * ((UB - LB) * Mu + LB)
+                            Xnew[i, j] = Best_P[j] * MOP * ((ub - lb) * Mu + lb)
                         end
                     else
                         r3 = rand()
                         if r3 > 0.5
-                            Xnew[i, j] = Best_P[j] - MOP * ((UB - LB) * Mu + LB)
+                            Xnew[i, j] = Best_P[j] - MOP * ((ub - lb) * Mu + lb)
                         else
-                            Xnew[i, j] = Best_P[j] + MOP * ((UB - LB) * Mu + LB)
+                            Xnew[i, j] = Best_P[j] + MOP * ((ub - lb) * Mu + lb)
                         end
                     end
                 else
@@ -61,27 +61,27 @@ function AOArithmetic(N, M_Iter, LB, UB, Dim, F_obj) # AOArithmetic(SearchAgents
                     if r1 < MOA
                         r2 = rand()
                         if r2 > 0.5
-                            Xnew[i, j] = Best_P[j] / (MOP + eps()) * ((UB[j] - LB[j]) * Mu + LB[j])
+                            Xnew[i, j] = Best_P[j] / (MOP + eps()) * ((ub[j] - lb[j]) * Mu + lb[j])
                         else
-                            Xnew[i, j] = Best_P[j] * MOP * ((UB[j] - LB[j]) * Mu + LB[j])
+                            Xnew[i, j] = Best_P[j] * MOP * ((ub[j] - lb[j]) * Mu + lb[j])
                         end
                     else
                         r3 = rand()
                         if r3 > 0.5
-                            Xnew[i, j] = Best_P[j] - MOP * ((UB[j] - LB[j]) * Mu + LB[j])
+                            Xnew[i, j] = Best_P[j] - MOP * ((ub[j] - lb[j]) * Mu + lb[j])
                         else
-                            Xnew[i, j] = Best_P[j] + MOP * ((UB[j] - LB[j]) * Mu + LB[j])
+                            Xnew[i, j] = Best_P[j] + MOP * ((ub[j] - lb[j]) * Mu + lb[j])
                         end
                     end
                 end
             end
 
             # Check boundaries
-            Flag_UB = Xnew[i, :] .> UB  # Check if they exceed upper boundaries
-            Flag_LB = Xnew[i, :] .< LB  # Check if they exceed lower boundaries
-            Xnew[i, :] = max.(min.(Xnew[i, :], UB), LB) # (Xnew[i, :] .* .!((Flag_UB .+ Flag_LB))) .+ UB .* Flag_UB .+ LB .* Flag_LB
+            Flag_UB = Xnew[i, :] .> ub  # Check if they exceed upper boundaries
+            Flag_LB = Xnew[i, :] .< lb  # Check if they exceed lower boundaries
+            Xnew[i, :] = max.(min.(Xnew[i, :], ub), lb) # (Xnew[i, :] .* .!((Flag_UB .+ Flag_LB))) .+ ub .* Flag_UB .+ lb .* Flag_LB
 
-            Ffun_new[i] = F_obj(Xnew[i, :])  # Calculate Fitness function
+            Ffun_new[i] = objfun(Xnew[i, :])  # Calculate Fitness function
             if Ffun_new[i] < Ffun[i]
                 X[i, :] = Xnew[i, :]
                 Ffun[i] = Ffun_new[i]

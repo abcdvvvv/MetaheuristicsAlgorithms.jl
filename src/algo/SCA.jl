@@ -3,19 +3,19 @@ Mirjalili, Seyedali.
 "SCA: a sine cosine algorithm for solving optimization problems." 
 Knowledge-based systems 96 (2016): 120-133.
 """
-function SCA(N::Int, Max_iteration::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
+function SCA(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     println("SCA is optimizing your problem")
 
-    X = initialization(N, dim, ub, lb) 
+    X = initialization(N, dim, ub, lb)
 
     Destination_position = zeros(dim)
     Destination_fitness = Inf
 
-    Convergence_curve = zeros(Max_iteration)
+    Convergence_curve = zeros(max_iter)
     Objective_values = zeros(size(X, 1))
 
     for i in axes(X, 1)
-        Objective_values[i] = fobj(X[i, :])
+        Objective_values[i] = objfun(X[i, :])
         if i == 1
             Destination_position .= X[i, :]
             Destination_fitness = Objective_values[i]
@@ -25,10 +25,10 @@ function SCA(N::Int, Max_iteration::Int, lb::Union{Int, AbstractVector}, ub::Uni
         end
     end
 
-    t = 2  
-    while t <= Max_iteration
+    t = 2
+    while t <= max_iter
         a = 2
-        r1 = a - t * (a / Max_iteration)  
+        r1 = a - t * (a / max_iter)
 
         for i in axes(X, 1)
             for j in axes(X, 2)
@@ -47,7 +47,7 @@ function SCA(N::Int, Max_iteration::Int, lb::Union{Int, AbstractVector}, ub::Uni
         for i in axes(X, 1)
             X[i, :] = clamp.(X[i, :], lb, ub)
 
-            Objective_values[i] = fobj(X[i, :])
+            Objective_values[i] = objfun(X[i, :])
 
             if Objective_values[i] < Destination_fitness
                 Destination_position .= X[i, :]

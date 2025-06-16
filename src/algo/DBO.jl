@@ -5,29 +5,29 @@
     The Journal of Supercomputing. 2023 May;79(7):7305-36.
     
 """
-function DBO(pop, M, c, d, dim, fobj)
+function DBO(npop, max_iter, c, d, dim, objfun)
     P_percent = 0.2
-    pNum = round(Int, pop * P_percent)  
-    
+    pNum = round(Int, npop * P_percent)
+
     lb = fill(c, dim)
     ub = fill(d, dim)
-    
-    x = [lb .+ (ub .- lb) .* rand(dim) for _ in 1:pop]
-    fit = [fobj(x[i]) for i in 1:pop]
+
+    x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    fit = [objfun(x[i]) for i = 1:npop]
     pFit = copy(fit)
     pX = copy(x)
     XX = copy(pX)
-    
+
     fMin, bestI = findmin(fit)
     bestX = copy(x[bestI])
-    Convergence_curve = zeros(M)
-    
-    for t in 1:M
+    Convergence_curve = zeros(max_iter)
+
+    for t = 1:max_iter
         fmax, B = findmax(fit)
         worse = x[B]
         r2 = rand()
-        
-        for i in 1:pNum
+
+        for i = 1:pNum
             if r2 < 0.9
                 r1 = rand()
                 a = rand() > 0.1 ? 1 : -1
@@ -37,38 +37,38 @@ function DBO(pop, M, c, d, dim, fobj)
                 x[i] = pX[i] .+ tan(theta) .* abs.(pX[i] .- XX[i])
             end
             x[i] = clamp.(x[i], lb, ub)
-            fit[i] = fobj(x[i])
+            fit[i] = objfun(x[i])
         end
-        
+
         fMMin, bestII = findmin(fit)
         bestXX = copy(x[bestII])
-        R = 1 - t / M
-        
+        R = 1 - t / max_iter
+
         Xnew1 = clamp.(bestXX .* (1 - R), lb, ub)
         Xnew2 = clamp.(bestXX .* (1 + R), lb, ub)
         Xnew11 = clamp.(bestX .* (1 - R), lb, ub)
         Xnew22 = clamp.(bestX .* (1 + R), lb, ub)
-        
-        for i in pNum + 1:12
+
+        for i = pNum+1:12
             x[i] = bestXX .+ rand(dim) .* (pX[i] .- Xnew1) .+ rand(dim) .* (pX[i] .- Xnew2)
             x[i] = clamp.(x[i], Xnew1, Xnew2)
-            fit[i] = fobj(x[i])
+            fit[i] = objfun(x[i])
         end
-        
-        for i in 13:19
+
+        for i = 13:19
             x[i] = pX[i] .+ randn() .* (pX[i] .- Xnew11) .+ rand(dim) .* (pX[i] .- Xnew22)
             x[i] = clamp.(x[i], lb, ub)
-            fit[i] = fobj(x[i])
+            fit[i] = objfun(x[i])
         end
-        
-        for j in 20:pop
+
+        for j = 20:npop
             x[j] = bestX .+ randn(dim) .* ((abs.(pX[j] .- bestXX) .+ abs.(pX[j] .- bestX)) ./ 2)
             x[j] = clamp.(x[j], lb, ub)
-            fit[j] = fobj(x[j])
+            fit[j] = objfun(x[j])
         end
-        
+
         XX = copy(pX)
-        for i in 1:pop
+        for i = 1:npop
             if fit[i] < pFit[i]
                 pFit[i] = fit[i]
                 pX[i] = copy(x[i])
@@ -80,6 +80,6 @@ function DBO(pop, M, c, d, dim, fobj)
         end
         Convergence_curve[t] = fMin
     end
-    
+
     return fMin, bestX, Convergence_curve
 end

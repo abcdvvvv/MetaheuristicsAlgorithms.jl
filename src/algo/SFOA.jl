@@ -4,9 +4,9 @@ Starfish optimization algorithm (SFOA): a bio-inspired metaheuristic algorithm f
 Neural Computing and Applications, 37(5), 3641-3683.
 """
 
-# function SHO(N, Max_iterations, lowerbound, upperbound, dimension, fitness)
+# function SHO(N, max_iter, lb, ub, dim, fitness)
 
-function SFOA(Npop, Max_it, lb, ub, nD, fobj)
+function SFOA(npop, max_iter, lb, ub, nD, objfun)
     # Starfish Optimization Algorithm (SFOA)
     GP = 0.5  # parameter
 
@@ -15,22 +15,22 @@ function SFOA(Npop, Max_it, lb, ub, nD, fobj)
     ub = length(ub) == 1 ? fill(ub, nD) : ub
 
     fvalbest = Inf
-    Curve = zeros(Max_it)
-    Xpos = [lb .+ rand(nD) .* (ub .- lb) for _ in 1:Npop]
-    Fitness = [fobj(X) for X in Xpos]
+    Curve = zeros(max_iter)
+    Xpos = [lb .+ rand(nD) .* (ub .- lb) for _ = 1:npop]
+    Fitness = [objfun(X) for X in Xpos]
 
     fvalbest, order = findmin(Fitness)
     xposbest = copy(Xpos[order])
 
-    newX = [zeros(nD) for _ in 1:Npop]
+    newX = [zeros(nD) for _ = 1:npop]
 
     T = 1
-    while T <= Max_it
-        theta = π / 2 * T / Max_it
-        tEO = (Max_it - T) / Max_it * cos(theta)
+    while T <= max_iter
+        theta = π / 2 * T / max_iter
+        tEO = (max_iter - T) / max_iter * cos(theta)
 
         if rand() < GP  # exploration
-            for i in 1:Npop
+            for i = 1:npop
                 if nD > 5
                     jp1 = randperm(nD)[1:5]
                     for j in jp1
@@ -46,7 +46,7 @@ function SFOA(Npop, Max_it, lb, ub, nD, fobj)
                     end
                 else
                     jp2 = rand(1:nD)
-                    im = randperm(Npop)
+                    im = randperm(npop)
                     rand1 = 2rand() - 1
                     rand2 = 2rand() - 1
                     newX[i][jp2] = tEO * Xpos[i][jp2] + rand1 * (Xpos[im[1]][jp2] - Xpos[i][jp2]) + rand2 * (Xpos[im[2]][jp2] - Xpos[i][jp2])
@@ -57,22 +57,22 @@ function SFOA(Npop, Max_it, lb, ub, nD, fobj)
                 newX[i] = clamp.(newX[i], lb, ub)
             end
         else  # exploitation
-            df = randperm(Npop)[1:5]
+            df = randperm(npop)[1:5]
             dm = [xposbest .- Xpos[d] for d in df]
-            for i in 1:Npop
+            for i = 1:npop
                 r1, r2 = rand(), rand()
                 kp = randperm(5)[1:2]
                 newX[i] = Xpos[i] .+ r1 .* dm[kp[1]] .+ r2 .* dm[kp[2]]
-                if i == Npop
-                    newX[i] = exp(-T * Npop / Max_it) .* Xpos[i]
+                if i == npop
+                    newX[i] = exp(-T * npop / max_iter) .* Xpos[i]
                 end
                 newX[i] = clamp.(newX[i], lb, ub)
             end
         end
 
         # Fitness evaluation
-        for i in 1:Npop
-            newFit = fobj(newX[i])
+        for i = 1:npop
+            newFit = objfun(newX[i])
             if newFit < Fitness[i]
                 Fitness[i] = newFit
                 Xpos[i] = copy(newX[i])
@@ -88,5 +88,5 @@ function SFOA(Npop, Max_it, lb, ub, nD, fobj)
     end
 
     #  return TargetFitness, TargetPosition, Convergence_curve,
-    return fvalbest, xposbest, Curve 
+    return fvalbest, xposbest, Curve
 end

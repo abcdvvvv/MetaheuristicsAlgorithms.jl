@@ -5,8 +5,7 @@ Knowledge-Based Systems 260 (2023): 110146.
 """
 
 
-function FLA(NoMolecules, T, lb, ub, dim, objfunc) 
-    
+function FLA(NoMolecules, max_iter, lb, ub, dim, objfun) 
     C1 = 0.5
     C2 = 2
     c3 = 0.1
@@ -16,11 +15,11 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc)
     X = lb .+ rand(NoMolecules, dim) .* (ub .- lb) 
     X1new = zeros(NoMolecules,dim)
     X2new = zeros(NoMolecules,dim)
-    CNVG=zeros(T,1)
+    CNVG=zeros(max_iter,1)
     FS = zeros(NoMolecules)
-    TF = zeros(T)
+    TF = zeros(max_iter)
     for i in 1:NoMolecules
-        FS[i] = objfunc(X[i, :])
+        FS[i] = objfun(X[i, :])
     end
 
     BestF, IndexBestF = findmin(FS)
@@ -36,11 +35,11 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc)
     FS2 = zeros(n2)
 
     for i in 1:n1
-        FS1[i] = objfunc(X1[i, :])
+        FS1[i] = objfun(X1[i, :])
     end
 
     for i in 1:n2
-        FS2[i] = objfunc(X2[i, :])
+        FS2[i] = objfun(X2[i, :])
     end
 
     FSeo1, IndexFSeo1 = findmin(FS1)
@@ -59,8 +58,8 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc)
         YSol = Xeo2
     end
 
-    for t = 1:T
-        TF[t] = sinh(t / T) ^ C1
+    for t = 1:max_iter
+        TF[t] = sinh(t / max_iter) ^ C1
 
         if TF[t] < 0.9
             DOF = exp(-(C2 * TF[t] - rand())) ^ C2
@@ -191,7 +190,7 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc)
             FU = X1new[j, :] .> ub
             FL = X1new[j, :] .< lb
             X1new[j, :] = max.(min.( X2new[j, :], ub), lb) 
-            v = objfunc(X1new[j, :])
+            v = objfun(X1new[j, :])
             if v < FS1[j]
                 FS1[j] = v
                 X1[j, :] = X1new[j, :]
@@ -202,7 +201,7 @@ function FLA(NoMolecules, T, lb, ub, dim, objfunc)
             FU = X2new[j, :] .> ub
             FL = X2new[j, :] .< lb
             X2new[j, :] = max.(min.( X2new[j, :], ub), lb) 
-            v = objfunc(X2new[j, :])
+            v = objfun(X2new[j, :])
             if v < FS2[j]
                 FS2[j] = v
                 X2[j, :] = X2new[j, :]

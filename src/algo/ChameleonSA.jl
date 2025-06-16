@@ -4,17 +4,17 @@
 - Braik, Malik Shehadeh. "Chameleon Swarm Algorithm: A bio-inspired optimizer for solving engineering design problems." Expert Systems with Applications 174 (2021): 114685.
 
 """
-function ChameleonSA(searchAgents, iteMax, lb, ub, dim, fobj)
+function ChameleonSA(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = fill(ub, dim)
         lb = fill(lb, dim)
     end
 
-    cg_curve = zeros(Float64, iteMax)
+    cg_curve = zeros(Float64, max_iter)
 
-    chameleonPositions = initialization(searchAgents, dim, ub, lb)
+    chameleonPositions = initialization(npop, dim, ub, lb)
 
-    fit = [fobj(chameleonPositions[i, :]) for i in 1:searchAgents]
+    fit = [objfun(chameleonPositions[i, :]) for i = 1:npop]
 
     fitness = copy(fit)
     fmin0, index = findmin(fit)
@@ -26,38 +26,39 @@ function ChameleonSA(searchAgents, iteMax, lb, ub, dim, fobj)
 
     rho, p1, p2, c1, c2, gamma, alpha, beta = 1.0, 2.0, 2.0, 2.0, 1.80, 2.0, 4.0, 3.0
 
-    for t in 1:iteMax
+    for t = 1:max_iter
         a = 2590 * (1 - exp(-log(t)))
-        omega = (1 - (t / iteMax))^(rho * sqrt(t / iteMax))
-        p1 = 2 * exp(-2 * (t / iteMax)^2)
-        p2 = 2 / (1 + exp((-t + iteMax / 2) / 100))
-        mu = gamma * exp(-(alpha * t / iteMax)^beta)
+        omega = (1 - (t / max_iter))^(rho * sqrt(t / max_iter))
+        p1 = 2 * exp(-2 * (t / max_iter)^2)
+        p2 = 2 / (1 + exp((-t + max_iter / 2) / 100))
+        mu = gamma * exp(-(alpha * t / max_iter)^beta)
 
-        ch = ceil.(Int, searchAgents * rand(searchAgents))
+        ch = ceil.(Int, npop * rand(npop))
 
-        for i in 1:searchAgents
+        for i = 1:npop
             if rand() >= 0.1
-                chameleonPositions[i, :] .= chameleonPositions[i, :] + 
+                chameleonPositions[i, :] .=
+                    chameleonPositions[i, :] +
                     p1 .* (chameleonBestPosition[ch[i], :] - chameleonPositions[i, :]) .* rand() +
                     p2 .* (gPosition - chameleonPositions[i, :]) .* rand()
             else
-                for j in 1:dim
+                for j = 1:dim
                     chameleonPositions[i, j] = gPosition[j] + mu * ((ub[j] - lb[j]) * rand() + lb[j]) * sign(rand() - 0.5)
                 end
             end
         end
 
-        for i in 1:searchAgents
-            v[i, :] .= omega .* v[i, :] + 
-                p1 .* (chameleonBestPosition[i, :] - chameleonPositions[i, :]) .* rand() +
-                p2 .* (gPosition - chameleonPositions[i, :]) .* rand()
+        for i = 1:npop
+            v[i, :] .= omega .* v[i, :] +
+                       p1 .* (chameleonBestPosition[i, :] - chameleonPositions[i, :]) .* rand() +
+                       p2 .* (gPosition - chameleonPositions[i, :]) .* rand()
 
-            chameleonPositions[i, :] .= chameleonPositions[i, :] + (v[i, :].^2 - v0[i, :].^2) / (2 * a)
+            chameleonPositions[i, :] .= chameleonPositions[i, :] + (v[i, :] .^ 2 - v0[i, :] .^ 2) / (2 * a)
         end
         v0 .= v
 
-        for i in 1:searchAgents
-            for j in 1:dim
+        for i = 1:npop
+            for j = 1:dim
                 if chameleonPositions[i, j] < lb[j]
                     chameleonPositions[i, j] = lb[j]
                 elseif chameleonPositions[i, j] > ub[j]
@@ -66,10 +67,10 @@ function ChameleonSA(searchAgents, iteMax, lb, ub, dim, fobj)
             end
         end
 
-        for i in 1:searchAgents
+        for i = 1:npop
             chameleonPositions[i, :] = clamp.(chameleonPositions[i, :], lb, ub)
 
-            fit[i] = fobj(chameleonPositions[i, :])
+            fit[i] = objfun(chameleonPositions[i, :])
             if fit[i] < fitness[i]
                 chameleonBestPosition[i, :] = chameleonPositions[i, :]
                 fitness[i] = fit[i]

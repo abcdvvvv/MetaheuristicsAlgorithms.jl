@@ -3,28 +3,28 @@ Dhiman, Gaurav, and Amandeep Kaur.
 "STOA: a bio-inspired based optimization algorithm for industrial engineering problems." 
 Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
 """
-function STOA(Search_Agents, Max_iterations, Lb, Ub, dimension, objective)
-    Position = zeros(Float64, dimension)  
-    Score = Inf  
+function STOA(npop, max_iter, lb, ub, dim, objfun)
+    Position = zeros(Float64, dim)
+    Score = Inf
 
-    Positions = initialization(Search_Agents, dimension, Ub, Lb)  
-    Convergence = zeros(Float64, Max_iterations)  
+    Positions = initialization(npop, dim, ub, lb)
+    Convergence = zeros(Float64, max_iter)
 
     l = 0
 
-    while l < Max_iterations
+    while l < max_iter
         for i in axes(Positions, 1)
-            Positions .= max.(Lb, min.(Positions, Ub))
+            Positions .= max.(lb, min.(Positions, ub))
 
-            fitness = objective(Positions[i, :])
+            fitness = objfun(Positions[i, :])
 
             if fitness < Score
                 Score = fitness
                 Position .= Positions[i, :]
             end
         end
-        
-        Sa = 2 - l * (2 / Max_iterations)
+
+        Sa = 2 - l * (2 / max_iter)
 
         for i in axes(Positions, 1)
             for j in axes(Positions, 2)
@@ -38,8 +38,8 @@ function STOA(Search_Agents, Max_iterations, Lb, Ub, dimension, objective)
                 Positions[i, j] = res
             end
         end
-        l += 1  
-        Convergence[l] = Score  
+        l += 1
+        Convergence[l] = Score
     end
 
     return Score, Position, Convergence

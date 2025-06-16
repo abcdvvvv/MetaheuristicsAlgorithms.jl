@@ -4,8 +4,8 @@ Jia, Heming, et al.
 Cluster Computing 28.4 (2025): 246.
 """
 
-function SuperbFOA(N, MaxIt, lb, ub, dim, fobj)
-    MaxFEs = MaxIt * N
+function SuperbFOA(N, max_iter, lb, ub, dim, objfun)
+    MaxFEs = max_iter * N
     curve = zeros(MaxFEs)
     X = initialization(N, dim, ub, lb)
     Xnew = zeros(N, dim)
@@ -13,11 +13,11 @@ function SuperbFOA(N, MaxIt, lb, ub, dim, fobj)
     best_position = zeros(dim)
     fitness = zeros(N)
     FEs = 1
-    LB = fill(lb, dim)
-    UB = fill(ub, dim)
+    lb = fill(lb, dim)
+    ub = fill(ub, dim)
 
-    for i in 1:N
-        fitness[i] = fobj(X[i, :])
+    for i = 1:N
+        fitness[i] = objfun(X[i, :])
         if fitness[i] < best_fitness
             best_fitness = fitness[i]
             best_position = copy(X[i, :])
@@ -39,13 +39,13 @@ function SuperbFOA(N, MaxIt, lb, ub, dim, fobj)
         c1 = rand()
         T = 0.5
         m = FEs / MaxFEs * 2
-        p = sin.(UB .- LB) .* 2 .+ (UB .- LB) .* m
+        p = sin.(ub .- lb) .* 2 .+ (ub .- lb) .* m
         Xb = best_position
         XG = best_position .* C
 
-        for i in 1:N
+        for i = 1:N
             if T < c1
-                Xnew[i, :] = X[i, :] .+ LB .+ (UB .- LB) .* rand(1, dim)
+                Xnew[i, :] = X[i, :] .+ lb .+ (ub .- lb) .* rand(1, dim)
             else
                 s = r1 * 20 + r2 * 20
                 if s > 20
@@ -58,9 +58,9 @@ function SuperbFOA(N, MaxIt, lb, ub, dim, fobj)
 
         X .= Xnew
 
-        for i in 1:N
+        for i = 1:N
             Xnew[i, :] = clamp.(Xnew[i, :], lb, ub)
-            fitness[i] = fobj(Xnew[i, :])
+            fitness[i] = objfun(Xnew[i, :])
             if fitness[i] < best_fitness
                 best_fitness = fitness[i]
                 best_position = copy(Xnew[i, :])

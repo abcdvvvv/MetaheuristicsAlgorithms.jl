@@ -3,7 +3,7 @@ Hashim, Fatma A., Essam H. Houssein, Kashif Hussain, Mai S. Mabrouk, and Walid A
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
-function HBA(N, tmax, lb, ub, dim, objfunc) 
+function HBA(N, max_iter, lb, ub, dim, objfun) 
     beta = 6                      
     C = 2                         
     vec_flag = [1.0, -1.0]
@@ -12,17 +12,17 @@ function HBA(N, tmax, lb, ub, dim, objfunc)
     fitness = ones(N) * Inf
     
     for i in 1:N
-        fitness[i] = objfunc(vec(X[i,:]'))
+        fitness[i] = objfun(vec(X[i,:]'))
     end
     
     GYbest, gbest = findmin(fitness)
     Xprey = X[gbest, :]
     Xnew = zeros(N, dim)
 
-    CNVG = zeros(Float64, tmax)  
+    CNVG = zeros(Float64, max_iter)  
 
-    for t in 1:tmax
-        alpha = C * exp(-t / tmax)  
+    for t in 1:max_iter
+        alpha = C * exp(-t / max_iter)  
         I = Intensity(N, Xprey, X)   
 
         for i in 1:N
@@ -51,7 +51,7 @@ function HBA(N, tmax, lb, ub, dim, objfunc)
             Xnew[i, :] = clamp.(Xnew[i, :], lb, ub)
 
 
-            tempFitness = objfunc(vec(Xnew[i,:]'))
+            tempFitness = objfun(vec(Xnew[i,:]'))
             if tempFitness < fitness[i]
                 fitness[i] = tempFitness
                 X[i, :] = Xnew[i, :]

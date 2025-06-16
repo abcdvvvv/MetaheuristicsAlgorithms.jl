@@ -4,47 +4,43 @@
 - Arora, Sankalap, and Satvir Singh. "Butterfly optimization algorithm: a novel approach for global optimization." Soft computing 23 (2019): 715-734.
 
 """
-function BOA(n, N_iter, Lb, Ub, dim, fobj)
-    p = 0.6                  
-    power_exponent = 0.1      
-    sensory_modality = 0.01   
+function BOA(npop, max_iter, lb, ub, dim, objfun)
+    p = 0.6
+    power_exponent = 0.1
+    sensory_modality = 0.01
 
-    Sol = initialization(n, dim, Ub, Lb)
-    Fitness = zeros(n)
-    for i in 1:n
-        Fitness[i] = fobj(Sol[i, :])
+    Sol = initialization(npop, dim, ub, lb)
+    Fitness = zeros(npop)
+    for i = 1:npop
+        Fitness[i] = objfun(Sol[i, :])
     end
 
     fmin, I = findmin(Fitness)
     best_pos = Sol[I, :]
 
     S = copy(Sol)
-    Convergence_curve = zeros(N_iter)
+    Convergence_curve = zeros(max_iter)
 
-    for t in 1:N_iter
-        for i in 1:n  
-            Fnew = fobj(S[i, :])
+    for t = 1:max_iter
+        for i = 1:npop
+            Fnew = objfun(S[i, :])
             FP = sensory_modality * (Fnew^power_exponent)
 
-            
             if rand() < p
                 dis = rand() * rand() * best_pos - Sol[i, :]  # Eq. (2) in paper
                 S[i, :] = Sol[i, :] + dis * FP
             else
-                
                 epsilon = rand()
-                JK = randperm(n)
+                JK = randperm(npop)
                 dis = epsilon * epsilon * Sol[JK[1], :] - Sol[JK[2], :]
                 S[i, :] = Sol[i, :] + dis * FP  # Eq. (3) in paper
             end
 
-            
-            Flag4Ub = S[i, :] .> Ub
-            Flag4Lb = S[i, :] .< Lb
-            S[i, :] = (S[i, :] .* .~(Flag4Ub .+ Flag4Lb)) .+ Ub .* Flag4Ub .+ Lb .* Flag4Lb
+            Flag4Ub = S[i, :] .> ub
+            Flag4Lb = S[i, :] .< lb
+            S[i, :] = (S[i, :] .* .~(Flag4Ub .+ Flag4Lb)) .+ ub .* Flag4Ub .+ lb .* Flag4Lb
 
-            
-            Fnew = fobj(S[i, :])  
+            Fnew = objfun(S[i, :])
 
             if Fnew <= Fitness[i]
                 Sol[i, :] = S[i, :]
@@ -59,7 +55,7 @@ function BOA(n, N_iter, Lb, Ub, dim, fobj)
 
         Convergence_curve[t] = fmin
 
-        sensory_modality = sensory_modality_NEW(sensory_modality, N_iter)
+        sensory_modality = sensory_modality_NEW(sensory_modality, max_iter)
     end
 
     return fmin, best_pos, Convergence_curve
@@ -70,6 +66,6 @@ function sensory_modality_NEW(x, Ngen)
 end
 
 # Initialization of agents within bounds
-function initialization(n, dim, Ub, Lb)
-    return rand(n, dim) .* (Ub - Lb) .+ Lb
+function initialization(npop, dim, ub, lb)
+    return rand(npop, dim) .* (ub - lb) .+ lb
 end

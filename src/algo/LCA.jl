@@ -4,28 +4,27 @@ Houssein, Essam H., Diego Oliva, Nagwan Abdel Samee, Noha F. Mahmoud, and Marwa 
 Computers in Biology and Medicine 165 (2023): 107389.
 """
 
-function LCA(N, T, lb, ub, dim, fobj)
+function LCA(N, max_iter, lb, ub, dim, objfun)
     println("LCA is now tackling your problem")
-    
+
     Tumor_Location = zeros(Float64, dim)
     Tumor_Energy = Inf
 
     X = initialization(N, dim, ub, lb)
 
-    CNVG = zeros(Float64, T)
+    CNVG = zeros(Float64, max_iter)
 
-    t = 0  
+    t = 0
 
     q = 0
 
-    while t < T
-
+    while t < max_iter
         for i in axes(X, 1)
             FU = X[i, :] .> ub
             FL = X[i, :] .< lb
             X[i, :] .= (X[i, :] .* .!(FU .| FL)) .+ ub .* FU .+ lb .* FL
 
-            fitness = fobj(X[i, :])
+            fitness = objfun(X[i, :])
 
             if fitness < Tumor_Energy
                 Tumor_Energy = fitness
@@ -55,28 +54,28 @@ function LCA(N, T, lb, ub, dim, fobj)
                 end
 
             elseif q >= 2 && q < 5
-                p = 2 / 3  
-                Jump_strength = v^p  
+                p = 2 / 3
+                Jump_strength = v^p
                 X[i, :] .= (Tumor_Location .- X[i, :]) .- v * abs(Jump_strength * Tumor_Location .- X[i, :])
 
                 X1 = Tumor_Location .- v * abs(Jump_strength * Tumor_Location .- X[i, :])
-                X1 = MutationU(dim, T, Tumor_Location, t)
+                X1 = MutationU(dim, max_iter, Tumor_Location, t)
 
                 X1 .= Tumor_Location .- v * abs(Jump_strength * Tumor_Location .- X[i, :])
-                X1 = MutationU(dim, T, Tumor_Location, t)
+                X1 = MutationU(dim, max_iter, Tumor_Location, t)
 
-                if fobj(X1') < fobj(X[i, :])  
+                if objfun(X1') < objfun(X[i, :])
                     X[i, :] .= X1
                 else
                     X2 = Tumor_Location .- v * abs(Jump_strength * Tumor_Location .- X[i, :]) .+ rand(dim) .* Levy(dim)
-                    X2 = MutationU(dim, T, Tumor_Location, t)
+                    X2 = MutationU(dim, max_iter, Tumor_Location, t)
 
-                    if fobj(X2') < fobj(X[i, :])  
+                    if objfun(X2') < objfun(X[i, :])
                         X[i, :] .= X2
                     end
 
                     X3 = rand() * X2 .+ (1 - rand()) * X1
-                    if fobj(X3') < fobj(X[i, :])  
+                    if objfun(X3') < objfun(X[i, :])
                         X[i, :] .= X3
                     end
                 end
@@ -87,5 +86,5 @@ function LCA(N, T, lb, ub, dim, fobj)
         CNVG[t] = Tumor_Energy
     end
 
-    return Tumor_Energy,Tumor_Location,CNVG
+    return Tumor_Energy, Tumor_Location, CNVG
 end

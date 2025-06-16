@@ -4,17 +4,15 @@ Ahmadianfar, Iman, Ali Asghar Heidari, Saeed Noshadian, Huiling Chen, and Amir H
 Expert Systems with Applications 195 (2022): 116516.
 """
 
-
-
-function INFO(nP, MaxIt, lb, ub, dim, fobj)
+function INFO(npop, max_iter, lb, ub, dim, objfun)
     # Initialization
-    Cost = zeros(nP)
-    M = zeros(nP)
+    Cost = zeros(npop)
+    M = zeros(npop)
 
-    X = initialization(nP, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
-    for i in 1:nP
-        Cost[i] = fobj(X[i, :])
+    for i = 1:npop
+        Cost[i] = objfun(X[i, :])
         M[i] = Cost[i]
     end
 
@@ -30,23 +28,23 @@ function INFO(nP, MaxIt, lb, ub, dim, fobj)
     Better_Cost = Cost[sorted_inds[I]]
 
     # Main Loop of INFO
-    Convergence_curve = zeros(MaxIt)
+    Convergence_curve = zeros(max_iter)
 
-    for it in 1:MaxIt
-        alpha = 2 * exp(-4 * (it / MaxIt))  # Eq. (5.1) & Eq. (9.1)
-        
+    for it = 1:max_iter
+        alpha = 2 * exp(-4 * (it / max_iter))  # Eq. (5.1) & Eq. (9.1)
+
         M_Best = Best_Cost
         M_Better = Better_Cost
         M_Worst = Worst_Cost
 
-        for i in 1:nP
+        for i = 1:npop
             # Updating rule stage
             del = 2 * rand() * alpha - alpha  # Eq. (5)
             sigm = 2 * rand() * alpha - alpha  # Eq. (9)
 
             # Select three random solutions
-            A1 = randperm(nP)
-            A1 = A1[A1 .!= i]
+            A1 = randperm(npop)
+            A1 = A1[A1.!=i]
             a, b, c = A1[1:3]
 
             e = 1e-25
@@ -58,7 +56,7 @@ function INFO(nP, MaxIt, lb, ub, dim, fobj)
             W = cos.(MM .+ π) .* exp.(-MM ./ omg)  # Eqs. (4.2), (4.3), (4.4)
             Wt = sum(W)
 
-            WM1 = del * (W[1] * (X[a, :] - X[b, :]) + W[2] * (X[a, :] - X[c, :]) + 
+            WM1 = del * (W[1] * (X[a, :] - X[b, :]) + W[2] * (X[a, :] - X[c, :]) +
                          W[3] * (X[b, :] - X[c, :])) / (Wt + 1) .+ epsi
 
             omg = maximum([M_Best, M_Better, M_Worst])
@@ -67,7 +65,7 @@ function INFO(nP, MaxIt, lb, ub, dim, fobj)
             W = cos.(MM .+ π) .* exp.(-MM ./ omg)  # Eqs. (4.7), (4.8), (4.9)
             Wt = sum(W)
 
-            WM2 = del * (W[1] * (Best_X - Better_X) + W[2] * (Best_X - Worst_X) + 
+            WM2 = del * (W[1] * (Best_X - Better_X) + W[2] * (Best_X - Worst_X) +
                          W[3] * (Better_X - Worst_X)) / (Wt + 1) .+ epsi
 
             # Determine MeanRule
@@ -84,7 +82,7 @@ function INFO(nP, MaxIt, lb, ub, dim, fobj)
 
             # Vector combining stage
             u = zeros(dim)
-            for j in 1:dim
+            for j = 1:dim
                 mu = 0.05 * randn()
                 if rand() < 0.5
                     if rand() < 0.5
@@ -116,7 +114,7 @@ function INFO(nP, MaxIt, lb, ub, dim, fobj)
             # Check if new solution is outside the search space and bring it back
             # New_X = BC(u, lb, ub)
             New_X = max.(min.(u, ub), lb)
-            New_Cost = fobj(New_X)
+            New_Cost = objfun(New_X)
 
             if New_Cost < Cost[i]
                 X[i, :] = New_X

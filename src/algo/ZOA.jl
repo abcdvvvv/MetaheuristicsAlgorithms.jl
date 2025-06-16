@@ -5,39 +5,39 @@ Ieee Access 10 (2022): 49445-49473.
 
 """
 
-function ZOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fitness)
-    lowerbound = ones(dimension) .* lowerbound
-    upperbound = ones(dimension) .* upperbound
+function ZOA(npop, max_iter, lb, ub, dim, objfun)
+    lb = ones(dim) .* lb
+    ub = ones(dim) .* ub
 
-    X = zeros(SearchAgents, dimension)  
-    for i in 1:dimension
-        X[:, i] = lowerbound[i] .+ rand(SearchAgents) .* (upperbound[i] - lowerbound[i])
+    X = zeros(npop, dim)
+    for i = 1:dim
+        X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])
     end
 
-    fit = zeros(SearchAgents)
-    for i in 1:SearchAgents
+    fit = zeros(npop)
+    for i = 1:npop
         L = X[i, :]
-        fit[i] = fitness(L)
+        fit[i] = objfun(L)
     end
 
-    best_so_far = zeros(Max_iterations)
-    average = zeros(Max_iterations)
-    fbest = Inf  
-    PZ = zeros(dimension)  
+    best_so_far = zeros(max_iter)
+    average = zeros(max_iter)
+    fbest = Inf
+    PZ = zeros(dim)
 
-    for t in 1:Max_iterations
-        best, location = findmin(fit)  
+    for t = 1:max_iter
+        best, location = findmin(fit)
         if t == 1 || best < fbest
             fbest = best
             PZ = X[location, :]
         end
 
-        for i in 1:SearchAgents
-            I = round(Int, 1 + rand())  
-            X_newP1 = X[i, :] + rand(dimension) .* (PZ - I * X[i, :])  
-            X_newP1 = clamp.(X_newP1, lowerbound, upperbound)  
+        for i = 1:npop
+            I = round(Int, 1 + rand())
+            X_newP1 = X[i, :] + rand(dim) .* (PZ - I * X[i, :])
+            X_newP1 = clamp.(X_newP1, lb, ub)
 
-            f_newP1 = fitness(X_newP1)
+            f_newP1 = objfun(X_newP1)
             if f_newP1 <= fit[i]
                 X[i, :] = X_newP1
                 fit[i] = f_newP1
@@ -45,21 +45,21 @@ function ZOA(SearchAgents, Max_iterations, lowerbound, upperbound, dimension, fi
         end
 
         Ps = rand()
-        k = rand(1:SearchAgents)
-        AZ = X[k, :] 
+        k = rand(1:npop)
+        AZ = X[k, :]
 
-        for i in 1:SearchAgents
+        for i = 1:npop
             if Ps < 0.5
                 R = 0.1
-                X_newP2 = X[i, :] + R * (2 * rand(dimension) .- 1) * (1 - t / Max_iterations) .* X[i, :]  # Eq(5) S1
-                X_newP2 = clamp.(X_newP2, lowerbound, upperbound)  
+                X_newP2 = X[i, :] + R * (2 * rand(dim) .- 1) * (1 - t / max_iter) .* X[i, :]  # Eq(5) S1
+                X_newP2 = clamp.(X_newP2, lb, ub)
             else
                 I = round(Int, 1 + rand())
-                X_newP2 = X[i, :] + rand(dimension) .* (AZ - I * X[i, :])  
-                X_newP2 = clamp.(X_newP2, lowerbound, upperbound)  
+                X_newP2 = X[i, :] + rand(dim) .* (AZ - I * X[i, :])
+                X_newP2 = clamp.(X_newP2, lb, ub)
             end
 
-            f_newP2 = fitness(X_newP2) 
+            f_newP2 = objfun(X_newP2)
             if f_newP2 <= fit[i]
                 X[i, :] = X_newP2
                 fit[i] = f_newP2

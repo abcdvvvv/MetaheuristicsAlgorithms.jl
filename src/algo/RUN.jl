@@ -3,15 +3,15 @@ Ahmadianfar, Iman, Ali Asghar Heidari, Amir H. Gandomi, Xuefeng Chu, and Huiling
 "RUN beyond the metaphor: An efficient optimization algorithm based on Runge Kutta method." 
 Expert Systems with Applications 181 (2021): 115079.
 """
-function RUN(nP, MaxIt, lb, ub, dim, fobj)
-    Cost = zeros(nP)                
-    X = initialization(nP, dim, ub, lb)  
+function RUN(npop, max_iter, lb, ub, dim, objfun)
+    Cost = zeros(npop)                
+    X = initialization(npop, dim, ub, lb)  
     Xnew2 = zeros(dim)
 
-    Convergence_curve = zeros(MaxIt)
+    Convergence_curve = zeros(max_iter)
 
-    for i in 1:nP
-        Cost[i] = fobj(X[i, :])      
+    for i in 1:npop
+        Cost[i] = objfun(X[i, :])      
     end
 
     Best_Cost, ind = findmin(Cost)  
@@ -21,20 +21,20 @@ function RUN(nP, MaxIt, lb, ub, dim, fobj)
 
 
     it = 1 
-    while it < MaxIt
+    while it < max_iter
         it += 1
-        f = 20 * exp(-(12 * (it / MaxIt))) 
+        f = 20 * exp(-(12 * (it / max_iter))) 
         Xavg = mean(X, dims=1)'              
-        SF = 2 * (0.5 .- rand(nP)) .* f     
+        SF = 2 * (0.5 .- rand(npop)) .* f     
 
-        for i in 1:nP
+        for i in 1:npop
             _, ind_l = findmin(Cost)
             lBest = X[ind_l, :]
 
-            A, B, C = RndX(nP, i)          
+            A, B, C = RndX(npop, i)          
             _, ind1 = findmin(Cost[[A, B, C]])
 
-            gama = rand() * (X[i, :] .- rand(dim) .* (ub .- lb)) .* exp(-4 * it / MaxIt)  
+            gama = rand() * (X[i, :] .- rand(dim) .* (ub .- lb)) .* exp(-4 * it / max_iter)  
             Stp = rand(dim) .* ((Best_X .- rand() .* Xavg) .+ gama)
             DelX = 2 * rand(dim) .* abs.(Stp)
 
@@ -70,7 +70,7 @@ function RUN(nP, MaxIt, lb, ub, dim, fobj)
             FL = Xnew .< lb
             Xnew = (Xnew .* .! (FU .| FL)) .+ ub .* FU .+ lb .* FL 
 
-            CostNew = fobj(Xnew[:])
+            CostNew = objfun(Xnew[:])
             
             if CostNew < Cost[i]
                 X[i, :] = Xnew
@@ -78,13 +78,13 @@ function RUN(nP, MaxIt, lb, ub, dim, fobj)
             end
 
             if rand() < 0.5
-                EXP = exp(-5 * rand() * it / MaxIt)
+                EXP = exp(-5 * rand() * it / max_iter)
                 r = floor(Unifrnd(-1, 2, 1, 1)[1])
 
                 u = 2 * rand(1, dim)
                 w = Unifrnd(0, 2, 1, dim) .* EXP  
                 
-                A, B, C = RndX(nP, i)
+                A, B, C = RndX(npop, i)
                 Xavg = (X[A, :] .+ X[B, :] .+ X[C, :]) / 3        
                 
                 beta = rand(1, dim)
@@ -101,7 +101,7 @@ function RUN(nP, MaxIt, lb, ub, dim, fobj)
                 FU = Xnew2 .> ub
                 FL = Xnew2 .< lb
                 Xnew2 = (Xnew2 .* .! (FU .| FL)) .+ ub .* FU .+ lb .* FL
-                CostNew = fobj(Xnew2)        
+                CostNew = objfun(Xnew2)        
                 
             
                 if CostNew < Cost[i]
@@ -116,7 +116,7 @@ function RUN(nP, MaxIt, lb, ub, dim, fobj)
                         FU = Xnew .> ub
                         FL = Xnew .< lb
                         Xnew = (Xnew .* .! (FU .| FL)) .+ ub .* FU .+ lb .* FL
-                        CostNew = fobj(Xnew)
+                        CostNew = objfun(Xnew)
                         
                         if CostNew < Cost[i]
                             X[i, :] = Xnew
@@ -146,8 +146,8 @@ function Unifrnd(a, b, c, dim)
     return mu .+ sig .* (2 * rand(c, dim) .- 1)
 end
 
-function RndX(nP, i)
-    Qi = randperm(nP)
+function RndX(npop, i)
+    Qi = randperm(npop)
     filter!(x -> x != i, Qi)
     return Qi[1], Qi[2], Qi[3]
 end

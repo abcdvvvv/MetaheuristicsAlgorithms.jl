@@ -3,9 +3,9 @@ Askari, Qamar, Mehreen Saeed, and Irfan Younas.
 "Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
 Expert Systems with Applications 161 (2020): 113702.
 """
-function colleaguesLimitsGenerator(degree::Int, searchAgents::Int)
-    colleaguesLimits = zeros(Float64, searchAgents, 2)  
-    for c in searchAgents:-1:1
+function colleaguesLimitsGenerator(degree::Int, npop::Int)
+    colleaguesLimits = zeros(Float64, npop, 2)
+    for c = npop:-1:1
         hi = ceil(log10(c * degree - c + 1) / log10(degree)) - 1
         lowerLim = ((degree * degree^(hi - 1) - 1) / (degree - 1) + 1)
         upperLim = (degree * degree^hi - 1) / (degree - 1)
@@ -13,29 +13,25 @@ function colleaguesLimitsGenerator(degree::Int, searchAgents::Int)
         colleaguesLimits[c, 2] = upperLim
     end
 
-    return colleaguesLimits  
+    return colleaguesLimits
 end
 
+function HBO(npop, max_iter, lb, ub, dim, objfun)
+    cycles = floor(Int, max_iter / 25)
+    degree = 3
 
-function HBO(searchAgents, Max_iter, lb, ub, dim, fobj)
-    cycles = floor(Int, Max_iter / 25)  
-    degree = 3  
-
-    treeHeight = ceil(log10(searchAgents * degree - searchAgents + 1) / log10(degree))
+    treeHeight = ceil(log10(npop * degree - npop + 1) / log10(degree))
     fevals = 0
 
     Leader_pos = zeros(dim)
-    Leader_score = Inf  
-    
+    Leader_score = Inf
 
-    Solutions = initialization(searchAgents, dim, ub, lb)
+    Solutions = initialization(npop, dim, ub, lb)
 
-    
-    fitnessHeap = fill(Inf, searchAgents, 2)  
+    fitnessHeap = fill(Inf, npop, 2)
 
-
-    for c in 1:searchAgents
-        fitness = fobj(Solutions[c, :])
+    for c = 1:npop
+        fitness = objfun(Solutions[c, :])
         fevals += 1
         fitnessHeap[c, 1] = fitness
         fitnessHeap[c, 2] = c
@@ -57,25 +53,25 @@ function HBO(searchAgents, Max_iter, lb, ub, dim, fobj)
         end
     end
 
-    colleaguesLimits = colleaguesLimitsGenerator(degree, searchAgents)
-    Convergence_curve = zeros(Max_iter)
-    itPerCycle = Max_iter / cycles
+    colleaguesLimits = colleaguesLimitsGenerator(degree, npop)
+    Convergence_curve = zeros(max_iter)
+    itPerCycle = max_iter / cycles
     qtrCycle = itPerCycle / 4
 
-    for it in 1:Max_iter
+    for it = 1:max_iter
         gamma = (mod(it, itPerCycle)) / qtrCycle
         gamma = abs(2 - gamma)
 
-        for c in searchAgents:-1:2
-            if c == 1  
+        for c = npop:-1:2
+            if c == 1
                 continue
             else
                 parentInd = div(c + 1, degree)
                 curSol = Solutions[Int(fitnessHeap[c, 2]), :]
                 parentSol = Solutions[Int(fitnessHeap[parentInd, 2]), :]  # Sol to be updated with reference to
 
-                if colleaguesLimits[c, 2] > searchAgents
-                    colleaguesLimits[c, 2] = searchAgents
+                if colleaguesLimits[c, 2] > npop
+                    colleaguesLimits[c, 2] = npop
                 end
 
                 colleagueInd = c
@@ -84,13 +80,13 @@ function HBO(searchAgents, Max_iter, lb, ub, dim, fobj)
                 end
                 colleagueSol = Solutions[Int(fitnessHeap[colleagueInd, 2]), :]
 
-                for j in 1:dim
-                    p1 = (1 - it / Max_iter)
+                for j = 1:dim
+                    p1 = (1 - it / max_iter)
                     p2 = p1 + (1 - p1) / 2
                     r = rand()
                     rn = (2 * rand() - 1)
 
-                    if r < p1  
+                    if r < p1
                         continue
                     elseif r < p2
                         D = abs(parentSol[j] - curSol[j])
@@ -111,7 +107,7 @@ function HBO(searchAgents, Max_iter, lb, ub, dim, fobj)
             Flag4lb = curSol .< lb
             curSol .= max.(lb, min.(curSol, ub))
 
-            newFitness = fobj(curSol)
+            newFitness = objfun(curSol)
             fevals += 1
             if newFitness < fitnessHeap[c, 1]
                 fitnessHeap[c, 1] = newFitness

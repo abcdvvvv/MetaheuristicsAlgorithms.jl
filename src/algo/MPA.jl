@@ -3,37 +3,35 @@ Faramarzi, Afshin, Mohammad Heidarinejad, Seyedali Mirjalili, and Amir H. Gandom
 "Marine Predators Algorithm: A nature-inspired metaheuristic." 
 Expert systems with applications 152 (2020): 113377.
 """
-function MPA(SearchAgents_no::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
-
-    
+function MPA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     Top_predator_pos = zeros(dim)
     Top_predator_fit = Inf
 
-    Convergence_curve = zeros(Max_iter)
-    stepsize = zeros(SearchAgents_no, dim)
-    fitness = fill(Inf, SearchAgents_no, 1)
+    Convergence_curve = zeros(max_iter)
+    stepsize = zeros(npop, dim)
+    fitness = fill(Inf, npop, 1)
     #
-    fit_old = zeros(SearchAgents_no)
+    fit_old = zeros(npop)
     #
 
-    Prey = initialization(SearchAgents_no, dim, ub, lb)
+    Prey = initialization(npop, dim, ub, lb)
     Prey_old = zeros(size(Prey))
 
-    Xmin = ones(SearchAgents_no, dim) .* lb
-    Xmax = ones(SearchAgents_no, dim) .* ub
+    lb = ones(npop, dim) .* lb
+    ub = ones(npop, dim) .* ub
 
     Iter = 0
     FADs = 0.2
     P = 0.5
 
-    while Iter < Max_iter
+    while Iter < max_iter
         # Detecting top predator
-        for i in 1:SearchAgents_no
+        for i = 1:npop
             Flag4ub = Prey[i, :] .> ub
             Flag4lb = Prey[i, :] .< lb
             Prey[i, :] .= (Prey[i, :] .* .!(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness[i] = fobj(Prey[i, :])
+            fitness[i] = objfun(Prey[i, :])
 
             if fitness[i] < Top_predator_fit
                 Top_predator_fit = fitness[i]
@@ -54,22 +52,22 @@ function MPA(SearchAgents_no::Int, Max_iter::Int, lb::Union{Int, AbstractVector}
         fit_old = copy(fitness)
         Prey_old = copy(Prey)
 
-        Elite = repeat(reshape(Top_predator_pos, 1, dim), SearchAgents_no, 1)
-        CF = (1 - Iter / Max_iter)^(2 * Iter / Max_iter)
+        Elite = repeat(reshape(Top_predator_pos, 1, dim), npop, 1)
+        CF = (1 - Iter / max_iter)^(2 * Iter / max_iter)
 
-        RL = 0.05 * levy(SearchAgents_no, dim, 1.5)
-        RB = randn(SearchAgents_no, dim)
+        RL = 0.05 * levy(npop, dim, 1.5)
+        RB = randn(npop, dim)
 
-        for i in 1:SearchAgents_no
-            for j in 1:dim
+        for i = 1:npop
+            for j = 1:dim
                 R = rand()
 
-                if Iter < Max_iter / 3
+                if Iter < max_iter / 3
                     stepsize[i, j] = RB[i, j] * (Elite[i, j] - RB[i, j] * Prey[i, j])
                     Prey[i, j] += P * R * stepsize[i, j]
 
-                elseif Iter > Max_iter / 3 && Iter < 2 * Max_iter / 3
-                    if i > SearchAgents_no / 2
+                elseif Iter > max_iter / 3 && Iter < 2 * max_iter / 3
+                    if i > npop / 2
                         stepsize[i, j] = RB[i, j] * (RB[i, j] * Elite[i, j] - Prey[i, j])
                         Prey[i, j] = Elite[i, j] + P * CF * stepsize[i, j]
                     else
@@ -84,12 +82,12 @@ function MPA(SearchAgents_no::Int, Max_iter::Int, lb::Union{Int, AbstractVector}
             end
         end
 
-        for i in 1:SearchAgents_no
+        for i = 1:npop
             Flag4ub = Prey[i, :] .> ub
             Flag4lb = Prey[i, :] .< lb
             Prey[i, :] .= (Prey[i, :] .* .!(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness[i] = fobj(Prey[i, :])
+            fitness[i] = objfun(Prey[i, :])
 
             if fitness[i] < Top_predator_fit
                 Top_predator_fit = fitness[i]
@@ -111,11 +109,11 @@ function MPA(SearchAgents_no::Int, Max_iter::Int, lb::Union{Int, AbstractVector}
         Prey_old = copy(Prey)
 
         if rand() < FADs
-            U = rand(SearchAgents_no, dim) .< FADs
-            Prey += CF * ((Xmin .+ rand(SearchAgents_no, dim) .* (Xmax - Xmin)) .* U)
+            U = rand(npop, dim) .< FADs
+            Prey += CF * ((lb .+ rand(npop, dim) .* (ub - lb)) .* U)
         else
             r = rand()
-            Rs = SearchAgents_no
+            Rs = npop
             stepsize = (FADs * (1 - r) + r) * (Prey[shuffle(1:Rs), :] - Prey[shuffle(1:Rs), :])
             Prey += stepsize
         end

@@ -4,28 +4,27 @@
 - Braik, Malik, Alaa Sheta, and Heba Al-Hiary. "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." Neural computing and applications 33, no. 7 (2021): 2515-2547.
 
 """
-function CapSA(noP, maxite, LB, UB, dim, fobj)
+function CapSA(npop, max_iter, lb, ub, dim, objfun)
+    cg_curve = zeros(max_iter)
 
-    cg_curve = zeros(maxite)
-    
-    CapPos = initialization(noP, dim, UB, LB)
-    
-    v = 0.1 .* CapPos  
-    v0 = zeros(noP, dim)
-    CapFit = zeros(noP)
+    CapPos = initialization(npop, dim, ub, lb)
 
-    for i = 1:noP
-        CapFit[i] = fobj(CapPos[i, :])
+    v = 0.1 .* CapPos
+    v0 = zeros(npop, dim)
+    CapFit = zeros(npop)
+
+    for i = 1:npop
+        CapFit[i] = objfun(CapPos[i, :])
     end
 
     Fit = CapFit
 
     fitCapSA, index = findmin(CapFit)
-    CapBestPos = copy(CapPos)  
-    gFoodPos = CapPos[index, :]  
+    CapBestPos = copy(CapPos)
+    gFoodPos = CapPos[index, :]
 
-    bf = 0.70  
-    cr = 11.0  
+    bf = 0.70
+    cr = 11.0
     g = 9.81
 
     a1 = 1.250
@@ -35,25 +34,25 @@ function CapSA(noP, maxite, LB, UB, dim, fobj)
     wmax = 0.8
     wmin = 0.1
 
-    for t = 1:maxite
-        tau = beta[1] * exp(-beta[2] * t / maxite) ^ beta[3]
-        w = wmax - (wmax - wmin) * (t / maxite)
-        fol = ceil.(Int, (noP - 1) .* rand(noP))
+    for t = 1:max_iter
+        tau = beta[1] * exp(-beta[2] * t / max_iter)^beta[3]
+        w = wmax - (wmax - wmin) * (t / max_iter)
+        fol = ceil.(Int, (npop - 1) .* rand(npop))
 
-        for i = 1:noP
+        for i = 1:npop
             for j = 1:dim
                 v[i, j] = w * v[i, j] + a1 * (CapBestPos[i, j] - CapPos[i, j]) * rand() + a2 * (gFoodPos[j] - CapPos[i, j]) * rand()
             end
         end
 
-        for i = 1:noP
+        for i = 1:npop
             r = rand()
-            if i < noP / 2
+            if i < npop / 2
                 if rand() >= 0.1
                     if r <= 0.15
-                        CapPos[i, :] = gFoodPos + bf * ((v[i, :].^2) * sin(2 * rand() * 1.5)) / g
+                        CapPos[i, :] = gFoodPos + bf * ((v[i, :] .^ 2) * sin(2 * rand() * 1.5)) / g
                     elseif r > 0.15 && r <= 0.30
-                        CapPos[i, :] = gFoodPos + cr * bf * ((v[i, :].^2) * sin(2 * rand() * 1.5)) / g
+                        CapPos[i, :] = gFoodPos + cr * bf * ((v[i, :] .^ 2) * sin(2 * rand() * 1.5)) / g
                     elseif r > 0.30 && r <= 0.9
                         CapPos[i, :] = CapPos[i, :] + v[i, :]
                     elseif r > 0.9 && r <= 0.95
@@ -62,22 +61,22 @@ function CapSA(noP, maxite, LB, UB, dim, fobj)
                         CapPos[i, :] = gFoodPos .+ bf * (v[i, :] - v0[i, :])
                     end
                 else
-                    CapPos[i, :] = tau * (LB .+ rand(dim) .* (UB .- LB))
+                    CapPos[i, :] = tau * (lb .+ rand(dim) .* (ub .- lb))
                 end
-            elseif i >= noP / 2 && i <= noP
+            elseif i >= npop / 2 && i <= npop
                 eps = ((rand() + 2 * rand()) - (3 * rand())) / (1 + rand())
                 Pos = gFoodPos .+ 2 * (CapBestPos[fol[i], :] - CapPos[i, :]) * eps .+ 2 * (CapPos[i, :] - CapBestPos[i, :]) * eps
-                CapPos[i, :] = (Pos .+ CapPos[i - 1, :]) ./ 2
+                CapPos[i, :] = (Pos .+ CapPos[i-1, :]) ./ 2
             end
         end
 
         v0 = copy(v)
 
-        for i = 1:noP
-            u = UB .- CapPos[i, :] .< 0
-            l = LB .- CapPos[i, :] .> 0
-            CapPos[i, :] = LB .* l .+ UB .* u .+ CapPos[i, :] .* .~xor.(u, l)
-            CapFit[i] = fobj(CapPos[i, :])
+        for i = 1:npop
+            u = ub .- CapPos[i, :] .< 0
+            l = lb .- CapPos[i, :] .> 0
+            CapPos[i, :] = lb .* l .+ ub .* u .+ CapPos[i, :] .* .~xor.(u, l)
+            CapFit[i] = objfun(CapPos[i, :])
 
             if CapFit[i] < Fit[i]
                 CapBestPos[i, :] = CapPos[i, :]

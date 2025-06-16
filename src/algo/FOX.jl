@@ -4,29 +4,27 @@ Mohammed, Hardi, and Tarik Rashid.
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """
 
-function FOX(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
+function FOX(npop, max_iter, lb, ub, dim, objfun)
     Best_pos = zeros(dim)
-    Best_score = Inf   
+    Best_score = Inf
     MinT = Inf
 
-    X = initialization(SearchAgents_no, dim, ub, lb)
-    Distance_Fox_Rat = zeros(SearchAgents_no, dim)
-    convergence_curve = zeros(Max_iter)  
+    X = initialization(npop, dim, ub, lb)
+    Distance_Fox_Rat = zeros(npop, dim)
+    convergence_curve = zeros(max_iter)
 
-    l = 0  
+    l = 0
 
-    
-    c1 = 0.18   
-    c2 = 0.82   
+    c1 = 0.18
+    c2 = 0.82
 
-    while l < Max_iter
-        for i in 1:SearchAgents_no
-
+    while l < max_iter
+        for i = 1:npop
             Flag4ub = X[i, :] .> ub
             Flag4lb = X[i, :] .< lb
             X[i, :] = X[i, :] .* .~(Flag4ub .+ Flag4lb) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness = fobj(X[i, :])
+            fitness = objfun(X[i, :])
 
             if fitness < Best_score
                 Best_score = fitness
@@ -34,13 +32,13 @@ function FOX(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
 
-        convergence_curve[l + 1] = Best_score
-        
-        a = 2 * (1 - (l / Max_iter))
+        convergence_curve[l+1] = Best_score
+
+        a = 2 * (1 - (l / max_iter))
         Jump = 0.0
         dir = rand()
 
-        for i in 1:SearchAgents_no
+        for i = 1:npop
             r = rand()
             p = rand()
 

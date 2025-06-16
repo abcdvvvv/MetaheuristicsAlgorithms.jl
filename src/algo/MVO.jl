@@ -19,8 +19,7 @@ function RouletteWheelSelection(weights)
     return chosen_index
 end
 
-
-function MVO(N, Max_time, lb, ub, dim, fobj)
+function MVO(N, Max_time, lb, ub, dim, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)
@@ -44,19 +43,19 @@ function MVO(N, Max_time, lb, ub, dim, fobj)
         WEP = WEP_Min + Time * ((WEP_Max - WEP_Min) / Max_time)
 
         # Eq. (3.4) in the paper: Calculate Travelling Distance Rate (TDR)
-        TDR = 1 - ((Time)^(1/6) / (Max_time)^(1/6))
+        TDR = 1 - ((Time)^(1 / 6) / (Max_time)^(1 / 6))
 
         # Initialize inflation rates (fitness values)
         Inflation_rates = zeros(N)
 
-        for i in 1:N
+        for i = 1:N
             # Boundary checking
             Flag4ub = Universes[i, :] .> ub
             Flag4lb = Universes[i, :] .< lb
             Universes[i, :] = (Universes[i, :] .* .~(Flag4ub .+ Flag4lb)) + ub .* Flag4ub + lb .* Flag4lb
 
             # Calculate inflation rate (fitness) for each universe
-            Inflation_rates[i] = fobj(Universes[i, :])
+            Inflation_rates[i] = objfun(Universes[i, :])
 
             # Elitism: Update the best universe
             if Inflation_rates[i] < Best_universe_Inflation_rate
@@ -76,8 +75,8 @@ function MVO(N, Max_time, lb, ub, dim, fobj)
         Universes[1, :] = Sorted_universes[1, :]
 
         # Update the position of universes
-        for i in 2:N # Start from 2, since the first is the elite
-            for j in 1:dim
+        for i = 2:N # Start from 2, since the first is the elite
+            for j = 1:dim
                 r1 = rand()
                 if r1 < normalized_sorted_Inflation_rates[i]
                     White_hole_index = RouletteWheelSelection(-sorted_Inflation_rates)

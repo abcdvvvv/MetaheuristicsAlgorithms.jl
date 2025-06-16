@@ -9,7 +9,7 @@ function exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lo
 end
 
 function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, variables_no, upper_bound, lower_bound)
-    
+
     # Phase 1
     if abs(F) < 0.5
         if rand() < p2
@@ -41,7 +41,7 @@ function levyFlight(d)
     sigma = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
     u = randn(d) * sigma
     v = randn(d)
-    step = u ./ abs.(v).^(1 / beta)
+    step = u ./ abs.(v) .^ (1 / beta)
 
     return step
 end
@@ -51,7 +51,7 @@ function random_select(Best_vulture1_X, Best_vulture2_X, alpha, betha)
 
     # Implement roulette wheel selection
     selected_index = rouletteWheelSelection(probabilities)
-    
+
     if selected_index == 1
         random_vulture_X = Best_vulture1_X
     else
@@ -64,14 +64,12 @@ end
 function rouletteWheelSelection(x)
     random_value = rand()
     cumulative_sum = cumsum(x)
-    
+
     # Find the first index where cumulative sum is greater than or equal to random_value
     index = findfirst(c -> c >= random_value, cumulative_sum)
-    
+
     return index
 end
-
-
 
 """
 # References:
@@ -79,7 +77,7 @@ end
 - Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems.  Computers & Industrial Engineering, 158, 107408.
 
 """
-function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
+function AVOA(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
 
     # Initialize Best vultures
     Best_vulture1_X = zeros(variables_no)
@@ -88,7 +86,7 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
     Best_vulture2_F = Inf
 
     # Initialize the first random population of vultures
-    X = initialization(pop_size, variables_no, upper_bound, lower_bound)
+    X = initialization(npop, variables_no, upper_bound, lower_bound)
 
     # Controlling parameters
     p1 = 0.6
@@ -107,7 +105,7 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
         # for i in 1:size(X, 1)
         for i in axes(X, 1)
             current_vulture_X = X[i, :]
-            current_vulture_F = fobj(current_vulture_X)
+            current_vulture_F = objfun(current_vulture_X)
 
             # Update the best vultures if needed
             if current_vulture_F < Best_vulture1_F
@@ -121,7 +119,6 @@ function AVOA(pop_size, max_iter, lower_bound, upper_bound, variables_no, fobj)
 
         a = rand(-2:0.001:2) * ((sin((π / 2) * (current_iter / max_iter))^gamma) + cos((π / 2) * (current_iter / max_iter)) - 1)
         P1 = (2 * rand() + 1) * (1 - (current_iter / max_iter)) + a
-
 
         for i in axes(X, 1)
             current_vulture_X = X[i, :]

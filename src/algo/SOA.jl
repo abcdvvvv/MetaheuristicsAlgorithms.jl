@@ -3,19 +3,19 @@ Dhiman, Gaurav, and Vijay Kumar.
 "Seagull optimization algorithm: Theory and its applications for large-scale industrial engineering problems." 
 Knowledge-based systems 165 (2019): 169-196.
 """
-function SOA(Search_Agents, Max_iterations, Lower_bound, Upper_bound, dimension, objective)
-    Position = zeros(dimension)
+function SOA(npop, max_iter, lb, ub, dim, objfun)
+    Position = zeros(dim)
     Score = Inf
-    Positions = initialization(Search_Agents, dimension, Upper_bound, Lower_bound)
-    Convergence = zeros(Max_iterations)
+    Positions = initialization(npop, dim, ub, lb)
+    Convergence = zeros(max_iter)
 
     l = 0
 
-    while l < Max_iterations
+    while l < max_iter
         for i in axes(Positions, 1)
-            Positions[i, :] = clamp.(Positions[i, :], Lower_bound, Upper_bound)
+            Positions[i, :] = clamp.(Positions[i, :], lb, ub)
 
-            fitness = objective(Positions[i, :])
+            fitness = objfun(Positions[i, :])
 
             if fitness < Score
                 Score = fitness
@@ -23,7 +23,7 @@ function SOA(Search_Agents, Max_iterations, Lower_bound, Upper_bound, dimension,
             end
         end
 
-        Fc = 2 - l * (2 / Max_iterations)
+        Fc = 2 - l * (2 / max_iter)
 
         for i in axes(Positions, 1)
             for j in axes(Positions, 2)

@@ -3,8 +3,7 @@ Yang, Yutao, Huiling Chen, Ali Asghar Heidari, and Amir H. Gandomi.
 "Hunger games search: Visions, conception, implementation, deep analysis, perspectives, and towards performance shifts." 
 Expert Systems with Applications 177 (2021): 114864.
 """
-function HGS(N::Int, Max_iter::Int, lb, Ub, dim::Int, fobj)
-
+function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     bestPositions = zeros(Float64, dim)
     tempPosition = zeros(Float64, N, dim)
     Destination_fitness = Inf
@@ -16,19 +15,19 @@ function HGS(N::Int, Max_iter::Int, lb, Ub, dim::Int, fobj)
     weight4 = ones(Float64, N, dim)
 
     X = initialization(N, dim, ub, lb)
-    Convergence_curve = zeros(Float64, Max_iter)
-    it = 1 
+    Convergence_curve = zeros(Float64, max_iter)
+    it = 1
     hungry = zeros(Float64, N)
     count = 0
 
     # Main loop
-    while it <= Max_iter
-        VC2 = 0.03  
-        sumHungry = 0  
+    while it <= max_iter
+        VC2 = 0.03
+        sumHungry = 0
 
-        for i in 1:N
+        for i = 1:N
             X[i, :] = clamp.(X[i, :], lb, ub)
-            AllFitness[i] = fobj(X[i, :])
+            AllFitness[i] = objfun(X[i, :])
         end
 
         IndexSorted = sortperm(AllFitness) # sortperm(AllFitness, rev=false)  # Get the indices that would sort the array
@@ -46,7 +45,7 @@ function HGS(N::Int, Max_iter::Int, lb, Ub, dim::Int, fobj)
             Worstest_fitness = worstFitness
         end
 
-        for i in 1:N
+        for i = 1:N
             VC1[i] = sech(abs(AllFitness[i] - Destination_fitness))
 
             if Destination_fitness == AllFitness[i]
@@ -62,8 +61,8 @@ function HGS(N::Int, Max_iter::Int, lb, Ub, dim::Int, fobj)
             end
         end
 
-        for i in 1:N
-            for j in 2:dim
+        for i = 1:N
+            for j = 2:dim
                 weight3[i, j] = (1 - exp(-abs(hungry[i] - sumHungry))) * rand() * 2
                 if rand() < VC2
                     weight4[i, j] = hungry[i] * N / sumHungry * rand()
@@ -73,15 +72,15 @@ function HGS(N::Int, Max_iter::Int, lb, Ub, dim::Int, fobj)
             end
         end
 
-        shrink = 2 * (1 - it / Max_iter)  
-        for i in 1:N
+        shrink = 2 * (1 - it / max_iter)
+        for i = 1:N
             if rand() < VC2
                 X[i, :] *= 1 + randn()
             else
                 A = rand(1:count)
-                for j in 1:dim
+                for j = 1:dim
                     r = rand()
-                    vb = 2 * shrink * r - shrink  
+                    vb = 2 * shrink * r - shrink
                     if r > VC1[i]
                         X[i, j] = weight4[i, j] * tempPosition[A, j] + vb * weight3[i, j] * abs(tempPosition[A, j] - X[i, j])
                     else

@@ -4,7 +4,7 @@ Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He.
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """
 
-function SBOA(N, T, lb, ub, dim, fitness) 
+function SBOA(N, max_iter, lb, ub, dim, objfun) 
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 
@@ -12,13 +12,13 @@ function SBOA(N, T, lb, ub, dim, fitness)
     fit = zeros(N) 
     Bast_P = zeros(dim)
     for i in 1:N
-        fit[i] = fitness(vec(X[i, :]))
+        fit[i] = objfun(vec(X[i, :]))
     end
-    SBOA_curve = zeros(T)
+    SBOA_curve = zeros(max_iter)
     fbest = Inf
 
-    for t in 1:T
-        CF = (1 - t / T)^(2 * t / T)
+    for t in 1:max_iter
+        CF = (1 - t / max_iter)^(2 * t / max_iter)
         
         best, location = findmin(fit)
         if t == 1
@@ -30,15 +30,15 @@ function SBOA(N, T, lb, ub, dim, fitness)
         end
 
         for i in 1:N
-            if t < T / 3  
+            if t < max_iter / 3  
                 X_random_1 = X[rand(1:N), :]
                 X_random_2 = X[rand(1:N), :]
                 R1 = rand(dim)
                 X1 = X[i, :] .+ (X_random_1 .- X_random_2) .* R1
                 X1 = clamp.(X1, lb, ub)
-            elseif t > T / 3 && t < 2 * T / 3  
+            elseif t > max_iter / 3 && t < 2 * max_iter / 3  
                 RB = randn(dim)
-                X1 = Bast_P .+ exp((t / T)^4) .* (RB .- 0.5) .* (Bast_P .- X[i, :])
+                X1 = Bast_P .+ exp((t / max_iter)^4) .* (RB .- 0.5) .* (Bast_P .- X[i, :])
                 X1 = clamp.(X1, lb, ub)
             else  
                 RL = 0.5 * Levy(dim)
@@ -46,7 +46,7 @@ function SBOA(N, T, lb, ub, dim, fitness)
                 X1 = clamp.(X1, lb, ub)
             end
 
-            f_newP1 = fitness(X1)
+            f_newP1 = objfun(X1)
             if f_newP1 <= fit[i]
                 X[i, :] = X1
                 fit[i] = f_newP1
@@ -58,7 +58,7 @@ function SBOA(N, T, lb, ub, dim, fitness)
         for i in 1:N
             if r < 0.5
                 RB = rand(dim)
-                X2 = Bast_P .+ (1 - t / T)^2 .* (2 * RB .- 1) .* X[i, :]
+                X2 = Bast_P .+ (1 - t / max_iter)^2 .* (2 * RB .- 1) .* X[i, :]
                 X2 = clamp.(X2, lb, ub)
             else
                 K = round(Int, 1 + rand())
@@ -67,7 +67,7 @@ function SBOA(N, T, lb, ub, dim, fitness)
                 X2 = clamp.(X2, lb, ub)
             end
 
-            f_newP2 = fitness(X2)
+            f_newP2 = objfun(X2)
             if f_newP2 <= fit[i]
                 X[i, :] = X2
                 fit[i] = f_newP2

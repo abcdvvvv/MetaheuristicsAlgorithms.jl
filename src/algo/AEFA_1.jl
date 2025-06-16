@@ -1,5 +1,10 @@
+"""
+Yadav, Anupam. 
+"AEFA: Artificial electric field algorithm for global optimization." 
+Swarm and Evolutionary Computation 48 (2019): 93-108.
+"""
 
-function AEFA_1(npop, maxiters, lb, ub, dim, func_num)
+function AEFA_1(npop, max_iter, lb, ub, dim, objfun)
     FCheck, Rpower, tag = 1, 1, 1
 
     Rnorm = 2
@@ -11,10 +16,10 @@ function AEFA_1(npop, maxiters, lb, ub, dim, func_num)
     Fbest = nothing
     Lbest = zeros(dim)
 
-    for iteration in 1:maxiters
+    for iteration in 1:max_iter
         # Evaluate fitness
-        # fitness = [benchmark(X[i, :], func_num, D) for i in 1:N]
-        fitness = [func_num(X[i, :]) for i in 1:npop]
+        # fitness = [benchmark(X[i, :], objfun, D) for i in 1:N]
+        fitness = [objfun(X[i, :]) for i in 1:npop]
 
         if tag == 1
             best, best_X = findmin(fitness)
@@ -47,7 +52,7 @@ function AEFA_1(npop, maxiters, lb, ub, dim, func_num)
 
         # Calculate total electric force
         fper = 3.0
-        cbest = FCheck == 1 ? round(Int, npop * (fper + (1 - iteration / maxiters) * (100 - fper)) / 100) : npop
+        cbest = FCheck == 1 ? round(Int, npop * (fper + (1 - iteration / max_iter) * (100 - fper)) / 100) : npop
         s = sortperm(Q, rev=true)
 
         E = zeros(npop, dim)
@@ -66,7 +71,7 @@ function AEFA_1(npop, maxiters, lb, ub, dim, func_num)
         # Coulomb constant
         alfa = 30.0
         K0 = 500.0
-        K = K0 * exp(-alfa * iteration / maxiters)
+        K = K0 * exp(-alfa * iteration / max_iter)
 
         a = E * K
         V = rand(npop, dim) .* V .+ a

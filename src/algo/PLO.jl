@@ -4,11 +4,10 @@ Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen.
 Neurocomputing 607 (2024): 128427.
 """
 
-
-function PLO(N::Int, MaxIt::Int, lb, ub, dim::Int, fobj::Function)
+function PLO(N::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
     FEs = 0
     it = 1
-    MaxFEs = N * MaxIt
+    MaxFEs = N * max_iter
     fitness = fill(Inf, N)
     fitness_new = fill(Inf, N)
 
@@ -16,14 +15,14 @@ function PLO(N::Int, MaxIt::Int, lb, ub, dim::Int, fobj::Function)
     V = ones(N, dim)
     X_new = zeros(N, dim)
 
-    for i in 1:N
-        fitness[i] = fobj(X[i, :])
+    for i = 1:N
+        fitness[i] = objfun(X[i, :])
         FEs += 1
     end
 
     SortOrder = sortperm(fitness)
     fitness = fitness[SortOrder]
-    
+
     X = X[SortOrder, :]
     Bestpos = X[1, :]
     Bestscore = fitness[1]
@@ -37,7 +36,7 @@ function PLO(N::Int, MaxIt::Int, lb, ub, dim::Int, fobj::Function)
         w1 = tanh((FEs / MaxFEs)^4)
         w2 = exp(-(2 * FEs / MaxFEs)^3)
 
-        for i in 1:N
+        for i = 1:N
             a = rand() / 2 + 1
             V[i, :] .= 1 * exp((1 - a) / 100 * FEs)
             LS = V[i, :]
@@ -49,8 +48,8 @@ function PLO(N::Int, MaxIt::Int, lb, ub, dim::Int, fobj::Function)
         E = sqrt(FEs / MaxFEs)
         A = randperm(N)
 
-        for i in 1:N
-            for j in 1:dim
+        for i = 1:N
+            for j = 1:dim
                 if (rand() < 0.05) && (rand() < E)
                     X_new[i, j] = X[i, j] + sin(rand() * π) * (X[i, j] - X[A[i], j])
                 end
@@ -60,7 +59,7 @@ function PLO(N::Int, MaxIt::Int, lb, ub, dim::Int, fobj::Function)
             Flag4lb = X_new[i, :] .< lb
             X_new[i, :] = X_new[i, :] .* .~(Flag4ub .+ Flag4lb) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness_new[i] = fobj(X_new[i, :])
+            fitness_new[i] = objfun(X_new[i, :])
             FEs += 1
 
             if fitness_new[i] < fitness[i]

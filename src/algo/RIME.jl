@@ -4,51 +4,50 @@ Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, 
 Neurocomputing 532 (2023): 183-214.
 """
 
-
-function RIME(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj)
+function RIME(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun)
     println("RIME is now tackling your problem")
 
     Best_rime = zeros(dim)
-    Best_rime_rate = Inf  
-    Rimepop = initialization(N, dim, ub, lb)  
-    Lb = fill(lb, dim)  
-    Ub = fill(ub, dim)  
-    it = 1  
-    Convergence_curve = zeros(Max_iter)
-    Rime_rates = zeros(N)  
+    Best_rime_rate = Inf
+    Rimepop = initialization(N, dim, ub, lb)
+    lb = fill(lb, dim)
+    ub = fill(ub, dim)
+    it = 1
+    Convergence_curve = zeros(max_iter)
+    Rime_rates = zeros(N)
     newRime_rates = zeros(N)
-    W = 5  
+    W = 5
 
-    for i in 1:N
-        Rime_rates[i] = fobj(Rimepop[i, :])  
+    for i = 1:N
+        Rime_rates[i] = objfun(Rimepop[i, :])
         if Rime_rates[i] < Best_rime_rate
             Best_rime_rate = Rime_rates[i]
             Best_rime = Rimepop[i, :]
         end
     end
 
-    while it <= Max_iter
-        RimeFactor = (rand() - 0.5) * 2 * cos(pi * it / (Max_iter / 10)) * (1 - round(it * W / Max_iter) / W)  # Eq.(3),(4),(5)
-        E = sqrt(it / Max_iter)  
-        newRimepop = copy(Rimepop)  
-        normalized_rime_rates = normalize(Rime_rates)  
+    while it <= max_iter
+        RimeFactor = (rand() - 0.5) * 2 * cos(pi * it / (max_iter / 10)) * (1 - round(it * W / max_iter) / W)  # Eq.(3),(4),(5)
+        E = sqrt(it / max_iter)
+        newRimepop = copy(Rimepop)
+        normalized_rime_rates = normalize(Rime_rates)
 
-        for i in 1:N
-            for j in 1:dim
+        for i = 1:N
+            for j = 1:dim
                 r1 = rand()
                 if r1 < E
-                    newRimepop[i, j] = Best_rime[j] + RimeFactor * ((Ub[j] - Lb[j]) * rand() + Lb[j])  # Eq.(3)
+                    newRimepop[i, j] = Best_rime[j] + RimeFactor * ((ub[j] - lb[j]) * rand() + lb[j])  # Eq.(3)
                 end
                 r2 = rand()
                 if r2 < normalized_rime_rates[i]
-                    newRimepop[i, j] = Best_rime[j]  
+                    newRimepop[i, j] = Best_rime[j]
                 end
             end
         end
 
-        for i in 1:N
+        for i = 1:N
             newRimepop[i, :] = clamp.(newRimepop[i, :], lb, ub)
-            newRime_rates[i] = fobj(newRimepop[i, :])
+            newRime_rates[i] = objfun(newRimepop[i, :])
 
             if newRime_rates[i] < Rime_rates[i]
                 Rime_rates[i] = newRime_rates[i]

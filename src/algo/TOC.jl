@@ -1,11 +1,11 @@
 # Tornado Optimizer with Coriolis Force (TOC) in Julia
 
-function TOC(n, max_it, lb, ub, dim, fobj, nto=4, nt=3)
-    ccurve = zeros(max_it)
+function TOC(n, max_iter, lb, ub, dim, objfun, nto=4, nt=3)
+    ccurve = zeros(max_iter)
 
     # Initialization
     y = initialization(n, dim, ub, lb)
-    fit = [fobj(y[i, :]) for i in 1:axes(y, 1)]
+    fit = [objfun(y[i, :]) for i = 1:axes(y, 1)]
     sorted_idx = sortperm(fit)
 
     To = nto - nt
@@ -51,13 +51,13 @@ function TOC(n, max_it, lb, ub, dim, fobj, nto=4, nt=3)
     t = 1
     println("================  Tornado Optimizer with Coriolis force (TOC) ================ ")
 
-    while t <= max_it
-        nu = (0.1 * exp(-0.1 * (t / max_it)^0.1))^16
+    while t <= max_iter
+        nu = (0.1 * exp(-0.1 * (t / max_iter)^0.1))^16
         mu = 0.5 + rand() / 2
-        ay = (max_it - (t^2 / max_it)) / max_it
+        ay = (max_iter - (t^2 / max_iter)) / max_iter
 
-        Rl = 2 / (1 + exp((-t + max_it / 2) / 2))
-        Rr = -2 / (1 + exp((-t + max_it / 2) / 2))
+        Rl = 2 / (1 + exp((-t + max_iter / 2) / 2))
+        Rr = -2 / (1 + exp((-t + max_iter / 2) / 2))
 
         # TODO: Continue porting core update loops (windstorms to tornado, exploitation, etc.)
 

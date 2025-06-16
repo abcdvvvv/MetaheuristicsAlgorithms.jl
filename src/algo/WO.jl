@@ -16,32 +16,32 @@ function levyFlight(d::Int)
     return step
 end
 
-function WO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
+function WO(npop, max_iter, lb, ub, dim, objfun)
     Best_Pos = zeros(Float64, dim)
     Second_Pos = zeros(Float64, dim)
     Best_Score = Inf
     Second_Score = Inf  
-    GBestX = repeat(Best_Pos, SearchAgents_no, 1)
+    GBestX = repeat(Best_Pos, npop, 1)
 
 
-    X = initialization(SearchAgents_no, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(Float64, Max_iter)
+    Convergence_curve = zeros(Float64, max_iter)
 
     P = 0.4  
-    F_number = round(Int, SearchAgents_no * P)  
+    F_number = round(Int, npop * P)  
     M_number = F_number  
-    C_number = SearchAgents_no - F_number - M_number  
+    C_number = npop - F_number - M_number  
     
     t = 0  
 
-    while t < Max_iter
+    while t < max_iter
         for i in axes(X, 1)
             Flag4ub = X[i, :] .> ub
             Flag4lb = X[i, :] .< lb
             X[i, :] .= (X[i, :] .* .! (Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb  
 
-            fitness = fobj(X[i, :])  
+            fitness = objfun(X[i, :])  
 
             if fitness < Best_Score
                 Best_Score = fitness
@@ -54,8 +54,8 @@ function WO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
         end
         
-        Alpha = 1 - t / Max_iter
-        Beta = 1 - 1 / (1 + exp((1 / 2 * Max_iter - t) / Max_iter * 10))
+        Alpha = 1 - t / max_iter
+        Beta = 1 - 1 / (1 + exp((1 / 2 * max_iter - t) / max_iter * 10))
         A = 2 * Alpha  
         r1 = rand()
         R = 2 * r1 - 1
@@ -81,7 +81,7 @@ function WO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
                 for j in M_number + 1:M_number + F_number
                     X[j, :] .= X[j, :] .+ Alpha .* (X[i, :] .- X[j, :]) .+ (1 .- Alpha) .* (GBestX[j, :] .- X[j, :])
                 end
-                for i in SearchAgents_no - C_number + 1:SearchAgents_no
+                for i in npop - C_number + 1:npop
                     P = rand()
                     o = GBestX[i, :] .+ X[i, :] .* levyFlight(dim)
                     X[i, :] .= P * (o .- X[i, :])
@@ -89,7 +89,7 @@ function WO(SearchAgents_no, Max_iter, lb, ub, dim, fobj)
             end
                 
             if Satey_signal < 0.5 && abs(Danger_signal) >= 0.5
-                for i in 1:SearchAgents_no
+                for i in 1:npop
                     r4 = rand()
                     X[i, :] .= X[i, :] .* R .- abs.(GBestX[i, :] .- X[i, :]) .* r4^2
                 end

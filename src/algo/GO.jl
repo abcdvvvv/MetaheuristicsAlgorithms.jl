@@ -3,22 +3,21 @@ Zhang, Qingke, Hao Gao, Zhi-Hui Zhan, Junqing Li, and Huaxiang Zhang.
 "Growth Optimizer: A powerful metaheuristic algorithm for solving continuous and discrete global optimization problems." 
 Knowledge-Based Systems 261 (2023): 110206.
 """
-function GO(popsize, MaxIter, xmin, xmax, dimension, Func) 
-
+function GO(popsize, max_iter, xmin, xmax, dim, objfun)
     FEs = 0
     P1 = 5
     P2 = 0.001
     P3 = 0.3
-    MaxFEs = MaxIter * popsize
-    
-    x = xmin .+ rand(popsize, dimension) .* (xmax - xmin)
-    gbestX = zeros(dimension)
+    MaxFEs = max_iter * popsize
+
+    x = xmin .+ rand(popsize, dim) .* (xmax - xmin)
+    gbestX = zeros(dim)
     gbestfitness = Inf
     fitness = zeros(popsize)
     gbesthistory = []
 
-    for i in 1:popsize
-        fitness[i] = Func(x[i, :])
+    for i = 1:popsize
+        fitness[i] = objfun(x[i, :])
         FEs += 1
         if gbestfitness > fitness[i]
             gbestfitness = fitness[i]
@@ -31,7 +30,7 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func)
         ind = sortperm(fitness)
         Best_X = x[ind[1], :]
 
-        for i in 1:popsize
+        for i = 1:popsize
             Worst_X = x[ind[rand(popsize-P1+1:popsize)], :]
             Better_X = x[ind[rand(2:P1)], :]
             random = selectID(popsize, i, 2)
@@ -62,7 +61,7 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func)
             newx = x[i, :] + KA1 + KA2 + KA3 + KA4
             newx = clamp.(newx, xmin, xmax)
 
-            newfitness = Func(newx)
+            newfitness = objfun(newx)
             FEs += 1
 
             if fitness[i] > newfitness
@@ -85,10 +84,10 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func)
             break
         end
 
-        for i in 1:popsize
+        for i = 1:popsize
             newx = x[i, :]
 
-            for j in 1:dimension
+            for j = 1:dim
                 if rand() < P3
                     R = x[ind[rand(1:P1)], :]
                     newx[j] = x[i, j] + (R[j] - x[i, j]) * rand()
@@ -101,7 +100,7 @@ function GO(popsize, MaxIter, xmin, xmax, dimension, Func)
             end
 
             newx = clamp.(newx, xmin, xmax)
-            newfitness = Func(newx)
+            newfitness = objfun(newx)
             FEs += 1
 
             if fitness[i] > newfitness
@@ -136,13 +135,13 @@ end
 
 function selectID(popsize, i, k)
     if k <= popsize
-        vecc = vcat(1:i-1, i+1:popsize)  
-        r = zeros(Int, k)  
-        for kkk in 1:k
+        vecc = vcat(1:i-1, i+1:popsize)
+        r = zeros(Int, k)
+        for kkk = 1:k
             n = popsize - kkk
-            t = rand(1:n)  
+            t = rand(1:n)
             r[kkk] = vecc[t]
-            vecc = deleteat!(vecc, t)  
+            vecc = deleteat!(vecc, t)
         end
         return r
     else

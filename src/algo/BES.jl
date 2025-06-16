@@ -19,8 +19,8 @@ function polr(a, R, N)
 end
 
 function swoo_p(a, R, N)
-    th = a * π * exp.(rand(N))  
-    r = th  
+    th = a * π * exp.(rand(N))
+    r = th
 
     xR = r .* sinh.(th)  # Element-wise sinh
     yR = r .* cosh.(th)  # Element-wise cosh
@@ -32,27 +32,27 @@ function swoo_p(a, R, N)
     return xR, yR
 end
 
-function swoop(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
+function swoop(objfun, popPos, popCost, BestPos, BestCost, npop, low, high)
     Mean = mean(popPos, dims=1)
     a = 10
     R = 1.5
     s1 = 0
 
     # Shuffle population
-    A = randperm(nPop)
+    A = randperm(npop)
     popPos = popPos[A, :]
     popCost = popCost[A]
 
-    x, y = swoo_p(a, R, nPop)
+    x, y = swoo_p(a, R, npop)
 
-    for i in 1:nPop
+    for i = 1:npop
         Step = popPos[i, :] .- 2 * Mean'
         Step1 = popPos[i, :] .- 2 * BestPos
         newsolPos = rand(length(Mean)) .* BestPos .+ x[i] * Step .+ y[i] * Step1
-        
+
         newsolPos = clamp.(newsolPos, low, high)
         newsolPos = vec(newsolPos)
-        newsolCost = fobj(newsolPos)
+        newsolCost = objfun(newsolPos)
 
         if newsolCost < popCost[i]
             popPos[i, :] = newsolPos
@@ -69,27 +69,26 @@ function swoop(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
     return popPos, popCost, BestPos, BestCost, s1
 end
 
-function search_space(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
-
+function search_space(objfun, popPos, popCost, BestPos, BestCost, npop, low, high)
     Mean = mean(popPos, dims=1)
     a = 10
     R = 1.5
     s1 = 0
 
     # Shuffle population
-    A = randperm(nPop)
+    A = randperm(npop)
     popPos = popPos[A, :]
     popCost = popCost[A]
 
-    x, y = polr(a, R, nPop)
+    x, y = polr(a, R, npop)
 
-    for i in 1:nPop-1
+    for i = 1:npop-1
         Step = popPos[i, :] .- popPos[i+1, :]
         Step1 = popPos[i, :] .- Mean'
         newsolPos = popPos[i, :] .+ y[i] * vec(Step) .+ x[i] * Step1
         newsolPos = vec(newsolPos)
         newsolPos = clamp.(newsolPos, low, high)
-        newsolCost = fobj(newsolPos)
+        newsolCost = objfun(newsolPos)
 
         if newsolCost < popCost[i]
             popPos[i, :] = newsolPos
@@ -106,18 +105,17 @@ function search_space(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
     return popPos, popCost, BestPos, BestCost, s1
 end
 
-function select_space(fobj, popPos, popCost, nPop, BestPos, BestCost, low, high, dim)
+function select_space(objfun, popPos, popCost, npop, BestPos, BestCost, low, high, dim)
     Mean = mean(popPos, dims=1)
     lm = 2
     s1 = 0
 
-
-    for i in 1:nPop
+    for i = 1:npop
         newsolPos = BestPos .+ lm * rand(dim) .* (vec(Mean) .- popPos[i, :])
-        newsolPos = clamp.(newsolPos, low, high)  
+        newsolPos = clamp.(newsolPos, low, high)
         newsolPos = vec(newsolPos)
-        newsolCost = fobj(vec(newsolPos))
-        
+        newsolCost = objfun(vec(newsolPos))
+
         if newsolCost < popCost[i]
             popPos[i, :] = newsolPos
             popCost[i] = newsolCost
@@ -133,36 +131,35 @@ function select_space(fobj, popPos, popCost, nPop, BestPos, BestCost, low, high,
     return popPos, popCost, BestPos, BestCost, s1
 end
 
-function BES(nPop, MaxIt, low, high, dim, fobj)
+function BES(npop, MaxIt, low, high, dim, objfun)
 
     # Initialize Best Solution
     BestCost = Inf
     BestPos = zeros(dim)
 
     # Population initialization
-    popPos = low .+ (high - low) .* rand(nPop, dim)
-    popCost = [fobj(popPos[i, :]) for i in 1:nPop]
+    popPos = low .+ (high - low) .* rand(npop, dim)
+    popCost = [objfun(popPos[i, :]) for i = 1:npop]
 
-    for i in 1:nPop
+    for i = 1:npop
         if popCost[i] < BestCost
             BestPos = popPos[i, :]
             BestCost = popCost[i]
         end
     end
-    
+
     Convergence_curve = zeros(MaxIt)
 
     # Main loop
-    for t in 1:MaxIt
-        (popPos, popCost, BestPos, BestCost, s1) = select_space(fobj, popPos, popCost, nPop, BestPos, BestCost, low, high, dim)
-        
-        (popPos, popCost, BestPos, BestCost, s2) = search_space(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
-        
-        (popPos, popCost, BestPos, BestCost, s3) = swoop(fobj, popPos, popCost, BestPos, BestCost, nPop, low, high)
+    for t = 1:MaxIt
+        (popPos, popCost, BestPos, BestCost, s1) = select_space(objfun, popPos, popCost, npop, BestPos, BestCost, low, high, dim)
+
+        (popPos, popCost, BestPos, BestCost, s2) = search_space(objfun, popPos, popCost, BestPos, BestCost, npop, low, high)
+
+        (popPos, popCost, BestPos, BestCost, s3) = swoop(objfun, popPos, popCost, BestPos, BestCost, npop, low, high)
 
         # Store convergence data
         Convergence_curve[t] = BestCost
-
     end
 
     return BestCost, BestPos, Convergence_curve

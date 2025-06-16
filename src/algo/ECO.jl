@@ -4,21 +4,19 @@ Lian, Junbo, Ting Zhu, Ling Ma, Xincan Wu, Ali Asghar Heidari, Yi Chen, Huiling 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """
 
-
-function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, fobj::Function)
-
+function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
-        m = copy(X[1, :])  
-    
+        m = copy(X[1, :])
+
         if G == 1
-            for s in 1:G1Number
+            for s = 1:G1Number
                 school = X[s, :]
                 if sum(abs.(m .- t)) > sum(abs.(school .- t))
                     m = school
                 end
             end
         else
-            for s in 1:G2Number
+            for s = 1:G2Number
                 school = X[s, :]
                 if sum(abs.(m .- t)) > sum(abs.(school .- t))
                     m = school
@@ -28,12 +26,12 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         return m
     end
 
-    function initializationLogistic(pop::Int, dim::Int, ub::Union{Int, AbstractVector}, lb::Union{Int, AbstractVector})
-        Boundary_no = length(ub)  
-        Positions = zeros(Float64, pop, dim)  
-    
-        for i in 1:pop
-            for j in 1:dim
+    function initializationLogistic(pop::Int, dim::Int, ub::Union{Int,AbstractVector}, lb::Union{Int,AbstractVector})
+        Boundary_no = length(ub)
+        Positions = zeros(Float64, pop, dim)
+
+        for i = 1:pop
+            for j = 1:dim
                 x0 = rand()
                 a = 4.0
                 x = a * x0 * (1 - x0)
@@ -54,7 +52,7 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                         Positions[i, j] = lb[j]
                     end
                 end
-                x0 = x  
+                x0 = x
             end
         end
         return Positions
@@ -69,9 +67,9 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         return step
     end
 
-    H = 0.5  
-    G1 = 0.2  
-    G2 = 0.1  
+    H = 0.5
+    G1 = 0.2
+    G2 = 0.1
 
     G1Number = round(Int, N * G1)
     G2Number = round(Int, N * G2)
@@ -81,52 +79,50 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         lb = fill(lb[1], dim)
     end
 
-    
-    X0 = initializationLogistic(N, dim, ub, lb)  
+    X0 = initializationLogistic(N, dim, ub, lb)
     X = copy(X0)
 
     fitness = zeros(Float64, N)
     fitness_new = zeros(Float64, N)
-    for i in 1:N
-        fitness[i] = fobj(X[i, :])
+    for i = 1:N
+        fitness[i] = objfun(X[i, :])
     end
 
-    index = sortperm(fitness)  
-    fitness = sort(fitness)     
+    index = sortperm(fitness)
+    fitness = sort(fitness)
 
-    GBestF = fitness[1]  
+    GBestF = fitness[1]
 
-    for i in 1:N
+    for i = 1:N
         X[i, :] = X0[index[i], :]
     end
 
-    curve = zeros(Float64, Max_iter)
+    curve = zeros(Float64, max_iter)
     Best_score = Inf
     Best_pos = zeros(dim)
 
-    GBestX = X[1, :]  
-    GWorstX = X[end, :]  
+    GBestX = X[1, :]
+    GWorstX = X[end, :]
     X_new = copy(X)
 
-
-    for i in 1:Max_iter
+    for i = 1:max_iter
         R1 = rand()
         R2 = rand()
-        P = 4 * randn() * (1 - i / Max_iter)
-        E = (π * i) / (P * Max_iter)
-        w = 0.1 * log(2 - (i / Max_iter))
+        P = 4 * randn() * (1 - i / max_iter)
+        E = (π * i) / (P * max_iter)
+        w = 0.1 * log(2 - (i / max_iter))
 
-        for j in 1:N
+        for j = 1:N
             if i % 3 == 1
-                if j >= 1 && j <= G1Number  
+                if j >= 1 && j <= G1Number
                     X_new[j, :] = X[j, :] .+ w * (mean(X[j, :]) .- X[j, :]) .* Levy(dim)
-                else  
+                else
                     X_new[j, :] = X[j, :] .+ w * (close(X[j, :], 1, X) .- X[j, :]) .* randn()
                 end
-            
+
             elseif i % 3 == 2
-                if j >= 1 && j <= G2Number  
-                    X_new[j, :] = X[j, :] .+ (GBestX .- mean(X, dims=1)') * exp(i / Max_iter - 1) .* Levy(dim)
+                if j >= 1 && j <= G2Number
+                    X_new[j, :] = X[j, :] .+ (GBestX .- mean(X, dims=1)') * exp(i / max_iter - 1) .* Levy(dim)
                 else
                     if R1 < H
                         X_new[j, :] = X[j, :] .- w * close(X[j, :], 2, X) .- P * (E * w * close(X[j, :], 2, X) .- X[j, :])
@@ -134,11 +130,11 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
                         X_new[j, :] = X[j, :] .- w * close(X[j, :], 2, X) .- P * (w * close(X[j, :], 2, X) .- X[j, :])
                     end
                 end
-            
+
             else
-                if j >= 1 && j <= G2Number  
+                if j >= 1 && j <= G2Number
                     X_new[j, :] = X[j, :] .+ (GBestX .- X[j, :]) .* randn() .- (GBestX .- X[j, :]) .* randn()
-                else  
+                else
                     if R2 < H
                         X_new[j, :] = GBestX .- P * (E * GBestX .- X[j, :])
                     else
@@ -151,7 +147,7 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
             Flag4lb = X_new[j, :] .< lb
             X_new[j, :] = (X_new[j, :] .* .!(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            fitness_new[j] = fobj(X_new[j, :])
+            fitness_new[j] = objfun(X_new[j, :])
             if fitness_new[j] > fitness[j]
                 fitness_new[j] = fitness[j]
                 X_new[j, :] = X[j, :]
@@ -169,13 +165,13 @@ function ECO(N::Int, Max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{In
         Best_pos = GBestX
         Best_score = curve[end]
 
-        index = sortperm(fitness)  
-        fitness = fitness[index]    
-        for j in 1:N
+        index = sortperm(fitness)
+        fitness = fitness[index]
+        for j = 1:N
             X0[j, :] = X[index[j], :]
         end
         X = copy(X0)
     end
-    
+
     return Best_score, Best_pos, curve
 end

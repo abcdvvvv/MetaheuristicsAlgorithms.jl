@@ -1,21 +1,21 @@
 struct AEOResult <: OptimizationResult
-    BestF
-    BestX
-    HisBestFit
-end 
+    BestF::Any
+    BestX::Any
+    HisBestFit::Any
+end
 
 """
-    AEO(nPop, MaxIt, Low, Up, F_index)
+    AEO(npop, max_iter, lb, ub, objfun)
 
     Artificial Ecosystem-based Optimization (AEO) algorithm implementation in Julia.
 
 # Arguments:
 
-- `nPop`: Number of individuals in the population.
-- `MaxIt`: Maximum number of iterations.
-- `Low`: Lower bounds for the search space.
-- `Up`: Upper bounds for the search space.
-- `F_index`: Function to evaluate the fitness of individuals.
+- `npop`: Number of individuals in the population.
+- `max_iter`: Maximum number of iterations.
+- `lb`: Lower bounds for the search space.
+- `ub`: Upper bounds for the search space.
+- `objfun`: Function to evaluate the fitness of individuals.
 
 # Returns:
 
@@ -28,16 +28,15 @@ end
 
 - Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
 """
-function AEO(nPop::Int, MaxIt::Int, Low::Vector, Up::Vector, F_index)::AEOResult
+function AEO(npop::Int, max_iter::Int, lb::Vector, ub::Vector, objfun)::AEOResult
+    dim = length(lb)
+    PopPos = zeros(npop, dim)
+    PopFit = zeros(npop)
 
-    Dim = length(Low)
-    PopPos = zeros(nPop, Dim)
-    PopFit = zeros(nPop)
-
-    newPopFit = zeros(nPop, Dim)
-    for i in 1:nPop
-        PopPos[i, :] = rand(Dim) .* (Up - Low) .+ Low
-        PopFit[i] = F_index(PopPos[i, :])
+    newPopFit = zeros(npop, dim)
+    for i = 1:npop
+        PopPos[i, :] = rand(dim) .* (ub - lb) .+ lb
+        PopFit[i] = objfun(PopPos[i, :])
     end
 
     indF = sortperm(PopFit, rev=true)
@@ -46,37 +45,37 @@ function AEO(nPop::Int, MaxIt::Int, Low::Vector, Up::Vector, F_index)::AEOResult
     BestF = PopFit[end]
     BestX = PopPos[end, :]
 
-    HisBestFit = zeros(MaxIt)
-    Matr = [1, Dim]
+    HisBestFit = zeros(max_iter)
+    Matr = [1, dim]
 
-    for It in 1:MaxIt
+    for It = 1:max_iter
         r1 = rand()
-        a = (1 - It / MaxIt) * r1
-        xrand = rand(Dim) .* (Up - Low) .+ Low
-        newPopPos = zeros(nPop, Dim) 
+        a = (1 - It / max_iter) * r1
+        xrand = rand(dim) .* (ub - lb) .+ lb
+        newPopPos = zeros(npop, dim)
         newPopPos[1, :] = (1 - a) * PopPos[end, :] .+ a * xrand  # equation (1)
 
-        for i in 3:nPop
-            u = randn(Dim)
-            v = randn(Dim)
+        for i = 3:npop
+            u = randn(dim)
+            v = randn(dim)
             C = 1 / 2 * u ./ abs.(v)  # equation (4)
 
             r = rand()
             if r < 1 / 3
                 newPopPos[i, :] = PopPos[i, :] .+ C .* (PopPos[i, :] .- newPopPos[1, :])  # equation (6)
             elseif r < 2 / 3
-                r_idx = rand(2:i-1)  
+                r_idx = rand(2:i-1)
                 newPopPos[i, :] = PopPos[i, :] .+ C .* (PopPos[i, :] .- PopPos[r_idx, :])  # equation (7)
             else
                 r2 = rand()
-                r_idx = rand(2:i-1)  
+                r_idx = rand(2:i-1)
                 newPopPos[i, :] = PopPos[i, :] .+ C .* (r2 * (PopPos[i, :] .- newPopPos[1, :]) .+ (1 - r2) .* (PopPos[i, :] .- PopPos[r_idx, :]))  # equation (8)
             end
         end
 
-        for i in 1:nPop
-            newPopPos[i, :] = max.(min.(newPopPos[i, :], Up), Low)
-            newPopFit[i] = F_index(newPopPos[i, :])
+        for i = 1:npop
+            newPopPos[i, :] = max.(min.(newPopPos[i, :], ub), lb)
+            newPopFit[i] = objfun(newPopPos[i, :])
             if newPopFit[i] < PopFit[i]
                 PopFit[i] = newPopFit[i]
                 PopPos[i, :] = newPopPos[i, :]
@@ -84,22 +83,22 @@ function AEO(nPop::Int, MaxIt::Int, Low::Vector, Up::Vector, F_index)::AEOResult
         end
 
         indOne = argmin(PopFit)
-        for i in 1:nPop
+        for i = 1:npop
             r3 = rand()
-            Ind = rand(1:2)  
+            Ind = rand(1:2)
             newPopPos[i, :] = PopPos[indOne, :] .+ 3 * randn(Matr[Ind]) .* ((r3 * rand(1:2) .- 1) .* PopPos[indOne, :] .- (2 * r3 - 1) .* PopPos[i, :])  # equation (9)
         end
 
-        for i in 1:nPop
-            newPopPos[i, :] = max.(min.(newPopPos[i, :], Up), Low)
-            newPopFit[i] = F_index(newPopPos[i, :])
+        for i = 1:npop
+            newPopPos[i, :] = max.(min.(newPopPos[i, :], ub), lb)
+            newPopFit[i] = objfun(newPopPos[i, :])
             if newPopFit[i] < PopFit[i]
                 PopPos[i, :] = newPopPos[i, :]
                 PopFit[i] = newPopFit[i]
             end
         end
 
-        indF = sortperm(PopFit, rev=true)    
+        indF = sortperm(PopFit, rev=true)
         PopPos = PopPos[indF, :]
         PopFit = PopFit[indF]
 
@@ -113,7 +112,7 @@ function AEO(nPop::Int, MaxIt::Int, Low::Vector, Up::Vector, F_index)::AEOResult
 
     #return BestF, BestX, HisBestFit
     return AEOResult(
-        BestF, 
-        BestX, 
+        BestF,
+        BestX,
         HisBestFit)
 end

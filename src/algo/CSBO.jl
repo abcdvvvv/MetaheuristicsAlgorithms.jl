@@ -11,20 +11,20 @@ end
   Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
 
 """
-function CSBO(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
-    VarSize = (1, nVar)       
+function CSBO(npop, max_iter, lb, ub, dim, objfun)
+    VarSize = (1, dim)
 
-    MaxFE = nPop * MaxIt
-    NR = div(nPop, 3)         
-    BestSolPosition = zeros(nVar)
+    MaxFE = npop * max_iter
+    NR = div(npop, 3)
+    BestSolPosition = zeros(dim)
     BestSolCost = Inf
 
-    pop = Vector{Plant}(undef, nPop)
-    sigma1 = [rand(nVar) for _ in 1:nPop]
+    pop = Vector{Plant}(undef, npop)
+    sigma1 = [rand(dim) for _ = 1:npop]
 
-    for i in 1:nPop
-        position = rand(VarMin:VarMax, nVar)
-        cost = CostFunction(position)
+    for i = 1:npop
+        position = rand(lb:ub, dim)
+        cost = objfun(position)
         pop[i] = Plant(position, cost)
 
         if cost <= BestSolCost
@@ -35,29 +35,29 @@ function CSBO(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
 
     BestCost = Float64[BestSolCost]
 
-    it = nPop
+    it = npop
 
-    while it <= MaxFE 
+    while it <= MaxFE
         Costs = [p.Cost for p in pop]
         BestCostNow = minimum(Costs)
         WorstCost = maximum(Costs)
 
-        for i in 1:nPop
-            A = shuffle(1:nPop)
+        for i = 1:npop
+            A = shuffle(1:npop)
             A = filter(x -> x != i, A)
             a1, a2, a3 = A[1:3]
-            
+
             AA1 = (pop[a2].Cost - pop[a3].Cost) / abs(pop[a3].Cost - pop[a2].Cost)
             AA2 = (pop[a1].Cost - pop[i].Cost) / abs(pop[a1].Cost - pop[i].Cost)
             AA1 = (pop[a2].Cost == pop[a3].Cost) ? 1.0 : AA1
             AA2 = (pop[a1].Cost == pop[i].Cost) ? 1.0 : AA2
 
             pos = pop[i].Position .+ AA2 * sigma1[i] .* (pop[i].Position - pop[a1].Position) .+
-                AA1 * sigma1[i] .* (pop[a3].Position - pop[a2].Position)
-            
-            pos = clamp.(pos, VarMin, VarMax)
-            cost = CostFunction(pos)
-            
+                  AA1 * sigma1[i] .* (pop[a3].Position - pop[a2].Position)
+
+            pos = clamp.(pos, lb, ub)
+            cost = objfun(pos)
+
             if cost < pop[i].Cost
                 pop[i] = Plant(pos, cost)
                 if cost <= BestSolCost
@@ -65,26 +65,26 @@ function CSBO(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
                     BestSolCost = cost
                 end
             end
-            
+
             it += 1
             push!(BestCost, BestSolCost)
         end
 
-        for i in 1:(nPop - NR)
+        for i = 1:(npop-NR)
             ratioi = (pop[i].Cost - WorstCost) / (BestCostNow - WorstCost)
-            sigma1[i] = fill(ratioi, nVar)
-            A = shuffle(1:nPop)
+            sigma1[i] = fill(ratioi, dim)
+            A = shuffle(1:npop)
             A = filter(x -> x != i, A)
             a1, a2, a3 = A[1:3]
-            
+
             pos = pop[a1].Position .+ sigma1[i] .* (pop[a3].Position - pop[a2].Position)
-            pos = clamp.(pos, VarMin, VarMax)
-            
+            pos = clamp.(pos, lb, ub)
+
             if rand() > 0.9
                 pos .= pop[i].Position
             end
 
-            cost = CostFunction(pos)
+            cost = objfun(pos)
             if cost < pop[i].Cost
                 pop[i] = Plant(pos, cost)
                 if cost <= BestSolCost
@@ -92,16 +92,16 @@ function CSBO(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
                     BestSolCost = cost
                 end
             end
-            
+
             it += 1
             push!(BestCost, BestSolCost)
         end
 
-        for i in (nPop - NR + 1):nPop
-            pos = pop[i].Position .+ (randn() / it) .* randn(nVar)
-            pos = clamp.(pos, VarMin, VarMax)
-            cost = CostFunction(pos)
-            
+        for i = (npop-NR+1):npop
+            pos = pop[i].Position .+ (randn() / it) .* randn(dim)
+            pos = clamp.(pos, lb, ub)
+            cost = objfun(pos)
+
             if cost < pop[i].Cost
                 pop[i] = Plant(pos, cost)
                 if cost <= BestSolCost
@@ -109,12 +109,11 @@ function CSBO(nPop, MaxIt, VarMin, VarMax, nVar, CostFunction)
                     BestSolCost = cost
                 end
             end
-            
-            sigma1[i] = rand(nVar)
+
+            sigma1[i] = rand(dim)
             it += 1
             push!(BestCost, BestSolCost)
         end
-
     end
     return BestSolCost, BestSolPosition, BestCost
 end

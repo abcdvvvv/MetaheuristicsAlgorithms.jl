@@ -4,24 +4,24 @@ Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang.
 Artificial Intelligence Review 57, no. 4 (2024): 98.
 """
 
-function BKA(pop, T, lb, ub, dim, fobj)
+function BKA(npop, max_iter, lb, ub, dim, objfun)
     # Initialize the locations of Blue Sheep
     p = 0.9
     r = rand()
-    XPos = initialization(pop, dim, ub, lb) # Initial population
-    XFit = [fobj(XPos[i, :]) for i in 1:pop]
-    Convergence_curve = zeros(T)
+    XPos = initialization(npop, dim, ub, lb) # Initial population
+    XFit = [objfun(XPos[i, :]) for i = 1:npop]
+    Convergence_curve = zeros(max_iter)
 
     Best_Fitness_BKA = Inf
     Best_Pos_BKA = zeros(dim)
 
-    for t in 1:T
+    for t = 1:max_iter
         sorted_indexes = sortperm(XFit)
         XLeader_Pos = XPos[sorted_indexes[1], :]
         XLeader_Fit = XFit[sorted_indexes[1]]
 
-        for i in 1:pop
-            n = 0.05 * exp(-2 * (t / T)^2)
+        for i = 1:npop
+            n = 0.05 * exp(-2 * (t / max_iter)^2)
             if p < r
                 XPosNew = XPos[i, :] .+ n .* (1 + sin(r)) .* XPos[i, :]
             else
@@ -29,7 +29,7 @@ function BKA(pop, T, lb, ub, dim, fobj)
             end
             XPosNew = clamp.(XPosNew, lb, ub) # Boundary checking
 
-            XFit_New = fobj(XPosNew)
+            XFit_New = objfun(XPosNew)
             if XFit_New < XFit[i]
                 XPos[i, :] = XPosNew
                 XFit[i] = XFit_New
@@ -46,9 +46,9 @@ function BKA(pop, T, lb, ub, dim, fobj)
             else
                 XPosNew = XPos[i, :] .+ cauchy_value .* (XLeader_Pos .- m .* XPos[i, :])
             end
-            XPosNew = clamp.(XPosNew, lb, ub) 
+            XPosNew = clamp.(XPosNew, lb, ub)
 
-            XFit_New = fobj(XPosNew)
+            XFit_New = objfun(XPosNew)
             if XFit_New < XFit[i]
                 XPos[i, :] = XPosNew
                 XFit[i] = XFit_New

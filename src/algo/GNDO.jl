@@ -3,19 +3,19 @@ Zhang, Yiying, Zhigang Jin, and Seyedali Mirjalili.
 "Generalized normal distribution optimization and its applications in parameter extraction of photovoltaic models." 
 Energy Conversion and Management 224 (2020): 113301.
 """
-function GNDO(n, t, lb, ub, d, obj)
+function GNDO(n, max_iter, lb, ub, d, objfun)
     x = lb .+ (ub .- lb) .* rand(n, d)
     
     bestFitness = Inf
     bestSol = zeros(d)
-    cgcurve = zeros(t)
+    cgcurve = zeros(max_iter)
 
     fitness = zeros(n)  
     
-    for it in 1:t
+    for it in 1:max_iter
         
         for i in 1:n
-            fitness[i] = obj(x[i, :])  
+            fitness[i] = objfun(x[i, :])  
         end
         
         for i in 1:n
@@ -66,7 +66,7 @@ function GNDO(n, t, lb, ub, d, obj)
             end
             
             newsol = clamp.(newsol, lb, ub)
-            newfitness = obj(vec(newsol))
+            newfitness = objfun(vec(newsol))
             
             if newfitness < fitness[i]
                 x[i,:] = newsol

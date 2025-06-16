@@ -4,7 +4,7 @@ Deng, Lingyun, and Sanyang Liu.
 Expert Systems with Applications 225 (2023): 120069.
 """
 
-function SnowOA(N, Max_iter, lb, ub, dim, fobj)
+function SnowOA(N, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)
@@ -21,8 +21,8 @@ function SnowOA(N, Max_iter, lb, ub, dim, fobj)
     N1 = floor(Int, N * 0.5)
     Elite_pool = zeros(4, dim)
 
-    for i in 1:N
-        Objective_values[i] = fobj(X[i, :])
+    for i = 1:N
+        Objective_values[i] = objfun(X[i, :])
         if i == 1
             Best_pos = X[i, :]
             Best_score = Objective_values[i]
@@ -35,7 +35,7 @@ function SnowOA(N, Max_iter, lb, ub, dim, fobj)
     idx1 = sortperm(Objective_values)
     second_best = X[idx1[2], :]
     third_best = X[idx1[3], :]
-    sum1 = sum(X[idx1[1:N1], :], dims=1)  
+    sum1 = sum(X[idx1[1:N1], :], dims=1)
     half_best_mean = sum1 / N1
 
     Elite_pool[1, :] = Best_pos
@@ -51,11 +51,11 @@ function SnowOA(N, Max_iter, lb, ub, dim, fobj)
     Nb = N ÷ 2
 
     l = 2
-    while l <= Max_iter
-        RB = randn(N, dim)  
-        T = exp(-l / Max_iter)
+    while l <= max_iter
+        RB = randn(N, dim)
+        T = exp(-l / max_iter)
         k = 1
-        DDF = 0.35 * (1 + (5/7) * (exp(l/Max_iter) - 1)^k / (exp(1) - 1)^k)
+        DDF = 0.35 * (1 + (5 / 7) * (exp(l / max_iter) - 1)^k / (exp(1) - 1)^k)
         M = DDF * T
 
         X_centroid = sum(X, dims=1) / N
@@ -63,10 +63,10 @@ function SnowOA(N, Max_iter, lb, ub, dim, fobj)
         index1 = randperm(N)[1:Na]
         index2 = setdiff(index, index1)
 
-        for i in 1:Na
+        for i = 1:Na
             r1 = rand()
             k1 = rand(1:4)
-            for j in 1:dim
+            for j = 1:dim
                 X[index1[i], j] = Elite_pool[k1, j] + RB[index1[i], j] * (r1 * (Best_pos[j] - X[index1[i], j]) + (1 - r1) * (X_centroid[j] - X[index1[i], j]))
             end
         end
@@ -77,17 +77,17 @@ function SnowOA(N, Max_iter, lb, ub, dim, fobj)
         end
 
         if Nb >= 1
-            for i in 1:Nb
+            for i = 1:Nb
                 r2 = 2 * rand() - 1
-                for j in 1:dim
+                for j = 1:dim
                     X[index2[i], j] = M * Best_pos[j] + RB[index2[i], j] * (r2 * (Best_pos[j] - X[index2[i], j]) + (1 - r2) * (X_centroid[j] - X[index2[i], j]))
                 end
             end
         end
 
-        for i in 1:N
-            X[i, :] = clamp.(X[i, :], lb, ub)  
-            Objective_values[i] = fobj(X[i, :])  
+        for i = 1:N
+            X[i, :] = clamp.(X[i, :], lb, ub)
+            Objective_values[i] = objfun(X[i, :])
 
             if Objective_values[i] < Best_score
                 Best_pos = X[i, :]

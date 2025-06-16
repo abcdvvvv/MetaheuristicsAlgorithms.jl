@@ -4,57 +4,56 @@
 - Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
 
 """
-function ARO(nPop, MaxIt, Low, Up, Dim, F_index)#(F_index, MaxIt, nPop)
-
-    PopPos = [rand(Dim) .* (Up - Low) .+ Low for _ in 1:nPop]
-    PopFit = [F_index(PopPos[i]) for i in 1:nPop]
+function ARO(npop, max_iter, lb, ub, dim, objfun)
+    PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
+    PopFit = [objfun(PopPos[i]) for i = 1:npop]
 
     BestF = Inf
-    BestX = zeros(Dim)
+    BestX = zeros(dim)
 
     # Find initial best solution
-    for i in 1:nPop
+    for i = 1:npop
         if PopFit[i] <= BestF
             BestF = PopFit[i]
             BestX = PopPos[i]
         end
     end
 
-    HisBestF = zeros(MaxIt)
+    HisBestF = zeros(max_iter)
 
     # Main loop
-    for It in 1:MaxIt
-        Direct1 = zeros(nPop, Dim)
-        Direct2 = zeros(nPop, Dim)
-        theta = 2 * (1 - It / MaxIt)
+    for It = 1:max_iter
+        Direct1 = zeros(npop, dim)
+        Direct2 = zeros(npop, dim)
+        theta = 2 * (1 - It / max_iter)
 
-        for i in 1:nPop
-            L = (exp(1) - exp(((It - 1) / MaxIt)^2)) * sin(2 * π * rand())
-            rd = ceil(Int, rand() * Dim)
-            Direct1[i, randperm(Dim)[1:rd]] .= 1
+        for i = 1:npop
+            L = (exp(1) - exp(((It - 1) / max_iter)^2)) * sin(2 * π * rand())
+            rd = ceil(Int, rand() * dim)
+            Direct1[i, randperm(dim)[1:rd]] .= 1
             c = Direct1[i, :]
             R = L .* c
 
             A = 2 * log(1 / rand()) * theta
 
             if A > 1
-                K = [1:i-1; i+1:nPop]
+                K = [1:i-1; i+1:npop]
                 RandInd = K[rand(1:end)]
                 newPopPos = PopPos[RandInd] .+ R .* (PopPos[i] .- PopPos[RandInd]) .+
-                            round(0.5 * (0.05 + rand())) * randn(Dim)
+                            round(0.5 * (0.05 + rand())) * randn(dim)
             else
-                Direct2[i, ceil(Int, rand() * Dim)] = 1
+                Direct2[i, ceil(Int, rand() * dim)] = 1
                 gr = Direct2[i, :]
-                H = ((MaxIt - It + 1) / MaxIt) * randn()
+                H = ((max_iter - It + 1) / max_iter) * randn()
                 b = PopPos[i] .+ H * gr .* PopPos[i]
                 newPopPos = PopPos[i] .+ R .* (rand() .* b .- PopPos[i])
             end
 
             # Apply boundary constraints
-            newPopPos = max.(min.(newPopPos, Up), Low)
+            newPopPos = max.(min.(newPopPos, ub), lb)
 
             # Evaluate the new solution
-            newPopFit = F_index(newPopPos)
+            newPopFit = objfun(newPopPos)
             if newPopFit < PopFit[i]
                 PopFit[i] = newPopFit
                 PopPos[i] = newPopPos
@@ -62,7 +61,7 @@ function ARO(nPop, MaxIt, Low, Up, Dim, F_index)#(F_index, MaxIt, nPop)
         end
 
         # Update the best solution
-        for i in 1:nPop
+        for i = 1:npop
             if PopFit[i] < BestF
                 BestF = PopFit[i]
                 BestX = PopPos[i]

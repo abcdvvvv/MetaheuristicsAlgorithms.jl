@@ -4,65 +4,62 @@ Flood algorithm (FLA): an efficient inspired meta-heuristic for engineering opti
 The Journal of Supercomputing, 80(15), pp.22913-23017.
 """
 
-function FLoodA(nPop, MaxIt, lb, ub, nVar, fobj)
+function FLoodA(npop, max_iter, lb, ub, dim, objfun)
+    CostFunction(x) = objfun(x)
 
-    CostFunction(x) = fobj(x)
+    lb = lb
+    ub = ub
+    VarSize = (1, dim)
+    NFEs = 0
+    Ne = 5
+    Convergence_curve = []
 
-    
-    VarMin = lb           
-    VarMax = ub           
-    VarSize = (1, nVar)   
-    NFEs = 0              
-    Ne = 5                
-    Convergence_curve = []  
-   
-    Position = zeros(nPop, nVar)  
+    Position = zeros(npop, dim)
     println("1 - size(Position) ", size(Position))
-    Cost = zeros(nPop)            
-    Val = zeros(nPop, nVar)       
-    
-    Position =initialization(nPop, nVar, VarMin, VarMax) 
-    for i in 1:nPop
+    Cost = zeros(npop)
+    Val = zeros(npop, dim)
+
+    Position = initialization(npop, dim, lb, ub)
+    for i = 1:npop
         Cost[i] = CostFunction(Position[i, :])
     end
-
 
     BestSolCost = Inf
     BestSolPosition = nothing
 
-    for i in 1:nPop
+    for i = 1:npop
         if Cost[i] <= BestSolCost
             BestSolCost = Cost[i]
-            BestSolPosition = Position[i,:]
+            BestSolPosition = Position[i, :]
         end
     end
 
     it = 0
     time1 = 0
-    while NFEs < nPop * MaxIt
+    while NFEs < npop * max_iter
         it += 1
-        PK = ((((MaxIt * (it^2) + 1)^0.5 + (1 / ((MaxIt / 4) * it)) * log(((MaxIt * (it^2) + 1)^0.5 + (MaxIt / 4) * it))))^(-2/3)) * (1.2 / it)
+        PK = ((((max_iter * (it^2) + 1)^0.5 + (1 / ((max_iter / 4) * it)) * log(((max_iter * (it^2) + 1)^0.5 + (max_iter / 4) * it))))^(-2 / 3)) * (1.2 / it)
 
-        for i in 1:nPop
+        for i = 1:npop
             sorted_costs = sort(Cost)
             Pe_i = ((Cost[i] - sorted_costs[1]) / (sorted_costs[end] - sorted_costs[1]))^2
-            A = filter(x -> x != i, collect(1:nPop))
+            A = filter(x -> x != i, collect(1:npop))
             a = A[rand(1:end)]
 
             if rand() > (rand() + Pe_i)
-                Val[i,:] = ((PK^randn()) / it) * (rand(nVar) .* (VarMax - VarMin) .+ VarMin)
-                new_position = Position[i,:] .+ Val[i,:]
+                Val[i, :] = ((PK^randn()) / it) * (rand(dim) .* (ub - lb) .+ lb)
+                new_position = Position[i, :] .+ Val[i, :]
             else
-                new_position = BestSolPosition .+ rand(nVar) .* (Position[a, :] .- Position[i, :])
+                new_position = BestSolPosition .+ rand(dim) .* (Position[a, :] .- Position[i, :])
             end
 
-            new_position = clamp.(new_position, VarMin, VarMax)
+            new_position = clamp.(new_position, lb, ub)
 
             new_cost = CostFunction(new_position)
             NFEs += 1
 
             if new_cost <= Cost[i]
-                Position[i,:] = new_position
+                Position[i, :] = new_position
                 Cost[i] = new_cost
             end
 
@@ -75,19 +72,19 @@ function FLoodA(nPop, MaxIt, lb, ub, nVar, fobj)
         Pt = abs(sin(rand() / it))
         if rand() < Pt
             sorted_indices = sortperm(Cost)
-            Position = Position[sorted_indices[1:nPop - Ne],:]
-            Cost = Cost[sorted_indices[1:nPop - Ne]]
-            Val = Val[sorted_indices[1:nPop - Ne],:]
+            Position = Position[sorted_indices[1:npop-Ne], :]
+            Cost = Cost[sorted_indices[1:npop-Ne]]
+            Val = Val[sorted_indices[1:npop-Ne], :]
 
-            for _ in 1:Ne
-                new_position = BestSolPosition .+ rand() .* (rand(nVar) .* (VarMax - VarMin) .+ VarMin)
+            for _ = 1:Ne
+                new_position = BestSolPosition .+ rand() .* (rand(dim) .* (ub - lb) .+ lb)
                 new_cost = CostFunction(new_position)
                 NFEs += 1
 
                 new_position = vec(new_position)
                 Position = vcat(Position, new_position')
                 push!(Cost, new_cost)
-                Val = vcat(Val, zeros(1, nVar))
+                Val = vcat(Val, zeros(1, dim))
 
                 if new_cost <= BestSolCost
                     BestSolCost = new_cost

@@ -4,16 +4,16 @@ Zheng, Boli, Yi Chen, Chaofan Wang, Ali Asghar Heidari, Lei Liu, and Huiling Che
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """
 
-function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
+function MossGO(npop, max_iter, lb, ub, dim, objfun)
     FEs = 0
-    MaxFEs = SearchAgents_no * MaxIt
-    best_cost = Inf   
+    MaxFEs = npop * max_iter
+    best_cost = Inf
     best_M = zeros(dim)
-    M = initialization(SearchAgents_no, dim, ub, lb) 
-    costs = zeros(SearchAgents_no)
+    M = initialization(npop, dim, ub, lb)
+    costs = zeros(npop)
 
-    for i in 1:SearchAgents_no
-        costs[i] = fobj(M[i, :])
+    for i = 1:npop
+        costs[i] = objfun(M[i, :])
         FEs += 1
         if costs[i] < best_cost
             best_M .= M[i, :]
@@ -30,16 +30,16 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
     divide_num = Int(floor(dim / 4))
     d1 = 0.2
 
-    newM = zeros(SearchAgents_no, dim)
-    newM_cost = zeros(SearchAgents_no)
-    rM = zeros(SearchAgents_no, dim, rec_num)  
-    rM_cos = zeros(SearchAgents_no, rec_num)   
+    newM = zeros(npop, dim)
+    newM_cost = zeros(npop)
+    rM = zeros(npop, dim, rec_num)
+    rM_cos = zeros(npop, rec_num)
 
     while FEs < MaxFEs
         calPositions = copy(M)
         div_num = randperm(dim)
 
-        for j in 1:max(divide_num, 1)
+        for j = 1:max(divide_num, 1)
             th = best_M[div_num[j]]
             index = calPositions[:, div_num[j]] .> th
             if sum(index) < size(calPositions, 1) / 2
@@ -50,20 +50,17 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
 
         D = repeat(best_M', size(calPositions, 1)) .- calPositions
 
-        D_wind = sum(D, dims=1) ./ size(calPositions, 1)  
+        D_wind = sum(D, dims=1) ./ size(calPositions, 1)
         D_wind = D_wind'
 
-        
-
-        beta = size(calPositions, 1) / SearchAgents_no
+        beta = size(calPositions, 1) / npop
         gama = 1 / sqrt(1 - beta^2)
         step = w * (rand(length(D_wind)) .- 0.5) .* (1 - FEs / MaxFEs)
-        step2 = 0.1 * w * (length(size(D_wind)) .- 0.5) .* (1 - FEs / MaxFEs) .* (1 + 1/2 * (1 + tanh(beta / gama)) * (1 - FEs / MaxFEs))
+        step2 = 0.1 * w * (length(size(D_wind)) .- 0.5) .* (1 - FEs / MaxFEs) .* (1 + 1 / 2 * (1 + tanh(beta / gama)) * (1 - FEs / MaxFEs))
         step3 = 0.1 * (rand() - 0.5) * (1 - FEs / MaxFEs)
-        rand_vals = rand(length(D_wind))  
-        result = 1 ./ (1 .+ (0.5 .- 10 .* rand_vals))  
-        act = actCal(result) 
-        
+        rand_vals = rand(length(D_wind))
+        result = 1 ./ (1 .+ (0.5 .- 10 .* rand_vals))
+        act = actCal(result)
 
         if rec == 1
             rM[:, :, rec] .= M
@@ -71,7 +68,7 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
             rec += 1
         end
 
-        for i in 1:SearchAgents_no
+        for i = 1:npop
             newM[i, :] .= M[i, :]
             if rand() > d1
                 newM[i, :] = newM[i, :] .+ step .* D_wind
@@ -91,7 +88,7 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
             Flag4lb = newM[i, :] .< lb
             newM[i, :] .= (newM[i, :] .* .~(Flag4ub .| Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
 
-            newM_cost[i] = fobj(newM[i, :])
+            newM_cost[i] = objfun(newM[i, :])
             FEs += 1
 
             rM[i, :, rec] .= newM[i, :]
@@ -107,7 +104,7 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
         if rec > rec_num || FEs >= MaxFEs
             lcost, Iindex = findmin(rM_cos, dims=2)
             Iindex = map(x -> x[2], Iindex)
-            for i in 1:SearchAgents_no
+            for i = 1:npop
                 M[i, :] = rM[i, :, Iindex[i]]
             end
             costs .= lcost
@@ -120,7 +117,6 @@ function MossGO(SearchAgents_no, MaxIt, lb, ub, dim, fobj)
 
     return best_cost, best_M, Convergence_curve
 end
-
 
 function actCal(X)
     act = X .>= 0.5  # Apply element-wise comparison, return a boolean array

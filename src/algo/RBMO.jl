@@ -4,26 +4,26 @@ Fu, Shengwei, et al.
 Artificial Intelligence Review 57.6 (2024): 134.
 """
 
-function RBMO(N::Int, T::Int, Xmin::Union{Int, AbstractVector}, Xmax::Union{Int, AbstractVector}, D::Int, fobj)
+function RBMO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, D::Int, objfun)
     Xfood = zeros(D)
     BestValue = Inf
-    Conv = zeros(T)
+    Conv = zeros(max_iter)
     fitness = fill(Inf, N)
     FES = 0
     Epsilon = 0.5
 
-    X = initialization(N, D, Xmax, Xmin)
+    X = initialization(N, D, ub, lb)
     X_old = copy(X)
     fitness_old = zeros(N)
 
-    for i in 1:N
-        fitness_old[i] = fobj(X_old[i, :])
+    for i = 1:N
+        fitness_old[i] = objfun(X_old[i, :])
     end
 
     t = 1
 
-    while t ≤ T
-        for i in 1:N
+    while t ≤ max_iter
+        for i = 1:N
             p = rand(2:5)
             selected_index_p = randperm(N)[1:p]
             Xp = X[selected_index_p, :]
@@ -44,10 +44,10 @@ function RBMO(N::Int, T::Int, Xmin::Union{Int, AbstractVector}, Xmax::Union{Int,
             end
         end
 
-        X = max.(Xmin, min.(X, Xmax))
+        X = max.(lb, min.(X, ub))
 
-        for i in 1:N
-            fitness[i] = fobj(X[i, :])
+        for i = 1:N
+            fitness[i] = objfun(X[i, :])
             if fitness[i] < BestValue
                 BestValue = fitness[i]
                 Xfood = copy(X[i, :])
@@ -57,9 +57,9 @@ function RBMO(N::Int, T::Int, Xmin::Union{Int, AbstractVector}, Xmax::Union{Int,
 
         fitness, X, fitness_old, X_old = Food_storage(fitness, X, fitness_old, X_old)
 
-        CF = (1 - t / T)^(2 * t / T)
+        CF = (1 - t / max_iter)^(2 * t / max_iter)
 
-        for i in 1:N
+        for i = 1:N
             p = rand(2:5)
             selected_index_p = randperm(N)[1:p]
             Xp = X[selected_index_p, :]
@@ -77,10 +77,10 @@ function RBMO(N::Int, T::Int, Xmin::Union{Int, AbstractVector}, Xmax::Union{Int,
             end
         end
 
-        X = max.(Xmin, min.(X, Xmax))
+        X = max.(lb, min.(X, ub))
 
-        for i in 1:N
-            fitness[i] = fobj(X[i, :])
+        for i = 1:N
+            fitness[i] = objfun(X[i, :])
             if fitness[i] < BestValue
                 BestValue = fitness[i]
                 Xfood = copy(X[i, :])
@@ -97,13 +97,12 @@ function RBMO(N::Int, T::Int, Xmin::Union{Int, AbstractVector}, Xmax::Union{Int,
     return BestValue, Xfood, Conv, FES
 end
 
-
 function Food_storage(fit, X, fit_old, X_old)
-    Inx = fit_old .< fit                       
-    Indx = repeat(Inx, 1, size(X, 2))          
+    Inx = fit_old .< fit
+    Indx = repeat(Inx, 1, size(X, 2))
 
-    X = Indx .* X_old .+ .!Indx .* X           
-    fit = Inx .* fit_old .+ .!Inx .* fit       
+    X = Indx .* X_old .+ .!Indx .* X
+    fit = Inx .* fit_old .+ .!Inx .* fit
 
     fit_old = copy(fit)
     X_old = copy(X)

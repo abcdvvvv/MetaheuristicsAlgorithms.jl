@@ -3,36 +3,36 @@ Li, Shimin, Huiling Chen, Mingjing Wang, Ali Asghar Heidari, and Seyedali Mirjal
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
-function SMA(N, Max_iter, lb, ub, dim, fobj)
+function SMA(N, max_iter, lb, ub, dim, objfun)
     bestPositions = zeros(1, dim)
-    Destination_fitness = Inf  
-    AllFitness = fill(Inf, N)  
-    weight = ones(N, dim)      
+    Destination_fitness = Inf
+    AllFitness = fill(Inf, N)
+    weight = ones(N, dim)
     X = initialization(N, dim, ub, lb)
-    Convergence_curve = zeros(Max_iter)
-    it = 1  
-    lb = ones(dim) .* lb  
-    ub = ones(dim) .* ub  
-    z = 0.03  
+    Convergence_curve = zeros(max_iter)
+    it = 1
+    lb = ones(dim) .* lb
+    ub = ones(dim) .* ub
+    z = 0.03
 
-    while it <= Max_iter
-        for i in 1:N
+    while it <= max_iter
+        for i = 1:N
             Flag4ub = X[i, :] .> ub
             Flag4lb = X[i, :] .< lb
             X[i, :] = (X[i, :] .* .~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
-            AllFitness[i] = fobj(X[i, :])
+            AllFitness[i] = objfun(X[i, :])
         end
 
-        SmellIndex = sortperm(AllFitness)   
-        SmellOrder = AllFitness[SmellIndex] 
-        worstFitness = SmellOrder[N]  
-        bestFitness = SmellOrder[1]   
+        SmellIndex = sortperm(AllFitness)
+        SmellOrder = AllFitness[SmellIndex]
+        worstFitness = SmellOrder[N]
+        bestFitness = SmellOrder[1]
 
-        S = bestFitness - worstFitness + eps()  
+        S = bestFitness - worstFitness + eps()
 
-        for i in 1:N
-            for j in 1:dim
-                if i <= (N / 2)  
+        for i = 1:N
+            for j = 1:dim
+                if i <= (N / 2)
                     weight[SmellIndex[i], j] = 1 + rand() * log10((bestFitness - AllFitness[SmellIndex[i]]) / S + 1)
                 else
                     weight[SmellIndex[i], j] = 1 - rand() * log10((bestFitness - AllFitness[SmellIndex[i]]) / S + 1)
@@ -45,21 +45,21 @@ function SMA(N, Max_iter, lb, ub, dim, fobj)
             Destination_fitness = bestFitness
         end
 
-        a = atanh(-(it / Max_iter) + 1)  
-        b = 1 - it / Max_iter
+        a = atanh(-(it / max_iter) + 1)
+        b = 1 - it / max_iter
 
-        for i in 1:N
-            if rand() < z  
+        for i = 1:N
+            if rand() < z
                 X[i, :] = (ub - lb) .* rand(dim) .+ lb
             else
-                p = tanh(abs(AllFitness[i] - Destination_fitness))  
-                vb = rand(dim) .* (2a) .- a  
+                p = tanh(abs(AllFitness[i] - Destination_fitness))
+                vb = rand(dim) .* (2a) .- a
                 vc = rand(dim) .* (2b) .- b
-                for j in 1:dim
+                for j = 1:dim
                     r = rand()
-                    A = rand(1:N)[1]  
+                    A = rand(1:N)[1]
                     B = rand(1:N)[1]
-                    if r < p  
+                    if r < p
                         X[i, j] = bestPositions[j] + vb[j] * (weight[i, j] * X[A, j] - X[B, j])
                     else
                         X[i, j] = vc[j] * X[i, j]

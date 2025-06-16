@@ -4,31 +4,24 @@ Heidari, Ali Asghar, Seyedali Mirjalili, Hossam Faris, Ibrahim Aljarah, Majdi Ma
 Future generation computer systems 97 (2019): 849-872.
 """
 
-
-function HHO(
-    N::Int,
-    T::Int,
-    lb::Union{Int,AbstractVector},
-    ub::Union{Int,AbstractVector},
-    dim::Int,
-    fobj::Function,
-)
+function HHO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector},
+    dim::Int, objfun::Function)
     Rabbit_Location = zeros(dim)
     Rabbit_Energy = Inf
 
     X = initialization(N, dim, ub, lb)
 
-    CNVG = zeros(T)
+    CNVG = zeros(max_iter)
 
     t = 0  # Loop counter
 
-    while t < T
+    while t < max_iter
         for i = 1:N
             FU = X[i, :] .> ub
             FL = X[i, :] .< lb
             X[i, :] = (X[i, :] .* .~(FU .+ FL)) .+ ub .* FU .+ lb .* FL
 
-            fitness = fobj(X[i, :])
+            fitness = objfun(X[i, :])
 
             if fitness < Rabbit_Energy
                 Rabbit_Energy = fitness
@@ -36,7 +29,7 @@ function HHO(
             end
         end
 
-        E1 = 2 * (1 - (t / T))
+        E1 = 2 * (1 - (t / max_iter))
 
         for i = 1:N
             E0 = 2 * rand() - 1
@@ -70,14 +63,14 @@ function HHO(
                         Rabbit_Location -
                         Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :])
 
-                    if fobj(X1) < fobj(X[i, :])
+                    if objfun(X1) < objfun(X[i, :])
                         X[i, :] = X1
                     else
                         X2 =
                             Rabbit_Location -
                             Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :]) .+
                             rand(dim) .* Levy(dim)
-                        if fobj(X2) < fobj(X[i, :])
+                        if objfun(X2) < objfun(X[i, :])
                             X[i, :] = X2
                         end
                     end
@@ -88,7 +81,7 @@ function HHO(
                         Escaping_Energy *
                         abs.(Jump_strength * Rabbit_Location .- vec(mean(X, dims=1)))
 
-                    if fobj(X1) < fobj(X[i, :])
+                    if objfun(X1) < objfun(X[i, :])
                         X[i, :] = X1
                     else
                         X2 =
@@ -96,7 +89,7 @@ function HHO(
                             Escaping_Energy *
                             abs.(Jump_strength * Rabbit_Location - vec(mean(X, dims=1))) .+
                             rand(dim) .* Levy(dim)
-                        if fobj(X2) < fobj(X[i, :])
+                        if objfun(X2) < objfun(X[i, :])
                             X[i, :] = X2
                         end
                     end
