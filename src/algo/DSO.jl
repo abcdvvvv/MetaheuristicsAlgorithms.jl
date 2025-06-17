@@ -1,8 +1,8 @@
-struct DSOResult <: OptimizationResult
-    Best_Cost::Float64
-    Best_Position::Vector{Float64}
-    Best_iteration::Vector{Float64}
-end
+# struct DSOResult <: OptimizationResult
+#     Best_Cost::Float64
+#     Best_Position::Vector{Float64}
+#     Best_iteration::Vector{Float64}
+# end
 
 """
     DSO(npop, max_iter, lb, ub, dim, objfun)
@@ -30,7 +30,7 @@ The Deep Sleep Optimiser (DSO) is a human-inspired metaheuristic optimization al
     The deep sleep optimiser: A human-based metaheuristic approach., IEEE Access (2023).
     
 """
-function DSO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, objfun)::DSOResult
+function DSO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, objfun)#::DSOResult
     prob = objfun
 
     if length(ub) != length(lb)

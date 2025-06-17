@@ -3,21 +3,21 @@ Chou, Jui-Sheng, and Dinh-Nhat Truong.
 "A novel metaheuristic optimizer inspired by behavior of jellyfish in ocean." 
 Applied Mathematics and Computation 389 (2021): 125535.
 """
-function JS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, nd, objfun)
-    dim = nd
+function JS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
+    dim = dim
     VarSize = (dim)
     if length(lb) == 1
-        lb = lb .* ones(nd)
-        ub = ub .* ones(nd)
+        lb = lb .* ones(dim)
+        ub = ub .* ones(dim)
     else
         lb = lb
         ub = ub
     end
 
-    popi = initialization(npop, nd, ub, lb)
+    popi = initialization(npop, dim, ub, lb)
     it = 0
 
-    BestSol = zeros(nd)
+    BestSol = zeros(dim)
 
     fval = Inf
 
