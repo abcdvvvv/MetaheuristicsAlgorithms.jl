@@ -3,6 +3,7 @@ Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 """
+
 function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     OneMarket = Dict(
         "CommPrice" => zeros(dim),
@@ -15,15 +16,15 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector
     best_f = Inf
     best_x = []
 
-    for i = 1:MarketSize
-        Market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
-        Market[i]["CommPriceFit"] = objfun(Market[i]["CommPrice"])
-        Market[i]["CommQuantity"] = rand(dim) .* (ub - lb) .+ lb
-        Market[i]["CommQuantityFit"] = objfun(Market[i]["CommQuantity"])
+    for i = 1:marketsize
+        market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
+        market[i]["CommPriceFit"] = objfun(market[i]["CommPrice"])
+        market[i]["CommQuantity"] = rand(dim) .* (ub - lb) .+ lb
+        market[i]["CommQuantityFit"] = objfun(market[i]["CommQuantity"])
 
-        if Market[i]["CommQuantityFit"] <= Market[i]["CommPriceFit"]
-            Market[i]["CommPriceFit"] = Market[i]["CommQuantityFit"]
-            Market[i]["CommPrice"] = Market[i]["CommQuantity"]
+        if market[i]["CommQuantityFit"] <= market[i]["CommPriceFit"]
+            market[i]["CommPriceFit"] = market[i]["CommQuantityFit"]
+            market[i]["CommPrice"] = market[i]["CommQuantity"]
         end
     end
 
@@ -38,58 +39,60 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector
 
     for Iter = 1:max_iter
         a = 2 * (max_iter - Iter + 1) / max_iter
-        F = zeros(MarketSize)
+        F = zeros(marketsize)
 
-        MeanQuantityFit = mean([Market[i]["CommQuantityFit"] for i = 1:MarketSize])
-        for i = 1:MarketSize
-            F[i] = abs(Market[i]["CommQuantityFit"] - MeanQuantityFit) + 1e-15
+        MeanQuantityFit = mean([market[i]["CommQuantityFit"] for i = 1:marketsize])
+        for i = 1:marketsize
+            F[i] = abs(market[i]["CommQuantityFit"] - MeanQuantityFit) + 1e-15
         end
         FQ = F / sum(F)
 
-        MeanPriceFit = mean([Market[i]["CommPriceFit"] for i = 1:MarketSize])
-        for i = 1:MarketSize
-            F[i] = abs(Market[i]["CommPriceFit"] - MeanPriceFit) + 1e-15
+        MeanPriceFit = mean([market[i]["CommPriceFit"] for i = 1:marketsize])
+        for i = 1:marketsize
+            F[i] = abs(market[i]["CommPriceFit"] - MeanPriceFit) + 1e-15
         end
         FP = F / sum(F)
 
-        MeanPrice = mean(hcat([Market[i]["CommPrice"] for i = 1:MarketSize]...), dims=2)'
+        MeanPrice = mean(hcat([market[i]["CommPrice"] for i = 1:marketsize]...), dims=2)'
 
-        for i = 1:MarketSize
+        for i = 1:marketsize
             Ind = rand() < 0.5 ? 1 : 2
             k = findfirst(x -> x >= rand(), cumsum(FQ))
-            CommQuantityEqu = Market[k]["CommQuantity"]
+            CommQuantityEqu = market[k]["CommQuantity"]
 
             Alpha = a * sin.(2 * pi * rand(dim))
             Beta = 2 * cos.(2 * pi * rand(dim))
 
-            CommPriceEqu = ifelse(rand() > 0.5, rand() * MeanPrice, Market[findfirst(x -> x >= rand(), cumsum(FP))]["CommPrice"])
+            CommPriceEqu = ifelse(rand() > 0.5, rand() * MeanPrice, market[findfirst(x -> x >= rand(), cumsum(FP))]["CommPrice"])
 
-            NewCommQuantity = CommQuantityEqu .+ Alpha .* (Market[i]["CommPrice"] .- vec(CommPriceEqu))
+            NewCommQuantity = CommQuantityEqu .+ Alpha .* (market[i]["CommPrice"] .- vec(CommPriceEqu))
 
             NewCommQuantity .= clamp.(NewCommQuantity, lb, ub)
 
             NewCommQuantityFit = objfun(NewCommQuantity)
 
-            if NewCommQuantityFit <= Market[i]["CommQuantityFit"]
-                Market[i]["CommQuantityFit"] = NewCommQuantityFit
-                Market[i]["CommQuantity"] = NewCommQuantity
+            if NewCommQuantityFit <= market[i]["CommQuantityFit"]
+                market[i]["CommQuantityFit"] = NewCommQuantityFit
+                market[i]["CommQuantity"] = NewCommQuantity
             end
 
             NewCommPrice = vec(CommPriceEqu) - Beta .* (NewCommQuantity .- CommQuantityEqu)
             NewCommPrice .= clamp.(NewCommPrice, lb, ub)
             NewCommPriceFit = objfun(NewCommPrice)
 
-            if NewCommPriceFit <= Market[i]["CommPriceFit"]
-                Market[i]["CommPriceFit"] = NewCommPriceFit
-                Market[i]["CommPrice"] = NewCommPrice
+            if NewCommPriceFit <= market[i]["CommPriceFit"]
+                market[i]["CommPriceFit"] = NewCommPriceFit
+                market[i]["CommPrice"] = NewCommPrice
             end
         end
 
-        for i = 1:MarketSize
-            if Market[i]["CommQuantityFit"] <= Market[i]["CommPriceFit"]
-                Market[i]["CommPriceFit"] = Market[i]["CommQuantityFit"]
-                Market[i]["CommPrice"] = Market[i]["CommQuantity"]
+        for i = 1:marketsize
+            if market[i]["CommQuantityFit"] <= market[i]["CommPriceFit"]
+                market[i]["CommPriceFit"] = market[i]["CommQuantityFit"]
+                market[i]["CommPrice"] = market[i]["CommQuantity"]
             end
+
+
 
             if Market[i]["CommPriceFit"] <= best_f
                 best_x = Market[i]["CommPrice"]
