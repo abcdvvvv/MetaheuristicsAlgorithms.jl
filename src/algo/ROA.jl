@@ -3,7 +3,7 @@ Jia, Heming, Xiaoxu Peng, and Chunbo Lang.
 "Remora optimization algorithm." 
 Expert Systems with Applications 185 (2021): 115665.
 """
-function ROA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function ROA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     Best_pos = zeros(Float64, dim)
     Best_score = Inf
 

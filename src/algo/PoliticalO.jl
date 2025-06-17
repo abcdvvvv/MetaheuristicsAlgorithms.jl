@@ -4,7 +4,7 @@ Askari, Qamar, Irfan Younas, and Mehreen Saeed.
 Knowledge-based systems 195 (2020): 105709.
 """
 
-function PoliticalO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function PoliticalO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     parties = 8
     lambda = 1.0
 

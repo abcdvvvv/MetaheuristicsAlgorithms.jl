@@ -4,7 +4,7 @@ Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang.
 Artificial Intelligence Review 57, no. 4 (2024): 98.
 """
 
-function BKA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function BKA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     # Initialize the locations of Blue Sheep
     p = 0.9
     r = rand()

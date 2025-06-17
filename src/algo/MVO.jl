@@ -19,7 +19,7 @@ function RouletteWheelSelection(weights)
     return chosen_index
 end
 
-function MVO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function MVO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)

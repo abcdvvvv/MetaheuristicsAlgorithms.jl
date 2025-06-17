@@ -29,7 +29,7 @@ function Solution_Imp(X, BestX, lb, ub, npop, cofi, M, A, D, i)
     return NewX
 end
 
-function MountainGO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function MountainGO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     lb = ones(dim) .* lb    # Lower Bound
     ub = ones(dim) .* ub    # Upper Bound
 

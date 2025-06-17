@@ -5,7 +5,7 @@
     The Journal of Supercomputing. 2023 May;79(7):7305-36.
     
 """
-function DBO(npop::Int, max_iter::Int, c, d, dim::Int, objfun)
+function DBO(npop::Int, max_iter::Int, c::Union{Real,AbstractVector}, d::Union{Real,AbstractVector}, dim::Int, objfun)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)
 

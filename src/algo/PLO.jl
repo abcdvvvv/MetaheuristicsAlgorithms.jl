@@ -4,7 +4,7 @@ Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen.
 Neurocomputing 607 (2024): 128427.
 """
 
-function PLO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
+function PLO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     FEs = 0
     it = 1
     MaxFEs = npop * max_iter

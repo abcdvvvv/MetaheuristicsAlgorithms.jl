@@ -4,7 +4,7 @@ Lian, Junbo, Ting Zhu, Ling Ma, Xincan Wu, Ali Asghar Heidari, Yi Chen, Huiling 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """
 
-function ECO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function ECO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
         m = copy(X[1, :])
 

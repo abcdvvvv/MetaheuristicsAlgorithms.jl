@@ -4,7 +4,7 @@ Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri.
 Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 """
 
-function SBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SBO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     alpha = 0.94
 
     pMutation = 0.05

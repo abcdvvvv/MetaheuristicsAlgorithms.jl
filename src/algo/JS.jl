@@ -3,7 +3,7 @@ Chou, Jui-Sheng, and Dinh-Nhat Truong.
 "A novel metaheuristic optimizer inspired by behavior of jellyfish in ocean." 
 Applied Mathematics and Computation 389 (2021): 125535.
 """
-function JS(npop::Int, max_iter::Int, lb, ub, nd, objfun)
+function JS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, nd, objfun)
     dim = nd
     VarSize = (dim)
     if length(lb) == 1

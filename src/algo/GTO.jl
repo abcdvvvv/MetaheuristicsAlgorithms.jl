@@ -3,7 +3,7 @@ Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, and Seyedali Mirjalil
 "Artificial gorilla troops optimizer: a new nature‐inspired metaheuristic algorithm for global optimization problems." 
 International Journal of Intelligent Systems 36, no. 10 (2021): 5887-5958.
 """
-function GTO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function GTO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Silverback = []
     Silverback_Score = Inf
 

@@ -3,7 +3,7 @@ Dhiman, Gaurav, Meenakshi Garg, Atulya Nagar, Vijay Kumar, and Mohammad Dehghani
 "A novel algorithm for global optimization: rat swarm optimizer." 
 Journal of Ambient Intelligence and Humanized Computing 12 (2021): 8457-8482.
 """
-function RSO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function RSO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Position = zeros(dim)
     Score = Inf
     Positions = initialization(npop, dim, ub, lb)

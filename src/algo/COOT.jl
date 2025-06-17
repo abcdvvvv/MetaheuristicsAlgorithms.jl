@@ -4,7 +4,7 @@
 - Naruei, Iraj, and Farshid Keynia. "A new optimization method based on COOT bird natural life model." Expert Systems with Applications 183 (2021): 115352.
 
 """
-function COOT(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function COOT(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     if length(ub) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb

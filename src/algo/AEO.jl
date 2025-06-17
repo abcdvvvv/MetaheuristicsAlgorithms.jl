@@ -28,7 +28,7 @@
 
 - Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
 """
-function AEO(npop::Int, max_iter::Int, lb::Vector, ub::Vector, objfun)::AEOResult
+function AEO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, objfun)::AEOResult
     dim = length(lb)
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)

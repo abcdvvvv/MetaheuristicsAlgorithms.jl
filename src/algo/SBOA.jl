@@ -4,7 +4,7 @@ Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He.
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """
 
-function SBOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun) 
+function SBOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun) 
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 

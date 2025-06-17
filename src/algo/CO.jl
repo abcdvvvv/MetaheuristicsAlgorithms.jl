@@ -9,7 +9,7 @@ end
 - Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. "The cheetah optimizer: A nature-inspired metaheuristic algorithm for large-scale optimization problems." Scientific reports 12, no. 1 (2022): 10953.
 
 """
-function CO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function CO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     empty_individual = Individual([], Inf)
     BestSol = Individual([], Inf)
     pop = [empty_individual for _ = 1:npop]

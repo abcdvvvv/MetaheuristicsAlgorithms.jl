@@ -4,7 +4,7 @@ Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri.
 Engineering applications of artificial intelligence 86 (2019): 165-181.
 """
 
-function PRO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function PRO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     VarSize = (1, dim)
 
     npoor = div(npop, 2)

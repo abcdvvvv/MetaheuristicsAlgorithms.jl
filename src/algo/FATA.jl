@@ -3,7 +3,7 @@ Qi, Ailiang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen.
 "FATA: an efficient optimization method based on geophysics." 
 Neurocomputing 607 (2024): 128289.
 """
-function FATA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function FATA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     worstInte = 0
     bestInte = Inf
     arf = 0.2

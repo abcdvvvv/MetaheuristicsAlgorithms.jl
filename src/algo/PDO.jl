@@ -16,7 +16,7 @@ Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 #     return z
 # end
 
-function PDO(npop, max_iter, lb, ub, dim, objfun)
+function PDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     PDBest_P = zeros(dim)
     Best_PD = Inf
     X = initialization(npop, dim, ub, lb)

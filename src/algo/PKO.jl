@@ -4,7 +4,7 @@ Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien.
 Neural Computing and Applications (2024): 1-59.
 """
 
-function PKO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function PKO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     BF = 8
     Crest_angles = 2 * π * rand()
 

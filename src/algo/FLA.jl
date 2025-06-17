@@ -5,7 +5,7 @@ Knowledge-Based Systems 260 (2023): 110146.
 """
 
 
-function FLA(NoMolecules::Int, max_iter::Int, lb, ub, dim::Int, objfun) 
+function FLA(NoMolecules::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun) 
     C1 = 0.5
     C2 = 2
     c3 = 0.1

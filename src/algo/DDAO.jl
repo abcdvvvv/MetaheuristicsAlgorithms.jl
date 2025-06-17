@@ -6,7 +6,7 @@
     Applied Soft Computing, 93, 106392.
     
 """
-function DDAO(npop::Int, max_iter::Int, lb, ub, dim, objfun)
+function DDAO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     VarLength = dim
 
     MaxSubIt = 1000

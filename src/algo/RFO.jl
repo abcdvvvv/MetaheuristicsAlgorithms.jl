@@ -4,7 +4,7 @@ Rüppell’s fox optimizer: A novel meta-heuristic approach for solving global o
 Cluster Computing, 28(5), 1-77.
 """
 
-function RFO(npop::Int, max_iter::Int, lb::AbstractVector{<:Real}, ub::AbstractVector{<:Real}, dim::Int, objfun::Function)
+function RFO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     # Preallocate
     ccurve = zeros(max_iter)
     vec_flag = [1, -1]

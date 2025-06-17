@@ -4,7 +4,7 @@ Heidari, Ali Asghar, Seyedali Mirjalili, Hossam Faris, Ibrahim Aljarah, Majdi Ma
 Future generation computer systems 97 (2019): 849-872.
 """
 
-function HHO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector},
+function HHO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector},
     dim::Int, objfun::Function)
     Rabbit_Location = zeros(dim)
     Rabbit_Energy = Inf

@@ -131,7 +131,7 @@ function select_space(objfun, popPos, popCost, npop, BestPos, BestCost, lb, ub, 
     return popPos, popCost, BestPos, BestCost, s1
 end
 
-function BES(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function BES(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
 
     # Initialize Best Solution
     BestCost = Inf

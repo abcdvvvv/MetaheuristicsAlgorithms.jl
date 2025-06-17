@@ -3,7 +3,7 @@ Faramarzi, Afshin, Mohammad Heidarinejad, Brent Stephens, and Seyedali Mirjalili
 "Equilibrium optimizer: A novel optimization algorithm." 
 Knowledge-based systems 191 (2020): 105190.
 """
-function EO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim, objfun)
+function EO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
     Convergence_curve = zeros(max_iter)
 
     Ceq1 = zeros(1, dim)

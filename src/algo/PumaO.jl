@@ -97,7 +97,7 @@ function Exploitation(Sol, lb, ub, dim, npop, Best, max_iter, Iter, objfun)
     return Sol
 end
 
-function PumaO(npop, max_iter, lb, ub, dim, objfun)
+function PumaO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     UnSelected = ones(Float64, 2)
     F3_Explore = 0.0
     F3_Exploit = 0.0

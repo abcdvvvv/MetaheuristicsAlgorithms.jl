@@ -3,7 +3,7 @@ Yang, Yutao, Huiling Chen, Ali Asghar Heidari, and Amir H. Gandomi.
 "Hunger games search: Visions, conception, implementation, deep analysis, perspectives, and towards performance shifts." 
 Expert Systems with Applications 177 (2021): 114864.
 """
-function HGS(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function HGS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     bestPositions = zeros(Float64, dim)
     tempPosition = zeros(Float64, npop, dim)
     Destination_fitness = Inf

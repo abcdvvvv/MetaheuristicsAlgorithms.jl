@@ -3,7 +3,7 @@ Hashim, Fatma A., Essam H. Houssein, Kashif Hussain, Mai S. Mabrouk, and Walid A
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
-function HBA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun) 
+function HBA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun) 
     beta = 6                      
     C = 2                         
     vec_flag = [1.0, -1.0]

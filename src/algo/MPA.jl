@@ -3,7 +3,7 @@ Faramarzi, Afshin, Mohammad Heidarinejad, Seyedali Mirjalili, and Amir H. Gandom
 "Marine Predators Algorithm: A nature-inspired metaheuristic." 
 Expert systems with applications 152 (2020): 113377.
 """
-function MPA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function MPA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
     Top_predator_pos = zeros(dim)
     Top_predator_fit = Inf
 

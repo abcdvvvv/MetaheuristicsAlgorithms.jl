@@ -54,7 +54,7 @@ function GQI(a, b, c, fa, fb, fc, low, up)
     return (dim == 1) ? L[1] : L
 end
 
-function QIO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function QIO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     IndividualsPos = zeros(npop, dim)
     IndividualsFit = zeros(npop)
 

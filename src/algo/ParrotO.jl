@@ -3,7 +3,7 @@ Lian, Junbo, Guohua Hui, Ling Ma, Ting Zhu, Xincan Wu, Ali Asghar Heidari, Yi Ch
 "Parrot optimizer: Algorithm and applications to medical problems." 
 Computers in Biology and Medicine 172 (2024): 108064.
 """
-function ParrotO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function ParrotO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     if length(ub) == 1
         ub = fill(ub, dim)
         lb = fill(lb, dim)

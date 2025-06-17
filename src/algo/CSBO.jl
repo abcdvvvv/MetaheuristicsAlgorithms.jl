@@ -11,7 +11,7 @@ end
   Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
 
 """
-function CSBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function CSBO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     VarSize = (1, dim)
 
     MaxFE = npop * max_iter

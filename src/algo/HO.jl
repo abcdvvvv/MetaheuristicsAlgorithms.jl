@@ -4,7 +4,7 @@ Hippopotamus optimization algorithm: a novel nature-inspired optimization algori
 Scientific Reports, 14(1), p.5032.
 """
 
-function HO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function HO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 

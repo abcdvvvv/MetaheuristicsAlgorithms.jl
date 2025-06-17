@@ -3,7 +3,7 @@ Ahmadianfar, Iman, Ali Asghar Heidari, Amir H. Gandomi, Xuefeng Chu, and Huiling
 "RUN beyond the metaphor: An efficient optimization algorithm based on Runge Kutta method." 
 Expert Systems with Applications 181 (2021): 115079.
 """
-function RUN(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function RUN(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Cost = zeros(npop)                
     X = initialization(npop, dim, ub, lb)  
     Xnew2 = zeros(dim)

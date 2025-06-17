@@ -5,7 +5,7 @@ Energy Conversion and Management 224 (2020): 113301.
 """
 
     
-function GNDO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function GNDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     x = lb .+ (ub .- lb) .* rand(npop, dim)
     
     bestFitness = Inf

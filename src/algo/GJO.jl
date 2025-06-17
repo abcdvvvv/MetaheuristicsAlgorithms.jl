@@ -3,7 +3,7 @@ Chopra, Nitish, and Muhammad Mohsin Ansari.
 "Golden jackal optimization: A novel nature-inspired optimizer for engineering applications." 
 Expert Systems with Applications 198 (2022): 116924.
 """
-function GJO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function GJO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Male_Jackal_pos = zeros(1, dim)
     Male_Jackal_score = Inf
     Female_Jackal_pos = zeros(1, dim)

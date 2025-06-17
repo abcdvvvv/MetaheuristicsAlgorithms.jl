@@ -4,7 +4,7 @@ MiarNaeimi, Farid, Gholamreza Azizyan, and Mohsen Rashki.
 Knowledge-Based Systems 213 (2021): 106711.
 """
 
-function HorseOA(nHourse::::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function HorseOA(nHourse::::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     VarSize = (1, dim)  # Size of Decision Variables Matrix
 
     VelMax = 0.1 * (ub .- lb)

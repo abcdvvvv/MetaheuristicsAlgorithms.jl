@@ -4,7 +4,7 @@ Houssein, Essam H., Diego Oliva, Nagwan Abdel Samee, Noha F. Mahmoud, and Marwa 
 Computers in Biology and Medicine 165 (2023): 107389.
 """
 
-function LCA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function LCA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     println("LCA is now tackling your problem")
 
     Tumor_Location = zeros(Float64, dim)

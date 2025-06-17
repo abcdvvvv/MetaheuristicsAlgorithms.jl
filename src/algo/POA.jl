@@ -4,7 +4,7 @@ Trojovský, Pavel, and Mohammad Dehghani.
 Sensors 22, no. 3 (2022): 855.
 """
 
-function POA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function POA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     lb = ones(dim) * lb
     ub = ones(dim) * ub
 

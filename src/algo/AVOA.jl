@@ -78,7 +78,7 @@ end
 - Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems.  Computers & Industrial Engineering, 158, 107408.
 
 """
-function AVOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function AVOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
 
     # Initialize Best vultures
     Best_vulture1_X = zeros(dim)

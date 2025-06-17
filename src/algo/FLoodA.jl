@@ -4,7 +4,7 @@ Flood algorithm (FLA): an efficient inspired meta-heuristic for engineering opti
 The Journal of Supercomputing, 80(15), pp.22913-23017.
 """
 
-function FLoodA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function FLoodA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     CostFunction(x) = objfun(x)
 
     lb = lb

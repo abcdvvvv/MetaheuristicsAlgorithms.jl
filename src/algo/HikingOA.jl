@@ -4,7 +4,7 @@ Oladejo, Sunday O., Stephen O. Ekwe, and Seyedali Mirjalili.
 Knowledge-Based Systems 296 (2024): 111880.
 """
 
-function HikingOA(hiker::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function HikingOA(hiker::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     # Problem Parameters
     prob = objfun
     npop = hiker

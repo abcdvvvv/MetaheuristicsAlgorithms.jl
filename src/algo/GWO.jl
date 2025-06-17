@@ -3,7 +3,7 @@ Mirjalili, Seyedali, Seyed Mohammad Mirjalili, and Andrew Lewis.
 "Grey wolf optimizer." 
 Advances in engineering software 69 (2014): 46-61.
 """
-function GWO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function GWO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Alpha_pos = zeros(1, dim)
     Alpha_score = Inf
 

@@ -4,7 +4,7 @@ Fu, Shengwei, et al.
 Artificial Intelligence Review 57.6 (2024): 134.
 """
 
-function RBMO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, D::Int, objfun)
+function RBMO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, D::Int, objfun)
     Xfood = zeros(D)
     BestValue = Inf
     Conv = zeros(max_iter)
