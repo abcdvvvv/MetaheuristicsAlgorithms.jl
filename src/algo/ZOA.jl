@@ -5,7 +5,7 @@ Ieee Access 10 (2022): 49445-49473.
 
 """
 
-function ZOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function ZOA(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
     X = zeros(npop, dim)
@@ -69,9 +69,13 @@ function ZOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         average[t] = mean(fit)
     end
 
-    Best_score = fbest
-    Best_pos = PZ
+    best_score = fbest
+    best_pos = PZ
     ZOA_curve = best_so_far
 
-    return Best_score, Best_pos, ZOA_curve
+    # return best_score, best_pos, ZOA_curve
+    return OptimizationResult(
+        best_pos,
+        best_score,
+        ZOA_curve)
 end

@@ -67,7 +67,7 @@ function LCA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 if objfun(X1') < objfun(X[i, :])
                     X[i, :] .= X1
                 else
-                    X2 = Tumor_Location .- v * abs(Jump_strength * Tumor_Location .- X[i, :]) .+ rand(dim) .* Levy(dim)
+                    X2 = Tumor_Location .- v * abs(Jump_strength * Tumor_Location .- X[i, :]) .+ rand(dim) .* levy(dim)
                     X2 = MutationU(dim, max_iter, Tumor_Location, t)
 
                     if objfun(X2') < objfun(X[i, :])

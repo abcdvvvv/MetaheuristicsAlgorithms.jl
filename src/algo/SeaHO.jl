@@ -4,12 +4,12 @@
 Engineering Science and Technology, an International Journal 41 (2023): 101408.
 """
 
-function SeaHO(pop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SeaHO(pop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     Sea_horses = initialization(pop, dim, ub, lb)
     Sea_horsesFitness = zeros(pop)
     fitness_history = zeros(pop, max_iter)
     population_history = zeros(pop, dim, max_iter)
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     Trajectories = zeros(pop, max_iter)
 
     for i = 1:pop
@@ -20,9 +20,9 @@ function SeaHO(pop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     end
 
     sorted_indexes = sortperm(Sea_horsesFitness)
-    TargetPosition = Sea_horses[sorted_indexes[1], :]
-    TargetFitness = Sea_horsesFitness[sorted_indexes[1]]
-    Convergence_curve[1] = TargetFitness
+    target_position = Sea_horses[sorted_indexes[1], :]
+    target_fitness = Sea_horsesFitness[sorted_indexes[1]]
+    convergence_curve[1] = target_fitness
 
     t = 1
     u = 0.05
@@ -31,7 +31,7 @@ function SeaHO(pop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     while t < max_iter + 1
         beta = randn(pop, dim)
-        Elite = repeat(TargetPosition', pop, 1)
+        Elite = repeat(target_position', pop, 1)
         r1 = randn(1, pop)
         Step_length = levy(pop, dim, 1.5)
         Sea_horses_new1 = similar(Sea_horses)
@@ -94,14 +94,18 @@ function SeaHO(pop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         population_history[:, :, t] = Sea_horses
         Trajectories[:, t] = Sea_horses[:, 1]
 
-        if SortfitbestN[1] < TargetFitness
-            TargetPosition = Sea_horses[1, :]
-            TargetFitness = SortfitbestN[1]
+        if SortfitbestN[1] < target_fitness
+            target_position = Sea_horses[1, :]
+            target_fitness = SortfitbestN[1]
         end
 
-        Convergence_curve[t] = TargetFitness
+        convergence_curve[t] = target_fitness
         t += 1
     end
 
-    return TargetFitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, population_history
+    # return target_fitness, target_position, convergence_curve, Trajectories, fitness_history, population_history
+    return OptimizationResult(
+        target_position,
+        target_fitness,
+        convergence_curve)
 end

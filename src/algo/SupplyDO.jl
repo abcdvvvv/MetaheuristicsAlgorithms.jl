@@ -3,7 +3,7 @@ Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 """
-function SupplyDO(MarketSize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     OneMarket = Dict(
         "CommPrice" => zeros(dim),
         "CommPriceFit" => Inf,
@@ -12,8 +12,8 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     )
 
     Market = fill(OneMarket, MarketSize)
-    BestF = Inf
-    BestX = []
+    best_f = Inf
+    best_x = []
 
     for i = 1:MarketSize
         Market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
@@ -28,13 +28,13 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     end
 
     for i = 1:MarketSize
-        if Market[i]["CommPriceFit"] <= BestF
-            BestX = Market[i]["CommPrice"]
-            BestF = Market[i]["CommPriceFit"]
+        if Market[i]["CommPriceFit"] <= best_f
+            best_x = Market[i]["CommPrice"]
+            best_f = Market[i]["CommPriceFit"]
         end
     end
 
-    HisBestFit = zeros(max_iter)
+    his_best_fit = zeros(max_iter)
 
     for Iter = 1:max_iter
         a = 2 * (max_iter - Iter + 1) / max_iter
@@ -91,14 +91,18 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 Market[i]["CommPrice"] = Market[i]["CommQuantity"]
             end
 
-            if Market[i]["CommPriceFit"] <= BestF
-                BestX = Market[i]["CommPrice"]
-                BestF = Market[i]["CommPriceFit"]
+            if Market[i]["CommPriceFit"] <= best_f
+                best_x = Market[i]["CommPrice"]
+                best_f = Market[i]["CommPriceFit"]
             end
         end
 
-        HisBestFit[Iter] = BestF
+        his_best_fit[Iter] = best_f
     end
 
-    return BestF, BestX, HisBestFit
+    # return best_f, best_x, his_best_fit
+    return OptimizationResult(
+        best_x,
+        best_f,
+        his_best_fit)
 end

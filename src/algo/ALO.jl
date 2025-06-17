@@ -87,9 +87,9 @@ function ALO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     # Initialize variables to save the position of elite, sorted antlions, 
     # convergence curve, antlions fitness, and ants fitness
     Sorted_antlions = zeros(npop, dim)
-    Elite_antlion_position = zeros(dim)
-    Elite_antlion_fitness = Inf
-    Convergence_curve = zeros(max_iter)
+    elite_antlion_position = zeros(dim)
+    elite_antlion_fitness = Inf
+    convergence_curve = zeros(max_iter)
     antlions_fitness = zeros(npop)
     ants_fitness = zeros(npop)
 
@@ -104,8 +104,8 @@ function ALO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         Sorted_antlions[newindex, :] = antlion_position[sorted_indexes[newindex], :]
     end
 
-    Elite_antlion_position .= Sorted_antlions[1, :]
-    Elite_antlion_fitness = sorted_antlion_fitness[1]
+    elite_antlion_position .= Sorted_antlions[1, :]
+    elite_antlion_fitness = sorted_antlion_fitness[1]
 
     # Main loop starts from the second iteration
     Current_iter = 2
@@ -119,7 +119,7 @@ function ALO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             RA = Random_walk_around_antlion(dim, max_iter, lb, ub, Sorted_antlions[Rolette_index, :], Current_iter)
 
             # RA is the random walk around the elite antlion
-            RE = Random_walk_around_antlion(dim, max_iter, lb, ub, Elite_antlion_position, Current_iter)
+            RE = Random_walk_around_antlion(dim, max_iter, lb, ub, elite_antlion_position, Current_iter)
 
             ant_position[i, :] = (RA[Current_iter, :] + RE[Current_iter, :]) / 2
         end
@@ -144,25 +144,29 @@ function ALO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         antlions_fitness .= double_fitness_sorted[1:npop]
         Sorted_antlions .= double_sorted_population[1:npop, :]
 
-        if antlions_fitness[1] < Elite_antlion_fitness
-            Elite_antlion_position .= Sorted_antlions[1, :]
-            Elite_antlion_fitness = antlions_fitness[1]
+        if antlions_fitness[1] < elite_antlion_fitness
+            elite_antlion_position .= Sorted_antlions[1, :]
+            elite_antlion_fitness = antlions_fitness[1]
         end
 
         # Keep the elite in the population
-        Sorted_antlions[1, :] .= Elite_antlion_position
-        antlions_fitness[1] = Elite_antlion_fitness
+        Sorted_antlions[1, :] .= elite_antlion_position
+        antlions_fitness[1] = elite_antlion_fitness
 
         # Update the convergence curve
-        Convergence_curve[Current_iter] = Elite_antlion_fitness
+        convergence_curve[Current_iter] = elite_antlion_fitness
 
         # Display the iteration and best optimum obtained so far
         # if Current_iter % 50 == 0
-        #     println("At iteration $Current_iter, the elite fitness is $Elite_antlion_fitness")
+        #     println("At iteration $Current_iter, the elite fitness is $elite_antlion_fitness")
         # end
 
         Current_iter += 1
     end
 
-    return Elite_antlion_fitness, Elite_antlion_position, Convergence_curve
+    # return elite_antlion_fitness, elite_antlion_position, convergence_curve
+    return OptimizationResult(
+        elite_antlion_position,
+        elite_antlion_position,
+        convergence_curve)
 end

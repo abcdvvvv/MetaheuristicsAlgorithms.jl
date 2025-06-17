@@ -69,7 +69,7 @@ function DO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         dandelions = clamp.(dandelions, lb, ub)
 
         # Step_length = levyF(npop, dim, 1.5)
-        Step_length = Levy(npop, dim, 1.5)
+        Step_length = levy(npop, dim, 1.5)
         Elite = repeat(Best_position', npop, 1)
         dandelions_3 = copy(dandelions)
         for i = 1:npop

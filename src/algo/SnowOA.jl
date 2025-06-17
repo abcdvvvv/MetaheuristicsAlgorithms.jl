@@ -4,7 +4,7 @@ Deng, Lingyun, and Sanyang Liu.
 Expert Systems with Applications 225 (2023): 120069.
 """
 
-function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SnowOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)
@@ -12,11 +12,11 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     X = initialization(npop, dim, ub, lb)
 
-    Best_pos = zeros(dim)
-    Best_score = Inf
+    best_pos = zeros(dim)
+    best_score = Inf
     Objective_values = zeros(npop)
 
-    Convergence_curve = []
+    convergence_curve = []
 
     N1 = floor(Int, npop * 0.5)
     Elite_pool = zeros(4, dim)
@@ -24,11 +24,11 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     for i = 1:npop
         Objective_values[i] = objfun(X[i, :])
         if i == 1
-            Best_pos = X[i, :]
-            Best_score = Objective_values[i]
-        elseif Objective_values[i] < Best_score
-            Best_pos = X[i, :]
-            Best_score = Objective_values[i]
+            best_pos = X[i, :]
+            best_score = Objective_values[i]
+        elseif Objective_values[i] < best_score
+            best_pos = X[i, :]
+            best_score = Objective_values[i]
         end
     end
 
@@ -38,12 +38,12 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     sum1 = sum(X[idx1[1:N1], :], dims=1)
     half_best_mean = sum1 / N1
 
-    Elite_pool[1, :] = Best_pos
+    Elite_pool[1, :] = best_pos
     Elite_pool[2, :] = second_best
     Elite_pool[3, :] = third_best
     Elite_pool[4, :] = half_best_mean
 
-    push!(Convergence_curve, Best_score)
+    push!(convergence_curve, best_score)
 
     index = collect(1:npop)
 
@@ -67,7 +67,7 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             r1 = rand()
             k1 = rand(1:4)
             for j = 1:dim
-                X[index1[i], j] = Elite_pool[k1, j] + RB[index1[i], j] * (r1 * (Best_pos[j] - X[index1[i], j]) + (1 - r1) * (X_centroid[j] - X[index1[i], j]))
+                X[index1[i], j] = Elite_pool[k1, j] + RB[index1[i], j] * (r1 * (best_pos[j] - X[index1[i], j]) + (1 - r1) * (X_centroid[j] - X[index1[i], j]))
             end
         end
 
@@ -80,7 +80,7 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             for i = 1:Nb
                 r2 = 2 * rand() - 1
                 for j = 1:dim
-                    X[index2[i], j] = M * Best_pos[j] + RB[index2[i], j] * (r2 * (Best_pos[j] - X[index2[i], j]) + (1 - r2) * (X_centroid[j] - X[index2[i], j]))
+                    X[index2[i], j] = M * best_pos[j] + RB[index2[i], j] * (r2 * (best_pos[j] - X[index2[i], j]) + (1 - r2) * (X_centroid[j] - X[index2[i], j]))
                 end
             end
         end
@@ -89,9 +89,9 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             X[i, :] = clamp.(X[i, :], lb, ub)
             Objective_values[i] = objfun(X[i, :])
 
-            if Objective_values[i] < Best_score
-                Best_pos = X[i, :]
-                Best_score = Objective_values[i]
+            if Objective_values[i] < best_score
+                best_pos = X[i, :]
+                best_score = Objective_values[i]
             end
         end
 
@@ -101,14 +101,18 @@ function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         sum1 = sum(X[idx1[1:N1], :], dims=1)
         half_best_mean = sum1 / N1
 
-        Elite_pool[1, :] = Best_pos
+        Elite_pool[1, :] = best_pos
         Elite_pool[2, :] = second_best
         Elite_pool[3, :] = third_best
         Elite_pool[4, :] = half_best_mean
 
-        push!(Convergence_curve, Best_score)
+        push!(convergence_curve, best_score)
         l += 1
     end
 
-    return Best_score, Best_pos, Convergence_curve
+    # return best_score, best_pos, convergence_curve
+    return OptimizationResult(
+        best_pos,
+        best_score,
+        convergence_curve)
 end

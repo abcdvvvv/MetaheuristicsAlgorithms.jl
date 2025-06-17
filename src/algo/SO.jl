@@ -4,7 +4,7 @@ Hashim, Fatma A., and Abdelazim G. Hussien.
 Knowledge-Based Systems 242 (2022): 108320.
 """
 
-function SO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
+function SO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
     vec_flag = [1, -1]
     Threshold = 0.25
     Thresold2 = 0.6
@@ -25,7 +25,7 @@ function SO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{I
         fitness[i] = objfun(X[i, :])
     end
     GYbest, gbest = findmin(fitness)
-    Xfood = X[gbest, :]
+    x_food = X[gbest, :]
     Nm = round(Int, npop / 2)
     Nf = npop - Nm
     Xm = X[1:Nm, :]
@@ -72,14 +72,14 @@ function SO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{I
                     flag_index = rand(1:2)
                     Flag = vec_flag[flag_index]
                     for j = 1:dim
-                        Xnewm[i, j] = Xfood[j] + C3 * Flag * Temp * rand() * (Xfood[j] - Xm[i, j])
+                        Xnewm[i, j] = x_food[j] + C3 * Flag * Temp * rand() * (x_food[j] - Xm[i, j])
                     end
                 end
                 for i = 1:Nf
                     flag_index = rand(1:2)
                     Flag = vec_flag[flag_index]
                     for j = 1:dim
-                        Xnewf[i, j] = Xfood[j] + Flag * C3 * Temp * rand() * (Xfood[j] - Xf[i, j])
+                        Xnewf[i, j] = x_food[j] + Flag * C3 * Temp * rand() * (x_food[j] - Xf[i, j])
                     end
                 end
             else
@@ -158,12 +158,16 @@ function SO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{I
         end
         if fitnessBest_m < fitnessBest_f
             GYbest = fitnessBest_m
-            Xfood = Xbest_m
+            x_food = Xbest_m
         else
             GYbest = fitnessBest_f
-            Xfood = Xbest_f
+            x_food = Xbest_f
         end
     end
     fval = GYbest
-    return fval, Xfood, gbest_t
+    # return fval, x_food, gbest_t
+    return OptimizationResult(
+        x_food,
+        fval,
+        gbest_t)
 end

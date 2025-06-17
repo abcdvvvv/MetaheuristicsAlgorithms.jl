@@ -17,17 +17,17 @@
 """
 function ALA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     X = initialization(npop, dim, ub, lb)
-    Position = zeros(dim)
-    Score = Inf
+    position = zeros(dim)
+    score = Inf
     fitness = zeros(npop)
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     vec_flag = [1, -1]
 
     for i = 1:npop
         fitness[i] = objfun(X[i, :])
-        if fitness[i] < Score
-            Position = copy(X[i, :])
-            Score = fitness[i]
+        if fitness[i] < score
+            position = copy(X[i, :])
+            score = fitness[i]
         end
     end
 
@@ -44,21 +44,21 @@ function ALA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 if rand() < 0.3
                     r1 = 2 .* rand(dim) .- 1
                     rand_agent = X[rand(1:npop), :]
-                    Xnew[i, :] = Position .+ F .* RB[i, :] .* (r1 .* (Position .- X[i, :]) .+ (1 .- r1) .* (X[i, :] .- rand_agent))
+                    Xnew[i, :] = position .+ F .* RB[i, :] .* (r1 .* (position .- X[i, :]) .+ (1 .- r1) .* (X[i, :] .- rand_agent))
                 else
                     r2 = rand() * (1 + sin(0.5 * Iter))
                     rand_agent = X[rand(1:npop), :]
-                    Xnew[i, :] = X[i, :] .+ F .* r2 .* (Position .- rand_agent)
+                    Xnew[i, :] = X[i, :] .+ F .* r2 .* (position .- rand_agent)
                 end
             else
                 if rand() < 0.5
-                    radius = norm(Position .- X[i, :])
+                    radius = norm(position .- X[i, :])
                     r3 = rand()
                     spiral = radius * (sin(2 * pi * r3) + cos(2 * pi * r3))
-                    Xnew[i, :] = Position .+ F .* X[i, :] .* spiral * rand()
+                    Xnew[i, :] = position .+ F .* X[i, :] .* spiral * rand()
                 else
                     G = 2 * sign(rand() - 0.5) * (1 - Iter / max_iter)
-                    Xnew[i, :] = Position .+ F .* G .* Levy(dim) .* (Position .- X[i, :])
+                    Xnew[i, :] = position .+ F .* G .* levy(dim) .* (position .- X[i, :])
                 end
             end
         end
@@ -70,15 +70,20 @@ function ALA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 X[i, :] = Xnew[i, :]
                 fitness[i] = newPopfit
             end
-            if fitness[i] < Score
-                Position = copy(X[i, :])
-                Score = fitness[i]
+            if fitness[i] < score
+                position = copy(X[i, :])
+                score = fitness[i]
             end
         end
 
-        Convergence_curve[Iter] = Score
+        convergence_curve[Iter] = score
         Iter += 1
     end
 
-    return Score, Position, Convergence_curve
+    # return score, position, convergence_curve
+    return OptimizationResult(
+        score,
+        position,
+        convergence_curve)
+
 end

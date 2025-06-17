@@ -21,7 +21,7 @@ function SparrowSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     fMin, bestI = findmin(fit)
     bestX = x[bestI]
 
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
 
     for t = 1:max_iter
         sorted_idx = sortperm(pFit)
@@ -80,8 +80,12 @@ function SparrowSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
 
-        Convergence_curve[t] = fMin
+        convergence_curve[t] = fMin
     end
 
-    return fMin, bestX, Convergence_curve
+    # return fMin, bestX, convergence_curve
+    return OptimizationResult(
+        bestX,
+        fMin,
+        convergence_curve)
 end

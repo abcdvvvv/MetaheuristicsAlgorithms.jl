@@ -130,5 +130,9 @@ function APO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)#(objfun, dim, n
         f_out_convergence[iter] = bestFit
     end
 
-    return bestFit, bestProtozoa, f_out_convergence
+    # return bestFit, bestProtozoa, f_out_convergence
+    return OptimizationResult(
+        bestFit,
+        bestProtozoa,
+        f_out_convergence)
 end

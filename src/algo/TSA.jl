@@ -4,25 +4,25 @@ Kaur, Satnam, Lalit K. Awasthi, Amrit Lal Sangal, and Gaurav Dhiman.
 Engineering Applications of Artificial Intelligence 90 (2020): 103541.
 """
 
-function TSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
-    Score = Inf
-    Position = zeros(dim)
-    Positions = initialization(npop, dim, ub, lb)
-    Convergence = zeros(max_iter)
+function TSA(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+    score = Inf
+    position = zeros(dim)
+    positions = initialization(npop, dim, ub, lb)
+    convergence = zeros(max_iter)
 
     t = 0
 
     while t < max_iter
-        for i in axes(Positions, 1)
-            Flag4ub = Positions[i, :] .> ub
-            Flag4lu = Positions[i, :] .< lb
-            Positions[i, :] = (Positions[i, :] .* .~(Flag4ub .+ Flag4lu)) .+ ub .* Flag4ub .+ lb .* Flag4lu
+        for i in axes(positions, 1)
+            Flag4ub = positions[i, :] .> ub
+            Flag4lu = positions[i, :] .< lb
+            positions[i, :] = (positions[i, :] .* .~(Flag4ub .+ Flag4lu)) .+ ub .* Flag4ub .+ lb .* Flag4lu
 
-            fitness = objfun(Positions[i, :])
+            fitness = objfun(positions[i, :])
 
-            if fitness < Score
-                Score = fitness
-                Position = copy(Positions[i, :])
+            if fitness < score
+                score = fitness
+                position = copy(positions[i, :])
             end
         end
 
@@ -31,38 +31,42 @@ function TSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         xr = xmin + rand() * (xmax - xmin)
         xr = floor(Int, xr)
 
-        for i in axes(Positions, 1)
-            for j in axes(Positions, 2)
+        for i in axes(positions, 1)
+            for j in axes(positions, 2)
                 A1 = ((rand() + rand()) - (2 * rand())) / xr
                 c2 = rand()
 
                 if i == 1
                     c3 = rand()
-                    d_pos = abs(Position[j] - c2 * Positions[i, j])
+                    d_pos = abs(position[j] - c2 * positions[i, j])
 
                     if c3 >= 0
-                        Positions[i, j] = Position[j] + A1 * d_pos
+                        positions[i, j] = position[j] + A1 * d_pos
                     else
-                        Positions[i, j] = Position[j] - A1 * d_pos
+                        positions[i, j] = position[j] - A1 * d_pos
                     end
                 else
                     c3 = rand()
-                    d_pos = abs(Position[j] - c2 * Positions[i, j])
+                    d_pos = abs(position[j] - c2 * positions[i, j])
 
                     if c3 >= 0
-                        Pos_i_j = Position[j] + A1 * d_pos
+                        Pos_i_j = position[j] + A1 * d_pos
                     else
-                        Pos_i_j = Position[j] - A1 * d_pos
+                        Pos_i_j = position[j] - A1 * d_pos
                     end
 
-                    Positions[i, j] = (Pos_i_j + Positions[i-1, j]) / 2
+                    positions[i, j] = (Pos_i_j + positions[i-1, j]) / 2
                 end
             end
         end
 
         t += 1
-        Convergence[t] = Score
+        convergence[t] = score
     end
 
-    return Score, Position, Convergence
+    # return score, position, convergence
+    return OptimizationResult(
+        position,
+        score,
+        convergence)
 end

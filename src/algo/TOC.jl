@@ -4,7 +4,7 @@ Tornado optimizer with Coriolis force: a novel bio-inspired meta-heuristic algor
 Artificial Intelligence Review, 58(4), 1-99.
 """
 
-function TOC(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun, nto=4, nt=3)
+function TOC(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun, nto=4, nt=3)
     ccurve = zeros(max_iter)
 
     # Initialization
@@ -15,8 +15,8 @@ function TOC(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun, nto=4, nt=3)
     To = nto - nt
     nw = npop - nto
 
-    Tornadoposition = y[sorted_idx[1:To], :]
-    TornadoCost = fit[sorted_idx[1:To]]
+    tornadoposition = y[sorted_idx[1:To], :]
+    tornadocost = fit[sorted_idx[1:To]]
 
     Thunderstormsposition = y[sorted_idx[2:nto], :]
     ThunderstormsCost = fit[sorted_idx[2:nto]]
@@ -65,10 +65,14 @@ function TOC(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun, nto=4, nt=3)
 
         # TODO: Continue porting core update loops (windstorms to tornado, exploitation, etc.)
 
-        println("Iteration: $t   minTornadoCost= $(minimum(TornadoCost))")
-        ccurve[t] = minimum(TornadoCost)
+        println("Iteration: $t   mintornadocost= $(minimum(tornadocost))")
+        ccurve[t] = minimum(tornadocost)
         t += 1
     end
 
-    return TornadoCost, Tornadoposition, ccurve
+    # return tornadocost, tornadoposition, ccurve
+    return OptimizationResult(
+        tornadoposition,
+        tornadocost,
+        ccurve)
 end

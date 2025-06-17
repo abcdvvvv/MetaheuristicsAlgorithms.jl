@@ -9,22 +9,22 @@ mutable struct individual
 end
 
 
-function TLBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function TLBO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     VarSize = (dim)
 
     pop = [individual(rand(VarSize) * (ub - lb) .+ lb,
         objfun(vec(rand(VarSize) .* (ub - lb) .+ lb))) for _ = 1:npop]
 
-    BestSol = individual([], Inf)
+    best_sol = individual([], Inf)
 
     for i = 1:npop
         pop[i].Cost = objfun(vec(pop[i].Position))
-        if pop[i].Cost < BestSol.Cost
-            BestSol = pop[i]
+        if pop[i].Cost < best_sol.cost
+            best_sol = pop[i]
         end
     end
 
-    BestCosts = zeros(max_iter)
+    best_costs = zeros(max_iter)
 
     for it = 1:max_iter
         Mean = sum(p.Position for p in pop) / npop
@@ -49,8 +49,8 @@ function TLBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
             if newsol.Cost < pop[i].Cost
                 pop[i] = newsol
-                if pop[i].Cost < BestSol.Cost
-                    BestSol = pop[i]
+                if pop[i].Cost < best_sol.cost
+                    best_sol = pop[i]
                 end
             end
         end
@@ -75,14 +75,18 @@ function TLBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
             if newsol.Cost < pop[i].Cost
                 pop[i] = newsol
-                if pop[i].Cost < BestSol.Cost
-                    BestSol = pop[i]
+                if pop[i].Cost < best_sol.cost
+                    best_sol = pop[i]
                 end
             end
         end
 
-        BestCosts[it] = BestSol.Cost
+        best_costs[it] = best_sol.cost
     end
 
-    return BestSol.Cost, BestSol, BestCosts
+    # return best_sol.cost, best_sol, best_costs
+    return OptimizationResult(
+        best_sol,
+        best_sol.cost,
+        best_costs)
 end

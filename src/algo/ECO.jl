@@ -115,14 +115,14 @@ function ECO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
         for j = 1:npop
             if i % 3 == 1
                 if j >= 1 && j <= G1Number
-                    X_new[j, :] = X[j, :] .+ w * (mean(X[j, :]) .- X[j, :]) .* Levy(dim)
+                    X_new[j, :] = X[j, :] .+ w * (mean(X[j, :]) .- X[j, :]) .* levy(dim)
                 else
                     X_new[j, :] = X[j, :] .+ w * (close(X[j, :], 1, X) .- X[j, :]) .* randn()
                 end
 
             elseif i % 3 == 2
                 if j >= 1 && j <= G2Number
-                    X_new[j, :] = X[j, :] .+ (GBestX .- mean(X, dims=1)') * exp(i / max_iter - 1) .* Levy(dim)
+                    X_new[j, :] = X[j, :] .+ (GBestX .- mean(X, dims=1)') * exp(i / max_iter - 1) .* levy(dim)
                 else
                     if R1 < H
                         X_new[j, :] = X[j, :] .- w * close(X[j, :], 2, X) .- P * (E * w * close(X[j, :], 2, X) .- X[j, :])

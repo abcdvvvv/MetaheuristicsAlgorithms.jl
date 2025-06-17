@@ -41,7 +41,7 @@ function SBOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 X1 = Bast_P .+ exp((t / max_iter)^4) .* (RB .- 0.5) .* (Bast_P .- X[i, :])
                 X1 = clamp.(X1, lb, ub)
             else  
-                RL = 0.5 * Levy(dim)
+                RL = 0.5 * levy(dim)
                 X1 = Bast_P .+ CF .* X[i, :] .* RL
                 X1 = clamp.(X1, lb, ub)
             end

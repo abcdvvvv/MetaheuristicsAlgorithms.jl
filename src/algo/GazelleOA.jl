@@ -52,7 +52,8 @@ function GazelleOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         Elite = ones(npop, 1) * Top_gazelle_pos'
         CF = (1 - Iter / max_iter)^(2 * Iter / max_iter)
 
-        RL = 0.05 * levyFun(npop, dim, 1.5)  # Levy random number vector
+        # RL = 0.05 * levyFun(npop, dim, 1.5)  # Levy random number vector
+        RL = 0.05 * levy(npop, dim, 1.5)  # Levy random number vector
         RB = randn(npop, dim)            # Brownian random number vector
 
         for i = 1:npop
@@ -115,18 +116,18 @@ function GazelleOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     return Top_gazelle_fit, Top_gazelle_pos, Convergence_curve
 end
 
-function levyFun(n, m, beta)
-    num = gamma(1 + beta) * sin(pi * beta / 2)
+# function levyFun(n, m, beta)
+#     num = gamma(1 + beta) * sin(pi * beta / 2)
 
-    den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
+#     den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
 
-    sigma_u = (num / den)^(1 / beta)
+#     sigma_u = (num / den)^(1 / beta)
 
-    u = rand(Normal(0, sigma_u), n, m)
+#     u = rand(Normal(0, sigma_u), n, m)
 
-    v = rand(Normal(0, 1), n, m)
+#     v = rand(Normal(0, 1), n, m)
 
-    z = u ./ abs.(v) .^ (1 / beta)
+#     z = u ./ abs.(v) .^ (1 / beta)
 
-    return z
-end
+#     return z
+# end

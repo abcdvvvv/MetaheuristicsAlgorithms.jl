@@ -69,7 +69,7 @@ function HHO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
                         X2 =
                             Rabbit_Location -
                             Escaping_Energy * abs.(Jump_strength * Rabbit_Location - X[i, :]) .+
-                            rand(dim) .* Levy(dim)
+                            rand(dim) .* levy(dim)
                         if objfun(X2) < objfun(X[i, :])
                             X[i, :] = X2
                         end
@@ -88,7 +88,7 @@ function HHO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
                             Rabbit_Location -
                             Escaping_Energy *
                             abs.(Jump_strength * Rabbit_Location - vec(mean(X, dims=1))) .+
-                            rand(dim) .* Levy(dim)
+                            rand(dim) .* levy(dim)
                         if objfun(X2) < objfun(X[i, :])
                             X[i, :] = X2
                         end
