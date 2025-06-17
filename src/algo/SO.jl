@@ -4,7 +4,7 @@ Hashim, Fatma A., and Abdelazim G. Hussien.
 Knowledge-Based Systems 242 (2022): 108320.
 """
 
-function SO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function) #(N, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(N, max_iter, objfun, dim, lb, ub)
+function SO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
     vec_flag = [1, -1]
     Threshold = 0.25
     Thresold2 = 0.6
@@ -20,20 +20,20 @@ function SO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,
 
     X = initialization(npop, dim, ub, lb)
     gbest_t = zeros(max_iter, 1)
-    fitness = zeros(N)
-    for i = 1:N
+    fitness = zeros(npop)
+    for i = 1:npop
         fitness[i] = objfun(X[i, :])
     end
     GYbest, gbest = findmin(fitness)
     Xfood = X[gbest, :]
-    Nm = round(Int, N / 2)
-    Nf = N - Nm
+    Nm = round(Int, npop / 2)
+    Nf = npop - Nm
     Xm = X[1:Nm, :]
     Xnewm = zeros(Nm, dim)
-    Xf = X[Nm+1:N, :]
+    Xf = X[Nm+1:npop, :]
     Xnewf = zeros(Nf, dim)
     fitness_m = fitness[1:Nm]
-    fitness_f = fitness[Nm+1:N]
+    fitness_f = fitness[Nm+1:npop]
     fitnessBest_m, gbest1 = findmin(fitness_m)
     Xbest_m = Xm[gbest1, :]
     fitnessBest_f, gbest2 = findmin(fitness_f)

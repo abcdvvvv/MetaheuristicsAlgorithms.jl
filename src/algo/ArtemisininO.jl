@@ -26,26 +26,26 @@ end
 - Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, Zongda Wu, and Huiling Chen. "Artemisinin optimization based on malaria therapy: Algorithm and applications to medical image segmentation." Displays 84 (2024): 102740.
 
 """
-function ArtemisininO(N, max_iter, lb, ub, dim, objfun) # (objfun, lb, ub, dim, N, MaxFEs)
+function ArtemisininO(npop, max_iter, lb, ub, dim, objfun) # (objfun, lb, ub, dim, npop, MaxFEs)
     # Initialization parameters
     FEs = 0
     it = 1
-    MaxFEs = N * max_iter
+    MaxFEs = npop * max_iter
 
     # Initialization of the solution set
-    pop = initialization(N, dim, ub, lb)
+    pop = initialization(npop, dim, ub, lb)
 
     # Calculate the fitness value of the initial solution set
-    Fitness = zeros(N)
-    for i = 1:N
+    Fitness = zeros(npop)
+    for i = 1:npop
         Fitness[i] = objfun(pop[i, :])
         FEs += 1
     end
     fmin, x = findmin(Fitness)
 
     # Containers
-    New_pop = zeros(N, dim)
-    Fitnorm = zeros(N)
+    New_pop = zeros(npop, dim)
+    Fitnorm = zeros(npop)
     Convergence_curve = []
 
     # Record the current optimal solution
@@ -57,7 +57,7 @@ function ArtemisininO(N, max_iter, lb, ub, dim, objfun) # (objfun, lb, ub, dim, 
         K = 1 - (FEs^(1 / 6) / MaxFEs^(1 / 6))
         E = exp(-4 * (FEs / MaxFEs))
 
-        for i = 1:N
+        for i = 1:npop
             Fitnorm[i] = (Fitness[i] - minimum(Fitness)) / (maximum(Fitness) - minimum(Fitness))
 
             for j = 1:dim
@@ -72,7 +72,7 @@ function ArtemisininO(N, max_iter, lb, ub, dim, objfun) # (objfun, lb, ub, dim, 
                 end
 
                 if rand() < Fitnorm[i]
-                    A = randperm(N)
+                    A = randperm(npop)
                     beta = (rand() / 2) + 0.1
                     New_pop[i, j] = pop[A[3], j] + beta * (pop[A[1], j] - pop[A[2], j])
                 end

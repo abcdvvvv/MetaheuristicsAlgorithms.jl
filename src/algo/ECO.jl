@@ -4,7 +4,7 @@ Lian, Junbo, Ting Zhu, Ling Ma, Xincan Wu, Ali Asghar Heidari, Yi Chen, Huiling 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """
 
-function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function ECO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
         m = copy(X[1, :])
 
@@ -71,20 +71,20 @@ function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
     G1 = 0.2
     G2 = 0.1
 
-    G1Number = round(Int, N * G1)
-    G2Number = round(Int, N * G2)
+    G1Number = round(Int, npop * G1)
+    G2Number = round(Int, npop * G2)
 
     if length(ub) == 1
         ub = fill(ub[1], dim)
         lb = fill(lb[1], dim)
     end
 
-    X0 = initializationLogistic(N, dim, ub, lb)
+    X0 = initializationLogistic(npop, dim, ub, lb)
     X = copy(X0)
 
-    fitness = zeros(Float64, N)
-    fitness_new = zeros(Float64, N)
-    for i = 1:N
+    fitness = zeros(Float64, npop)
+    fitness_new = zeros(Float64, npop)
+    for i = 1:npop
         fitness[i] = objfun(X[i, :])
     end
 
@@ -93,7 +93,7 @@ function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
 
     GBestF = fitness[1]
 
-    for i = 1:N
+    for i = 1:npop
         X[i, :] = X0[index[i], :]
     end
 
@@ -112,7 +112,7 @@ function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
         E = (π * i) / (P * max_iter)
         w = 0.1 * log(2 - (i / max_iter))
 
-        for j = 1:N
+        for j = 1:npop
             if i % 3 == 1
                 if j >= 1 && j <= G1Number
                     X_new[j, :] = X[j, :] .+ w * (mean(X[j, :]) .- X[j, :]) .* Levy(dim)
@@ -167,7 +167,7 @@ function ECO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
 
         index = sortperm(fitness)
         fitness = fitness[index]
-        for j = 1:N
+        for j = 1:npop
             X0[j, :] = X[index[j], :]
         end
         X = copy(X0)

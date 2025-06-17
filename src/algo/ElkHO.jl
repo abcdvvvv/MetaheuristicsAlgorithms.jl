@@ -4,23 +4,23 @@ Elk herd optimizer: a novel nature-inspired metaheuristic algorithm.
 Artif Intell Rev 57, 48 (2024). 
 https://doi.org/10.1007/s10462-023-10680-4
 """
-function ElkHO(N, max_iter, lb, ub, dim, objfun)
+function ElkHO(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb
     end
 
     MalesRate = 0.2
-    No_of_Males = round(Int, N * MalesRate)
+    No_of_Males = round(Int, npop * MalesRate)
 
     Convergence_curve = zeros(max_iter)
 
-    ElkHerd = initialization(N, dim, ub, lb)
+    ElkHerd = initialization(npop, dim, ub, lb)
 
     BestBull = zeros(dim)
     BestBullFitness = Inf
 
-    ElkHerdFitness = [objfun(ElkHerd[i, :]) for i = 1:N]
+    ElkHerdFitness = [objfun(ElkHerd[i, :]) for i = 1:npop]
 
     l = 1
     while l <= max_iter
@@ -35,8 +35,8 @@ function ElkHO(N, max_iter, lb, ub, dim, objfun)
 
         TransposeFitness = [1 / sorted_ELKS_fitness[i] for i = 1:No_of_Males]
 
-        Familes = zeros(Int, N)
-        for i = (No_of_Males+1):N
+        Familes = zeros(Int, npop)
+        for i = (No_of_Males+1):npop
             FemaleIndex = sorted_indexes[i]
             randNumber = rand()
             MaleIndex = 0
@@ -52,16 +52,16 @@ function ElkHO(N, max_iter, lb, ub, dim, objfun)
             Familes[FemaleIndex] = sorted_indexes[MaleIndex]
         end
 
-        for i = 1:N
+        for i = 1:npop
             # Male
             if Familes[i] == 0
-                h = rand(1:N)
+                h = rand(1:npop)
                 for j = 1:dim
                     NewElkHerd[i, j] = ElkHerd[i, j] + rand() * (ElkHerd[h, j] - ElkHerd[i, j])
                     NewElkHerd[i, j] = clamp(NewElkHerd[i, j], lb[j], ub[j])
                 end
             else
-                h = rand(1:N)
+                h = rand(1:npop)
                 MaleIndex = Familes[i]
                 hh = randperm(sum(Familes .== MaleIndex))
                 h = 1 + floor(Int, (length(hh) - 1) * rand())
@@ -72,7 +72,7 @@ function ElkHO(N, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             NewElkHerdFitness[i] = objfun(NewElkHerd[i, :])
             if NewElkHerdFitness[i] < BestBullFitness
                 BestBull = NewElkHerd[i, :]
@@ -86,7 +86,7 @@ function ElkHO(N, max_iter, lb, ub, dim, objfun)
         sorted_indexes = sortperm(NewFitness)
         sorted_NewFitness = NewFitness[sorted_indexes]
 
-        for i = 1:N
+        for i = 1:npop
             ElkHerd[i, :] = NewPopulation[sorted_indexes[i], :]
             ElkHerdFitness[i] = sorted_NewFitness[i]
         end

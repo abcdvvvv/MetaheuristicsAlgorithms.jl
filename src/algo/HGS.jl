@@ -3,21 +3,21 @@ Yang, Yutao, Huiling Chen, Ali Asghar Heidari, and Amir H. Gandomi.
 "Hunger games search: Visions, conception, implementation, deep analysis, perspectives, and towards performance shifts." 
 Expert Systems with Applications 177 (2021): 114864.
 """
-function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function HGS(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     bestPositions = zeros(Float64, dim)
-    tempPosition = zeros(Float64, N, dim)
+    tempPosition = zeros(Float64, npop, dim)
     Destination_fitness = Inf
     Worstest_fitness = -Inf
-    AllFitness = fill(Inf, N)
-    VC1 = ones(N)
+    AllFitness = fill(Inf, npop)
+    VC1 = ones(npop)
 
-    weight3 = ones(Float64, N, dim)
-    weight4 = ones(Float64, N, dim)
+    weight3 = ones(Float64, npop, dim)
+    weight4 = ones(Float64, npop, dim)
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
     Convergence_curve = zeros(Float64, max_iter)
     it = 1
-    hungry = zeros(Float64, N)
+    hungry = zeros(Float64, npop)
     count = 0
 
     # Main loop
@@ -25,7 +25,7 @@ function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         VC2 = 0.03
         sumHungry = 0
 
-        for i = 1:N
+        for i = 1:npop
             X[i, :] = clamp.(X[i, :], lb, ub)
             AllFitness[i] = objfun(X[i, :])
         end
@@ -45,7 +45,7 @@ function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             Worstest_fitness = worstFitness
         end
 
-        for i = 1:N
+        for i = 1:npop
             VC1[i] = sech(abs(AllFitness[i] - Destination_fitness))
 
             if Destination_fitness == AllFitness[i]
@@ -61,11 +61,11 @@ function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             for j = 2:dim
                 weight3[i, j] = (1 - exp(-abs(hungry[i] - sumHungry))) * rand() * 2
                 if rand() < VC2
-                    weight4[i, j] = hungry[i] * N / sumHungry * rand()
+                    weight4[i, j] = hungry[i] * npop / sumHungry * rand()
                 else
                     weight4[i, j] = 1
                 end
@@ -73,7 +73,7 @@ function HGS(N::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         end
 
         shrink = 2 * (1 - it / max_iter)
-        for i = 1:N
+        for i = 1:npop
             if rand() < VC2
                 X[i, :] *= 1 + randn()
             else

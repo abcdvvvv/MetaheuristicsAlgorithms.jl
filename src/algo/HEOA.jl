@@ -4,7 +4,7 @@ Lian, Junbo, and Guohua Hui.
 Expert Systems with Applications 241 (2024): 122638.
 
 """
-function HEOA(N, max_iter, lb, ub, dim, objfun)
+function HEOA(npop, max_iter, lb, ub, dim, objfun)
     jump_factor = abs(lb[1] - ub[1]) / 1000
 
     A = 0.6
@@ -12,23 +12,23 @@ function HEOA(N, max_iter, lb, ub, dim, objfun)
     EN = 0.4
     FN = 0.1
 
-    LNNumber = round(Int, N * LN)
-    ENNumber = round(Int, N * EN)
-    FNNumber = round(Int, N * FN)
+    LNNumber = round(Int, npop * LN)
+    ENNumber = round(Int, npop * EN)
+    FNNumber = round(Int, npop * FN)
 
     if length(ub) == 1
         ub = fill(ub[1], dim)
         lb = fill(lb[1], dim)
     end
 
-    X0 = initializationLogistic(N, dim, ub, lb)
+    X0 = initializationLogistic(npop, dim, ub, lb)
     X = X0
 
-    fitness_new = zeros(N)
+    fitness_new = zeros(npop)
     Best_pos = zeros(dim)
     Best_score = Inf
 
-    fitness = [objfun(X[i, :]) for i = 1:N]
+    fitness = [objfun(X[i, :]) for i = 1:npop]
     index = sortperm(fitness)
     fitness = fitness[index]
     BestF = fitness[1]
@@ -51,7 +51,7 @@ function HEOA(N, max_iter, lb, ub, dim, objfun)
         avg_fitness_curve[i] = AveF
         R = rand()
 
-        for j = 1:N
+        for j = 1:npop
             if i <= (1 / 4) * max_iter
                 X_new[j, :] = GBestX * (1 - i / max_iter) +
                               (mean(X[j, :]) .- GBestX) * floor(rand() / jump_factor) * jump_factor +
@@ -73,7 +73,7 @@ function HEOA(N, max_iter, lb, ub, dim, objfun)
                     X_new[j, :] = X[j, :] + 0.2 * cos(pi / 2 * (1 - (i / max_iter))) * rand(Float64, dim) .* (X[1, :] - X[j, :])
                 end
 
-                for j = (LNNumber+ENNumber+FNNumber+1):N
+                for j = (LNNumber+ENNumber+FNNumber+1):npop
                     X_new[j, :] = GBestX + (GBestX - X[j, :]) * randn()
                 end
             end

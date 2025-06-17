@@ -16,20 +16,20 @@ function levym(n, m, beta)
     return z
 end
 
-function PDO(N, max_iter, lb, ub, dim, objfun)
+function PDO(npop, max_iter, lb, ub, dim, objfun)
     PDBest_P = zeros(dim)
     Best_PD = Inf
-    X = initialization(N, dim, ub, lb)
-    Xnew = zeros(N, dim)
+    X = initialization(npop, dim, ub, lb)
+    Xnew = zeros(npop, dim)
     PDConv = zeros(max_iter)
     M = dim
     t = 1
     rho = 0.005
     epsPD = 0.1
-    OBest = zeros(N)
-    CBest = zeros(N)
+    OBest = zeros(npop)
+    CBest = zeros(npop)
 
-    for i = 1:N
+    for i = 1:npop
         Flag_UB = X[i, :] .> ub
         Flag_LB = X[i, :] .< lb
         X[i, :] .= (X[i, :] .* .~(Flag_UB .| Flag_LB)) .+ ub .* Flag_UB .+ lb .* Flag_LB
@@ -45,19 +45,19 @@ function PDO(N, max_iter, lb, ub, dim, objfun)
         mu = ifelse(t % 2 == 0, -1, 1)
         DS = 1.5 * randn() * (1 - t / max_iter)^(2 * t / max_iter) * mu
         PE = 1.5 * (1 - t / max_iter)^(2 * t / max_iter) * mu
-        RL = levym(N, dim, 1.5)
-        TPD = repeat(PDBest_P', N)
+        RL = levym(npop, dim, 1.5)
+        TPD = repeat(PDBest_P', npop)
 
-        for i = 1:N
+        for i = 1:npop
             for j = 1:M
-                cpd = rand() * ((TPD[i, j] - X[rand(1:N), j]) / (TPD[i, j] + eps()))
+                cpd = rand() * ((TPD[i, j] - X[rand(1:npop), j]) / (TPD[i, j] + eps()))
                 P = rho + (X[i, j] - mean(X[i, :])) / (TPD[i, j] * (ub - lb) + eps())
                 eCB = PDBest_P[j] * P
 
                 if t < max_iter / 4
                     Xnew[i, j] = PDBest_P[j] - eCB * epsPD - cpd * RL[i, j]
                 elseif t < 2 * max_iter / 4
-                    Xnew[i, j] = PDBest_P[j] * X[rand(1:N), j] * DS * RL[i, j]
+                    Xnew[i, j] = PDBest_P[j] * X[rand(1:npop), j] * DS * RL[i, j]
                 elseif t < 3 * max_iter / 4
                     Xnew[i, j] = PDBest_P[j] * PE * rand()
                 else

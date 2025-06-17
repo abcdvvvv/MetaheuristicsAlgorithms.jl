@@ -4,13 +4,13 @@ Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 """
 
-function EDO(N, max_iter, lb, ub, dim, objfun)
+function EDO(npop, max_iter, lb, ub, dim, objfun)
     BestSol = zeros(dim)
     BestFitness = Inf
-    Xwinners = initialization(N, dim, ub, lb)
-    Fitness = zeros(N)
+    Xwinners = initialization(npop, dim, ub, lb)
+    Fitness = zeros(npop)
 
-    for i = 1:N
+    for i = 1:npop
         Fitness[i] = objfun(Xwinners[i, :])
         if Fitness[i] < BestFitness
             BestFitness = Fitness[i]
@@ -23,7 +23,7 @@ function EDO(N, max_iter, lb, ub, dim, objfun)
     cgcurve = zeros(max_iter)
 
     while iter <= max_iter
-        V = zeros(N, dim)
+        V = zeros(npop, dim)
         cgcurve[iter] = BestFitness
 
         sorted_indices = sortperm(Fitness)
@@ -37,7 +37,7 @@ function EDO(N, max_iter, lb, ub, dim, objfun)
         c = d * f
         X_guide = mean(Xwinners[1:3, :], dims=1) |> vec
 
-        for i = 1:N
+        for i = 1:npop
             alpha = rand()
             if alpha < 0.5
                 if Memoryless[i, :] == Xwinners[i, :]
@@ -54,7 +54,7 @@ function EDO(N, max_iter, lb, ub, dim, objfun)
                 end
             else
                 M = mean(Xwinners, dims=1) |> vec
-                s = randperm(N)
+                s = randperm(npop)
                 D1 = M .- Xwinners[s[1], :]
                 D2 = M .- Xwinners[s[2], :]
                 Z1 = M .- D1 .+ D2
@@ -66,8 +66,8 @@ function EDO(N, max_iter, lb, ub, dim, objfun)
 
         Memoryless .= V
 
-        V_Fitness = zeros(N)
-        for i = 1:N
+        V_Fitness = zeros(npop)
+        for i = 1:npop
             V_Fitness[i] = objfun(V[i, :])
             if V_Fitness[i] < Fitness[i]
                 Xwinners[i, :] = V[i, :]

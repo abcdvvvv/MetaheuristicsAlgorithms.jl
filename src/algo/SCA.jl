@@ -3,10 +3,10 @@ Mirjalili, Seyedali.
 "SCA: a sine cosine algorithm for solving optimization problems." 
 Knowledge-based systems 96 (2016): 120-133.
 """
-function SCA(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function SCA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     println("SCA is optimizing your problem")
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
     Destination_position = zeros(dim)
     Destination_fitness = Inf

@@ -4,18 +4,18 @@ Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen.
 Neurocomputing 607 (2024): 128427.
 """
 
-function PLO(N::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
+function PLO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
     FEs = 0
     it = 1
-    MaxFEs = N * max_iter
-    fitness = fill(Inf, N)
-    fitness_new = fill(Inf, N)
+    MaxFEs = npop * max_iter
+    fitness = fill(Inf, npop)
+    fitness_new = fill(Inf, npop)
 
-    X = initialization(N, dim, ub, lb)
-    V = ones(N, dim)
-    X_new = zeros(N, dim)
+    X = initialization(npop, dim, ub, lb)
+    V = ones(npop, dim)
+    X_new = zeros(npop, dim)
 
-    for i = 1:N
+    for i = 1:npop
         fitness[i] = objfun(X[i, :])
         FEs += 1
     end
@@ -32,11 +32,11 @@ function PLO(N::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
 
     while FEs <= MaxFEs
         X_sum = sum(X, dims=1)
-        X_mean = vec(X_sum / N)
+        X_mean = vec(X_sum / npop)
         w1 = tanh((FEs / MaxFEs)^4)
         w2 = exp(-(2 * FEs / MaxFEs)^3)
 
-        for i = 1:N
+        for i = 1:npop
             a = rand() / 2 + 1
             V[i, :] .= 1 * exp((1 - a) / 100 * FEs)
             LS = V[i, :]
@@ -46,9 +46,9 @@ function PLO(N::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
         end
 
         E = sqrt(FEs / MaxFEs)
-        A = randperm(N)
+        A = randperm(npop)
 
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
                 if (rand() < 0.05) && (rand() < E)
                     X_new[i, j] = X[i, j] + sin(rand() * π) * (X[i, j] - X[A[i], j])

@@ -4,21 +4,21 @@ Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, 
 Neurocomputing 532 (2023): 183-214.
 """
 
-function RIME(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun)
+function RIME(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun)
     println("RIME is now tackling your problem")
 
     Best_rime = zeros(dim)
     Best_rime_rate = Inf
-    Rimepop = initialization(N, dim, ub, lb)
+    Rimepop = initialization(npop, dim, ub, lb)
     lb = fill(lb, dim)
     ub = fill(ub, dim)
     it = 1
     Convergence_curve = zeros(max_iter)
-    Rime_rates = zeros(N)
-    newRime_rates = zeros(N)
+    Rime_rates = zeros(npop)
+    newRime_rates = zeros(npop)
     W = 5
 
-    for i = 1:N
+    for i = 1:npop
         Rime_rates[i] = objfun(Rimepop[i, :])
         if Rime_rates[i] < Best_rime_rate
             Best_rime_rate = Rime_rates[i]
@@ -32,7 +32,7 @@ function RIME(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{In
         newRimepop = copy(Rimepop)
         normalized_rime_rates = normalize(Rime_rates)
 
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
                 r1 = rand()
                 if r1 < E
@@ -45,7 +45,7 @@ function RIME(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{In
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             newRimepop[i, :] = clamp.(newRimepop[i, :], lb, ub)
             newRime_rates[i] = objfun(newRimepop[i, :])
 

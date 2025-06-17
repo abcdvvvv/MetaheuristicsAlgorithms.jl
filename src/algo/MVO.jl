@@ -19,14 +19,14 @@ function RouletteWheelSelection(weights)
     return chosen_index
 end
 
-function MVO(N, Max_time, lb, ub, dim, objfun)
+function MVO(npop, Max_time, lb, ub, dim, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)
     Best_universe_Inflation_rate = Inf
 
     # Initialize the positions of universes
-    Universes = initialization(N, dim, ub, lb)
+    Universes = initialization(npop, dim, ub, lb)
 
     # Minimum and maximum of Wormhole Existence Probability (WEP)
     WEP_Max = 1
@@ -46,9 +46,9 @@ function MVO(N, Max_time, lb, ub, dim, objfun)
         TDR = 1 - ((Time)^(1 / 6) / (Max_time)^(1 / 6))
 
         # Initialize inflation rates (fitness values)
-        Inflation_rates = zeros(N)
+        Inflation_rates = zeros(npop)
 
-        for i = 1:N
+        for i = 1:npop
             # Boundary checking
             Flag4ub = Universes[i, :] .> ub
             Flag4lb = Universes[i, :] .< lb
@@ -75,7 +75,7 @@ function MVO(N, Max_time, lb, ub, dim, objfun)
         Universes[1, :] = Sorted_universes[1, :]
 
         # Update the position of universes
-        for i = 2:N # Start from 2, since the first is the elite
+        for i = 2:npop # Start from 2, since the first is the elite
             for j = 1:dim
                 r1 = rand()
                 if r1 < normalized_sorted_Inflation_rates[i]

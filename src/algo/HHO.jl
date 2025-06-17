@@ -4,19 +4,19 @@ Heidari, Ali Asghar, Seyedali Mirjalili, Hossam Faris, Ibrahim Aljarah, Majdi Ma
 Future generation computer systems 97 (2019): 849-872.
 """
 
-function HHO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector},
+function HHO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector},
     dim::Int, objfun::Function)
     Rabbit_Location = zeros(dim)
     Rabbit_Energy = Inf
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
     CNVG = zeros(max_iter)
 
     t = 0  # Loop counter
 
     while t < max_iter
-        for i = 1:N
+        for i = 1:npop
             FU = X[i, :] .> ub
             FL = X[i, :] .< lb
             X[i, :] = (X[i, :] .* .~(FU .+ FL)) .+ ub .* FU .+ lb .* FL
@@ -31,13 +31,13 @@ function HHO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
 
         E1 = 2 * (1 - (t / max_iter))
 
-        for i = 1:N
+        for i = 1:npop
             E0 = 2 * rand() - 1
             Escaping_Energy = E1 * E0
 
             if abs(Escaping_Energy) >= 1
                 q = rand()
-                rand_Hawk_index = rand(1:N)
+                rand_Hawk_index = rand(1:npop)
                 X_rand = X[rand_Hawk_index, :]
                 if q < 0.5
                     X[i, :] = X_rand - rand() * abs.(X_rand - 2 * rand() * X[i, :])

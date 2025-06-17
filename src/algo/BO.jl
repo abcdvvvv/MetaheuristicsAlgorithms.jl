@@ -4,7 +4,7 @@
 - Das, Amit Kumar, and Dilip Kumar Pratihar. "Bonobo optimizer (BO): an intelligent heuristic with self-adjusting parameters over continuous spaces and its applications to engineering problems." Applied Intelligence 52, no. 3 (2022): 2942-2974.
 
 """
-function BO(N, max_iter, lb, ub, dim, objfun)
+function BO(npop, max_iter, lb, ub, dim, objfun)
     p_xgm_initial = 0.001
     scab = 1.25
     scsb = 1.3
@@ -19,10 +19,10 @@ function BO(N, max_iter, lb, ub, dim, objfun)
     end
 
     # Initialization
-    cost = zeros(N)
-    bonobo = zeros(N, dim)
+    cost = zeros(npop)
+    bonobo = zeros(npop, dim)
     convergence = zeros(max_iter)
-    for i = 1:N
+    for i = 1:npop
         bonobo[i, :] = [rand(Uniform(lb[j], ub[j])) for j = 1:dim]
         cost[i] = objfun(bonobo[i, :])
     end
@@ -43,11 +43,11 @@ function BO(N, max_iter, lb, ub, dim, objfun)
 
     # Main Loop of BO
     while it <= max_iter
-        tsgs_max = max(2, ceil(Int, N * tsgs_factor))
+        tsgs_max = max(2, ceil(Int, npop * tsgs_factor))
 
-        for i = 1:N
+        for i = 1:npop
             newbonobo = zeros(1, dim)
-            B = collect(1:N)
+            B = collect(1:npop)
             deleteat!(B, i)  # Exclude the current index
 
             tsg = rand(2:tsgs_max)

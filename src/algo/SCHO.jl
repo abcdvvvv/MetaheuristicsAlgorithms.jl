@@ -4,12 +4,12 @@ Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abuali
 Knowledge-Based Systems 282 (2023): 111081.
 """
 
-function SCHO(N, max_iter, lb, ub, dim, objfun)
+function SCHO(npop, max_iter, lb, ub, dim, objfun)
     Destination_position = zeros(1, dim)
     Destination_fitness = Inf
     Destination_position_second = zeros(1, dim)
     Convergence_curve = zeros(max_iter)
-    Position_sort = zeros(N, dim)
+    Position_sort = zeros(npop, dim)
 
     u = 0.388
     m = 0.45
@@ -26,10 +26,10 @@ function SCHO(N, max_iter, lb, ub, dim, objfun)
     ub_2 = ub
     lb_2 = lb
 
-    X = initialization(N, dim, ub, lb)
-    Objective_values = zeros(N)
+    X = initialization(npop, dim, ub, lb)
+    Objective_values = zeros(npop)
 
-    for i = 1:N
+    for i = 1:npop
         Objective_values[i] = objfun(X[i, :])
         if Objective_values[i] < Destination_fitness
             Destination_position = X[i, :]
@@ -41,7 +41,7 @@ function SCHO(N, max_iter, lb, ub, dim, objfun)
     t = 2
 
     while t <= max_iter
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
                 cosh2 = (exp(t / max_iter) + exp(-t / max_iter)) / 2
                 sinh2 = (exp(t / max_iter) - exp(-t / max_iter)) / 2
@@ -53,7 +53,7 @@ function SCHO(N, max_iter, lb, ub, dim, objfun)
                     lb_2 = Destination_position[j] - (1 - t / max_iter) * abs(Destination_position[j] - Destination_position_second[j])
                     ub_2 = min(ub_2, ub)
                     lb_2 = max(lb_2, lb)
-                    X = initialization(N, dim, ub_2, lb_2)
+                    X = initialization(npop, dim, ub_2, lb_2)
                     BSi_temp = BSi
                     BSi = 0
                 end
@@ -88,7 +88,7 @@ function SCHO(N, max_iter, lb, ub, dim, objfun)
             BSi = BSi_temp
         end
 
-        for i = 1:N
+        for i = 1:npop
             X[i, :] = clamp.(X[i, :], lb_2, ub_2)
 
             Objective_values[i] = objfun(X[i, :])

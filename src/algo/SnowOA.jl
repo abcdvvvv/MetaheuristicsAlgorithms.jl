@@ -4,24 +4,24 @@ Deng, Lingyun, and Sanyang Liu.
 Expert Systems with Applications 225 (2023): 120069.
 """
 
-function SnowOA(N, max_iter, lb, ub, dim, objfun)
+function SnowOA(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)
     end
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
     Best_pos = zeros(dim)
     Best_score = Inf
-    Objective_values = zeros(N)
+    Objective_values = zeros(npop)
 
     Convergence_curve = []
 
-    N1 = floor(Int, N * 0.5)
+    N1 = floor(Int, npop * 0.5)
     Elite_pool = zeros(4, dim)
 
-    for i = 1:N
+    for i = 1:npop
         Objective_values[i] = objfun(X[i, :])
         if i == 1
             Best_pos = X[i, :]
@@ -45,22 +45,22 @@ function SnowOA(N, max_iter, lb, ub, dim, objfun)
 
     push!(Convergence_curve, Best_score)
 
-    index = collect(1:N)
+    index = collect(1:npop)
 
-    Na = N ÷ 2
-    Nb = N ÷ 2
+    Na = npop ÷ 2
+    Nb = npop ÷ 2
 
     l = 2
     while l <= max_iter
-        RB = randn(N, dim)
+        RB = randn(npop, dim)
         T = exp(-l / max_iter)
         k = 1
         DDF = 0.35 * (1 + (5 / 7) * (exp(l / max_iter) - 1)^k / (exp(1) - 1)^k)
         M = DDF * T
 
-        X_centroid = sum(X, dims=1) / N
+        X_centroid = sum(X, dims=1) / npop
 
-        index1 = randperm(N)[1:Na]
+        index1 = randperm(npop)[1:Na]
         index2 = setdiff(index, index1)
 
         for i = 1:Na
@@ -71,7 +71,7 @@ function SnowOA(N, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        if Na < N
+        if Na < npop
             Na += 1
             Nb -= 1
         end
@@ -85,7 +85,7 @@ function SnowOA(N, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             X[i, :] = clamp.(X[i, :], lb, ub)
             Objective_values[i] = objfun(X[i, :])
 

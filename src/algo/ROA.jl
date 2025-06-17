@@ -3,17 +3,17 @@ Jia, Heming, Xiaoxu Peng, and Chunbo Lang.
 "Remora optimization algorithm." 
 Expert Systems with Applications 185 (2021): 115665.
 """
-function ROA(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function ROA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     Best_pos = zeros(Float64, dim)
     Best_score = Inf
 
-    Positions = initialization(N, dim, ub, lb)
-    Positions_attempt = zeros(Float64, N, dim)
-    Positions_previous = initialization(N, dim, ub, lb)
+    Positions = initialization(npop, dim, ub, lb)
+    Positions_attempt = zeros(Float64, npop, dim)
+    Positions_previous = initialization(npop, dim, ub, lb)
     Convergence_curve = zeros(Float64, max_iter)
 
-    fitness = zeros(Float64, N)
-    H = rand(1, N) .> 0.5
+    fitness = zeros(Float64, npop)
+    H = rand(1, npop) .> 0.5
 
     for t = 1:max_iter
         for i in axes(Positions, 1)
@@ -40,7 +40,7 @@ function ROA(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
                 Positions[i, :] .= distance2Leader * exp(l) .* cos(l * 2 * π) .+ Best_pos
 
             elseif H[i] == true
-                rand_leader_index = rand(1:N)
+                rand_leader_index = rand(1:npop)
                 X_rand = Positions[rand_leader_index, :]
                 Positions[i, :] .= Best_pos .- (rand(dim) .* (Best_pos .+ X_rand) / 2 .- X_rand)
             end

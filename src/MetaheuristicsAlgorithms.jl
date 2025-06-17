@@ -123,7 +123,7 @@ using SpecialFunctions: gamma
 
 include("utils/utils.jl")
 include("utils/Chung_Reynolds.jl")
-include("initialization.jl")
+include("utils/initialization.jl")
 # addpath(joinpath(@__DIR__, "algorithms"))
 
 ##

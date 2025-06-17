@@ -4,14 +4,14 @@ Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He.
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """
 
-function SBOA(N, max_iter, lb, ub, dim, objfun) 
+function SBOA(npop, max_iter, lb, ub, dim, objfun) 
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 
-    X = initialization(N, dim, lb, ub)
-    fit = zeros(N) 
+    X = initialization(npop, dim, lb, ub)
+    fit = zeros(npop) 
     Bast_P = zeros(dim)
-    for i in 1:N
+    for i in 1:npop
         fit[i] = objfun(vec(X[i, :]))
     end
     SBOA_curve = zeros(max_iter)
@@ -29,10 +29,10 @@ function SBOA(N, max_iter, lb, ub, dim, objfun)
             Bast_P = X[location, :]
         end
 
-        for i in 1:N
+        for i in 1:npop
             if t < max_iter / 3  
-                X_random_1 = X[rand(1:N), :]
-                X_random_2 = X[rand(1:N), :]
+                X_random_1 = X[rand(1:npop), :]
+                X_random_2 = X[rand(1:npop), :]
                 R1 = rand(dim)
                 X1 = X[i, :] .+ (X_random_1 .- X_random_2) .* R1
                 X1 = clamp.(X1, lb, ub)
@@ -54,8 +54,8 @@ function SBOA(N, max_iter, lb, ub, dim, objfun)
         end
 
         r = rand()
-        Xrandom = X[rand(1:N), :]
-        for i in 1:N
+        Xrandom = X[rand(1:npop), :]
+        for i in 1:npop
             if r < 0.5
                 RB = rand(dim)
                 X2 = Bast_P .+ (1 - t / max_iter)^2 .* (2 * RB .- 1) .* X[i, :]

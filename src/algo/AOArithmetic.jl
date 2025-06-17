@@ -5,7 +5,7 @@
 - Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 
 """
-function AOArithmetic(N, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+function AOArithmetic(npop, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max_iter, lb, ub, dim, Chung_Reynolds)
 
     # Two variables to keep the positions and the fitness value of the best-obtained solution
     Best_P = zeros(dim)
@@ -13,10 +13,10 @@ function AOArithmetic(N, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max
     Conv_curve = zeros(max_iter)
 
     # Initialize the positions of solution
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
     Xnew = copy(X)
-    Ffun = zeros(N)  # (fitness values)
-    Ffun_new = zeros(N)  # (fitness values)
+    Ffun = zeros(npop)  # (fitness values)
+    Ffun_new = zeros(npop)  # (fitness values)
 
     MOP_Max = 1
     MOP_Min = 0.2
@@ -24,7 +24,7 @@ function AOArithmetic(N, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max
     Alpha = 5
     Mu = 0.499
 
-    for i = 1:N
+    for i = 1:npop
         Ffun[i] = objfun(X[i, :])  # Calculate the fitness values of solutions
         if Ffun[i] < Best_FF
             Best_FF = Ffun[i]
@@ -37,7 +37,7 @@ function AOArithmetic(N, max_iter, lb, ub, dim, objfun) # AOArithmetic(npop, max
         MOA = MOP_Min + C_Iter * ((MOP_Max - MOP_Min) / max_iter)  # Accelerated function
 
         # Update the Position of solutions
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
                 r1 = rand()
                 if length(lb) == 1

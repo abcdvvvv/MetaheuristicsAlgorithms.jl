@@ -4,19 +4,10 @@ Ghasemi, Mojtaba, Mohsen Zare, Pavel Trojovský, Ravipudi Venkata Rao, Eva Trojo
 Knowledge-Based Systems 295 (2024): 111850.
 """
 
-function IVYA(N, max_iter, lb, ub, dim, objfun)
-    CostFunction = x -> objfun(x)
-
-    lb = lb
-    ub = ub
-
-    max_iter = max_iter
-    npop = N
-    VarSize = (1, dim)
-
+function IVYA(npop, max_iter, lb, ub, dim, objfun)
     Position = rand(npop, dim) .* (ub .- lb) .+ lb
     GV = Position ./ (ub .- lb)
-    Cost = [CostFunction(Position[i, :]) for i = 1:npop]
+    Cost = [objfun(Position[i, :]) for i = 1:npop]
 
     BestCosts = zeros(Float64, max_iter)
     Convergence_curve = zeros(Float64, max_iter)
@@ -44,7 +35,7 @@ function IVYA(N, max_iter, lb, ub, dim, objfun)
 
             new_GV = new_position ./ (ub .- lb)
 
-            new_cost = CostFunction(vec(new_position))
+            new_cost = objfun(vec(new_position))
 
             push!(newpop, (new_position, new_cost, new_GV))
         end

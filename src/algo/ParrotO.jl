@@ -3,24 +3,24 @@ Lian, Junbo, Guohua Hui, Ling Ma, Ting Zhu, Xincan Wu, Ali Asghar Heidari, Yi Ch
 "Parrot optimizer: Algorithm and applications to medical problems." 
 Computers in Biology and Medicine 172 (2024): 108064.
 """
-function ParrotO(N, max_iter, lb, ub, dim, objfun)
+function ParrotO(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = fill(ub, dim)
         lb = fill(lb, dim)
     end
 
-    X0 = initialization(N, dim, ub, lb)
+    X0 = initialization(npop, dim, ub, lb)
     X = X0
 
-    fitness = zeros(N)
-    for i = 1:N
+    fitness = zeros(npop)
+    for i = 1:npop
         fitness[i] = objfun(X[i, :])
     end
 
     index = sortperm(fitness)
     fitness = fitness[index]
     GBestF = fitness[1]
-    for i = 1:N
+    for i = 1:npop
         X[i, :] .= X0[index[i], :]
     end
 
@@ -53,7 +53,7 @@ function ParrotO(N, max_iter, lb, ub, dim, objfun)
                 X_new[j, :] .= X[j, :] .+ rand() * cos((π * i) / (2 * max_iter)) * (GBestX .- X[j, :]) .- cos(sita) * (i / max_iter)^(2 / max_iter) * (X[j, :] .- GBestX)
             end
 
-            for m = 1:N
+            for m = 1:npop
                 for a = 1:dim
                     if X_new[m, a] > ub[a]
                         X_new[m, a] = ub[a]
@@ -70,12 +70,12 @@ function ParrotO(N, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        fitness_new = zeros(N)
-        for s = 1:N
+        fitness_new = zeros(npop)
+        for s = 1:npop
             fitness_new[s] = objfun(X_new[s, :])
         end
 
-        for s = 1:N
+        for s = 1:npop
             if fitness_new[s] < GBestF
                 GBestF = fitness_new[s]
                 GBestX .= X_new[s, :]
@@ -87,7 +87,7 @@ function ParrotO(N, max_iter, lb, ub, dim, objfun)
 
         index = sortperm(fitness)
         fitness = fitness[index]
-        for s = 1:N
+        for s = 1:npop
             X0[s, :] .= X[index[s], :]
         end
 

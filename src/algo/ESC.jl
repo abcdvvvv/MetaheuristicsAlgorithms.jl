@@ -4,7 +4,7 @@ Escape: an optimization method based on crowd evacuation behaviors.
 Artificial Intelligence Review, 58(1), 19.
 """
 
-function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
+function ESC(npop::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)
         ub = fill(ub, dim)
@@ -15,11 +15,11 @@ function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
         ub = ub'
     end
 
-    population = rand(N, dim) .* (ub .- lb) .+ lb
+    population = rand(npop, dim) .* (ub .- lb) .+ lb
     best_fitness = Inf
     best_solution = zeros(dim)
 
-    fitness = [objfun(population[i, :]) for i = 1:N]
+    fitness = [objfun(population[i, :]) for i = 1:npop]
 
     sorted = sortperm(fitness)
     population = population[sorted, :]
@@ -43,15 +43,15 @@ function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
         populationNew = copy(population)
 
         if t / max_iter <= 0.5
-            calmCount = ceil(Int, round(a * N))
-            conformCount = ceil(Int, round(b * N))
+            calmCount = ceil(Int, round(a * npop))
+            conformCount = ceil(Int, round(b * npop))
             calm = population[1:calmCount, :]
             conform = population[calmCount+1:calmCount+conformCount, :]
             panic = population[(calmCount+conformCount+1):end, :]
             calmCenter = sum(calm, dims=1) / calmCount
             calmCenter = vec(calmCenter)
 
-            for i = 1:N
+            for i = 1:npop
                 if size(panic, 1) > 0
                     randomPanicIndex = Int(floor(rand(1:size(panic, 1))))
                     panicIndividual = panic[randomPanicIndex, :]
@@ -84,7 +84,7 @@ function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                         (weight1 .* (calmCenter - population[i, :]) + mask2 .* (weight2 .* (panicIndividual .- population[i, :])) + (randVec - population[i, :] .+ randn(dim) / 50) .* panicIndex)
                 else
                     elite = best_solutions[rand(1:eliteSize), :]
-                    randomInd = population[rand(1:N), :]#[1, :]
+                    randomInd = population[rand(1:npop), :]#[1, :]
                     weight1 = adaptive_levy_weight(beta_base, dim, t, max_iter)
                     weight2 = adaptive_levy_weight(beta_base, dim, t, max_iter)
                     mask2 = rand(dim) .> mask_probability
@@ -96,10 +96,10 @@ function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                 end
             end
         else
-            for i = 1:N
+            for i = 1:npop
                 elite = best_solutions[rand(1:eliteSize), :]
 
-                randInd = population[rand(1:N), :]
+                randInd = population[rand(1:npop), :]
                 weight1 = adaptive_levy_weight(beta_base, dim, t, max_iter)
                 weight2 = adaptive_levy_weight(beta_base, dim, t, max_iter)
                 mask1 = rand(dim) .> mask_probability
@@ -109,12 +109,12 @@ function ESC(N::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             populationNew[i, :] = max.(lb', min.(populationNew[i, :], ub'))
         end
 
-        fitnessNew = [objfun(populationNew[i, :]) for i = 1:N]
-        for i = 1:N
+        fitnessNew = [objfun(populationNew[i, :]) for i = 1:npop]
+        for i = 1:npop
             if fitnessNew[i] < fitness[i]
                 population[i, :] .= populationNew[i, :]
                 fitness[i] = fitnessNew[i]

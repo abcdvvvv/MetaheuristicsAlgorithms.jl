@@ -4,14 +4,14 @@
 - Naruei, Iraj, and Farshid Keynia. "A new optimization method based on COOT bird natural life model." Expert Systems with Applications 183 (2021): 115352.
 
 """
-function COOT(N, max_iter, lb, ub, dim, objfun)
+function COOT(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb
     end
 
-    NLeader = ceil(Int, 0.1 * N)
-    Ncoot = N - NLeader
+    NLeader = ceil(Int, 0.1 * npop)
+    Ncoot = npop - NLeader
     Convergence_curve = zeros(max_iter)
     gBest = zeros(dim)
     gBestScore = Inf

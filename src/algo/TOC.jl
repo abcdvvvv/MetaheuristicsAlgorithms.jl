@@ -1,15 +1,15 @@
 # Tornado Optimizer with Coriolis Force (TOC) in Julia
 
-function TOC(n, max_iter, lb, ub, dim, objfun, nto=4, nt=3)
+function TOC(npop, max_iter, lb, ub, dim, objfun, nto=4, nt=3)
     ccurve = zeros(max_iter)
 
     # Initialization
-    y = initialization(n, dim, ub, lb)
+    y = initialization(npop, dim, ub, lb)
     fit = [objfun(y[i, :]) for i = 1:axes(y, 1)]
     sorted_idx = sortperm(fit)
 
     To = nto - nt
-    nw = n - nto
+    nw = npop - nto
 
     Tornadoposition = y[sorted_idx[1:To], :]
     TornadoCost = fit[sorted_idx[1:To]]

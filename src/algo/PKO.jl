@@ -4,16 +4,16 @@ Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien.
 Neural Computing and Applications (2024): 1-59.
 """
 
-function PKO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
+function PKO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)
     BF = 8
     Crest_angles = 2 * π * rand()
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
-    Fitness = zeros(N)
+    Fitness = zeros(npop)
     Convergence_curve = zeros(max_iter, 1)
 
-    for i = 1:N
+    for i = 1:npop
         Fitness[i] = objfun(X[i, :])
     end
 
@@ -29,11 +29,11 @@ function PKO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
     while t < max_iter + 1
         o = exp(-t / max_iter)^2
 
-        for i = 1:N
+        for i = 1:npop
             if rand() < 0.8
                 j = i
                 while i == j
-                    seed = randperm(N)
+                    seed = randperm(npop)
                     j = seed[1]
                 end
 
@@ -73,10 +73,10 @@ function PKO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int
 
         PE = PEmax - (PEmax - PEmin) * (t / max_iter)
 
-        for i = 1:N
+        for i = 1:npop
             alpha = 2 * randn(dim) .- 1
             if rand() > (1 - PE)
-                X_1 = X[rand(1:N), :] + o * alpha .* abs.(X[i, :] - X[rand(1:N), :])
+                X_1 = X[rand(1:npop), :] + o * alpha .* abs.(X[i, :] - X[rand(1:npop), :])
             else
                 X_1 = X[i, :]
             end

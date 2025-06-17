@@ -4,13 +4,13 @@ Houssein, Essam H., Diego Oliva, Nagwan Abdel Samee, Noha F. Mahmoud, and Marwa 
 Computers in Biology and Medicine 165 (2023): 107389.
 """
 
-function LCA(N, max_iter, lb, ub, dim, objfun)
+function LCA(npop, max_iter, lb, ub, dim, objfun)
     println("LCA is now tackling your problem")
 
     Tumor_Location = zeros(Float64, dim)
     Tumor_Energy = Inf
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
     CNVG = zeros(Float64, max_iter)
 
@@ -42,7 +42,7 @@ function LCA(N, max_iter, lb, ub, dim, objfun)
 
             if abs(v) <= 5
                 q = rand()
-                rand_Hawk_index = rand(1:N)
+                rand_Hawk_index = rand(1:npop)
                 X_rand = X[rand_Hawk_index, :]
 
                 q = π / 6 * (l * w)^1.5

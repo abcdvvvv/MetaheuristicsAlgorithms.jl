@@ -15,7 +15,7 @@ function S_func(r)
     return o
 end
 
-function GOA(N, max_iter, lb, ub, dim, objfun)
+function GOA(npop, max_iter, lb, ub, dim, objfun)
     flag = false
     if length(ub) == 1
         ub = ones(dim) * ub
@@ -29,18 +29,18 @@ function GOA(N, max_iter, lb, ub, dim, objfun)
         flag = true
     end
 
-    GrassHopperPositions = initialization(N, dim, ub, lb)
-    GrassHopperFitness = zeros(N)
+    GrassHopperPositions = initialization(npop, dim, ub, lb)
+    GrassHopperFitness = zeros(npop)
 
-    fitness_history = zeros(N, max_iter)
-    position_history = zeros(N, max_iter, dim)
+    fitness_history = zeros(npop, max_iter)
+    position_history = zeros(npop, max_iter, dim)
     Convergence_curve = zeros(max_iter)
-    Trajectories = zeros(N, max_iter)
+    Trajectories = zeros(npop, max_iter)
 
     cMax = 1.0
     cMin = 0.00004
 
-    for i = 1:N
+    for i = 1:npop
         if flag
             GrassHopperFitness[i] = objfun(GrassHopperPositions[i, 1:end-1])
         else
@@ -60,14 +60,14 @@ function GOA(N, max_iter, lb, ub, dim, objfun)
     for l = 2:max_iter
         c = cMax - l * ((cMax - cMin) / max_iter)
 
-        GrassHopperPositions_temp = zeros(N, dim)
+        GrassHopperPositions_temp = zeros(npop, dim)
 
-        for i = 1:N
+        for i = 1:npop
             temp = GrassHopperPositions'
             S_i_total = zeros(dim)
             for k = 1:2:dim
                 S_i = zeros(2)
-                for j = 1:N
+                for j = 1:npop
                     if i != j
                         Dist = distance(temp[k:k+1, j], temp[k:k+1, i])
                         r_ij_vec = (temp[k:k+1, j] - temp[k:k+1, i]) / (Dist + eps())
@@ -85,7 +85,7 @@ function GOA(N, max_iter, lb, ub, dim, objfun)
 
         GrassHopperPositions = GrassHopperPositions_temp
 
-        for i = 1:N
+        for i = 1:npop
             GrassHopperPositions[i, :] = max.(min.(GrassHopperPositions[i, :], ub), lb)
 
             if flag

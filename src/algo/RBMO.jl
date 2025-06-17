@@ -4,37 +4,37 @@ Fu, Shengwei, et al.
 Artificial Intelligence Review 57.6 (2024): 134.
 """
 
-function RBMO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, D::Int, objfun)
+function RBMO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, D::Int, objfun)
     Xfood = zeros(D)
     BestValue = Inf
     Conv = zeros(max_iter)
-    fitness = fill(Inf, N)
+    fitness = fill(Inf, npop)
     FES = 0
     Epsilon = 0.5
 
-    X = initialization(N, D, ub, lb)
+    X = initialization(npop, D, ub, lb)
     X_old = copy(X)
-    fitness_old = zeros(N)
+    fitness_old = zeros(npop)
 
-    for i = 1:N
+    for i = 1:npop
         fitness_old[i] = objfun(X_old[i, :])
     end
 
     t = 1
 
     while t ≤ max_iter
-        for i = 1:N
+        for i = 1:npop
             p = rand(2:5)
-            selected_index_p = randperm(N)[1:p]
+            selected_index_p = randperm(npop)[1:p]
             Xp = X[selected_index_p, :]
             Xpmean = mean(Xp, dims=1)
 
-            q = rand(10:N)
-            selected_index_q = randperm(N)[1:q]
+            q = rand(10:npop)
+            selected_index_q = randperm(npop)[1:q]
             Xq = X[selected_index_q, :]
             Xpmean = vec(mean(Xp, dims=1))
 
-            A = randperm(N)
+            A = randperm(npop)
             R1 = A[1]
 
             if rand() < Epsilon
@@ -46,7 +46,7 @@ function RBMO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{In
 
         X = max.(lb, min.(X, ub))
 
-        for i = 1:N
+        for i = 1:npop
             fitness[i] = objfun(X[i, :])
             if fitness[i] < BestValue
                 BestValue = fitness[i]
@@ -59,14 +59,14 @@ function RBMO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{In
 
         CF = (1 - t / max_iter)^(2 * t / max_iter)
 
-        for i = 1:N
+        for i = 1:npop
             p = rand(2:5)
-            selected_index_p = randperm(N)[1:p]
+            selected_index_p = randperm(npop)[1:p]
             Xp = X[selected_index_p, :]
             Xpmean = vec(mean(Xp, dims=1))
 
-            q = rand(10:N)
-            selected_index_q = randperm(N)[1:q]
+            q = rand(10:npop)
+            selected_index_q = randperm(npop)[1:q]
             Xq = X[selected_index_q, :]
             Xqmean = vec(mean(Xq, dims=1))
 
@@ -79,7 +79,7 @@ function RBMO(N::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{In
 
         X = max.(lb, min.(X, ub))
 
-        for i = 1:N
+        for i = 1:npop
             fitness[i] = objfun(X[i, :])
             if fitness[i] < BestValue
                 BestValue = fitness[i]

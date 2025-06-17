@@ -3,7 +3,7 @@ Houssein, Essam H., Mohammed R. Saad, Fatma A. Hashim, Hassan Shaban, and M. Has
 "Lévy flight distribution: A new metaheuristic algorithm for solving engineering optimization problems." 
 Engineering Applications of Artificial Intelligence 94 (2020): 103731.
 """
-function LFD(N, max_iter, lb, ub, dim, objfun)
+function LFD(npop, max_iter, lb, ub, dim, objfun)
     threshold = 2
     lb = lb * ones(dim)
     ub = ub * ones(dim)
@@ -13,9 +13,9 @@ function LFD(N, max_iter, lb, ub, dim, objfun)
         lb = ones(dim) * lb
     end
 
-    Positions = initialization(N, dim, ub, lb)
+    Positions = initialization(npop, dim, ub, lb)
 
-    PositionsFitness = zeros(N)
+    PositionsFitness = zeros(npop)
     Positions_temp = copy(Positions)
 
     for i in axes(Positions, 1)
@@ -26,14 +26,14 @@ function LFD(N, max_iter, lb, ub, dim, objfun)
     TargetPosition = Positions[sorted_indexes, :]
     TargetFitness = sorted_fitness
     vec_flag = [1, -1]
-    NN = zeros(Int, N)
+    NN = zeros(Int, npop)
 
     conver_iter = zeros(max_iter)
     conver_iter[1] = TargetFitness
     l = 1
 
-    D = zeros(N)
-    pos_temp_nei = Vector{Vector{Float64}}(undef, N)
+    D = zeros(npop)
+    pos_temp_nei = Vector{Vector{Float64}}(undef, npop)
 
     while l <= max_iter
         for i in axes(Positions, 1)
@@ -42,7 +42,7 @@ function LFD(N, max_iter, lb, ub, dim, objfun)
             S_i = zeros(dim)
             NeighborN = 0
 
-            for j = 1:N
+            for j = 1:npop
                 if i != j
                     dis = norm(Positions[j, :] - Positions[i, :])
                     if (dis < threshold)
@@ -56,7 +56,7 @@ function LFD(N, max_iter, lb, ub, dim, objfun)
                         R = rand()
                         CSV = 0.5
                         if R < CSV
-                            rand_leader_index = rand(1:N)
+                            rand_leader_index = rand(1:npop)
                             X_rand = Positions[rand_leader_index, :]
                             Positions_temp[j, :] = LF(Positions[j, :], X_rand, dim)
                         else
@@ -74,7 +74,7 @@ function LFD(N, max_iter, lb, ub, dim, objfun)
             end
 
             S_i_total = S_i
-            rand_leader_index = rand(1:floor(Int(N)))
+            rand_leader_index = rand(1:floor(Int(npop)))
             X_rand = Positions[rand_leader_index, :]
             X_new = TargetPosition + 10 * S_i_total + rand() * 0.00005 * ((TargetPosition + 0.005 * X_rand) / 2 - Positions[i, :])
             X_new = LF(X_new, TargetPosition, dim)

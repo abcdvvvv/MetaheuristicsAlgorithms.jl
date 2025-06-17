@@ -3,12 +3,12 @@ Li, Shimin, Huiling Chen, Mingjing Wang, Ali Asghar Heidari, and Seyedali Mirjal
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
-function SMA(N, max_iter, lb, ub, dim, objfun)
+function SMA(npop, max_iter, lb, ub, dim, objfun)
     bestPositions = zeros(1, dim)
     Destination_fitness = Inf
-    AllFitness = fill(Inf, N)
-    weight = ones(N, dim)
-    X = initialization(N, dim, ub, lb)
+    AllFitness = fill(Inf, npop)
+    weight = ones(npop, dim)
+    X = initialization(npop, dim, ub, lb)
     Convergence_curve = zeros(max_iter)
     it = 1
     lb = ones(dim) .* lb
@@ -16,7 +16,7 @@ function SMA(N, max_iter, lb, ub, dim, objfun)
     z = 0.03
 
     while it <= max_iter
-        for i = 1:N
+        for i = 1:npop
             Flag4ub = X[i, :] .> ub
             Flag4lb = X[i, :] .< lb
             X[i, :] = (X[i, :] .* .~(Flag4ub .+ Flag4lb)) .+ ub .* Flag4ub .+ lb .* Flag4lb
@@ -25,14 +25,14 @@ function SMA(N, max_iter, lb, ub, dim, objfun)
 
         SmellIndex = sortperm(AllFitness)
         SmellOrder = AllFitness[SmellIndex]
-        worstFitness = SmellOrder[N]
+        worstFitness = SmellOrder[npop]
         bestFitness = SmellOrder[1]
 
         S = bestFitness - worstFitness + eps()
 
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
-                if i <= (N / 2)
+                if i <= (npop / 2)
                     weight[SmellIndex[i], j] = 1 + rand() * log10((bestFitness - AllFitness[SmellIndex[i]]) / S + 1)
                 else
                     weight[SmellIndex[i], j] = 1 - rand() * log10((bestFitness - AllFitness[SmellIndex[i]]) / S + 1)
@@ -48,7 +48,7 @@ function SMA(N, max_iter, lb, ub, dim, objfun)
         a = atanh(-(it / max_iter) + 1)
         b = 1 - it / max_iter
 
-        for i = 1:N
+        for i = 1:npop
             if rand() < z
                 X[i, :] = (ub - lb) .* rand(dim) .+ lb
             else
@@ -57,8 +57,8 @@ function SMA(N, max_iter, lb, ub, dim, objfun)
                 vc = rand(dim) .* (2b) .- b
                 for j = 1:dim
                     r = rand()
-                    A = rand(1:N)[1]
-                    B = rand(1:N)[1]
+                    A = rand(1:npop)[1]
+                    B = rand(1:npop)[1]
                     if r < p
                         X[i, j] = bestPositions[j] + vb[j] * (weight[i, j] * X[A, j] - X[B, j])
                     else

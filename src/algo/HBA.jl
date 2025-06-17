@@ -3,29 +3,29 @@ Hashim, Fatma A., Essam H. Houssein, Kashif Hussain, Mai S. Mabrouk, and Walid A
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
-function HBA(N, max_iter, lb, ub, dim, objfun) 
+function HBA(npop, max_iter, lb, ub, dim, objfun) 
     beta = 6                      
     C = 2                         
     vec_flag = [1.0, -1.0]
 
-    X = lb .+ rand(N, dim) .* (ub .- lb)
-    fitness = ones(N) * Inf
+    X = lb .+ rand(npop, dim) .* (ub .- lb)
+    fitness = ones(npop) * Inf
     
-    for i in 1:N
+    for i in 1:npop
         fitness[i] = objfun(vec(X[i,:]'))
     end
     
     GYbest, gbest = findmin(fitness)
     Xprey = X[gbest, :]
-    Xnew = zeros(N, dim)
+    Xnew = zeros(npop, dim)
 
     CNVG = zeros(Float64, max_iter)  
 
     for t in 1:max_iter
         alpha = C * exp(-t / max_iter)  
-        I = Intensity(N, Xprey, X)   
+        I = Intensity(npop, Xprey, X)   
 
-        for i in 1:N
+        for i in 1:npop
             r = rand()
             F = vec_flag[Int(floor(2 * rand())) + 1]
 
@@ -75,31 +75,31 @@ function HBA(N, max_iter, lb, ub, dim, objfun)
 end
 
 function fun_calcobjfunc(func, X)
-    N = size(X, 1)               
-    Y = zeros(Float64, N)        
+    npop = size(X, 1)               
+    Y = zeros(Float64, npop)        
 
-    for i in 1:N
+    for i in 1:npop
         Y[i] = func(vec(X[i, :]'))
     end
 
     return Y                     
 end
 
-function Intensity(N, Xprey, X)
-    di = zeros(Float64, N)       
-    S = zeros(Float64, N)        
-    I = zeros(Float64, N)        
+function Intensity(npop, Xprey, X)
+    di = zeros(Float64, npop)       
+    S = zeros(Float64, npop)        
+    I = zeros(Float64, npop)        
     eps = 1e-10                   
 
-    for i in 1:N-1
+    for i in 1:npop-1
         di[i] = norm(X[i, :] - Xprey .+ eps)^2
         S[i] = norm(X[i, :] - X[i + 1, :] .+ eps)^2
     end
     
-    di[N] = norm(X[N, :] - Xprey .+ eps)^2
-    S[N] = norm(X[N, :] - X[1, :] .+ eps)^2
+    di[npop] = norm(X[npop, :] - Xprey .+ eps)^2
+    S[npop] = norm(X[npop, :] - X[1, :] .+ eps)^2
 
-    for i in 1:N
+    for i in 1:npop
         r2 = rand()
         I[i] = r2 * S[i] / (4 * π * di[i])
     end

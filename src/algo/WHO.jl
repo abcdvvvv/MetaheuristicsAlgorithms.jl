@@ -20,7 +20,7 @@ function exchange(Stallion)
     return Stallion
 end
 
-function WHO(N, max_iter, lb, ub, dim, objfun)
+function WHO(npop, max_iter, lb, ub, dim, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)
@@ -28,8 +28,8 @@ function WHO(N, max_iter, lb, ub, dim, objfun)
 
     PS = 0.2
     PC = 0.13
-    NStallion = ceil(Int, PS * N)
-    Nfoal = N - NStallion
+    NStallion = ceil(Int, PS * npop)
+    Nfoal = npop - NStallion
     r1 = r2 = r3 = rr = 0
 
     Convergence_curve = zeros(max_iter)

@@ -20,20 +20,20 @@ function noh(best_hyena_fitness)
     return count
 end
 
-function SHO(N, max_iter, lb, ub, dim, objfun)
-    hyena_pos = initialization(N, dim, ub, lb)
+function SHO(npop, max_iter, lb, ub, dim, objfun)
+    hyena_pos = initialization(npop, dim, ub, lb)
     Convergence_curve = zeros(max_iter)
     Iteration = 1
 
-    pre_population = zeros(N, dim)
-    best_hyenas = zeros(N, dim)
-    Best_hyena_pos = zeros(N)
+    pre_population = zeros(npop, dim)
+    best_hyenas = zeros(npop, dim)
+    Best_hyena_pos = zeros(npop)
     Best_hyena_score = Inf
 
     while Iteration < max_iter
-        hyena_fitness = zeros(N)
+        hyena_fitness = zeros(npop)
 
-        pre_fitness = zeros(N)
+        pre_fitness = zeros(npop)
         best_hyena_fitness = 0
 
         for i in axes(hyena_pos, 1)
@@ -55,8 +55,8 @@ function SHO(N, max_iter, lb, ub, dim, objfun)
             FS = sortperm(double_fitness)
             double_fitness_sorted = sort(double_fitness)
             double_sorted_population = double_population[FS, :]
-            fitness_sorted = double_fitness_sorted[1:N]
-            sorted_population = double_sorted_population[1:N, :]
+            fitness_sorted = double_fitness_sorted[1:npop]
+            sorted_population = double_sorted_population[1:npop, :]
             best_hyenas = sorted_population
             best_hyena_fitness = fitness_sorted
         end

@@ -15,15 +15,15 @@ end
 - Xiao, Y., Cui, H., Khurma, R. A., & Castillo, P. A. (2025). Artificial lemming algorithm: a novel bionic meta-heuristic technique for solving real-world engineering optimization problems. Artificial Intelligence Review, 58(3), 84.
 
 """
-function ALA(N, max_iter, lb, ub, dim, objfun)
-    X = initialization(N, dim, ub, lb)
+function ALA(npop, max_iter, lb, ub, dim, objfun)
+    X = initialization(npop, dim, ub, lb)
     Position = zeros(dim)
     Score = Inf
-    fitness = zeros(N)
+    fitness = zeros(npop)
     Convergence_curve = zeros(max_iter)
     vec_flag = [1, -1]
 
-    for i = 1:N
+    for i = 1:npop
         fitness[i] = objfun(X[i, :])
         if fitness[i] < Score
             Position = copy(X[i, :])
@@ -33,21 +33,21 @@ function ALA(N, max_iter, lb, ub, dim, objfun)
 
     Iter = 1
     while Iter <= max_iter
-        RB = randn(N, dim)
+        RB = randn(npop, dim)
         F = vec_flag[rand(1:2)]
         theta = 2 * atan(1 - Iter / max_iter)
         Xnew = similar(X)
 
-        for i = 1:N
+        for i = 1:npop
             E = 2 * log(1 / rand()) * theta
             if E > 1
                 if rand() < 0.3
                     r1 = 2 .* rand(dim) .- 1
-                    rand_agent = X[rand(1:N), :]
+                    rand_agent = X[rand(1:npop), :]
                     Xnew[i, :] = Position .+ F .* RB[i, :] .* (r1 .* (Position .- X[i, :]) .+ (1 .- r1) .* (X[i, :] .- rand_agent))
                 else
                     r2 = rand() * (1 + sin(0.5 * Iter))
-                    rand_agent = X[rand(1:N), :]
+                    rand_agent = X[rand(1:npop), :]
                     Xnew[i, :] = X[i, :] .+ F .* r2 .* (Position .- rand_agent)
                 end
             else
@@ -63,7 +63,7 @@ function ALA(N, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:N
+        for i = 1:npop
             Xnew[i, :] = clamp.(Xnew[i, :], lb, ub)
             newPopfit = objfun(Xnew[i, :])
             if newPopfit < fitness[i]

@@ -3,12 +3,12 @@ Luan, Tran Minh, Samir Khatir, Minh Thi Tran, Bernard De Baets, and Thanh Cuong-
 "Exponential-trigonometric optimization algorithm for solving complicated engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.
 """
-function ETO(N, max_iter, lb, ub, dim, objfun)
+function ETO(npop, max_iter, lb, ub, dim, objfun)
     Destination_position = zeros(dim)
     Destination_fitness = Inf
     Destination_position_second = zeros(dim)
     Convergence_curve = zeros(max_iter)
-    Position_sort = zeros(N, dim)
+    Position_sort = zeros(npop, dim)
 
     b = 1.55
     CE = floor(Int, 1 + max_iter / b)
@@ -18,10 +18,10 @@ function ETO(N, max_iter, lb, ub, dim, objfun)
     UB_2 = ub
     LB_2 = lb
 
-    X = initialization(N, dim, ub, lb)
-    Objective_values = zeros(N)
+    X = initialization(npop, dim, ub, lb)
+    Objective_values = zeros(npop)
 
-    for i = 1:N
+    for i = 1:npop
         Objective_values[i] = objfun(X[i, :])
         if Objective_values[i] < Destination_fitness
             Destination_position .= X[i, :]
@@ -32,7 +32,7 @@ function ETO(N, max_iter, lb, ub, dim, objfun)
     t = 2
 
     while t <= max_iter
-        for i = 1:N
+        for i = 1:npop
             for j = 1:dim
                 d1 = 0.1 * exp(-0.01 * t) * cos(0.5 * max_iter * (1 - t / max_iter))
                 d2 = -0.1 * exp(-0.01 * t) * cos(0.5 * max_iter * (1 - t / max_iter))
@@ -50,7 +50,7 @@ function ETO(N, max_iter, lb, ub, dim, objfun)
                         LB_2 = lb
                     end
 
-                    X = initialization(N, dim, UB_2, LB_2)
+                    X = initialization(npop, dim, UB_2, LB_2)
                     CEi_temp = CEi
                     CEi = 0
                 end
@@ -99,7 +99,7 @@ function ETO(N, max_iter, lb, ub, dim, objfun)
             CEi = CEi_temp
         end
 
-        for i = 1:N
+        for i = 1:npop
             X[i, :] = clamp.(X[i, :], LB_2, UB_2)
             Objective_values[i] = objfun(X[i, :])
 
@@ -113,10 +113,10 @@ function ETO(N, max_iter, lb, ub, dim, objfun)
             CEi = CE + 1
             CE += floor(Int, 2 - t * 2 / (max_iter - CE * 4.6) / 1)
             temp = zeros(dim)
-            temp2 = zeros(N, dim)
+            temp2 = zeros(npop, dim)
 
-            for i = 1:(N-1)
-                for j = 1:(N-1-i)
+            for i = 1:(npop-1)
+                for j = 1:(npop-1-i)
                     if Objective_values[j] > Objective_values[j+1]
                         temp .= Objective_values[j]
                         Objective_values[j] = Objective_values[j+1]

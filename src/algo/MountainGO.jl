@@ -19,28 +19,28 @@ function Coefficient_Vector(dim, Iter, max_iter)
     return cofi
 end
 
-function Solution_Imp(X, BestX, lb, ub, N, cofi, M, A, D, i)
+function Solution_Imp(X, BestX, lb, ub, npop, cofi, M, A, D, i)
     NewX = zeros(Float64, 4, size(X, 2))
     NewX[1, :] .= (ub .- lb) .* rand(size(X, 2)) .+ lb
     NewX[2, :] .= BestX .- abs.((rand(1:2) .* M .- rand(1:2) .* X[i, :]) .* A) .* cofi[rand(1:4), :]  # Second row
-    NewX[3, :] .= (M .+ cofi[rand(1:4), :]) .+ (rand(1:2) .* BestX .- rand(1:2) .* X[rand(1:N), :]) .* cofi[rand(1:4), :]  # Third row
+    NewX[3, :] .= (M .+ cofi[rand(1:4), :]) .+ (rand(1:2) .* BestX .- rand(1:2) .* X[rand(1:npop), :]) .* cofi[rand(1:4), :]  # Third row
     NewX[4, :] .= (X[i, :] .- D) .+ (rand(1:2) .* BestX .- rand(1:2) .* M) .* cofi[rand(1:4), :]  # Fourth row
 
     return NewX
 end
 
-function MountainGO(N, max_iter, lb, ub, dim, objfun)
+function MountainGO(npop, max_iter, lb, ub, dim, objfun)
     lb = ones(dim) .* lb    # Lower Bound
     ub = ones(dim) .* ub    # Upper Bound
 
-    X = initialization(N, dim, ub, lb)
+    X = initialization(npop, dim, ub, lb)
 
     BestX = []
     BestFitness = Inf
     BestF = 0.0
 
-    Sol_Cost = zeros(N)
-    for i = 1:N
+    Sol_Cost = zeros(npop)
+    for i = 1:npop
         Sol_Cost[i] = objfun(X[i, :])
         if Sol_Cost[i] <= BestFitness
             BestFitness = Sol_Cost[i]
@@ -50,16 +50,16 @@ function MountainGO(N, max_iter, lb, ub, dim, objfun)
 
     cnvg = zeros(max_iter)
     for Iter = 1:max_iter
-        for i = 1:N
-            RandomSolution = rand(1:N, ceil(Int, N / 3))
-            M = X[rand(ceil(Int, N / 3):N), :] * floor(rand()) + reshape(mean(X[RandomSolution, :], dims=1), 30) .* ceil(rand())
+        for i = 1:npop
+            RandomSolution = rand(1:npop, ceil(Int, npop / 3))
+            M = X[rand(ceil(Int, npop / 3):npop), :] * floor(rand()) + reshape(mean(X[RandomSolution, :], dims=1), 30) .* ceil(rand())
 
             cofi = Coefficient_Vector(dim, Iter, max_iter)
 
             A = randn(dim) .* exp(2 - Iter * (2 / max_iter))
             D = (abs.(X[i, :]) .+ abs.(BestX)) .* (2 * rand() .- 1)
 
-            NewX = Solution_Imp(X, BestX, lb, ub, N, cofi, M, A, D, i)
+            NewX = Solution_Imp(X, BestX, lb, ub, npop, cofi, M, A, D, i)
 
             NewX .= max.(lb, min.(NewX, ub))
             Sol_CostNew = [objfun(row) for row in eachrow(NewX)]
@@ -77,8 +77,8 @@ function MountainGO(N, max_iter, lb, ub, dim, objfun)
         X = X[SortOrder, :]
         BestFitness, idbest = findmin(Sol_Cost)
         BestX = X[idbest, :]
-        X = X[1:N, :]
-        Sol_Cost = Sol_Cost[1:N]
+        X = X[1:npop, :]
+        Sol_Cost = Sol_Cost[1:npop]
         cnvg[Iter] = BestFitness
         BestF = BestFitness
     end

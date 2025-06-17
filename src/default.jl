@@ -107,7 +107,7 @@ include("algo/YDSE.jl")
 include("algo/ZOA.jl")
 ##
 include("utils/Chung_Reynolds.jl")
-include("initialization.jl")
+include("utils/initialization.jl")
 ##
 dim = 30
 max_iter = 1000

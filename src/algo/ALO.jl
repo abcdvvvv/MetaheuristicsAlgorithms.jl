@@ -79,19 +79,19 @@ end
 - Mirjalili, Seyedali. "The ant lion optimizer." Advances in engineering software 83 (2015): 80-98.
 
 """
-function ALO(N, max_iter, lb, ub, dim, objfun)
+function ALO(npop, max_iter, lb, ub, dim, objfun)
     # Initialize the positions of antlions and ants
-    antlion_position = initialization(N, dim, ub, lb)
-    ant_position = initialization(N, dim, ub, lb)
+    antlion_position = initialization(npop, dim, ub, lb)
+    ant_position = initialization(npop, dim, ub, lb)
 
     # Initialize variables to save the position of elite, sorted antlions, 
     # convergence curve, antlions fitness, and ants fitness
-    Sorted_antlions = zeros(N, dim)
+    Sorted_antlions = zeros(npop, dim)
     Elite_antlion_position = zeros(dim)
     Elite_antlion_fitness = Inf
     Convergence_curve = zeros(max_iter)
-    antlions_fitness = zeros(N)
-    ants_fitness = zeros(N)
+    antlions_fitness = zeros(npop)
+    ants_fitness = zeros(npop)
 
     for i in axes(antlion_position, 1)
         antlions_fitness[i] = objfun(antlion_position[i, :])
@@ -100,7 +100,7 @@ function ALO(N, max_iter, lb, ub, dim, objfun)
     sorted_indexes = sortperm(antlions_fitness)
     sorted_antlion_fitness = antlions_fitness[sorted_indexes]
 
-    for newindex = 1:N
+    for newindex = 1:npop
         Sorted_antlions[newindex, :] = antlion_position[sorted_indexes[newindex], :]
     end
 
@@ -141,8 +141,8 @@ function ALO(N, max_iter, lb, ub, dim, objfun)
 
         double_sorted_population = double_population[I, :]
 
-        antlions_fitness .= double_fitness_sorted[1:N]
-        Sorted_antlions .= double_sorted_population[1:N, :]
+        antlions_fitness .= double_fitness_sorted[1:npop]
+        Sorted_antlions .= double_sorted_population[1:npop, :]
 
         if antlions_fitness[1] < Elite_antlion_fitness
             Elite_antlion_position .= Sorted_antlions[1, :]
