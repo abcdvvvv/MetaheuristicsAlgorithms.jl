@@ -9,7 +9,7 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Sea_horses = initialization(npop, dim, ub, lb)
     Sea_horsesFitness = zeros(npop)
     fitness_history = zeros(npop, max_iter)
-    npopulation_history = zeros(npop, dim, max_iter)
+    population_history = zeros(npop, dim, max_iter)
     convergence_curve = zeros(max_iter)
     Trajectories = zeros(npop, max_iter)
 
