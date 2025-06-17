@@ -1,10 +1,10 @@
-function levyF(npop, dim, beta)
-    sigma_u = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-    u = randn(npop, dim) * sigma_u
-    v = randn(npop, dim)
-    step = u ./ abs.(v) .^ (1 / beta)
-    return step
-end
+# function levyF(npop, dim, beta)
+#     sigma_u = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
+#     u = randn(npop, dim) * sigma_u
+#     v = randn(npop, dim)
+#     step = u ./ abs.(v) .^ (1 / beta)
+#     return step
+# end
 
 """
 # References:
@@ -68,7 +68,8 @@ function DO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         dandelions .= dandelions_2
         dandelions = clamp.(dandelions, lb, ub)
 
-        Step_length = levyF(npop, dim, 1.5)
+        # Step_length = levyF(npop, dim, 1.5)
+        Step_length = Levy(npop, dim, 1.5)
         Elite = repeat(Best_position', npop, 1)
         dandelions_3 = copy(dandelions)
         for i = 1:npop

@@ -1,13 +1,13 @@
 
-function levy(d)
-    beta = 1.5
-    sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
-             (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-    u = randn(d) * sigma
-    v = randn(d)
-    step = u ./ abs.(v) .^ (1 / beta)
-    return step
-end
+# function levy(d)
+#     beta = 1.5
+#     sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
+#              (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
+#     u = randn(d) * sigma
+#     v = randn(d)
+#     step = u ./ abs.(v) .^ (1 / beta)
+#     return step
+# end
 
 """
 # References:
@@ -58,7 +58,7 @@ function ALA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                     Xnew[i, :] = Position .+ F .* X[i, :] .* spiral * rand()
                 else
                     G = 2 * sign(rand() - 0.5) * (1 - Iter / max_iter)
-                    Xnew[i, :] = Position .+ F .* G .* levy(dim) .* (Position .- X[i, :])
+                    Xnew[i, :] = Position .+ F .* G .* Levy(dim) .* (Position .- X[i, :])
                 end
             end
         end

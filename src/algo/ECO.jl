@@ -58,14 +58,14 @@ function ECO(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
         return Positions
     end
 
-    function Levy(d::Int)
-        beta = 1.5
-        sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-        u = randn(d) * sigma
-        v = randn(d)
-        step = u ./ abs.(v) .^ (1 / beta)
-        return step
-    end
+    # function Levy(d::Int)
+    #     beta = 1.5
+    #     sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
+    #     u = randn(d) * sigma
+    #     v = randn(d)
+    #     step = u ./ abs.(v) .^ (1 / beta)
+    #     return step
+    # end
 
     H = 0.5
     G1 = 0.2
