@@ -17,7 +17,8 @@ function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, rando
             B = Best_vulture2_X - ((Best_vulture2_X .* current_vulture_X) ./ (Best_vulture2_X .- current_vulture_X .^ 2)) * F
             current_vulture_X = (A + B) / 2
         else
-            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levyFlight(dim)
+            # current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levyFlight(dim)
+            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* Levy(dim)
         end
     end
 
@@ -35,16 +36,16 @@ function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, rando
     return current_vulture_X
 end
 
-function levyFlight(d)
-    beta = 3 / 2
+# function levyFlight(d)
+#     beta = 3 / 2
 
-    sigma = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-    u = randn(d) * sigma
-    v = randn(d)
-    step = u ./ abs.(v) .^ (1 / beta)
+#     sigma = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
+#     u = randn(d) * sigma
+#     v = randn(d)
+#     step = u ./ abs.(v) .^ (1 / beta)
 
-    return step
-end
+#     return step
+# end
 
 function random_select(Best_vulture1_X, Best_vulture2_X, alpha, betha)
     probabilities = [alpha, betha]
