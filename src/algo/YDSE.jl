@@ -4,7 +4,7 @@ Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 """
 
-function YDSE(npop, max_iter, lb, ub, dim, objfun)
+function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     L = 1
     d = 5e-3
     I = 0.01

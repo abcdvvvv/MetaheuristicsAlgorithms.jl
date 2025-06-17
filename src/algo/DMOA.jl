@@ -11,7 +11,7 @@ end
     Computer methods in applied mechanics and engineering 391 (2022): 114570.
     
 """
-function DMOA(npop, max_iter, lb, ub, dim, objfun)
+function DMOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     VarSize = dim
 
     nBabysitter = 3

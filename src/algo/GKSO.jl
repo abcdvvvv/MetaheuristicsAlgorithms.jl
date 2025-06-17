@@ -3,14 +3,14 @@ Hu, Gang, Yuxuan Guo, Guo Wei, and Laith Abualigah.
 "Genghis Khan shark optimizer: a novel nature-inspired algorithm for engineering optimization." 
 Advanced Engineering Informatics 58 (2023): 102210.
 """
-function GKSO(n, max_iter, lb, ub, dim, objfun)
+function GKSO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
     VarSize = (dim)
 
-    PopPos = zeros(n, dim)
-    PopFit = zeros(n)
-    for i = 1:n
+    PopPos = zeros(npop, dim)
+    PopFit = zeros(npop)
+    for i = 1:npop
         PopPos[i, :] = rand(dim) .* (ub - lb) + lb
         PopFit[i] = objfun(vec(PopPos[i, :]'))
     end
@@ -18,7 +18,7 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
     Best_score = Inf
     Best_pos = []
 
-    for i = 1:n
+    for i = 1:npop
         if PopFit[i] <= Best_score
             Best_score = PopFit[i]
             Best_pos = PopPos[i, :]
@@ -34,9 +34,9 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
         beta = 0.2 + (1.2 - 0.2) * (1 - (it / max_iter)^3)^2
         alpha = abs(beta * sin((3 * π / 2 + sin(3 * π / 2 * beta))))
 
-        newPopPos = zeros(n, dim)
-        newPopFit = zeros(n)
-        for i = 1:n
+        newPopPos = zeros(npop, dim)
+        newPopFit = zeros(npop)
+        for i = 1:npop
             newPopPos[i, :] = PopPos[i, :] + (lb + rand() * (ub - lb)) / it
             newPopPos[i, :] = clamp.(newPopPos[i, :], lb, ub)
             newPopFit[i] = objfun(vec(newPopPos[i, :]'))
@@ -46,8 +46,8 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        GKS_Pos = zeros(n, dim)
-        for i = 1:n
+        GKS_Pos = zeros(npop, dim)
+        for i = 1:npop
             s = (1.5 * PopFit[i]^rand())
             s = real(s)
             if i == 1
@@ -65,7 +65,7 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:n
+        for i = 1:npop
             TF = (rand() > 0.5) * 2 - 1
             newPopPos[i, :] = Best_pos + rand(dim) .* (Best_pos - PopPos[i, :]) + TF * p^2 * (Best_pos - PopPos[i, :])
             newPopPos[i, :] = clamp.(newPopPos[i, :], lb, ub)
@@ -76,12 +76,12 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:n
-            A1 = rand(1:n, n)
+        for i = 1:npop
+            A1 = rand(1:npop, npop)
             r1, r2 = A1[1], A1[2]
-            k = rand(1:n)
+            k = rand(1:npop)
             if rand() < 0.5
-                k = rand(1:n)
+                k = rand(1:npop)
                 f1, f2 = -1 + 2 * rand(), -1 + 2 * rand()
                 ro = alpha * (2 * rand() - 1)
                 Xk = rand(dim) .* (ub - lb) + lb
@@ -95,9 +95,9 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
                 popi1 = rand(VarSize) .* (ub - lb) + lb
                 popi2 = rand(VarSize) .* (ub - lb) + lb
 
-                A1 = rand(1:n, 2)
+                A1 = rand(1:npop, 2)
                 r1, r2 = A1[1], A1[2]
-                k = rand(1:n)
+                k = rand(1:npop)
 
                 if u1 < 0.5
                     newPopPos[i, :] = newPopPos[i, :] + f1 * (u1 * Best_pos - u2 * Xp) + f2 * ro * (u3 * (popi2 - popi1) + u2 * (PopPos[r1, :] - PopPos[r2, :])) / 2
@@ -113,7 +113,7 @@ function GKSO(n, max_iter, lb, ub, dim, objfun)
             end
         end
 
-        for i = 1:n
+        for i = 1:npop
             if PopFit[i] < Best_score
                 Best_score = PopFit[i]
                 Best_pos = PopPos[i, :]

@@ -1,14 +1,14 @@
 
-function exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lower_bound)
+function exploration(current_vulture_X, random_vulture_X, F, p1, ub, lb)
     if rand() < p1
         current_vulture_X = random_vulture_X - abs.((2 * rand()) * random_vulture_X - current_vulture_X) * F
     else
-        current_vulture_X = random_vulture_X .- F .+ rand() * ((upper_bound - lower_bound) .* rand() .+ lower_bound)
+        current_vulture_X = random_vulture_X .- F .+ rand() * ((ub - lb) .* rand() .+ lb)
     end
     return current_vulture_X
 end
 
-function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, variables_no, upper_bound, lower_bound)
+function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, dim, ub, lb)
 
     # Phase 1
     if abs(F) < 0.5
@@ -17,7 +17,7 @@ function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, rando
             B = Best_vulture2_X - ((Best_vulture2_X .* current_vulture_X) ./ (Best_vulture2_X .- current_vulture_X .^ 2)) * F
             current_vulture_X = (A + B) / 2
         else
-            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levyFlight(variables_no)
+            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levyFlight(dim)
         end
     end
 
@@ -77,16 +77,16 @@ end
 - Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems.  Computers & Industrial Engineering, 158, 107408.
 
 """
-function AVOA(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
+function AVOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     # Initialize Best vultures
-    Best_vulture1_X = zeros(variables_no)
+    Best_vulture1_X = zeros(dim)
     Best_vulture1_F = Inf
-    Best_vulture2_X = zeros(variables_no)
+    Best_vulture2_X = zeros(dim)
     Best_vulture2_F = Inf
 
     # Initialize the first random population of vultures
-    X = initialization(npop, variables_no, upper_bound, lower_bound)
+    X = initialization(npop, dim, ub, lb)
 
     # Controlling parameters
     p1 = 0.6
@@ -127,9 +127,9 @@ function AVOA(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
             random_vulture_X = random_select(Best_vulture1_X, Best_vulture2_X, alpha, betha)
 
             if abs(F) >= 1
-                current_vulture_X = exploration(current_vulture_X, random_vulture_X, F, p1, upper_bound, lower_bound)
+                current_vulture_X = exploration(current_vulture_X, random_vulture_X, F, p1, ub, lb)
             else
-                current_vulture_X = exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, variables_no, upper_bound, lower_bound)
+                current_vulture_X = exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, random_vulture_X, F, p2, p3, dim, ub, lb)
             end
 
             X[i, :] = current_vulture_X
@@ -138,7 +138,7 @@ function AVOA(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
         current_iter += 1
         convergence_curve[current_iter] = Best_vulture1_F
 
-        X = clamp.(X, lower_bound, upper_bound)
+        X = clamp.(X, lb, ub)
     end
 
     return Best_vulture1_F, Best_vulture1_X, convergence_curve

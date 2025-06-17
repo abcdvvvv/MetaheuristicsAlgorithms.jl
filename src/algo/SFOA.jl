@@ -6,23 +6,23 @@ Neural Computing and Applications, 37(5), 3641-3683.
 
 # function SHO(N, max_iter, lb, ub, dim, fitness)
 
-function SFOA(npop, max_iter, lb, ub, nD, objfun)
+function SFOA(npop::Int, max_iter::Int, lb, ub, dim, objfun)
     # Starfish Optimization Algorithm (SFOA)
     GP = 0.5  # parameter
 
     # Ensure bounds are vectors of length nD
-    lb = length(lb) == 1 ? fill(lb, nD) : lb
-    ub = length(ub) == 1 ? fill(ub, nD) : ub
+    lb = length(lb) == 1 ? fill(lb, dim) : lb
+    ub = length(ub) == 1 ? fill(ub, dim) : ub
 
     fvalbest = Inf
     Curve = zeros(max_iter)
-    Xpos = [lb .+ rand(nD) .* (ub .- lb) for _ = 1:npop]
+    Xpos = [lb .+ rand(dim) .* (ub .- lb) for _ = 1:npop]
     Fitness = [objfun(X) for X in Xpos]
 
     fvalbest, order = findmin(Fitness)
     xposbest = copy(Xpos[order])
 
-    newX = [zeros(nD) for _ = 1:npop]
+    newX = [zeros(dim) for _ = 1:npop]
 
     T = 1
     while T <= max_iter
@@ -31,8 +31,8 @@ function SFOA(npop, max_iter, lb, ub, nD, objfun)
 
         if rand() < GP  # exploration
             for i = 1:npop
-                if nD > 5
-                    jp1 = randperm(nD)[1:5]
+                if dim > 5
+                    jp1 = randperm(dim)[1:5]
                     for j in jp1
                         pm = (2rand() - 1) * π
                         if rand() < GP
@@ -45,7 +45,7 @@ function SFOA(npop, max_iter, lb, ub, nD, objfun)
                         end
                     end
                 else
-                    jp2 = rand(1:nD)
+                    jp2 = rand(1:dim)
                     im = randperm(npop)
                     rand1 = 2rand() - 1
                     rand2 = 2rand() - 1

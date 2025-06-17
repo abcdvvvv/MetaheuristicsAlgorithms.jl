@@ -3,7 +3,7 @@ Mirjalili, Seyedali, and Andrew Lewis.
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
-function WOA(npop, max_iter, lb, ub, dim, objfun)
+function WOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Leader_pos = zeros(1, dim)
     Leader_score = Inf
 

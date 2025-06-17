@@ -3,7 +3,7 @@ Dhiman, Gaurav, and Amandeep Kaur.
 "STOA: a bio-inspired based optimization algorithm for industrial engineering problems." 
 Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
 """
-function STOA(npop, max_iter, lb, ub, dim, objfun)
+function STOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Position = zeros(Float64, dim)
     Score = Inf
 

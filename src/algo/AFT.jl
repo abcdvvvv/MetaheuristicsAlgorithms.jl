@@ -28,7 +28,7 @@ The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimizat
 
 - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
 """
-function AFT(noThieves, max_iter, lb, ub, objfun)
+function AFT(noThieves::Int, max_iter::Int, lb, ub, objfun)
 
     dim = length(lb)  # Dimension of the problem
 

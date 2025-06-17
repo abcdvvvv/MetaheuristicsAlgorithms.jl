@@ -5,7 +5,8 @@ Systems Science & Control Engineering, 8:1, 22-34,
 DOI: 10.1080/21642583.2019.1708830
 (2020) 
 """
-function SparrowSA(npop::Int, max_iter::Int, c, d, dim::Int, objfun)
+
+function SparrowSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)
 

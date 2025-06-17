@@ -3,7 +3,7 @@ Dhiman, Gaurav, and Vijay Kumar.
 "Seagull optimization algorithm: Theory and its applications for large-scale industrial engineering problems." 
 Knowledge-based systems 165 (2019): 169-196.
 """
-function SOA(npop, max_iter, lb, ub, dim, objfun)
+function SOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Position = zeros(dim)
     Score = Inf
     Positions = initialization(npop, dim, ub, lb)

@@ -16,7 +16,7 @@ function colleaguesLimitsGenerator(degree::Int, npop::Int)
     return colleaguesLimits
 end
 
-function HBO(npop, max_iter, lb, ub, dim, objfun)
+function HBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     cycles = floor(Int, max_iter / 25)
     degree = 3
 

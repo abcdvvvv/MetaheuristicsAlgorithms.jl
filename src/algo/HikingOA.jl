@@ -4,14 +4,10 @@ Oladejo, Sunday O., Stephen O. Ekwe, and Seyedali Mirjalili.
 Knowledge-Based Systems 296 (2024): 111880.
 """
 
-function HikingOA(hiker, max_iter, lb, ub, dim, objfun)
+function HikingOA(hiker::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     # Problem Parameters
     prob = objfun
-    dim = dim
-    lb = lb
-    ub = ub
     npop = hiker
-    max_iter = max_iter
 
     # Pre-allocate
     fit = zeros(npop)

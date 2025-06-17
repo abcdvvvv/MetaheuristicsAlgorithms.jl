@@ -3,7 +3,7 @@ Luan, Tran Minh, Samir Khatir, Minh Thi Tran, Bernard De Baets, and Thanh Cuong-
 "Exponential-trigonometric optimization algorithm for solving complicated engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.
 """
-function ETO(npop, max_iter, lb, ub, dim, objfun)
+function ETO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Destination_position = zeros(dim)
     Destination_fitness = Inf
     Destination_position_second = zeros(dim)

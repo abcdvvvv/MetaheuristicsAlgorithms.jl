@@ -4,7 +4,7 @@ Jia, Heming, et al.
 Cluster Computing 28.4 (2025): 246.
 """
 
-function SuperbFOA(npop, max_iter, lb, ub, dim, objfun)
+function SuperbFOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     MaxFEs = max_iter * npop
     curve = zeros(MaxFEs)
     X = initialization(npop, dim, ub, lb)

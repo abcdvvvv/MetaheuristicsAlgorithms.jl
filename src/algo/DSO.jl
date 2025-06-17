@@ -5,14 +5,14 @@ struct DSOResult <: OptimizationResult
 end
 
 """
-    DSO(npop, run, lb, ub, dim, objfun)
+    DSO(npop, max_iter, lb, ub, dim, objfun)
 
 The Deep Sleep Optimiser (DSO) is a human-inspired metaheuristic optimization algorithm that mimics the sleep patterns of humans to find optimal solutions in various optimization problems.
 
 # Arguments:
 
 - `npop`: Number of search agents (population size).
-- `run`: Number of iterations (generations).
+- `max_iter`: Number of iterations (generations).
 - `lb`: Lower bounds of the search space.
 - `ub`: Upper bounds of the search space.
 - `objfun`: Objective function to be minimized.
@@ -30,7 +30,7 @@ The Deep Sleep Optimiser (DSO) is a human-inspired metaheuristic optimization al
     The deep sleep optimiser: A human-based metaheuristic approach., IEEE Access (2023).
     
 """
-function DSO(npop, run, lb, ub, objfun)::DSOResult
+function DSO(npop::Int, max_iter::Int, lb, ub, objfun)::DSOResult
     prob = objfun
 
     if length(ub) != length(lb)
@@ -41,7 +41,7 @@ function DSO(npop, run, lb, ub, objfun)::DSOResult
     lb = lb
     ub = ub
     npop = npop
-    max_iter = run
+    max_iter = max_iter
 
     H0_minus = 0.17
     H0_plus = 0.85

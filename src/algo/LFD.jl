@@ -3,7 +3,7 @@ Houssein, Essam H., Mohammed R. Saad, Fatma A. Hashim, Hassan Shaban, and M. Has
 "Lévy flight distribution: A new metaheuristic algorithm for solving engineering optimization problems." 
 Engineering Applications of Artificial Intelligence 94 (2020): 103731.
 """
-function LFD(npop, max_iter, lb, ub, dim, objfun)
+function LFD(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     threshold = 2
     lb = lb * ones(dim)
     ub = ub * ones(dim)

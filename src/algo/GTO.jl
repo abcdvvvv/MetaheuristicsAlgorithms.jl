@@ -3,11 +3,11 @@ Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, and Seyedali Mirjalil
 "Artificial gorilla troops optimizer: a new nature‐inspired metaheuristic algorithm for global optimization problems." 
 International Journal of Intelligent Systems 36, no. 10 (2021): 5887-5958.
 """
-function GTO(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
+function GTO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Silverback = []
     Silverback_Score = Inf
 
-    X = initialization(npop, variables_no, upper_bound, lower_bound)
+    X = initialization(npop, dim, ub, lb)
 
     convergence_curve = zeros(max_iter)
 
@@ -21,8 +21,8 @@ function GTO(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
     end
 
     GX = copy(X)
-    lb = ones(variables_no) * lower_bound
-    ub = ones(variables_no) * upper_bound
+    lb = ones(dim) * lb
+    ub = ones(dim) * ub
 
     p = 0.03
     Beta = 3
@@ -37,7 +37,7 @@ function GTO(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
                 GX[i, :] .= (ub - lb) .* rand() .+ lb
             else
                 if rand() >= 0.5
-                    Z = rand(variables_no) * (2 * a) .- a
+                    Z = rand(dim) * (2 * a) .- a
                     H = Z .* X[i, :]
                     GX[i, :] .= (rand() - a) * X[rand(1:npop), :] .+ C .* H
                 else
@@ -46,7 +46,7 @@ function GTO(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
             end
         end
 
-        GX .= clamp.(GX, lower_bound, upper_bound)
+        GX .= clamp.(GX, lb, ub)
 
         for i = 1:npop
             New_Fit = objfun(GX[i, :])
@@ -72,7 +72,7 @@ function GTO(npop, max_iter, lower_bound, upper_bound, variables_no, objfun)
             end
         end
 
-        GX .= clamp.(GX, lower_bound, upper_bound)
+        GX .= clamp.(GX, lb, ub)
 
         for i = 1:npop
             New_Fit = objfun(GX[i, :])

@@ -3,7 +3,7 @@ Zhao, Weiguo, Zhenxing Zhang, and Liying Wang.
 "Manta ray foraging optimization: An effective bio-inspired optimizer for engineering applications." 
 Engineering Applications of Artificial Intelligence 87 (2020): 103300.
 """
-function MRFO(npop, max_iter, lb, ub, dim, objfun)#(objfun, max_iter, npop)
+function MRFO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
     PopFit = [objfun(PopPos[i]) for i = 1:npop]
 

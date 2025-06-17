@@ -20,7 +20,7 @@ function exchange(Stallion)
     return Stallion
 end
 
-function WHO(npop, max_iter, lb, ub, dim, objfun)
+function WHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)

@@ -4,7 +4,7 @@ Yadav, Anupam.
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 
-function AEFA_1(npop, max_iter, lb, ub, dim, objfun)
+function AEFA_1(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     FCheck, Rpower, tag = 1, 1, 1
 
     Rnorm = 2

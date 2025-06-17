@@ -4,7 +4,7 @@ Ghasemi, Mojtaba, Mohsen Zare, Pavel Trojovský, Ravipudi Venkata Rao, Eva Trojo
 Knowledge-Based Systems 295 (2024): 111850.
 """
 
-function IVYA(npop, max_iter, lb, ub, dim, objfun)
+function IVYA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Position = rand(npop, dim) .* (ub .- lb) .+ lb
     GV = Position ./ (ub .- lb)
     Cost = [objfun(Position[i, :]) for i = 1:npop]

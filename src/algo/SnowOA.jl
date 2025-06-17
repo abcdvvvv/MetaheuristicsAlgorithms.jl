@@ -4,7 +4,7 @@ Deng, Lingyun, and Sanyang Liu.
 Expert Systems with Applications 225 (2023): 120069.
 """
 
-function SnowOA(npop, max_iter, lb, ub, dim, objfun)
+function SnowOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)

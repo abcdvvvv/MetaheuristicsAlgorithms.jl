@@ -3,20 +3,20 @@ Zhang, Qingke, Hao Gao, Zhi-Hui Zhan, Junqing Li, and Huaxiang Zhang.
 "Growth Optimizer: A powerful metaheuristic algorithm for solving continuous and discrete global optimization problems." 
 Knowledge-Based Systems 261 (2023): 110206.
 """
-function GO(popsize, max_iter, xmin, xmax, dim, objfun)
+function GO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     FEs = 0
     P1 = 5
     P2 = 0.001
     P3 = 0.3
-    MaxFEs = max_iter * popsize
+    MaxFEs = max_iter * npop
 
-    x = xmin .+ rand(popsize, dim) .* (xmax - xmin)
+    x = lb .+ rand(npop, dim) .* (ub - lb)
     gbestX = zeros(dim)
     gbestfitness = Inf
-    fitness = zeros(popsize)
+    fitness = zeros(npop)
     gbesthistory = []
 
-    for i = 1:popsize
+    for i = 1:npop
         fitness[i] = objfun(x[i, :])
         FEs += 1
         if gbestfitness > fitness[i]
@@ -30,10 +30,10 @@ function GO(popsize, max_iter, xmin, xmax, dim, objfun)
         ind = sortperm(fitness)
         Best_X = x[ind[1], :]
 
-        for i = 1:popsize
-            Worst_X = x[ind[rand(popsize-P1+1:popsize)], :]
+        for i = 1:npop
+            Worst_X = x[ind[rand(npop-P1+1:npop)], :]
             Better_X = x[ind[rand(2:P1)], :]
-            random = selectID(popsize, i, 2)
+            random = selectID(npop, i, 2)
             L1, L2 = random[rand(1:length(random), 2)]
 
             Gap1 = Best_X - Better_X
@@ -59,7 +59,7 @@ function GO(popsize, max_iter, xmin, xmax, dim, objfun)
             KA4 = LF4 * SF * Gap4
 
             newx = x[i, :] + KA1 + KA2 + KA3 + KA4
-            newx = clamp.(newx, xmin, xmax)
+            newx = clamp.(newx, lb, ub)
 
             newfitness = objfun(newx)
             FEs += 1
@@ -84,7 +84,7 @@ function GO(popsize, max_iter, xmin, xmax, dim, objfun)
             break
         end
 
-        for i = 1:popsize
+        for i = 1:npop
             newx = x[i, :]
 
             for j = 1:dim
@@ -94,12 +94,12 @@ function GO(popsize, max_iter, xmin, xmax, dim, objfun)
 
                     AF = 0.01 + (0.1 - 0.01) * (1 - FEs / MaxFEs)
                     if rand() < AF
-                        newx[j] = xmin + (xmax - xmin) * rand()
+                        newx[j] = lb + (ub - lb) * rand()
                     end
                 end
             end
 
-            newx = clamp.(newx, xmin, xmax)
+            newx = clamp.(newx, lb, ub)
             newfitness = objfun(newx)
             FEs += 1
 
@@ -133,18 +133,18 @@ function GO(popsize, max_iter, xmin, xmax, dim, objfun)
     return gbestfitness, gbestX, gbesthistory
 end
 
-function selectID(popsize, i, k)
-    if k <= popsize
-        vecc = vcat(1:i-1, i+1:popsize)
+function selectID(npop, i, k)
+    if k <= npop
+        vecc = vcat(1:i-1, i+1:npop)
         r = zeros(Int, k)
         for kkk = 1:k
-            n = popsize - kkk
+            n = npop - kkk
             t = rand(1:n)
             r[kkk] = vecc[t]
             vecc = deleteat!(vecc, t)
         end
         return r
     else
-        error("k must be less than or equal to popsize")
+        error("k must be less than or equal to npop")
     end
 end

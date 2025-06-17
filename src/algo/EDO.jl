@@ -4,7 +4,7 @@ Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 """
 
-function EDO(npop, max_iter, lb, ub, dim, objfun)
+function EDO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     BestSol = zeros(dim)
     BestFitness = Inf
     Xwinners = initialization(npop, dim, ub, lb)

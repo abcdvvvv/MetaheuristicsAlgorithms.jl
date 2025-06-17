@@ -4,7 +4,7 @@ Mohammed, Hardi, and Tarik Rashid.
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """
 
-function FOX(npop, max_iter, lb, ub, dim, objfun)
+function FOX(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Best_pos = zeros(dim)
     Best_score = Inf
     MinT = Inf

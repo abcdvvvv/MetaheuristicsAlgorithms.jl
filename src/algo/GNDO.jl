@@ -3,22 +3,24 @@ Zhang, Yiying, Zhigang Jin, and Seyedali Mirjalili.
 "Generalized normal distribution optimization and its applications in parameter extraction of photovoltaic models." 
 Energy Conversion and Management 224 (2020): 113301.
 """
-function GNDO(n, max_iter, lb, ub, d, objfun)
-    x = lb .+ (ub .- lb) .* rand(n, d)
+
+    
+function GNDO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+    x = lb .+ (ub .- lb) .* rand(npop, dim)
     
     bestFitness = Inf
-    bestSol = zeros(d)
+    bestSol = zeros(dim)
     cgcurve = zeros(max_iter)
 
-    fitness = zeros(n)  
+    fitness = zeros(npop)  
     
     for it in 1:max_iter
         
-        for i in 1:n
+        for i in 1:npop
             fitness[i] = objfun(x[i, :])  
         end
         
-        for i in 1:n
+        for i in 1:npop
             if fitness[i] < bestFitness
                 bestSol = x[i,:]
                 bestFitness = fitness[i]
@@ -28,10 +30,10 @@ function GNDO(n, max_iter, lb, ub, d, objfun)
         
         mo = mean(x, dims=1)
         
-        for i in 1:n
-            a, b, c = randperm(n)[1:3]
+        for i in 1:npop
+            a, b, c = randperm(npop)[1:3]
             while a == i || b == i || c == i || a == b || a == c || b == c
-                a, b, c = randperm(n)[1:3]
+                a, b, c = randperm(npop)[1:3]
             end
             
             v1 = (fitness[a] < fitness[i]) ? (x[a] - x[i]) : (x[i] - x[a])
@@ -43,8 +45,8 @@ function GNDO(n, max_iter, lb, ub, d, objfun)
                 deta = sqrt.((1/3) .* ((x[i,:] - u).^2 + (bestSol - u).^2 + vec(mo' - u)).^2)
 
                 
-                vc1 = rand(d)
-                vc2 = rand(d)
+                vc1 = rand(dim)
+                vc2 = rand(dim)
                 
                 Z1 = sqrt.(-log.(vc2)) .* cos.(2pi .* vc1)
                 Z2 = sqrt.(-log.(vc2)) .* cos.(2pi .* vc1 .+ pi)
@@ -61,7 +63,7 @@ function GNDO(n, max_iter, lb, ub, d, objfun)
                 newsol = eta
             else
                 beta = rand()
-                v = x[i] .+ beta .* abs.(randn(d)) .* v1 .+ (1 - beta) .* abs.(randn(d)) .* v2
+                v = x[i] .+ beta .* abs.(randn(dim)) .* v1 .+ (1 - beta) .* abs.(randn(dim)) .* v2
                 newsol = v
             end
             

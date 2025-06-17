@@ -4,7 +4,7 @@ Braik, Malik, Abdelaziz Hammouri, Jaffar Atwan, Mohammed Azmi Al-Betar, and Moha
 Knowledge-Based Systems 243 (2022): 108457.
 
 """
-function WSO(whiteSharks, max_iter, lb, ub, dim, objfun)
+function WSO(whiteSharks::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     ccurve = zeros(max_iter)
 
     WSO_Positions = initialization(whiteSharks, dim, ub, lb)

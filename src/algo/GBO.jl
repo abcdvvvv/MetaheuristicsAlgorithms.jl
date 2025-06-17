@@ -4,7 +4,7 @@ Ahmadianfar, Iman, Omid Bozorg-Haddad, and Xuefeng Chu.
 Information Sciences 540 (2020): 131-159.
 
 """
-function GBO(npop, max_iter, lb, ub, dim, objfun)
+function GBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     nV = dim
     pr = 0.5
     lb = ones(dim) .* lb

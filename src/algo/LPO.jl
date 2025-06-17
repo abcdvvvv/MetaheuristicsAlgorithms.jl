@@ -4,7 +4,7 @@ Ghasemi, Mojtaba, Mohsen Zare, Amir Zahedi, Pavel Trojovský, Laith Abualigah, a
 Computer Methods in Applied Mechanics and Engineering 419 (2024): 116582.
 """
 
-function LPO(npop, max_iter, lb, ub, dim, objfun)
+function LPO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Positions = initialization(npop, dim, lb, ub)
     Fitness = fill(Inf, npop)
     BestPosition = zeros(dim)

@@ -1,6 +1,10 @@
-# Tornado Optimizer with Coriolis Force (TOC) in Julia
+"""
+Braik, M., Al-Hiary, H., Alzoubi, H., Hammouri, A., Azmi Al-Betar, M., & Awadallah, M. A. (2025). 
+Tornado optimizer with Coriolis force: a novel bio-inspired meta-heuristic algorithm for solving engineering problems. 
+Artificial Intelligence Review, 58(4), 1-99.
+"""
 
-function TOC(npop, max_iter, lb, ub, dim, objfun, nto=4, nt=3)
+function TOC(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun, nto=4, nt=3)
     ccurve = zeros(max_iter)
 
     # Initialization

@@ -3,7 +3,7 @@ Li, Shimin, Huiling Chen, Mingjing Wang, Ali Asghar Heidari, and Seyedali Mirjal
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
-function SMA(npop, max_iter, lb, ub, dim, objfun)
+function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     bestPositions = zeros(1, dim)
     Destination_fitness = Inf
     AllFitness = fill(Inf, npop)

@@ -15,7 +15,7 @@ function S_func(r)
     return o
 end
 
-function GOA(npop, max_iter, lb, ub, dim, objfun)
+function GOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     flag = false
     if length(ub) == 1
         ub = ones(dim) * ub

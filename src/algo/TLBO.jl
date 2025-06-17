@@ -8,7 +8,8 @@ mutable struct individual
     Cost::Float64
 end
 
-function TLBO(npop, max_iter, lb, ub, dim, objfun)
+
+function TLBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     VarSize = (dim)
 
     pop = [individual(rand(VarSize) * (ub - lb) .+ lb,

@@ -4,7 +4,7 @@ Rao, R.
 International Journal of Industrial Engineering Computations 7, no. 1 (2016): 19-34.
 """
 
-function Jaya(npop, max_iter, mini, maxi, var, objfun)
+function Jaya(npop::Int, max_iter::Int, lb, ub, vdimar::Int, objfun)
 
     # Parameters
     # npop = 1000                # Population size
@@ -15,24 +15,24 @@ function Jaya(npop, max_iter, mini, maxi, var, objfun)
     # objfun = Sphere        # Cost Function (assumes a function named `Sphere` is defined)
 
     # Initialize
-    x = zeros(npop, var)
+    x = zeros(npop, dim)
     fnew = zeros(npop)
     f = zeros(npop)
     convergence = zeros(max_iter)
     fopt = zeros(max_iter)
-    xopt = zeros(max_iter, var)
+    xopt = zeros(max_iter, dim)
 
-    if length(mini) == 1
-        mini = mini * ones(var)
+    if length(lb) == 1
+        lb = lb * ones(dim)
     end
 
-    if length(maxi) == 1
-        maxi = maxi * ones(var)
+    if length(ub) == 1
+        ub = ub * ones(dim)
     end
 
     # Generate and Initialize the positions
-    for i = 1:var
-        x[:, i] = mini[i] .+ (maxi[i] - mini[i]) .* rand(npop)
+    for i = 1:dim
+        x[:, i] = lb[i] .+ (ub[i] - lb[i]) .* rand(npop)
     end
 
     for i = 1:npop
@@ -56,7 +56,7 @@ function Jaya(npop, max_iter, mini, maxi, var, objfun)
         end
 
         for i = 1:row
-            xnew[i, :] = clamp.(xnew[i, :], mini, maxi)
+            xnew[i, :] = clamp.(xnew[i, :], lb, ub)
             fnew[i] = objfun(xnew[i, :])
         end
 

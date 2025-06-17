@@ -4,7 +4,7 @@ Ghasemi, Mojtaba, Mohsen Zare, Amir Zahedi, Mohammad-Amin Akbari, Seyedali Mirja
 Journal of Bionic Engineering 21, no. 1 (2024): 374-408.
 """
 
-function GEA(npop, max_iter, lb, ub, dim, objfun)
+function GEA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     VarSize = (1, dim)
     Nc = Int(floor(npop / 3))
     FEs = npop * max_iter

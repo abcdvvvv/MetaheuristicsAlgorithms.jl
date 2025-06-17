@@ -4,7 +4,7 @@ Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri.
 Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 """
 
-function SBO(npop, max_iter, lb, ub, numbervar, objfun)
+function SBO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     alpha = 0.94
 
     pMutation = 0.05
@@ -12,10 +12,10 @@ function SBO(npop, max_iter, lb, ub, numbervar, objfun)
     Z = 0.02
     sigma = Z * (max(ub) - min(lb))
 
-    pop = [Dict("Position" => zeros(numbervar), "Cost" => Inf) for _ = 1:npop]
+    pop = [Dict("Position" => zeros(dim), "Cost" => Inf) for _ = 1:npop]
 
     for i = 1:npop
-        pop[i]["Position"] = rand(numbervar) .* (ub - lb) .+ lb
+        pop[i]["Position"] = rand(dim) .* (ub - lb) .+ lb
         pop[i]["Cost"] = objfun(pop[i]["Position"])
     end
 
@@ -40,7 +40,7 @@ function SBO(npop, max_iter, lb, ub, numbervar, objfun)
         P = F / sum(F)
 
         for i = 1:npop
-            for k = 1:numbervar
+            for k = 1:dim
                 j = RouletteWheelSelection(P)
 
                 λ = alpha / (1 + P[j])

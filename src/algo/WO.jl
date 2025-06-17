@@ -16,7 +16,7 @@ function levyFlight(d::Int)
     return step
 end
 
-function WO(npop, max_iter, lb, ub, dim, objfun)
+function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Best_Pos = zeros(Float64, dim)
     Second_Pos = zeros(Float64, dim)
     Best_Score = Inf

@@ -3,7 +3,7 @@ Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 """
-function SupplyDO(MarketSize, max_iter, lb, ub, dim, objfun)
+function SupplyDO(MarketSize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     OneMarket = Dict(
         "CommPrice" => zeros(dim),
         "CommPriceFit" => Inf,

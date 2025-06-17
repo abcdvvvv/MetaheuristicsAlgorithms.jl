@@ -79,7 +79,7 @@ end
 - Mirjalili, Seyedali. "The ant lion optimizer." Advances in engineering software 83 (2015): 80-98.
 
 """
-function ALO(npop, max_iter, lb, ub, dim, objfun)
+function ALO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     # Initialize the positions of antlions and ants
     antlion_position = initialization(npop, dim, ub, lb)
     ant_position = initialization(npop, dim, ub, lb)

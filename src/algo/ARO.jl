@@ -4,7 +4,7 @@
 - Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
 
 """
-function ARO(npop, max_iter, lb, ub, dim, objfun)
+function ARO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
     PopFit = [objfun(PopPos[i]) for i = 1:npop]
 

@@ -3,19 +3,19 @@ Abdollahzadeh, Benyamin, Nima Khodadadi, Saeid Barshandeh, Pavel Trojovský, Far
 "Puma optimizer (PO): A novel metaheuristic optimization algorithm and its application in machine learning." 
 Cluster Computing (2024): 1-49.
 """
-function Exploration(Sol, lb, ub, dim, nSol, objfun)
+function Exploration(Sol, lb, ub, dim, npop, objfun)
     sorted_indices = sortperm([s[:Cost] for s in Sol])
     Sol = [Sol[i] for i in sorted_indices]
 
     pCR = 0.20
     PCR = 1 - pCR
-    p = PCR / nSol
+    p = PCR / npop
 
-    NewSol = [Dict(:X => zeros(dim), :Cost => Inf) for _ = 1:nSol]
+    NewSol = [Dict(:X => zeros(dim), :Cost => Inf) for _ = 1:npop]
 
-    for i = 1:nSol
+    for i = 1:npop
         x = Sol[i][:X]
-        A = randperm(nSol)
+        A = randperm(npop)
         A = A[A.!=i]
         a, b, c, d, e, f = A[1:6]
 
@@ -53,15 +53,15 @@ function Exploration(Sol, lb, ub, dim, nSol, objfun)
     return Sol
 end
 
-function Exploitation(Sol, lb, ub, dim, nSol, Best, max_iter, Iter, objfun)
+function Exploitation(Sol, lb, ub, dim, npop, Best, max_iter, Iter, objfun)
     Q = 0.67
     Beta = 2
 
-    NewSol = [Dict(:X => zeros(dim), :Cost => Inf) for _ = 1:nSol]
+    NewSol = [Dict(:X => zeros(dim), :Cost => Inf) for _ = 1:npop]
 
-    mbest = mean([s[:X] for s in Sol]) / nSol
+    mbest = mean([s[:X] for s in Sol]) / npop
 
-    for i = 1:nSol
+    for i = 1:npop
         beta1 = 2 * rand()
         beta2 = randn(dim)
         w = randn(dim)
@@ -77,12 +77,12 @@ function Exploitation(Sol, lb, ub, dim, nSol, Best, max_iter, Iter, objfun)
         if rand() <= 0.5
             Xattack = VEC
             if rand() > Q
-                NewSol[i][:X] = Best[:X] .+ beta1 .* exp.(beta2) .* (Sol[rand(1:nSol)][:X] - Sol[i][:X])  # Eq 32
+                NewSol[i][:X] = Best[:X] .+ beta1 .* exp.(beta2) .* (Sol[rand(1:npop)][:X] - Sol[i][:X])  # Eq 32
             else
                 NewSol[i][:X] = beta1 .* Xattack .- Best[:X]
             end
         else
-            r1 = round(Int, 1 + (nSol - 1) * rand())
+            r1 = round(Int, 1 + (npop - 1) * rand())
             NewSol[i][:X] = (mbest .* Sol[r1][:X] .- ((-1)^(rand(Bool))) .* Sol[i][:X]) ./ (1 + (Beta * rand()))  # Eq 32
         end
 
@@ -97,7 +97,7 @@ function Exploitation(Sol, lb, ub, dim, nSol, Best, max_iter, Iter, objfun)
     return Sol
 end
 
-function PumaO(nSol, max_iter, lb, ub, dim, objfun)
+function PumaO(npop, max_iter, lb, ub, dim, objfun)
     UnSelected = ones(Float64, 2)
     F3_Explore = 0.0
     F3_Exploit = 0.0
@@ -114,8 +114,8 @@ function PumaO(nSol, max_iter, lb, ub, dim, objfun)
 
     Convergence = zeros(max_iter)
 
-    Sol = Vector{Any}(undef, nSol)
-    for i = 1:nSol
+    Sol = Vector{Any}(undef, npop)
+    for i = 1:npop
         Sol[i] = Dict(:X => rand(lb:ub, dim), :Cost => objfun(rand(lb:ub, dim)))
     end
 
@@ -128,10 +128,10 @@ function PumaO(nSol, max_iter, lb, ub, dim, objfun)
     Costs_Exploit = zeros(Float64, 1, 3)
 
     for Iter = 1:3
-        Sol_Explor = Exploration(Sol, lb, ub, dim, nSol, objfun)
+        Sol_Explor = Exploration(Sol, lb, ub, dim, npop, objfun)
         Costs_Explor[1, Iter] = minimum([s[:Cost] for s in Sol_Explor])
 
-        Sol_Exploit = Exploitation(Sol, lb, ub, dim, nSol, Best, max_iter, Iter, objfun)
+        Sol_Exploit = Exploitation(Sol, lb, ub, dim, npop, Best, max_iter, Iter, objfun)
         Costs_Exploit[1, Iter] = minimum([s[:Cost] for s in Sol_Exploit])
 
         Sol = vcat(Sol, Sol_Explor, Sol_Exploit)
@@ -171,7 +171,7 @@ function PumaO(nSol, max_iter, lb, ub, dim, objfun)
     for Iter = 4:max_iter
         if Score_Explore > Score_Exploit
             SelectFlag = 1
-            Sol = Exploration(Sol, lb, ub, dim, nSol, objfun)
+            Sol = Exploration(Sol, lb, ub, dim, npop, objfun)
             Count_select = UnSelected
             UnSelected[2] += 1
             UnSelected[1] = 1
@@ -190,7 +190,7 @@ function PumaO(nSol, max_iter, lb, ub, dim, objfun)
             end
         else
             SelectFlag = 2
-            Sol = Exploitation(Sol, lb, ub, dim, nSol, Best, max_iter, Iter, objfun)
+            Sol = Exploitation(Sol, lb, ub, dim, npop, Best, max_iter, Iter, objfun)
             Count_select = UnSelected
             UnSelected[1] += 1
             UnSelected[2] = 1

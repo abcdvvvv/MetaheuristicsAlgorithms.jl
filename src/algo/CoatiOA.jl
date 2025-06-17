@@ -4,7 +4,7 @@
 - Braik, Malik, Alaa Sheta, and Heba Al-Hiary. "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." Neural computing and applications 33, no. 7 (2021): 2515-2547.
 
 """
-function CoatiOA(npop, max_iter, lb, ub, dim, objfun)
+function CoatiOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
 

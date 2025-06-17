@@ -4,9 +4,9 @@ Minh, Hoang-Le, Thanh Sang-To, Guy Theraulaz, Magd Abdel Wahab, and Thanh Cuong-
 Expert Systems with Applications 213 (2023): 119211.
 """
 
-function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
-    lb = Lower_B * ones(nvar)
-    ub = Upper_B * ones(nvar)
+function TLCO(npop, cycle, lb, ub, dim, objfun)
+    lb = lb * ones(dim)
+    ub = ub * ones(dim)
     trial_worker = zeros(npop)
     trial_soldier = zeros(npop)
 
@@ -15,7 +15,7 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
     Int_Population = [deepcopy(empt) for _ = 1:npop]
 
     for i = 1:npop
-        Int_Population[i]["pos"] = lb .+ rand(nvar) .* (ub - lb)
+        Int_Population[i]["pos"] = lb .+ rand(dim) .* (ub - lb)
         Int_Population[i]["cost"] = objfun(Int_Population[i]["pos"])
     end
 
@@ -40,7 +40,7 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
         for i = 1:round(npop)
             if i <= round(0.7 * npop)
                 particle_worker[i]["pos"] = particle_worker[i]["pos"] .+
-                                            (-1 + 2 * rand()) * (rand(nvar) .+ levy_fun_TLCO(1, nvar, beta)) .*
+                                            (-1 + 2 * rand()) * (rand(dim) .+ levy_fun_TLCO(1, dim, beta)) .*
                                             abs.(Gbest["pos"] .- particle_worker[i]["pos"])
 
                 particle_worker[i]["pos"] = min.(max.(particle_worker[i]["pos"], lb), ub)
@@ -65,10 +65,10 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
 
                     if Int_Population[r2]["cost"] < Int_Population[r1]["cost"]
                         particle_reproductive[i]["pos"] = Int_Population[r1]["pos"] .+
-                                                          rand(nvar) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
+                                                          rand(dim) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
                     else
                         particle_reproductive[i]["pos"] = Int_Population[r1]["pos"] .-
-                                                          rand(nvar) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
+                                                          rand(dim) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
                     end
 
                     particle_reproductive[i]["pos"] = min.(max.(particle_reproductive[i]["pos"], lb), ub)
@@ -81,7 +81,7 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
                             Gbest = deepcopy(Int_Population[i])
                         end
                     else
-                        particle_reproductive[i]["pos"] = lb .+ rand(nvar) .* (ub - lb)
+                        particle_reproductive[i]["pos"] = lb .+ rand(dim) .* (ub - lb)
                     end
 
                     particle_worker[i] = deepcopy(particle_reproductive[i])
@@ -90,7 +90,7 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
 
             if i > round(0.7 * npop) && i <= npop
                 particle_soldier[i]["pos"] = 2 * rand() * Gbest["pos"] .+
-                                             (-1 + 2 * rand()) .* abs.(particle_soldier[i]["pos"] .- levy_fun_TLCO(1, nvar, beta) .* Gbest["pos"])
+                                             (-1 + 2 * rand()) .* abs.(particle_soldier[i]["pos"] .- levy_fun_TLCO(1, dim, beta) .* Gbest["pos"])
 
                 particle_soldier[i]["pos"] = min.(max.(particle_soldier[i]["pos"], lb), ub)
 
@@ -115,10 +115,10 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
 
                     if Int_Population[r2]["cost"] < Int_Population[r1]["cost"]
                         particle_reproductive[i]["pos"] = Int_Population[r1]["pos"] .+
-                                                          rand(nvar) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
+                                                          rand(dim) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
                     else
                         particle_reproductive[i]["pos"] = Int_Population[r1]["pos"] .-
-                                                          rand(nvar) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
+                                                          rand(dim) .* (Int_Population[r2]["pos"] .- Int_Population[r1]["pos"])
                     end
 
                     particle_reproductive[i]["pos"] = min.(max.(particle_reproductive[i]["pos"], lb), ub)
@@ -132,7 +132,7 @@ function TLCO(npop, cycle, Lower_B, Upper_B, nvar, objfun)
                             Gbest = deepcopy(Int_Population[i])
                         end
                     else
-                        particle_reproductive[i]["pos"] .= lb .+ rand(nvar) .* (ub - lb)
+                        particle_reproductive[i]["pos"] .= lb .+ rand(dim) .* (ub - lb)
                     end
                     particle_soldier[i] = deepcopy(particle_reproductive[i])
                 end

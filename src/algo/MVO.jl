@@ -19,7 +19,7 @@ function RouletteWheelSelection(weights)
     return chosen_index
 end
 
-function MVO(npop, Max_time, lb, ub, dim, objfun)
+function MVO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)
@@ -32,18 +32,18 @@ function MVO(npop, Max_time, lb, ub, dim, objfun)
     WEP_Max = 1
     WEP_Min = 0.2
 
-    Convergence_curve = zeros(Max_time)
+    Convergence_curve = zeros(max_iter)
 
     # Iteration (time) counter
     Time = 1
 
     # Main loop
-    while Time <= Max_time
+    while Time <= max_iter
         # Eq. (3.3) in the paper: Calculate WEP
-        WEP = WEP_Min + Time * ((WEP_Max - WEP_Min) / Max_time)
+        WEP = WEP_Min + Time * ((WEP_Max - WEP_Min) / max_iter)
 
         # Eq. (3.4) in the paper: Calculate Travelling Distance Rate (TDR)
-        TDR = 1 - ((Time)^(1 / 6) / (Max_time)^(1 / 6))
+        TDR = 1 - ((Time)^(1 / 6) / (max_iter)^(1 / 6))
 
         # Initialize inflation rates (fitness values)
         Inflation_rates = zeros(npop)

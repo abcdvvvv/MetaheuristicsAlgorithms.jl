@@ -4,7 +4,7 @@ Agushaka, Jeffrey O., Absalom E. Ezugwu, and Laith Abualigah.
 Neural Computing and Applications 35, no. 5 (2023): 4099-4131.
 """
 
-function GazelleOA(npop, max_iter, lb, ub, dim, objfun)
+function GazelleOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Top_gazelle_pos = zeros(dim)
     Top_gazelle_fit = Inf
 

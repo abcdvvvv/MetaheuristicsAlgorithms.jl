@@ -14,7 +14,7 @@ end
     Engineering Applications of Artificial Intelligence 114 (2022): 105075.
     
 """
-function DO(npop, max_iter, lb, ub, dim, objfun)
+function DO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     dandelions = rand(npop, dim) .* (ub - lb) .+ lb
     dandelionsFitness = zeros(npop)
     Convergence_curve = zeros(max_iter)

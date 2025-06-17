@@ -3,20 +3,20 @@ El-Kenawy, El-Sayed M., Nima Khodadadi, Seyedali Mirjalili, Abdelaziz A. Abdelha
 "Greylag goose optimization: nature-inspired optimization algorithm." 
 Expert Systems with Applications 238 (2024): 122147.
 """
-function GGO(num_agents::Int, max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, num_variables::Int, objfun)
-    population = lb .+ rand(num_agents, num_variables) .* (ub .- lb)
-    fitness = zeros(Float64, num_agents)
+function GGO(npop::Int, max_iter::Int, lb::Union{Int, AbstractVector}, ub::Union{Int, AbstractVector}, dim::Int, objfun)
+    population = lb .+ rand(npop, dim) .* (ub .- lb)
+    fitness = zeros(Float64, npop)
     Convergence = zeros(max_iter,1)
 
-    for i in 1:num_agents
+    for i in 1:npop
         fitness[i] = objfun(population[i, :])
     end
 
     for iter in 1:max_iter
-        for i in 1:num_agents
+        for i in 1:npop
             best_agent_index = argmin(fitness)
 
-            new_solution = population[i, :] .+ rand(num_variables) .* (population[best_agent_index, :] .- population[i, :])
+            new_solution = population[i, :] .+ rand(dim) .* (population[best_agent_index, :] .- population[i, :])
 
             new_solution = max.(min.(new_solution, ub), lb)
 

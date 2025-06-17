@@ -4,7 +4,7 @@
 Engineering Science and Technology, an International Journal 41 (2023): 101408.
 """
 
-function SeaHO(pop, max_iter, lb, ub, dim, objfun)
+function SeaHO(pop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Sea_horses = initialization(pop, dim, ub, lb)
     Sea_horsesFitness = zeros(pop)
     fitness_history = zeros(pop, max_iter)

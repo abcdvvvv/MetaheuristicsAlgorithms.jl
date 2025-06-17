@@ -6,8 +6,8 @@
     Applied Soft Computing, 93, 106392.
     
 """
-function DDAO(npop, max_iter, L_limit, U_limit, Nvar, objfun)
-    VarLength = Nvar
+function DDAO(npop::Int, max_iter::Int, lb, ub, dim, objfun)
+    VarLength = dim
 
     MaxSubIt = 1000
     T0 = 2000.0
@@ -19,7 +19,7 @@ function DDAO(npop, max_iter, L_limit, U_limit, Nvar, objfun)
     BestSol = Dict("Phase" => [], "Cost" => Inf)
 
     for i = 1:npop
-        pop[i]["Phase"] = L_limit .+ rand(VarLength) .* (U_limit - L_limit)
+        pop[i]["Phase"] = lb .+ rand(VarLength) .* (ub - lb)
 
         pop[i]["Cost"] = objfun(pop[i]["Phase"])
 
@@ -36,8 +36,8 @@ function DDAO(npop, max_iter, L_limit, U_limit, Nvar, objfun)
         newpop = [deepcopy(empty_template) for _ = 1:MaxSubIt]
 
         for subit = 1:MaxSubIt
-            newpop[subit]["Phase"] = L_limit .+ rand(VarLength) .* (U_limit - L_limit)
-            newpop[subit]["Phase"] = clamp.(newpop[subit]["Phase"], L_limit, U_limit)
+            newpop[subit]["Phase"] = lb .+ rand(VarLength) .* (ub - lb)
+            newpop[subit]["Phase"] = clamp.(newpop[subit]["Phase"], lb, ub)
             newpop[subit]["Cost"] = objfun(newpop[subit]["Phase"])
         end
 
@@ -54,7 +54,7 @@ function DDAO(npop, max_iter, L_limit, U_limit, Nvar, objfun)
             Mnew["Phase"] = (pop[kk]["Phase"] - pop[bb]["Phase"]) + bnew["Phase"] * rand()
         end
 
-        Mnew["Phase"] = clamp.(Mnew["Phase"], L_limit, U_limit)
+        Mnew["Phase"] = clamp.(Mnew["Phase"], lb, ub)
 
         Mnew["Cost"] = objfun(Mnew["Phase"])
 

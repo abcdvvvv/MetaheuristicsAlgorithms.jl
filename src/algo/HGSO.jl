@@ -4,7 +4,7 @@ Henry gas solubility optimization: A novel physics-based algorithm.
 Future Generation Computer Systems, 101, pp.646-667.
 """
 
-function HGSO(var_n_gases, max_iter, var_down, var_up, dim, objfun)
+function HGSO(var_n_gases::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     var_n_types = 5
 
     l1 = 5e-3
@@ -21,7 +21,7 @@ function HGSO(var_n_gases, max_iter, var_down, var_up, dim, objfun)
     P = l2 * rand(var_n_gases)
     C = l3 * rand(var_n_types)
 
-    X = var_down .+ rand(var_n_gases, dim) .* (var_up - var_down)
+    X = lb .+ rand(var_n_gases, dim) .* (ub - lb)
 
     Group = Create_Groups(var_n_gases, var_n_types, X)
 
@@ -40,11 +40,11 @@ function HGSO(var_n_gases, max_iter, var_down, var_up, dim, objfun)
     for var_iter = 1:max_iter
         S = update_variables(var_iter, max_iter, K, P, C, var_n_types, var_n_gases)
         Groupnew = update_positions(Group, best_pos, vec_Xbest, S, var_n_gases, var_n_types, var_Gbest, alpha, beta, dim)
-        Groupnew = fun_checkpoisions(dim, Groupnew, var_n_gases, var_n_types, var_down, var_up)
+        Groupnew = fun_checkpoisions(dim, Groupnew, var_n_gases, var_n_types, lb, ub)
 
         for i = 1:var_n_types
             Group[i], best_fit[i], best_pos[i] = Evaluate(objfun, var_n_types, var_n_gases, Group[i], Groupnew[i], 0)
-            Group[i] = worst_agents(Group[i], M1, M2, dim, var_up, var_down, var_n_gases, var_n_types)
+            Group[i] = worst_agents(Group[i], M1, M2, dim, ub, lb, var_n_gases, var_n_types)
         end
 
         var_Ybest, var_index = findmin(best_fit)
@@ -143,9 +143,9 @@ function update_positions(Group, best_pos, vec_Xbest, S, var_n_gases, var_n_type
     return Group
 end
 
-function fun_checkpoisions(dim, Group, var_n_gases, var_n_types, var_down, var_up)
-    lb = ones(dim) * var_down
-    ub = ones(dim) * var_up
+function fun_checkpoisions(dim, Group, var_n_gases, var_n_types, lb, ub)
+    lb = ones(dim) * lb
+    ub = ones(dim) * ub
 
     for j = 1:var_n_types
         for i = 1:div(var_n_gases, var_n_types)

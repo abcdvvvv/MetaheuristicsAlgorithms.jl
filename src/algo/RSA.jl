@@ -3,7 +3,7 @@ Abualigah, Laith, Mohamed Abd Elaziz, Putra Sumari, Zong Woo Geem, and Amir H. G
 "Reptile Search Algorithm (RSA): A nature-inspired meta-heuristic optimizer." 
 Expert Systems with Applications 191 (2022): 116158.
 """
-function RSA(npop, max_iter, lb, ub, dim, objfun)
+function RSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Best_P = zeros(dim)           
     Best_F = Inf                   
     X = initialization(npop, dim, ub, lb) 

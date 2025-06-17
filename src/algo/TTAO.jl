@@ -5,7 +5,7 @@ continuous optimization and engineering applications."
 Expert Systems with Applications 238 (2024): 121744.
 """
 
-function TTAO(npop, max_iter, lb, ub, dim, objfun)
+function TTAO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     N = floor(Int, npop / 3)
     X1 = rand(N, dim) .* (ub - lb) .+ lb
     Convergence_curve = zeros(max_iter)

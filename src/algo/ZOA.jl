@@ -5,10 +5,9 @@ Ieee Access 10 (2022): 49445-49473.
 
 """
 
-function ZOA(npop, max_iter, lb, ub, dim, objfun)
+function ZOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
-
     X = zeros(npop, dim)
     for i = 1:dim
         X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])

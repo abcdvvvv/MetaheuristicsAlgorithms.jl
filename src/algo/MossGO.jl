@@ -4,7 +4,7 @@ Zheng, Boli, Yi Chen, Chaofan Wang, Ali Asghar Heidari, Lei Liu, and Huiling Che
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """
 
-function MossGO(npop, max_iter, lb, ub, dim, objfun)
+function MossGO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     FEs = 0
     MaxFEs = npop * max_iter
     best_cost = Inf
