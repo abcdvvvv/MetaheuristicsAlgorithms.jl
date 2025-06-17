@@ -21,7 +21,7 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     end
 
     sorted_indexes = sortperm(Sea_horsesFitness)
-    target_position = Sea_horses[sorted_indexes[1], :]
+    TargetPosition = Sea_horses[sorted_indexes[1], :]
     target_fitness = Sea_horsesFitness[sorted_indexes[1]]
     Convergence_curve[1] = target_fitness
 
@@ -32,7 +32,7 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     while t < max_iter + 1
         beta = randn(npop, dim)
-        Elite = repeat(target_position', npop, 1)
+        Elite = repeat(TargetPosition', npop, 1)
         r1 = randn(1, npop)
         Step_length = levy(npop, dim, 1.5)
         Sea_horses_new1 = similar(Sea_horses)
@@ -96,7 +96,7 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         Trajectories[:, t] = Sea_horses[:, 1]
 
         if SortfitbestN[1] < target_fitness
-            target_position = Sea_horses[1, :]
+            TargetPosition = Sea_horses[1, :]
             target_fitness = SortfitbestN[1]
         end
 
@@ -104,9 +104,9 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         t += 1
     end
 
-    # return target_fitness, target_position, Convergence_curve, Trajectories, fitness_history, population_history
+    # return target_fitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, population_history
     return OptimizationResult(
-        target_position,
+        TargetPosition,
         target_fitness,
         Convergence_curve)
 end
