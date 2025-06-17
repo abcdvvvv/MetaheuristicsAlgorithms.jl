@@ -3,7 +3,7 @@ Mirjalili, Seyedali, Amir H. Gandomi, Seyedeh Zahra Mirjalili, Shahrzad Saremi, 
 "Salp Swarm Algorithm: A bio-inspired optimizer for engineering design problems." 
 Advances in engineering software 114 (2017): 163-191.
 """
-function SSA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{Int,AbstractVector}, dim::Int, objfun::Function)#(npop, max_iter, lb, ub, dim, objfun)#(npop, max_iter, objfun, dim, lb, ub)
+function SSA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)#(npop, max_iter, lb, ub, dim, objfun)#(npop, max_iter, objfun, dim, lb, ub)
     if size(ub, 1) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb
@@ -13,8 +13,8 @@ function SSA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
 
     SalpPositions = initialization(npop, dim, ub, lb)
 
-    FoodPosition = zeros(dim)
-    FoodFitness = Inf
+    food_position = zeros(dim)
+    food_fitness = Inf
 
     SalpFitness = zeros(npop)
     for i in axes(SalpPositions, 1)
@@ -24,8 +24,8 @@ function SSA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
     sorted_indexes = sortperm(SalpFitness)
     Sorted_salps = SalpPositions[sorted_indexes, :]
 
-    FoodPosition .= Sorted_salps[1, :]
-    FoodFitness = SalpFitness[sorted_indexes[1]]
+    food_position .= Sorted_salps[1, :]
+    food_fitness = SalpFitness[sorted_indexes[1]]
 
     l = 2
     while l <= max_iter
@@ -38,9 +38,9 @@ function SSA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
                     c2 = rand()
                     c3 = rand()
                     if c3 < 0.5
-                        SalpPositions[i, j] = FoodPosition[j] + c1 * ((ub[j] - lb[j]) * c2 + lb[j])
+                        SalpPositions[i, j] = food_position[j] + c1 * ((ub[j] - lb[j]) * c2 + lb[j])
                     else
-                        SalpPositions[i, j] = FoodPosition[j] - c1 * ((ub[j] - lb[j]) * c2 + lb[j])
+                        SalpPositions[i, j] = food_position[j] - c1 * ((ub[j] - lb[j]) * c2 + lb[j])
                     end
                 end
             elseif i > npop / 2 && i < npop + 1
@@ -57,14 +57,18 @@ function SSA(npop::Int, max_iter::Int, lb::Union{Int,AbstractVector}, ub::Union{
 
             SalpFitness[i] = objfun(SalpPositions[i, :])
 
-            if SalpFitness[i] < FoodFitness
-                FoodPosition .= SalpPositions[i, :]
-                FoodFitness = SalpFitness[i]
+            if SalpFitness[i] < food_fitness
+                food_position .= SalpPositions[i, :]
+                food_fitness = SalpFitness[i]
             end
         end
-        Convergence_curve[l] = FoodFitness
+        Convergence_curve[l] = food_fitness
         l += 1
     end
 
-    return FoodFitness, FoodPosition, Convergence_curve
+    # return food_fitness, food_position, Convergence_curve
+    return OptimizationResult(
+        food_position,
+        food_fitness,
+        Convergence_curve)
 end

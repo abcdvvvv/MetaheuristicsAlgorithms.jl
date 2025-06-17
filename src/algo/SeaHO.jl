@@ -4,6 +4,7 @@
 Engineering Science and Technology, an International Journal 41 (2023): 101408.
 """
 
+
 function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Sea_horses = initialization(npop, dim, ub, lb)
     Sea_horsesFitness = zeros(npop)
@@ -21,8 +22,8 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
     sorted_indexes = sortperm(Sea_horsesFitness)
     TargetPosition = Sea_horses[sorted_indexes[1], :]
-    TargetFitness = Sea_horsesFitness[sorted_indexes[1]]
-    Convergence_curve[1] = TargetFitness
+    target_fitness = Sea_horsesFitness[sorted_indexes[1]]
+    Convergence_curve[1] = target_fitness
 
     t = 1
     u = 0.05
@@ -73,16 +74,16 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         Sea_horsesFitness1 = [objfun(Sea_horses_new2[i, :]) for i = 1:npop]
         sorted_indexes = sortperm(Sea_horsesFitness1)
 
-        Sea_horses_father = Sea_horses_new2[sorted_indexes[1:pop÷2], :]
-        Sea_horses_mother = Sea_horses_new2[sorted_indexes[pop÷2+1:end], :]
-        for k = 1:pop÷2
+        Sea_horses_father = Sea_horses_new2[sorted_indexes[1:npop], :]
+        Sea_horses_mother = Sea_horses_new2[sorted_indexes[npop+1:end], :]
+        for k = 1:npop÷2
             r3 = rand()
             Si[k, :] = r3 * Sea_horses_father[k, :] + (1 - r3) * Sea_horses_mother[k, :]
         end
 
         Sea_horses_offspring = Si
         Sea_horses_offspring = max.(min.(Sea_horses_offspring, ub'), lb')
-        Sea_horsesFitness2 = [objfun(Sea_horses_offspring[i, :]) for i = 1:pop÷2]
+        Sea_horsesFitness2 = [objfun(Sea_horses_offspring[i, :]) for i = 1:npop÷2]
 
         Sea_horsesFitness = vcat(Sea_horsesFitness1, Sea_horsesFitness2)
         Sea_horses_new = vcat(Sea_horses_new2, Sea_horses_offspring)
@@ -94,14 +95,18 @@ function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         population_history[:, :, t] = Sea_horses
         Trajectories[:, t] = Sea_horses[:, 1]
 
-        if SortfitbestN[1] < TargetFitness
+        if SortfitbestN[1] < target_fitness
             TargetPosition = Sea_horses[1, :]
-            TargetFitness = SortfitbestN[1]
+            target_fitness = SortfitbestN[1]
         end
 
-        Convergence_curve[t] = TargetFitness
+        Convergence_curve[t] = target_fitness
         t += 1
     end
 
-    return TargetFitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, population_history
+    # return target_fitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, population_history
+    return OptimizationResult(
+        TargetPosition,
+        target_fitness,
+        Convergence_curve)
 end

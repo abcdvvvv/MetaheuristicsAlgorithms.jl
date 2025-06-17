@@ -4,17 +4,17 @@ Ezugwu, Absalom E., Jeffrey O. Agushaka, Laith Abualigah, Seyedali Mirjalili, an
 Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 """
 
-function levym(n, m, beta)
-    num = gamma(1 + beta) * sin(pi * beta / 2)
-    den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
-    sigma_u = (num / den)^(1 / beta)
+# function levym(n, m, beta)
+#     num = gamma(1 + beta) * sin(pi * beta / 2)
+#     den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
+#     sigma_u = (num / den)^(1 / beta)
 
-    u = rand(Normal(0, sigma_u), n, m)
-    v = rand(Normal(0, 1), n, m)
+#     u = rand(Normal(0, sigma_u), n, m)
+#     v = rand(Normal(0, 1), n, m)
 
-    z = u ./ (abs.(v) .^ (1 / beta))
-    return z
-end
+#     z = u ./ (abs.(v) .^ (1 / beta))
+#     return z
+# end
 
 function PDO(npop, max_iter, lb, ub, dim, objfun)
     PDBest_P = zeros(dim)
@@ -45,7 +45,7 @@ function PDO(npop, max_iter, lb, ub, dim, objfun)
         mu = ifelse(t % 2 == 0, -1, 1)
         DS = 1.5 * randn() * (1 - t / max_iter)^(2 * t / max_iter) * mu
         PE = 1.5 * (1 - t / max_iter)^(2 * t / max_iter) * mu
-        RL = levym(npop, dim, 1.5)
+        RL = levy(npop, dim, 1.5)
         TPD = repeat(PDBest_P', npop)
 
         for i = 1:npop

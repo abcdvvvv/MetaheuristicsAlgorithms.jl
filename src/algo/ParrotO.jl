@@ -36,10 +36,10 @@ function ParrotO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             St = rand(1:4)
 
             if St == 1
-                X_new[j, :] .= (X[j, :] .- GBestX) .* Levy(dim) .+ rand() * mean(X) * (1 - i / max_iter)^(2 * i / max_iter)
+                X_new[j, :] .= (X[j, :] .- GBestX) .* levy(dim) .+ rand() * mean(X) * (1 - i / max_iter)^(2 * i / max_iter)
 
             elseif St == 2
-                X_new[j, :] .= X[j, :] .+ GBestX .* Levy(dim) .+ randn() * (1 - i / max_iter) * ones(dim)
+                X_new[j, :] .= X[j, :] .+ GBestX .* levy(dim) .+ randn() * (1 - i / max_iter) * ones(dim)
 
             elseif St == 3
                 H = rand()

@@ -66,7 +66,7 @@ function ESC(npop::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                     maxCalm = vec(maximum(calm, dims=1))
                     randVec = minCalm + rand(dim) .* (maxCalm - minCalm)
                     # weight1 = adaptive_levy_weight(beta_base, dim, t, max_iter)
-                    weight1 = Levy(beta_base, dim, t, max_iter)
+                    weight1 = levy(beta_base, dim, t, max_iter)
 
                     populationNew[i, :] .= population[i, :]
                     .+mask1 .* (weight1 .* (calmCenter - population[i, :]) + (randVec - population[i, :] .+ randn(dim) / 50)) .* panicIndex
@@ -75,8 +75,8 @@ function ESC(npop::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                     minConform = vec(minimum(conform, dims=1))
                     maxConform = vec(maximum(conform, dims=1))
                     randVec = minConform + rand(dim) .* (maxConform - minConform)
-                    weight1 = Levy(beta_base, dim, t, max_iter)
-                    weight2 = Levy(beta_base, dim, t, max_iter)
+                    weight1 = levy(beta_base, dim, t, max_iter)
+                    weight2 = levy(beta_base, dim, t, max_iter)
                     mask2 = rand(dim) .> mask_probability
 
                     populationNew[i, :] =
@@ -86,8 +86,8 @@ function ESC(npop::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                 else
                     elite = best_solutions[rand(1:eliteSize), :]
                     randomInd = population[rand(1:npop), :]#[1, :]
-                    weight1 = Levy(beta_base, dim, t, max_iter)
-                    weight2 = Levy(beta_base, dim, t, max_iter)
+                    weight1 = levy(beta_base, dim, t, max_iter)
+                    weight2 = levy(beta_base, dim, t, max_iter)
                     mask2 = rand(dim) .> mask_probability
                     randVec = elite .+ weight1 .* (randomInd - elite)
 
@@ -101,8 +101,8 @@ function ESC(npop::Int, max_iter::Int, lb::Int, ub::Int, dim::Int, objfun)
                 elite = best_solutions[rand(1:eliteSize), :]
 
                 randInd = population[rand(1:npop), :]
-                weight1 = Levy(beta_base, dim, t, max_iter)
-                weight2 = Levy(beta_base, dim, t, max_iter)
+                weight1 = levy(beta_base, dim, t, max_iter)
+                weight2 = levy(beta_base, dim, t, max_iter)
                 mask1 = rand(dim) .> mask_probability
                 mask2 = rand(dim) .> mask_probability
 

@@ -5,12 +5,12 @@ continuous optimization and engineering applications."
 Expert Systems with Applications 238 (2024): 121744.
 """
 
-function TTAO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function TTAO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     N = floor(Int, npop / 3)
     X1 = rand(N, dim) .* (ub - lb) .+ lb
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     t = 1
-    Xbest = zeros(dim)
+    xbest = zeros(dim)
     fbest = Inf
 
     while t <= max_iter
@@ -102,12 +102,16 @@ function TTAO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
         X1 = X_best_1
         index1 = argmin(best_fit_1)
-        Xbest = X1[index1, :]
+        xbest = X1[index1, :]
         fbest = best_fit_1[index1]
-        Convergence_curve[t] = fbest
+        convergence_curve[t] = fbest
 
         t += 1
     end
 
-    return fbest, Xbest, Convergence_curve
+    # return fbest, xbest, convergence_curve
+    return OptimizationResult(
+        xbest,
+        fbest,
+        convergence_curve)
 end

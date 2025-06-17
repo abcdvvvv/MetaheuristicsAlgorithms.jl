@@ -4,7 +4,7 @@ Braik, Malik, Abdelaziz Hammouri, Jaffar Atwan, Mohammed Azmi Al-Betar, and Moha
 Knowledge-Based Systems 243 (2022): 108457.
 
 """
-function WSO(whiteSharks::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function WSO(whiteSharks::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     ccurve = zeros(max_iter)
 
     WSO_Positions = initialization(whiteSharks, dim, ub, lb)
@@ -92,5 +92,9 @@ function WSO(whiteSharks::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         ccurve[ite] = fmin0
     end
 
-    return fmin0, gbest, ccurve
+    # return fmin0, gbest, ccurve
+    return OptimizationResult(
+        gbest,
+        fmin0,
+        ccurve)
 end

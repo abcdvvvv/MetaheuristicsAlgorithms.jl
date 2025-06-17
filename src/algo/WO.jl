@@ -5,28 +5,28 @@ Expert Systems with Applications 239 (2024): 122413.
 """
 
 
-function levyFlight(d::Int)
-    beta = 3/2
+# function levyFlight(d::Int)
+#     beta = 3/2
 
-    sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1/beta)
-    u = randn(d) * sigma  
-    v = randn(d)  
-    step = u ./ abs.(v).^(1/beta)  
+#     sigma = (gamma(1 + beta) * sin(pi * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1/beta)
+#     u = randn(d) * sigma  
+#     v = randn(d)  
+#     step = u ./ abs.(v).^(1/beta)  
 
-    return step
-end
+#     return step
+# end
 
-function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
-    Best_Pos = zeros(Float64, dim)
+function WO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+    best_pos = zeros(Float64, dim)
     Second_Pos = zeros(Float64, dim)
-    Best_Score = Inf
+    best_score = Inf
     Second_Score = Inf  
-    GBestX = repeat(Best_Pos, npop, 1)
+    GBestX = repeat(best_pos, npop, 1)
 
 
     X = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(Float64, max_iter)
+    convergence_curve = zeros(Float64, max_iter)
 
     P = 0.4  
     F_number = round(Int, npop * P)  
@@ -43,12 +43,12 @@ function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
             fitness = objfun(X[i, :])  
 
-            if fitness < Best_Score
-                Best_Score = fitness
-                Best_Pos .= X[i, :]  
+            if fitness < best_score
+                best_score = fitness
+                best_pos .= X[i, :]  
             end
             
-            if fitness > Best_Score && fitness < Second_Score
+            if fitness > best_score && fitness < Second_Score
                 Second_Score = fitness
                 Second_Pos .= X[i, :]  
             end
@@ -83,7 +83,7 @@ function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 end
                 for i in npop - C_number + 1:npop
                     P = rand()
-                    o = GBestX[i, :] .+ X[i, :] .* levyFlight(dim)
+                    o = GBestX[i, :] .+ X[i, :] .* levy(dim)
                     X[i, :] .= P * (o .- X[i, :])
                 end
             end
@@ -101,7 +101,7 @@ function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                         theta1 = rand()
                         a1 = Beta * rand() - Beta
                         b1 = tan(theta1 * π)
-                        X1 = Best_Pos[j] - a1 * b1 * abs(Best_Pos[j] - X[i, j])
+                        X1 = best_pos[j] - a1 * b1 * abs(best_pos[j] - X[i, j])
                         
                         theta2 = rand()
                         a2 = Beta * rand() - Beta
@@ -114,10 +114,14 @@ function WO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
         t += 1
-        Convergence_curve[t] = Best_Score
+        convergence_curve[t] = best_score
     end
 
-    return Best_Score, Best_Pos, Convergence_curve
+    # return best_score, best_pos, convergence_curve
+    return OptimizationResult(
+        best_pos,
+        best_score,
+        convergence_curve)
 end
 
 function hal(index, base)

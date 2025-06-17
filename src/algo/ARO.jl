@@ -72,5 +72,9 @@ function ARO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         HisBestF[It] = BestF
     end
 
-    return BestF, BestX, HisBestF
+    # return BestF, BestX, HisBestF
+    return OptimizationResult(
+        BestF,
+        BestX,
+        HisBestF)
 end

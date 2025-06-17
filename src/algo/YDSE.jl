@@ -4,7 +4,7 @@ Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 """
 
-function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function YDSE(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     L = 1
     d = 5e-3
     I = 0.01
@@ -21,8 +21,8 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         SS[i, :] = S[i, :] .- I .* (2 * rand() - 1) .* (S_Mean .- S[i, :])
     end
 
-    BestFringe = zeros(dim)
-    Best_Fringe_fitness = Inf
+    best_fringe = zeros(dim)
+    best_fringe_fitness = Inf
     Fringes_fitness = zeros(npop)
     X = zeros(npop, dim)
 
@@ -48,8 +48,8 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     sorted_indices = sortperm(Fringes_fitness)
     Fringes_fitness = Fringes_fitness[sorted_indices]
     X = X[sorted_indices, :]
-    Best_Fringe_fitness = Fringes_fitness[1]
-    BestFringe = X[1, :]
+    best_fringe_fitness = Fringes_fitness[1]
+    best_fringe = X[1, :]
 
     Int_max0 = 1e-20
     cgcurve = zeros(max_iter)
@@ -57,7 +57,7 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     X_New = zeros(npop, dim)
 
     while iter <= max_iter
-        cgcurve[iter] = Best_Fringe_fitness
+        cgcurve[iter] = best_fringe_fitness
 
         sorted_indices = sortperm(Fringes_fitness)
         Fringes_fitness = Fringes_fitness[sorted_indices]
@@ -77,7 +77,7 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 A_bright = 2 / (1 + sqrt(abs(1 - beta^2)))
                 A = 1:2:npop
                 randomIndex = rand(A)
-                X_New[i, :] = BestFringe .+ Int_max .* A_bright .* X[i, :] .- r1 .* z .* X[randomIndex, :]
+                X_New[i, :] = best_fringe .+ Int_max .* A_bright .* X[i, :] .- r1 .* z .* X[randomIndex, :]
             elseif isodd(i)
                 beta = q * cosh(pi / iter)
                 A_bright = 2 / (1 + sqrt(abs(1 - beta^2)))
@@ -93,7 +93,7 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 m = i - 1
                 y_dark = Lambda * L * (m + 0.5) / d
                 Int_dark = Int_max .* cos((pi * d) / (Lambda * L) * y_dark) .^ 2
-                X_New[i, :] = X[i, :] .- (r1 .* A_dark .* Int_dark .* X[i, :] .- z .* BestFringe)
+                X_New[i, :] = X[i, :] .- (r1 .* A_dark .* Int_dark .* X[i, :] .- z .* best_fringe)
             end
 
             X_New[i, :] = clamp.(X_New[i, :], lb, ub)
@@ -105,9 +105,9 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             if X_New_Fitness[i] < Fringes_fitness[i]
                 X[i, :] = X_New[i, :]
                 Fringes_fitness[i] = X_New_Fitness[i]
-                if Fringes_fitness[i] < Best_Fringe_fitness
-                    Best_Fringe_fitness = Fringes_fitness[i]
-                    BestFringe = X[i, :]
+                if Fringes_fitness[i] < best_fringe_fitness
+                    best_fringe_fitness = Fringes_fitness[i]
+                    best_fringe = X[i, :]
                 end
             end
         end
@@ -115,5 +115,9 @@ function YDSE(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         iter += 1
     end
 
-    return Best_Fringe_fitness, BestFringe, cgcurve
+    # return best_fringe_fitness, best_fringe, cgcurve
+    return OptimizationResult(
+        best_fringe,
+        best_fringe_fitness,
+        cgcurve)
 end

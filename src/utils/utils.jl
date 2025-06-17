@@ -5,7 +5,7 @@ addpath(directory) =
 get_population!(x, lb, ub) = x .= (ub .- lb) .* rand!(x) .+ lb
 get_population(dims, lb, ub) = (ub .- lb) .* rand(Float64, dims) .+ lb
 
-function Levy(d::Int)
+function levy(d::Int)
     beta = 1.5
     sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
              (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
@@ -15,7 +15,7 @@ function Levy(d::Int)
     return step
 end
 
-function Levy(n::Int, m::Int, beta::Float64)
+function levy(n::Int, m::Int, beta::Float64)
     num = gamma(1 + beta) * sin(pi * beta / 2)
 
     den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)

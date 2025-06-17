@@ -103,5 +103,9 @@ function AOArithmetic(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun) # AOAr
         C_Iter += 1  # Incremental iteration
     end
 
-    return Best_FF, Best_P, Conv_curve
+    # return Best_FF, Best_P, Conv_curve
+    return OptimizationResult(
+        Best_FF,
+        Best_P,
+        Conv_curve)
 end

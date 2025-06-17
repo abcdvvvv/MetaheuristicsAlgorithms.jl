@@ -41,7 +41,7 @@ function PLO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun::Function)
             V[i, :] .= 1 * exp((1 - a) / 100 * FEs)
             LS = V[i, :]
 
-            GS = vec(Levy(dim)) .* (X_mean .- X[i, :] + (lb .+ rand(dim) .* (ub .- lb)) / 2)
+            GS = vec(levy(dim)) .* (X_mean .- X[i, :] + (lb .+ rand(dim) .* (ub .- lb)) / 2)
             X_new[i, :] = X[i, :] .+ (w1 * LS .+ w2 * GS) .* rand(dim)
         end
 

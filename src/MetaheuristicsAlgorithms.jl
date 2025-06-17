@@ -8,7 +8,13 @@ using Random,
       LinearAlgebra,
       Printf
 
-abstract type OptimizationResult end 
+# abstract type OptimizationResult end 
+
+struct OptimizationResult
+	bestX::Vector
+	bestF::Float64
+      HisBestFit::Vector{Float64}
+end
 export OptimizationResult
 
 include("algo/AEFA.jl")

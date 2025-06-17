@@ -3,13 +3,13 @@ Mirjalili, Seyedali, and Andrew Lewis.
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
-function WOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
-    Leader_pos = zeros(1, dim)
-    Leader_score = Inf
+function WOA(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+    leader_pos = zeros(1, dim)
+    leader_score = Inf
 
     Positions = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(max_iter, 1)
+    convergence_curve = zeros(max_iter, 1)
 
     t = 0
 
@@ -21,9 +21,9 @@ function WOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
             fitness = objfun(Positions[i, :])
 
-            if fitness < Leader_score
-                Leader_score = fitness
-                Leader_pos = Positions[i, :]
+            if fitness < leader_score
+                leader_score = fitness
+                leader_pos = Positions[i, :]
             end
         end
 
@@ -50,17 +50,21 @@ function WOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                         D_X_rand = abs(C * X_rand[j] - Positions[i, j])
                         Positions[i, j] = X_rand[j] - A * D_X_rand
                     elseif abs(A) < 1
-                        D_Leader = abs(C * Leader_pos[j] - Positions[i, j])
-                        Positions[i, j] = Leader_pos[j] - A * D_Leader
+                        D_Leader = abs(C * leader_pos[j] - Positions[i, j])
+                        Positions[i, j] = leader_pos[j] - A * D_Leader
                     end
                 elseif p >= 0.5
-                    distance2Leader = abs(Leader_pos[j] - Positions[i, j])
-                    Positions[i, j] = distance2Leader * exp(b * l) * cos(l * 2 * pi) + Leader_pos[j]
+                    distance2Leader = abs(leader_pos[j] - Positions[i, j])
+                    Positions[i, j] = distance2Leader * exp(b * l) * cos(l * 2 * pi) + leader_pos[j]
                 end
             end
         end
         t += 1
-        Convergence_curve[t] = Leader_score
+        convergence_curve[t] = leader_score
     end
-    return Leader_score, Leader_pos, Convergence_curve
+    # return leader_score, leader_pos, convergence_curve
+    return OptimizationResult(
+        leader_pos,
+        leader_score,
+        convergence_curve)
 end

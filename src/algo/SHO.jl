@@ -20,15 +20,15 @@ function noh(best_hyena_fitness)
     return count
 end
 
-function SHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SHO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     hyena_pos = initialization(npop, dim, ub, lb)
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     Iteration = 1
 
     pre_population = zeros(npop, dim)
     best_hyenas = zeros(npop, dim)
-    Best_hyena_pos = zeros(npop)
-    Best_hyena_score = Inf
+    best_hyena_pos = zeros(npop)
+    best_hyena_score = Inf
 
     while Iteration < max_iter
         hyena_fitness = zeros(npop)
@@ -63,8 +63,8 @@ function SHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
         NOH = noh(best_hyena_fitness)
 
-        Best_hyena_score = fitness_sorted[1]
-        Best_hyena_pos = sorted_population[1, :]
+        best_hyena_score = fitness_sorted[1]
+        best_hyena_pos = sorted_population[1, :]
         pre_population = copy(hyena_pos)
         pre_fitness = copy(hyena_fitness)
 
@@ -87,9 +87,13 @@ function SHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
 
-        Convergence_curve[Iteration] = Best_hyena_score
+        convergence_curve[Iteration] = best_hyena_score
         Iteration += 1
     end
 
-    return Best_hyena_score, Best_hyena_pos, Convergence_curve
+    # return best_hyena_score, best_hyena_pos, convergence_curve
+    return OptimizationResult(
+        best_hyena_pos,
+        best_hyena_score,
+        convergence_curve)
 end

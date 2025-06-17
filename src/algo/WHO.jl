@@ -20,7 +20,7 @@ function exchange(Stallion)
     return Stallion
 end
 
-function WHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function WHO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
     if length(ub) == 1
         ub = ub * ones(dim)
         lb = lb * ones(dim)
@@ -32,7 +32,7 @@ function WHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     Nfoal = npop - NStallion
     r1 = r2 = r3 = rr = 0
 
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     gBest = zeros(dim)
     gBestScore = Inf
 
@@ -57,7 +57,7 @@ function WHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
     WH = Stallion[idx]
     gBest = WH["pos"]
     gBestScore = WH["cost"]
-    Convergence_curve[1] = WH["cost"]
+    convergence_curve[1] = WH["cost"]
 
     l = 2
     while l <= max_iter
@@ -116,10 +116,14 @@ function WHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
 
         gBest = WH["pos"]
         gBestScore = WH["cost"]
-        Convergence_curve[l] = WH["cost"]
+        convergence_curve[l] = WH["cost"]
 
         l += 1
     end
 
-    return gBestScore, gBest, Convergence_curve
+    # return gBestScore, gBest, convergence_curve
+    return OptimizationResult(
+        gBest,
+        gBestScore,
+        convergence_curve)
 end

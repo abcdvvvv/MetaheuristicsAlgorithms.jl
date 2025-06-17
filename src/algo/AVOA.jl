@@ -18,7 +18,7 @@ function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, rando
             current_vulture_X = (A + B) / 2
         else
             # current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levyFlight(dim)
-            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* Levy(dim)
+            current_vulture_X = random_vulture_X - abs.(random_vulture_X - current_vulture_X) .* F .* levy(dim)
         end
     end
 

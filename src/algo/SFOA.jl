@@ -6,7 +6,7 @@ Neural Computing and Applications, 37(5), 3641-3683.
 
 # function SHO(N, max_iter, lb, ub, dim, fitness)
 
-function SFOA(npop::Int, max_iter::Int, lb, ub, dim, objfun)
+function SFOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
     # Starfish Optimization Algorithm (SFOA)
     GP = 0.5  # parameter
 
@@ -88,5 +88,9 @@ function SFOA(npop::Int, max_iter::Int, lb, ub, dim, objfun)
     end
 
     #  return TargetFitness, TargetPosition, Convergence_curve,
-    return fvalbest, xposbest, Curve
+    # return fvalbest, xposbest, Curve
+    return OptimizationResult(
+        best_hyena_pos,
+        best_hyena_score,
+        convergence_curve)
 end

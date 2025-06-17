@@ -55,7 +55,7 @@ function HEOA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             if i <= (1 / 4) * max_iter
                 X_new[j, :] = GBestX * (1 - i / max_iter) +
                               (mean(X[j, :]) .- GBestX) * floor(rand() / jump_factor) * jump_factor +
-                              0.2 * (1 - i / max_iter) .* (X[j, :] .- GBestX) .* Levy(dim)
+                              0.2 * (1 - i / max_iter) .* (X[j, :] .- GBestX) .* levy(dim)
             else
                 for j = 1:LNNumber
                     if R < A

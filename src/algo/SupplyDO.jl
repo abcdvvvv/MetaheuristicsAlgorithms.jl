@@ -3,17 +3,18 @@ Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 """
-function SupplyDO(marketsize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
-    onemarket = Dict(
+
+function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+    OneMarket = Dict(
         "CommPrice" => zeros(dim),
         "CommPriceFit" => Inf,
         "CommQuantity" => zeros(dim),
         "CommQuantityFit" => Inf,
     )
 
-    market = fill(onemarket, marketsize)
-    BestF = Inf
-    BestX = []
+    Market = fill(OneMarket, MarketSize)
+    best_f = Inf
+    best_x = []
 
     for i = 1:marketsize
         market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
@@ -27,14 +28,14 @@ function SupplyDO(marketsize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
         end
     end
 
-    for i = 1:marketsize
-        if market[i]["CommPriceFit"] <= BestF
-            BestX = market[i]["CommPrice"]
-            BestF = market[i]["CommPriceFit"]
+    for i = 1:MarketSize
+        if Market[i]["CommPriceFit"] <= best_f
+            best_x = Market[i]["CommPrice"]
+            best_f = Market[i]["CommPriceFit"]
         end
     end
 
-    HisBestFit = zeros(max_iter)
+    his_best_fit = zeros(max_iter)
 
     for Iter = 1:max_iter
         a = 2 * (max_iter - Iter + 1) / max_iter
@@ -91,14 +92,20 @@ function SupplyDO(marketsize::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                 market[i]["CommPrice"] = market[i]["CommQuantity"]
             end
 
-            if market[i]["CommPriceFit"] <= BestF
-                BestX = market[i]["CommPrice"]
-                BestF = market[i]["CommPriceFit"]
+
+
+            if Market[i]["CommPriceFit"] <= best_f
+                best_x = Market[i]["CommPrice"]
+                best_f = Market[i]["CommPriceFit"]
             end
         end
 
-        HisBestFit[Iter] = BestF
+        his_best_fit[Iter] = best_f
     end
 
-    return BestF, BestX, HisBestFit
+    # return best_f, best_x, his_best_fit
+    return OptimizationResult(
+        best_x,
+        best_f,
+        his_best_fit)
 end

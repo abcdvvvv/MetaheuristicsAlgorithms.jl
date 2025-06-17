@@ -1,8 +1,8 @@
-struct AFTResult <: OptimizationResult
-    fitness
-    gbest
-    ccurve
-end 
+# struct AFTResult <: OptimizationResult
+#     fitness
+#     gbest
+#     ccurve
+# end 
 
 """
     AFT(noThieves, max_iter, lb, ub, objfun)
@@ -101,7 +101,7 @@ function AFT(noThieves::Int, max_iter::Int, lb, ub, objfun)
     fitness = objfun(gbestSol)
 
     #return fitness, gbest, ccurve
-    return AFTResult(
+    return OptimizationResult(
         fitness, 
         gbestSol, 
         ccurve)

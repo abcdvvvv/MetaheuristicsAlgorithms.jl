@@ -3,13 +3,13 @@ Li, Shimin, Huiling Chen, Mingjing Wang, Ali Asghar Heidari, and Seyedali Mirjal
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
-function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
-    bestPositions = zeros(1, dim)
-    Destination_fitness = Inf
+function SMA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+    best_positions = zeros(1, dim)
+    destination_fitness = Inf
     AllFitness = fill(Inf, npop)
     weight = ones(npop, dim)
     X = initialization(npop, dim, ub, lb)
-    Convergence_curve = zeros(max_iter)
+    convergence_curve = zeros(max_iter)
     it = 1
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
@@ -40,9 +40,9 @@ function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
 
-        if bestFitness < Destination_fitness
-            bestPositions = X[SmellIndex[1], :]
-            Destination_fitness = bestFitness
+        if bestFitness < destination_fitness
+            best_positions = X[SmellIndex[1], :]
+            destination_fitness = bestFitness
         end
 
         a = atanh(-(it / max_iter) + 1)
@@ -52,7 +52,7 @@ function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             if rand() < z
                 X[i, :] = (ub - lb) .* rand(dim) .+ lb
             else
-                p = tanh(abs(AllFitness[i] - Destination_fitness))
+                p = tanh(abs(AllFitness[i] - destination_fitness))
                 vb = rand(dim) .* (2a) .- a
                 vc = rand(dim) .* (2b) .- b
                 for j = 1:dim
@@ -60,7 +60,7 @@ function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
                     A = rand(1:npop)[1]
                     B = rand(1:npop)[1]
                     if r < p
-                        X[i, j] = bestPositions[j] + vb[j] * (weight[i, j] * X[A, j] - X[B, j])
+                        X[i, j] = best_positions[j] + vb[j] * (weight[i, j] * X[A, j] - X[B, j])
                     else
                         X[i, j] = vc[j] * X[i, j]
                     end
@@ -68,9 +68,13 @@ function SMA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
             end
         end
 
-        Convergence_curve[it] = Destination_fitness
+        convergence_curve[it] = destination_fitness
         it += 1
     end
 
-    return Destination_fitness, bestPositions, Convergence_curve
+    # return destination_fitness, best_positions, convergence_curve
+    return OptimizationResult(
+        best_positions,
+        destination_fitness,
+        convergence_curve)
 end

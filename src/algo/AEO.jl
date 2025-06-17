@@ -1,8 +1,8 @@
-struct AEOResult <: OptimizationResult
-    BestF::Any
-    BestX::Any
-    HisBestFit::Any
-end
+# struct AEOResult <: OptimizationResult
+#     BestF::Any
+#     BestX::Any
+#     HisBestFit::Any
+# end
 
 """
     AEO(npop, max_iter, lb, ub, objfun)
@@ -111,8 +111,8 @@ function AEO(npop::Int, max_iter::Int, lb::Vector, ub::Vector, objfun)::AEOResul
     end
 
     #return BestF, BestX, HisBestFit
-    return AEOResult(
-        BestF,
+    return OptimizationResult(
         BestX,
+        BestF,
         HisBestFit)
 end

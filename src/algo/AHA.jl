@@ -1,9 +1,9 @@
 
-struct AHAResult <: OptimizationResult
-    BestF::Any
-    BestX::Any
-    HisBestFit::Any
-end
+# struct AHAResult <: OptimizationResult
+#     BestF::Any
+#     BestX::Any
+#     HisBestFit::Any
+# end
 
 """
 
@@ -135,7 +135,7 @@ function AHA(npop::Int, max_iter::Int, lb, ub, objfun)::AHAResult
     end
 
     # return  BestF, BestX,HisBestFit
-    return AHAResult(
+    return OptimizationResult(
         BestF,
         BestX,
         HisBestFit)
