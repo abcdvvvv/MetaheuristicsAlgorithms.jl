@@ -4,7 +4,7 @@ Yadav, Anupam.
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 
-mutable struct AEFA
+mutable struct AEFA_Struct
     npop::Int
     i::Int
     maxiters::Int

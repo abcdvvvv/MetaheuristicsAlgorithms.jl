@@ -1,5 +1,5 @@
 include("algo/AEFA.jl")
-include("algo/AEFA_struct.jl")
+include("algo/AEFA_Struct.jl")
 include("algo/AEO.jl")
 include("algo/AFT.jl")
 include("algo/AHA.jl")
