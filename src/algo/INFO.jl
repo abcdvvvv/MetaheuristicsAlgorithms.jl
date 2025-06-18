@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Ahmadianfar, Iman, Ali Asghar Heidari, Saeed Noshadian, Huiling Chen, and Amir H. Gandomi. 
 "INFO: An efficient optimization algorithm based on weighted mean of vectors." 
 Expert Systems with Applications 195 (2022): 116516.
 """
-
 function INFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Initialization
     Cost = zeros(npop)

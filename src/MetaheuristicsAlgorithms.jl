@@ -50,6 +50,7 @@ include("algo/EDO.jl")
 include("algo/ElkHO.jl")
 include("algo/EO.jl")
 include("algo/ETO.jl")
+include("algo/ESC.jl")
 include("algo/FATA.jl")
 include("algo/FLA.jl")
 include("algo/FLoodA.jl")
@@ -165,7 +166,7 @@ export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export CapSA, ChOA, CO, CoatiOA, COOT, CSBO
 export DBO, DDAO, DMOA, DO, DSO
-export ECO, EDO, ElkHO, EO, ETO
+export ECO, EDO, ElkHO, EO, ETO, ESC
 export FLA, FLoodA, FOX
 export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
 export update_state!

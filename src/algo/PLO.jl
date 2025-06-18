@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen. 
 "Polar lights optimizer: Algorithm and applications in image segmentation and feature selection." 
 Neurocomputing 607 (2024): 128427.
 """
-
 function PLO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
     FEs = 0
     it = 1

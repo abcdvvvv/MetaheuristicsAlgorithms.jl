@@ -1,5 +1,6 @@
 """
 # References:
+
 - Luan, Tran Minh, Samir Khatir, Minh Thi Tran, Bernard De Baets, and Thanh Cuong-Le. 
 "Exponential-trigonometric optimization algorithm for solving complicated engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.

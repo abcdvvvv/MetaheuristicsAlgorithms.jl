@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Amiri, M.H., Mehrabi Hashjin, N., Montazeri, M., Mirjalili, S. and Khodadadi, N., 2024. 
 Hippopotamus optimization algorithm: a novel nature-inspired optimization algorithm. 
 Scientific Reports, 14(1), p.5032.
 """
-
 function HO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     lb = fill(lb, dim)
     ub = fill(ub, dim)

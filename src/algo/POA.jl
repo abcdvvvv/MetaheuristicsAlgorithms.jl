@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Trojovský, Pavel, and Mohammad Dehghani. 
 "Pelican optimization algorithm: A novel nature-inspired algorithm for engineering applications." 
 Sensors 22, no. 3 (2022): 855.
 """
-
 function POA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     lb = ones(dim) * lb
     ub = ones(dim) * ub

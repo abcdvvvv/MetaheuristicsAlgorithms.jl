@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, and Huiling Chen. 
 "RIME: A physics-based optimization." 
 Neurocomputing 532 (2023): 183-214.
 """
-
 function RIME(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     println("RIME is now tackling your problem")
 

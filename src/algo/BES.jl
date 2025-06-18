@@ -1,4 +1,3 @@
-
 function polr(a, R, N)
     th = a * π * rand(N)  # Generate theta
     r = th .+ R * rand(N)  # Calculate r
@@ -127,11 +126,11 @@ function select_space(objfun, popPos, popCost, npop, BestPos, BestCost, lb, ub, 
 end
 
 """
-Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. 
+# References:
+- Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. 
 "Novel meta-heuristic bald eagle search optimisation algorithm." 
 Artificial Intelligence Review 53 (2020): 2237-2264.
 """
-
 function BES(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
 
     # Initialize Best Solution

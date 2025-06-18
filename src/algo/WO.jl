@@ -1,8 +1,9 @@
 """
 # References:
--  Han, Muxuan, Zunfeng Du, Kum Fai Yuen, Haitao Zhu, Yancang Li, and Qiuyu Yuan. 
-"Walrus optimizer: A novel nature-inspired metaheuristic algorithm." 
-Expert Systems with Applications 239 (2024): 122413.
+
+-  Han, Muxuan, Zunfeng Du, Kum Fai Yuen, Haitao Zhu, Yancang Li, and Qiuyu Yuan.
+"Wave optimization algorithm: A new metaheuristic algorithm for solving optimization problems." 
+Knowledge-Based Systems 236 (2022): 107760.
 """
 
 

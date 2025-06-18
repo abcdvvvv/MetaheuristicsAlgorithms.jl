@@ -4,7 +4,6 @@
 "Geyser inspired algorithm: a new geological-inspired meta-heuristic for real-parameter and constrained engineering optimization." 
 Journal of Bionic Engineering 21, no. 1 (2024): 374-408.
 """
-
 function GEA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     VarSize = (1, dim)
     Nc = Int(floor(npop / 3))

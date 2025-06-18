@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Rao, R. 
 "Jaya: A simple and new optimization algorithm for solving constrained and unconstrained optimization problems." 
 International Journal of Industrial Engineering Computations 7, no. 1 (2016): 19-34.
 """
-
 function Jaya(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
 
     # Parameters

@@ -17,11 +17,11 @@ end
 
 """
 # References:
+
 -  Mirjalili, Seyedali, Seyed Mohammad Mirjalili, and Abdolreza Hatamlou. 
 "Multi-verse optimizer: a nature-inspired algorithm for global optimization." 
 Neural Computing and Applications 27 (2016): 495-513.
 """
-
 function MVO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)

@@ -13,11 +13,11 @@
 
 """
 # References:
+
 -  Ezugwu, Absalom E., Jeffrey O. Agushaka, Laith Abualigah, Seyedali Mirjalili, and Amir H. Gandomi. 
 "Prairie dog optimization algorithm." 
 Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 """
-
 function PDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     PDBest_P = zeros(dim)
     Best_PD = Inf

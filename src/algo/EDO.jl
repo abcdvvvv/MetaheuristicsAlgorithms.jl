@@ -5,7 +5,6 @@
 "Exponential distribution optimizer (EDO): a novel math-inspired algorithm for global optimization and engineering problems." 
 Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 """
-
 function EDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     BestSol = zeros(dim)
     BestFitness = Inf

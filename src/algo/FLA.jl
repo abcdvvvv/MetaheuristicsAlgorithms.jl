@@ -1,25 +1,24 @@
 """
 # References:
--   Hashim, Fatma A., Reham R. Mostafa, Abdelazim G. Hussien, Seyedali Mirjalili, and Karam M. Sallam. 
-"Fick’s Law Algorithm: A physical law-based algorithm for numerical optimization." 
+
+- Hashim, Fatma A., Reham R. Mostafa, Abdelazim G. Hussien, Seyedali Mirjalili, and Karam M. Sallam. 
+"Fick's Law Algorithm: A physical law-based algorithm for numerical optimization." 
 Knowledge-Based Systems 260 (2023): 110146.
 """
-
-
-function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun) 
+function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     C1 = 0.5
     C2 = 2
     c3 = 0.1
     c4 = 0.2
     c5 = 2
     D = 0.01
-    X = lb .+ rand(NoMolecules, dim) .* (ub .- lb) 
-    X1new = zeros(NoMolecules,dim)
-    X2new = zeros(NoMolecules,dim)
-    CNVG=zeros(max_iter,1)
+    X = lb .+ rand(NoMolecules, dim) .* (ub .- lb)
+    X1new = zeros(NoMolecules, dim)
+    X2new = zeros(NoMolecules, dim)
+    CNVG = zeros(max_iter, 1)
     FS = zeros(NoMolecules)
     TF = zeros(max_iter)
-    for i in 1:NoMolecules
+    for i = 1:NoMolecules
         FS[i] = objfun(X[i, :])
     end
 
@@ -35,11 +34,11 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
     FS1 = zeros(n1)
     FS2 = zeros(n2)
 
-    for i in 1:n1
+    for i = 1:n1
         FS1[i] = objfun(X1[i, :])
     end
 
-    for i in 1:n2
+    for i = 1:n2
         FS2[i] = objfun(X2[i, :])
     end
 
@@ -60,17 +59,17 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
     end
 
     for t = 1:max_iter
-        TF[t] = sinh(t / max_iter) ^ C1
+        TF[t] = sinh(t / max_iter)^C1
 
         if TF[t] < 0.9
-            DOF = exp(-(C2 * TF[t] - rand())) ^ C2
+            DOF = exp(-(C2 * TF[t] - rand()))^C2
             TDO = c5 * TF[t] - rand()
-            
+
             if TDO < rand()
                 M1N = c3 * n1
                 M2N = c4 * n1
                 NT12 = round(Int, (M2N - M1N) * rand() + M1N)
-                
+
                 for u = 1:NT12
                     flag_index = rand(1:2)
                     DFg = vec_flag[flag_index]
@@ -79,9 +78,9 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                     J = -D * (Xm2 - Xm1) / (norm(Xeo2 - X1[u, :]) + eps())
                     X1new[u, :] = Xeo2 .+ rand(dim) .* DFg .* DOF .* (J .* Xeo2 - X1[u, :])
                 end
-                
-                for u in NT12+1:n1
-                    for tt in 1:dim
+
+                for u = NT12+1:n1
+                    for tt = 1:dim
                         p = rand()
                         if p < 0.8
                             X1new[u, tt] = Xeo1[tt]
@@ -93,8 +92,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                         end
                     end
                 end
-                
-                for u in 1:n2
+
+                for u = 1:n2
                     r4 = rand()
                     X2new[u, :] = Xeo2 .+ DOF .* ((ub - lb) .* r4 .+ lb)
                 end
@@ -102,8 +101,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                 M1N = 0.1 * n2
                 M2N = 0.2 * n2
                 Ntransfer = round(Int, (M2N - M1N) * rand() + M1N)
-                
-                for u in 1:Ntransfer
+
+                for u = 1:Ntransfer
                     flag_index = rand(1:2)
                     DFg = vec_flag[flag_index]
                     R1 = rand(1:n1)
@@ -112,9 +111,9 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                     J = (-D .* (Xm1 - Xm2)) ./ norm((Xeo1 .- X2[u, :]) .+ eps())
                     X2new[u, :] = Xeo1 .+ DFg .* DOF .* rand(dim) .* (transpose(J) .* Xeo1 .- X2[u, :])
                 end
-                
-                for u in Ntransfer+1:n2
-                    for tt in 1:dim
+
+                for u = Ntransfer+1:n2
+                    for tt = 1:dim
                         p = rand()
                         if p < 0.8
                             X2new[u, tt] = Xeo2[tt]
@@ -126,15 +125,15 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                         end
                     end
                 end
-                
-                for u in 1:n1
+
+                for u = 1:n1
                     r4 = rand()
                     X1new[u, :] = Xeo1 .+ DOF .* ((ub .- lb) .* r4 + lb)
                 end
             end
         else
             if TF[t] <= 1
-                for u in 1:n1
+                for u = 1:n1
                     flag_index = rand(1:2)
                     DFg = vec_flag[flag_index]
                     Xm1 = mean(X1)
@@ -146,8 +145,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                     Qeo = DFg * DRF .* R1
                     X1new[u, :] = Xeo1 + Qeo .* X1[u, :] + Qeo .* (MS * Xeo1 - X1[u, :])
                 end
-                
-                for u in 1:n2
+
+                for u = 1:n2
                     flag_index = rand(1:2)
                     DFg = vec_flag[flag_index]
                     Xm2 = mean(X2)
@@ -160,8 +159,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                     X2new[u, :] = Xeo2 + Qeo .* X2[u, :] + Qeo .* (MS * Xeo1 - X2[u, :])
                 end
             else
-                R1=rand(1,dim)
-                for u in 1:n1
+                R1 = rand(1, dim)
+                for u = 1:n1
                     flag_index = rand(1:2)
                     DFg = vec_flag[flag_index]
                     Xm1 = mean(X1)
@@ -173,8 +172,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                     Qg = DFg * DRF .* R1
                     X1new[u, :] = Xss + Qg .* X1[u, :] + Qg .* (MS * Xss - X1[u, :])
                 end
-                
-                for u in 1:n2
+
+                for u = 1:n2
                     Xm1 = mean(X1)
                     Xm = mean(X)
                     J = -D .* (Xm1 - Xm) / (norm(Xss - X2[u, :]) + eps())
@@ -187,34 +186,34 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
                 end
             end
         end
-        for j in 1:n1
+        for j = 1:n1
             FU = X1new[j, :] .> ub
             FL = X1new[j, :] .< lb
-            X1new[j, :] = max.(min.( X2new[j, :], ub), lb) 
+            X1new[j, :] = max.(min.(X2new[j, :], ub), lb)
             v = objfun(X1new[j, :])
             if v < FS1[j]
                 FS1[j] = v
                 X1[j, :] = X1new[j, :]
             end
         end
-        
-        for j in 1:n2
+
+        for j = 1:n2
             FU = X2new[j, :] .> ub
             FL = X2new[j, :] .< lb
-            X2new[j, :] = max.(min.( X2new[j, :], ub), lb) 
+            X2new[j, :] = max.(min.(X2new[j, :], ub), lb)
             v = objfun(X2new[j, :])
             if v < FS2[j]
                 FS2[j] = v
                 X2[j, :] = X2new[j, :]
             end
         end
-        
+
         FSeo1, IndexFSeo1 = findmin(FS1)
         FSeo2, IndexFSeo2 = findmin(FS2)
-        
+
         Xeo1 = X1[IndexFSeo1, :]
         Xeo2 = X2[IndexFSeo2, :]
-        
+
         if FSeo1 < FSeo2
             FSss = FSeo1
             YSol = Xeo1
@@ -222,9 +221,9 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
             FSss = FSeo2
             YSol = Xeo2
         end
-        
+
         CNVG[t] = FSss
-        
+
         if FSss < BestF
             BestF = FSss
             Xss = YSol

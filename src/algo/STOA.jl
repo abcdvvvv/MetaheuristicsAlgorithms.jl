@@ -1,6 +1,7 @@
 """
 # References:
--  Dhiman, Gaurav, and Amandeep Kaur. 
+
+- Dhiman, Gaurav, and Amandeep Kaur. 
 "STOA: a bio-inspired based optimization algorithm for industrial engineering problems." 
 Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
 """

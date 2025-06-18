@@ -1,5 +1,6 @@
 """
-Lian, Junbo, and Guohua Hui. 
+# References:
+- Lian, Junbo, and Guohua Hui. 
 "Human evolutionary optimization algorithm." 
 Expert Systems with Applications 241 (2024): 122638.
 

@@ -1,10 +1,10 @@
 """
 # References:
--  Minh, Hoang-Le, Thanh Sang-To, Guy Theraulaz, Magd Abdel Wahab, and Thanh Cuong-Le. 
+
+- Minh, Hoang-Le, Thanh Sang-To, Guy Theraulaz, Magd Abdel Wahab, and Thanh Cuong-Le. 
 "Termite life cycle optimizer." 
 Expert Systems with Applications 213 (2023): 119211.
 """
-
 function TLCO(npop::Integer, cycle::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)

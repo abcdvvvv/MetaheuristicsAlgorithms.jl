@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Oladejo, Sunday O., Stephen O. Ekwe, and Seyedali Mirjalili. 
 "The Hiking Optimization Algorithm: A novel human-based metaheuristic approach." 
 Knowledge-Based Systems 296 (2024): 111880.
 """
-
 function HikingOA(hiker::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Problem Parameters
     prob = objfun

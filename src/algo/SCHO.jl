@@ -1,12 +1,10 @@
 """
-
-
 # References:
+
 -  Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abualigah, and Magd Abdel Wahab. 
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
 """
-
 function SCHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Destination_position = zeros(1, dim)
     Destination_fitness = Inf

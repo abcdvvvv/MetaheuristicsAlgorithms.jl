@@ -1,10 +1,11 @@
 """
 # References:
+
 -  Wang, Jun, Wen-chuan Wang, Xiao-xue Hu, Lin Qiu, and Hong-fei Zang. 
 "Black-winged kite algorithm: a nature-inspired meta-heuristic for solving benchmark functions and engineering problems." 
 Artificial Intelligence Review 57, no. 4 (2024): 98.
-"""
 
+"""
 function BKA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Initialize the locations of Blue Sheep
     p = 0.9

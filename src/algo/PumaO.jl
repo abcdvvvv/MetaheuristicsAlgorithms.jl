@@ -95,11 +95,11 @@ end
 
 """
 # References:
+
 - Abdollahzadeh, Benyamin, Nima Khodadadi, Saeid Barshandeh, Pavel Trojovský, Farhad Soleimanian Gharehchopogh, El-Sayed M. El-kenawy, Laith Abualigah, and Seyedali Mirjalili. 
 "Puma optimizer (PO): A novel metaheuristic optimization algorithm and its application in machine learning." 
 Cluster Computing (2024): 1-49.
 """
-
 function PumaO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     UnSelected = ones(Float64, 2)
     F3_Explore = 0.0
