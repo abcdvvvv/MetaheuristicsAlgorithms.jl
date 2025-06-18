@@ -1,5 +1,5 @@
 # Algorithms
-<!--
+
 ```@docs 
 MetaheuristicsAlgorithms.AEFA
 ```
@@ -466,4 +466,3 @@ MetaheuristicsAlgorithms.YDSE
 ```@docs
 MetaheuristicsAlgorithms.ZOA
 ```
--->
