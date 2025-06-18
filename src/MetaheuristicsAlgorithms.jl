@@ -1,19 +1,19 @@
 module MetaheuristicsAlgorithms
 
-using Random, 
-      Dates, 
-      SpecialFunctions,
-      Distributions,
-      Statistics,
-      LinearAlgebra,
-      Printf
+using Random,
+    Dates,
+    SpecialFunctions,
+    Distributions,
+    Statistics,
+    LinearAlgebra,
+    Printf
 
 # abstract type OptimizationResult end 
 
 struct OptimizationResult
-	bestX::Vector
-	bestF::Float64
-      his_best_fit::Vector{Float64}
+    bestX::Vector
+    bestF::Float64
+    his_best_fit::Vector{Float64}
 end
 export OptimizationResult
 
@@ -58,6 +58,7 @@ include("algo/FOX.jl")
 include("algo/GazelleOA.jl")
 include("algo/GBO.jl")
 include("algo/GEA.jl")
+include("algo/GGO.jl")
 include("algo/GJO.jl")
 include("algo/GKSO.jl")
 include("algo/GNDO.jl")
@@ -88,6 +89,7 @@ include("algo/MRFO.jl")
 include("algo/MVO.jl")
 include("algo/OOA.jl")
 include("algo/ParrotO.jl")
+include("algo/RBMO.jl")
 include("algo/PDO.jl")
 include("algo/PKO.jl")
 include("algo/PLO.jl")
@@ -97,6 +99,8 @@ include("algo/PRO.jl")
 include("algo/PumaO.jl")
 include("algo/QIO.jl")
 include("algo/ROA.jl")
+include("algo/RFO.jl")
+include("algo/RIME.jl")
 include("algo/RSA.jl")
 include("algo/RSO.jl")
 include("algo/RUN.jl")
@@ -105,10 +109,12 @@ include("algo/SBOA.jl")
 include("algo/SCA.jl")
 include("algo/SCHO.jl")
 include("algo/SeaHO.jl")
+include("algo/SFOA.jl")
 include("algo/SHO.jl")
 include("algo/SMA.jl")
 include("algo/SnowOA.jl")
 include("algo/SO.jl")
+include("algo/SOA.jl")
 include("algo/SparrowSA.jl")
 include("algo/SSA.jl")
 include("algo/STOA.jl")
@@ -123,6 +129,7 @@ include("algo/WHO.jl")
 include("algo/WO.jl")
 include("algo/WOA.jl")
 include("algo/WSO.jl")
+include("algo/WUTP.jl")
 include("algo/YDSE.jl")
 include("algo/ZOA.jl")
 
@@ -157,7 +164,6 @@ include("utils/initialization.jl")
 # using .YDSE
 # using .ZOA
 
-
 # This list of exports include 
 # repeated items and should be cleaned up.
 # some of the algorithms are missing and didn't get exported.
@@ -169,7 +175,9 @@ export DBO, DDAO, DMOA, DO, DSO
 export ECO, EDO, ElkHO, EO, ETO, ESC
 export FLA, FLoodA, FOX
 export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
+export RBMO, RFO, RIME
+export SFOA, SHO, SMA, SSA, STOA, SupplyDO
+export TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
 export update_state!
-
 
 end
