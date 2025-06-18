@@ -22,7 +22,7 @@
 - `AEOResult`: A struct containing:
   - `BestF`: The best fitness value found.
   - `BestX`: The position corresponding to the best fitness.
-  - `HisBestFit`: A vector of best fitness values at each iteration.
+  - `his_best_fit`: A vector of best fitness values at each iteration.
 
 # References: 
 
@@ -45,7 +45,7 @@ function AEO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
     BestF = PopFit[end]
     BestX = PopPos[end, :]
 
-    HisBestFit = zeros(max_iter)
+    his_best_fit = zeros(max_iter)
     Matr = [1, dim]
 
     for It = 1:max_iter
@@ -107,12 +107,12 @@ function AEO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
             BestX = PopPos[end, :]
         end
 
-        HisBestFit[It] = BestF
+        his_best_fit[It] = BestF
     end
 
-    #return BestF, BestX, HisBestFit
+    #return BestF, BestX, his_best_fit
     return OptimizationResult(
         BestX,
         BestF,
-        HisBestFit)
+        his_best_fit)
 end

@@ -13,7 +13,7 @@ using Random,
 struct OptimizationResult
 	bestX::Vector
 	bestF::Float64
-      HisBestFit::Vector{Float64}
+      his_best_fit::Vector{Float64}
 end
 export OptimizationResult
 

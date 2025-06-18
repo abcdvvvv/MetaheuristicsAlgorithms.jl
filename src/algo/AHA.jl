@@ -2,7 +2,7 @@
 # struct AHAResult <: OptimizationResult
 #     BestF::Any
 #     BestX::Any
-#     HisBestFit::Any
+#     his_best_fit::Any
 # end
 
 """
@@ -49,7 +49,7 @@ function AHA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
         end
     end
 
-    HisBestFit = zeros(max_iter)
+    his_best_fit = zeros(max_iter)
     VisitTable = zeros(npop, npop)
     VisitTable .= NaN
     for i = 1:npop
@@ -131,12 +131,12 @@ function AHA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
             end
         end
 
-        HisBestFit[It] = BestF
+        his_best_fit[It] = BestF
     end
 
-    # return  BestF, BestX,HisBestFit
+    # return  BestF, BestX,his_best_fit
     return OptimizationResult(
         BestX,
         BestF,
-        HisBestFit)
+        his_best_fit)
 end

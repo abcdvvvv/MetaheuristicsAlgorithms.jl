@@ -18,7 +18,7 @@ function MRFO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Unio
         end
     end
 
-    HisBestFit = zeros(max_iter)
+    his_best_fit = zeros(max_iter)
 
     for It = 1:max_iter
         Coef = It / max_iter
@@ -87,7 +87,7 @@ function MRFO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Unio
             end
         end
 
-        HisBestFit[It] = BestF
+        his_best_fit[It] = BestF
     end
-    return BestF, BestX, HisBestFit
+    return BestF, BestX, his_best_fit
 end
