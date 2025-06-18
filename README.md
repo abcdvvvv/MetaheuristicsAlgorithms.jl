@@ -9,7 +9,7 @@
 
 ## Introduction
 MetaheuristicsAlgorithms.jl is one of the world’s most comprehensive Julia packages, offering an extensive collection of advanced metaheuristic algorithms. This package includes a diverse array of algorithms, meticulously organized in alphabetical order for ease of navigation:
-### A
+<!-- ### A
 - **<u>Artificial Electric Field Algorithm</u>**: Yadav, Anupam. "AEFA: Artificial electric field algorithm for global optimization." Swarm and Evolutionary Computation 48 (2019): 93-108.
 - **<u>Artificial Ecosystem-based Optimization</u>**: Zhao, Weiguo, Liying Wang, and Zhenxing Zhang.  "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
 - **<u>Ali Baba and the Forty Thieves</u>**: Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
@@ -336,4 +336,4 @@ Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 ### Z
 - Trojovská, Eva, Mohammad Dehghani, and Pavel Trojovský. 
 "Zebra optimization algorithm: A new bio-inspired optimization algorithm for solving optimization algorithm." 
-Ieee Access 10 (2022): 49445-49473.
+Ieee Access 10 (2022): 49445-49473.-->

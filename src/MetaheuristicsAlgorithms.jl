@@ -133,27 +133,27 @@ include("utils/initialization.jl")
 # addpath(joinpath(@__DIR__, "algorithms"))
 
 ##
-# using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
-# using .BES, .BKA, .BO, .BOA
-# using .CDO, .Chameleon, .ChOA, .CO, .CoatiOA, .COOT, .CSBO
-# using .DBO, .DDAO, .DMOA, .DO, .DSO
-# using .ECO, .EDO, .ElkHO, .EO, .ETO
-# using .FATA, .FLA, .FLoodA, .FOX
-# using .GazelleOA, .GBO, .GEA, .GGO, .GJO, .GKSO, .GNDO, .GO, .GOA, .GTO, .GWO
-# using .HBA, .HBO, .HEOA, .HGS, .HGSO, .HikingOA, .HO, .HorseOA
-# using .INFO, .IVYA
-# using .Jaya, .JS
-# using .LCA, .LFD, .LPO
-# using .MossGO, .MountainGO, .MPA, .MRFO, .MVO
-# using .OOA
-# using .ParrotO, .PDO, .PKO, .PLO, .POA, .PoliticalO, .PRO, .PumaO
-# using .QIO
-# using .ROA, .RSA, .RSO, .RUN
-# using .SBO, .SBOA, .SCA, .SCHO, .SeaHO, .SHO, .SMA, .SnowOA, .SO, .SparrowSA, .SSA, .STOA, .SupplyDO
-# using .TLBO, .TLCO, .TSA, .TTAO
-# using .WHO, .WO, .WOA, .WSO
-# using .YDSE
-# using .ZOA
+using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
+using .BES, .BKA, .BO, .BOA
+using .CDO, .Chameleon, .ChOA, .CO, .CoatiOA, .COOT, .CSBO
+using .DBO, .DDAO, .DMOA, .DO, .DSO
+using .ECO, .EDO, .ElkHO, .EO, .ETO
+using .FATA, .FLA, .FLoodA, .FOX
+using .GazelleOA, .GBO, .GEA, .GGO, .GJO, .GKSO, .GNDO, .GO, .GOA, .GTO, .GWO
+using .HBA, .HBO, .HEOA, .HGS, .HGSO, .HikingOA, .HO, .HorseOA
+using .INFO, .IVYA
+using .Jaya, .JS
+using .LCA, .LFD, .LPO
+using .MossGO, .MountainGO, .MPA, .MRFO, .MVO
+using .OOA
+using .ParrotO, .PDO, .PKO, .PLO, .POA, .PoliticalO, .PRO, .PumaO
+using .QIO
+using .ROA, .RSA, .RSO, .RUN
+using .SBO, .SBOA, .SCA, .SCHO, .SeaHO, .SHO, .SMA, .SnowOA, .SO, .SparrowSA, .SSA, .STOA, .SupplyDO
+using .TLBO, .TLCO, .TSA, .TTAO
+using .WHO, .WO, .WOA, .WSO
+using .YDSE
+using .ZOA
 
 
 # This list of exports include 
