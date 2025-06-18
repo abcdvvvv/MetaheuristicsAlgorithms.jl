@@ -1,5 +1,4 @@
 
-
 function distance(a, b)
     return sqrt((a[1] - b[1])^2 + (a[2] - b[2])^2)
 end
@@ -17,7 +16,7 @@ Saremi, Shahrzad, Seyedali Mirjalili, and Andrew Lewis.
 Advances in engineering software 105 (2017): 30-47.
 """
 
-function GOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     flag = false
     if length(ub) == 1
         ub = ones(dim) * ub

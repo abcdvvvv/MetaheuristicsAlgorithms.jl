@@ -6,9 +6,12 @@ Ieee Access 10 (2022): 49445-49473.
 
 """
 
-function ZOA(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
-    lb = ones(dim) .* lb
-    ub = ones(dim) .* ub
+function ZOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+    if length(lb) == 1 && length(ub) == 1
+        lb = fill(lb, dim)
+        ub = fill(ub, dim)
+    end
+
     X = zeros(npop, dim)
     for i = 1:dim
         X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])

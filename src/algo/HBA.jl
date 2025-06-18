@@ -4,7 +4,7 @@
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
-function HBA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun) 
+function HBA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun) 
     beta = 6                      
     C = 2                         
     vec_flag = [1.0, -1.0]

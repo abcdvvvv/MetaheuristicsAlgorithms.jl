@@ -4,7 +4,7 @@
 - Arora, Sankalap, and Satvir Singh. "Butterfly optimization algorithm: a novel approach for global optimization." Soft computing 23 (2019): 715-734.
 
 """
-function BOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function BOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     p = 0.6
     power_exponent = 0.1
     sensory_modality = 0.01

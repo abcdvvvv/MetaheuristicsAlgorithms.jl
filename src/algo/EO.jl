@@ -5,7 +5,7 @@
 "Equilibrium optimizer: A novel optimization algorithm." 
 Knowledge-based systems 191 (2020): 105190.
 """
-function EO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
+function EO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim, objfun)
     Convergence_curve = zeros(max_iter)
 
     Ceq1 = zeros(1, dim)

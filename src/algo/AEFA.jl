@@ -6,7 +6,7 @@
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 
-function AEFA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     FCheck, Rpower, tag = 1, 1, 1
 
     Rnorm = 2
@@ -14,14 +14,14 @@ function AEFA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Unio
     V = zeros(npop, dim)
     BestValues = Float64[]
     MeanValues = Float64[]
-    
+
     Fbest = nothing
     Lbest = zeros(dim)
 
-    for iteration in 1:max_iter
+    for iteration = 1:max_iter
         # Evaluate fitness
         # fitness = [benchmark(X[i, :], objfun, D) for i in 1:N]
-        fitness = [objfun(X[i, :]) for i in 1:npop]
+        fitness = [objfun(X[i, :]) for i = 1:npop]
 
         if tag == 1
             best, best_X = findmin(fitness)
@@ -58,12 +58,12 @@ function AEFA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Unio
         s = sortperm(Q, rev=true)
 
         E = zeros(npop, dim)
-        for i in 1:npop
-            for ii in 1:cbest
+        for i = 1:npop
+            for ii = 1:cbest
                 j = s[ii]
                 if j != i
                     R = norm(X[i, :] - X[j, :], Rnorm)
-                    for k in 1:dim
+                    for k = 1:dim
                         E[i, k] += rand() * Q[j] * (X[j, k] - X[i, k]) / (R^Rpower + eps())
                     end
                 end

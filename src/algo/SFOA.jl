@@ -7,7 +7,7 @@ Neural Computing and Applications, 37(5), 3641-3683.
 
 # function SHO(N, max_iter, lb, ub, dim, fitness)
 
-function SFOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
+function SFOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim, objfun)
     # Starfish Optimization Algorithm (SFOA)
     GP = 0.5  # parameter
 

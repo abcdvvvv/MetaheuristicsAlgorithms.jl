@@ -5,7 +5,7 @@
 Neurocomputing 532 (2023): 183-214.
 """
 
-function RIME(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function RIME(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     println("RIME is now tackling your problem")
 
     Best_rime = zeros(dim)

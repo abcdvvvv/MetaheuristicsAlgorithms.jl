@@ -4,7 +4,7 @@
 "RUN beyond the metaphor: An efficient optimization algorithm based on Runge Kutta method." 
 Expert Systems with Applications 181 (2021): 115079.
 """
-function RUN(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function RUN(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Cost = zeros(npop)                
     X = initialization(npop, dim, ub, lb)  
     Xnew2 = zeros(dim)

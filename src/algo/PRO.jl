@@ -5,7 +5,7 @@
 Engineering applications of artificial intelligence 86 (2019): 165-181.
 """
 
-function PRO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function PRO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     VarSize = (1, dim)
 
     npoor = div(npop, 2)

@@ -5,7 +5,7 @@
 Information Sciences 540 (2020): 131-159.
 
 """
-function GBO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     nV = dim
     pr = 0.5
     lb = ones(dim) .* lb

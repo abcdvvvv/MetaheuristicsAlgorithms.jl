@@ -5,9 +5,12 @@
 Expert Systems with Applications 213 (2023): 119211.
 """
 
-function TLCO(npop::Int, cycle::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
-    lb = lb * ones(dim)
-    ub = ub * ones(dim)
+function TLCO(npop::Integer, cycle::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+    if length(lb) == 1 && length(ub) == 1
+        lb = fill(lb, dim)
+        ub = fill(ub, dim)
+    end
+
     trial_worker = zeros(npop)
     trial_soldier = zeros(npop)
 

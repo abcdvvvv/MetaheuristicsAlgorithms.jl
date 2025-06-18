@@ -15,7 +15,7 @@
 - Xiao, Y., Cui, H., Khurma, R. A., & Castillo, P. A. (2025). Artificial lemming algorithm: a novel bionic meta-heuristic technique for solving real-world engineering optimization problems. Artificial Intelligence Review, 58(3), 84.
 
 """
-function ALA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function ALA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     X = initialization(npop, dim, ub, lb)
     position = zeros(dim)
     score = Inf
@@ -85,5 +85,4 @@ function ALA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
         score,
         position,
         convergence_curve)
-
 end

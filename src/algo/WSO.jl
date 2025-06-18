@@ -5,7 +5,7 @@
 Knowledge-Based Systems 243 (2022): 108457.
 
 """
-function WSO(whiteSharks::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function WSO(whiteSharks::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     ccurve = zeros(max_iter)
 
     WSO_Positions = initialization(whiteSharks, dim, ub, lb)

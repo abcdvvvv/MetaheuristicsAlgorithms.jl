@@ -5,7 +5,7 @@
 Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 """
 
-function SBO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function SBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     alpha = 0.94
 
     pMutation = 0.05

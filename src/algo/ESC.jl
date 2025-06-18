@@ -5,7 +5,7 @@ Escape: an optimization method based on crowd evacuation behaviors.
 Artificial Intelligence Review, 58(1), 19.
 """
 
-function ESC(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function ESC(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)
         ub = fill(ub, dim)

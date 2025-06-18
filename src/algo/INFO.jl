@@ -5,7 +5,7 @@
 Expert Systems with Applications 195 (2022): 116516.
 """
 
-function INFO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function INFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Initialization
     Cost = zeros(npop)
     M = zeros(npop)

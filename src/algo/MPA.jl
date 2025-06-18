@@ -4,7 +4,7 @@
 "Marine Predators Algorithm: A nature-inspired metaheuristic." 
 Expert systems with applications 152 (2020): 113377.
 """
-function MPA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
+function MPA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
     Top_predator_pos = zeros(dim)
     Top_predator_fit = Inf
 

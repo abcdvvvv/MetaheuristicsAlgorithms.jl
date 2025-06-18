@@ -100,7 +100,7 @@ end
 Cluster Computing (2024): 1-49.
 """
 
-function PumaO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function PumaO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     UnSelected = ones(Float64, 2)
     F3_Explore = 0.0
     F3_Exploit = 0.0

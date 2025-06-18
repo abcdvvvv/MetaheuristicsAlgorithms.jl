@@ -5,7 +5,7 @@
 Neurocomputing 607 (2024): 128427.
 """
 
-function PLO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)
+function PLO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
     FEs = 0
     it = 1
     MaxFEs = npop * max_iter

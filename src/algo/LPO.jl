@@ -5,7 +5,7 @@
 Computer Methods in Applied Mechanics and Engineering 419 (2024): 116582.
 """
 
-function LPO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function LPO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Positions = initialization(npop, dim, lb, ub)
     Fitness = fill(Inf, npop)
     BestPosition = zeros(dim)

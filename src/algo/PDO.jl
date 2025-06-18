@@ -1,5 +1,4 @@
 
-
 # function levym(n, m, beta)
 #     num = gamma(1 + beta) * sin(pi * beta / 2)
 #     den = gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)
@@ -19,7 +18,7 @@
 Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 """
 
-function PDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function PDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     PDBest_P = zeros(dim)
     Best_PD = Inf
     X = initialization(npop, dim, ub, lb)

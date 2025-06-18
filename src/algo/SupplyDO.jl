@@ -5,7 +5,7 @@
 Ieee Access 7 (2019): 73182-73206.
 """
 
-function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function SupplyDO(marketsize::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     OneMarket = Dict(
         "CommPrice" => zeros(dim),
         "CommPriceFit" => Inf,
@@ -13,7 +13,7 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector
         "CommQuantityFit" => Inf,
     )
 
-    Market = fill(OneMarket, MarketSize)
+    market = fill(OneMarket, marketsize)
     best_f = Inf
     best_x = []
 
@@ -29,10 +29,10 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector
         end
     end
 
-    for i = 1:MarketSize
-        if Market[i]["CommPriceFit"] <= best_f
-            best_x = Market[i]["CommPrice"]
-            best_f = Market[i]["CommPriceFit"]
+    for i = 1:marketsize
+        if market[i]["CommPriceFit"] <= best_f
+            best_x = market[i]["CommPrice"]
+            best_f = market[i]["CommPriceFit"]
         end
     end
 
@@ -95,9 +95,9 @@ function SupplyDO(MarketSize::Int, max_iter::Int, lb::Union{Real, AbstractVector
 
 
 
-            if Market[i]["CommPriceFit"] <= best_f
-                best_x = Market[i]["CommPrice"]
-                best_f = Market[i]["CommPriceFit"]
+            if market[i]["CommPriceFit"] <= best_f
+                best_x = market[i]["CommPrice"]
+                best_f = market[i]["CommPriceFit"]
             end
         end
 

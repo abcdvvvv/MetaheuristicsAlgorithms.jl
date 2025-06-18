@@ -5,7 +5,7 @@ Henry gas solubility optimization: A novel physics-based algorithm.
 Future Generation Computer Systems, 101, pp.646-667.
 """
 
-function HGSO(var_n_gases::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function HGSO(var_n_gases::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     var_n_types = 5
 
     l1 = 5e-3

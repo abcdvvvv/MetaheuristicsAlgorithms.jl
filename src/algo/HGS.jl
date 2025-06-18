@@ -4,7 +4,7 @@
 "Hunger games search: Visions, conception, implementation, deep analysis, perspectives, and towards performance shifts." 
 Expert Systems with Applications 177 (2021): 114864.
 """
-function HGS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function HGS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     bestPositions = zeros(Float64, dim)
     tempPosition = zeros(Float64, npop, dim)
     Destination_fitness = Inf

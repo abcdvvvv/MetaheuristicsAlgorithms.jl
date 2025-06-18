@@ -7,12 +7,14 @@ DOI: 10.1080/21642583.2019.1708830
 (2020) 
 """
 
-function SparrowSA(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
+function SparrowSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)
 
-    lb = fill(c, dim)
-    ub = fill(d, dim)
+    if length(lb) == 1 && length(ub) == 1
+        lb = fill(lb, dim)
+        ub = fill(ub, dim)
+    end
 
     x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
     fit = [objfun(xi) for xi in x]

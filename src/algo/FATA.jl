@@ -4,7 +4,7 @@
 "FATA: an efficient optimization method based on geophysics." 
 Neurocomputing 607 (2024): 128289.
 """
-function FATA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function FATA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     worstInte = 0
     bestInte = Inf
     arf = 0.2

@@ -37,7 +37,7 @@ mutable struct AEFA_Struct
         gbest_val = Float64[]
         mean_val = Float64[]
 
-        x = get_population((dim, npop), lb, ub)
+        x = copy(initialization(npop, dim, lb, ub)')
         v = zeros(dim, npop)
         i = 1
         update = true

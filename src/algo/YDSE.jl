@@ -5,7 +5,7 @@
 Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 """
 
-function YDSE(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function YDSE(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     L = 1
     d = 5e-3
     I = 0.01

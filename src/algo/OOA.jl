@@ -5,7 +5,7 @@
 Frontiers in Mechanical Engineering 8 (2023): 1126450.
 """
 
-function OOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function OOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Lower limit for variables
     lb = ones(dim) .* lb
     # Upper limit for variables

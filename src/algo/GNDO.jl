@@ -5,85 +5,82 @@
 Energy Conversion and Management 224 (2020): 113301.
 """
 
-    
-function GNDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GNDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     x = lb .+ (ub .- lb) .* rand(npop, dim)
-    
+
     bestFitness = Inf
     bestSol = zeros(dim)
     cgcurve = zeros(max_iter)
 
-    fitness = zeros(npop)  
-    
-    for it in 1:max_iter
-        
-        for i in 1:npop
-            fitness[i] = objfun(x[i, :])  
+    fitness = zeros(npop)
+
+    for it = 1:max_iter
+        for i = 1:npop
+            fitness[i] = objfun(x[i, :])
         end
-        
-        for i in 1:npop
+
+        for i = 1:npop
             if fitness[i] < bestFitness
-                bestSol = x[i,:]
+                bestSol = x[i, :]
                 bestFitness = fitness[i]
             end
         end
         cgcurve[it] = bestFitness
-        
+
         mo = mean(x, dims=1)
-        
-        for i in 1:npop
+
+        for i = 1:npop
             a, b, c = randperm(npop)[1:3]
             while a == i || b == i || c == i || a == b || a == c || b == c
                 a, b, c = randperm(npop)[1:3]
             end
-            
+
             v1 = (fitness[a] < fitness[i]) ? (x[a] - x[i]) : (x[i] - x[a])
             v2 = (fitness[b] < fitness[c]) ? (x[b] - x[c]) : (x[c] - x[b])
-            
-            if rand() <= rand()
-                u = (1/3) * (x[i,:] + bestSol + mo')
-                
-                deta = sqrt.((1/3) .* ((x[i,:] - u).^2 + (bestSol - u).^2 + vec(mo' - u)).^2)
 
-                
+            if rand() <= rand()
+                u = (1 / 3) * (x[i, :] + bestSol + mo')
+
+                deta = sqrt.((1 / 3) .* ((x[i, :] - u) .^ 2 + (bestSol - u) .^ 2 + vec(mo' - u)) .^ 2)
+
                 vc1 = rand(dim)
                 vc2 = rand(dim)
-                
+
                 Z1 = sqrt.(-log.(vc2)) .* cos.(2pi .* vc1)
                 Z2 = sqrt.(-log.(vc2)) .* cos.(2pi .* vc1 .+ pi)
-                
+
                 a_rand = rand()
                 b_rand = rand()
-                
+
                 if a_rand <= b_rand
                     eta = u + deta .* Z1
                 else
                     eta = u + deta .* Z2
                 end
-                
+
                 newsol = eta
             else
                 beta = rand()
                 v = x[i] .+ beta .* abs.(randn(dim)) .* v1 .+ (1 - beta) .* abs.(randn(dim)) .* v2
                 newsol = v
             end
-            
+
             newsol = clamp.(newsol, lb, ub)
             newfitness = objfun(vec(newsol))
-            
+
             if newfitness < fitness[i]
-                x[i,:] = newsol
+                x[i, :] = newsol
                 fitness[i] = newfitness
-                
+
                 if fitness[i] < bestFitness
-                    bestSol = x[i,:]
+                    bestSol = x[i, :]
                     bestFitness = fitness[i]
                 end
             end
         end
-        
+
         cgcurve[it] = bestFitness
     end
-    
+
     return bestFitness, bestSol, cgcurve
 end
