@@ -94,8 +94,12 @@ function DSO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
     Best_Cost, idx = findmin(fit)
     Best_Position = Pop[idx]
 
-    return DSOResult(
+    return OptimizationResult(
         Best_Cost,
         Best_Position,
         Best_iteration)
+    # return DSOResult(
+    #     Best_Cost,
+    #     Best_Position,
+    #     Best_iteration)
 end
