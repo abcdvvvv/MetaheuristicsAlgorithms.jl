@@ -4,21 +4,21 @@
         lb = [-32.768 for i in 1:5]
         ub = [32.768 for i in 1:5]
         result = AFT(5, 0, lb, ub,Ackley)
-        @test isapprox(result.gbest, [0.0 for i in 1:5], atol=1e-5)
-        @test isapprox(result.fitness, 0.0, atol=1e-5)
+        @test isapprox(result.bestX, [0.0 for i in 1:5], atol=1e-5)
+        @test isapprox(result.bestF, 0.0, atol=1e-5)
     end 
     @testset "Ackley with AFT, p = 10" verbose = true begin 
         lb = [-32.768 for i in 1:10]
         ub = [32.768 for i in 1:10]
         result = AFT(5, 5000, lb, ub, Ackley)
-        @test isapprox(result.gbest, [0.0 for i in 1:10], atol=1e-5)
-        @test isapprox(result.fitness, 0.0, atol=1e-5)
+        @test isapprox(result.bestX, [0.0 for i in 1:10], atol=1e-5)
+        @test isapprox(result.bestF, 0.0, atol=1e-5)
     end
     @testset "Griewank with AFT, p = 2" verbose = true begin 
         lb = [-600 for i in 1:2]
         ub = [600 for i in 1:2]
         result = AFT(2, 5000, lb, ub, Griewank)
-        @test isapprox(result.gbest, [0.0 for i in 1:2], atol=1e-5)
-        @test isapprox(result.fitness, 0.0, atol=1e-5)
+        @test isapprox(result.bestX, [0.0 for i in 1:2], atol=1e-5)
+        @test isapprox(result.bestF, 0.0, atol=1e-5)
     end
 end 
