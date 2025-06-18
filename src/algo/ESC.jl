@@ -16,7 +16,8 @@ function ESC(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         ub = ub'
     end
 
-    population = rand(npop, dim) .* (ub .- lb) .+ lb
+    # population = rand(npop, dim) .* (ub .- lb) .+ lb
+    population = initialization(npop, dim, ub, lb)
     best_fitness = Inf
     best_solution = zeros(dim)
 
@@ -134,7 +135,11 @@ function ESC(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         fitness_history[t] = best_fitness
     end
 
-    return best_fitness, best_solution, vcat([fitness1], fitness_history)
+    # return best_fitness, best_solution, vcat([fitness1], fitness_history)
+    return OptimizationResult(
+        best_solution,
+        best_fitness,
+        fitness_history)
 end
 
 # function adaptive_levy_weight(beta_base, dim, t, max_iter)

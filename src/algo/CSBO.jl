@@ -115,7 +115,7 @@ function CSBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     end
     # return BestSolCost, BestSolPosition, BestCost
     return OptimizationResult(
-        BestSolCost,
+        BestSolPosition,
         BestSolCost,
         BestCost)
 end

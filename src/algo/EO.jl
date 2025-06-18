@@ -90,5 +90,9 @@ function EO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         Convergence_curve[Iter] = Ceq1_fit
     end
 
-    return Ceq1_fit, Ceq1, Convergence_curve
+    # return Ceq1_fit, Ceq1, Convergence_curve
+    return OptimizationResult(
+        Ceq1,
+        Ceq1_fit,
+        Convergence_curve)
 end

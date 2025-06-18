@@ -12,7 +12,8 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
     c4 = 0.2
     c5 = 2
     D = 0.01
-    X = lb .+ rand(NoMolecules, dim) .* (ub .- lb)
+    # X = lb .+ rand(NoMolecules, dim) .* (ub .- lb)
+    X = initialization(NoMolecules, dim, ub, lb)
     X1new = zeros(NoMolecules, dim)
     X2new = zeros(NoMolecules, dim)
     CNVG = zeros(max_iter, 1)
@@ -229,5 +230,9 @@ function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
             Xss = YSol
         end
     end
-    return BestF, Xss, CNVG
+    # return BestF, Xss, CNVG
+    return OptimizationResult(
+        Xss,
+        BestF,
+        CNVG)
 end

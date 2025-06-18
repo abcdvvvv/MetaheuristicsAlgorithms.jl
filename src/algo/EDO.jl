@@ -83,5 +83,9 @@ function EDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         iter += 1
     end
 
-    return BestFitness, BestSol, cgcurve
+    # return BestFitness, BestSol, cgcurve
+    return OptimizationResult(
+        BestFitness,
+        BestSol,
+        cgcurve)
 end

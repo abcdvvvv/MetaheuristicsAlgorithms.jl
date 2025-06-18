@@ -75,5 +75,9 @@ function FATA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         bestPos = gBest
     end
 
-    return gBestScore, bestPos, cg_curve
+    # return gBestScore, bestPos, cg_curve
+    return OptimizationResult(
+        bestPos,
+        gBestScore,
+        cg_curve)
 end

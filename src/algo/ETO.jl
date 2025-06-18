@@ -136,5 +136,9 @@ function ETO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         t += 1
     end
 
-    return Destination_fitness, Destination_position, Convergence_curve
+    # return Destination_fitness, Destination_position, Convergence_curve
+    return OptimizationResult(
+        Destination_position,
+        Destination_fitness,
+        Convergence_curve)
 end

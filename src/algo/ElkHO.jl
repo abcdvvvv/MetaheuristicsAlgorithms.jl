@@ -98,5 +98,9 @@ function ElkHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<
         l += 1
     end
 
-    return BestBullFitness, BestBull, Convergence_curve
+    # return BestBullFitness, BestBull, Convergence_curve
+    return OptimizationResult(
+        BestBull,
+        BestBullFitness,
+        Convergence_curve)
 end

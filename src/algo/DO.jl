@@ -15,7 +15,8 @@
     
 """
 function DO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    dandelions = rand(npop, dim) .* (ub - lb) .+ lb
+    # dandelions = rand(npop, dim) .* (ub - lb) .+ lb
+    dandelions = initialization(npop, dim, ub, lb)
     dandelionsFitness = zeros(npop)
     Convergence_curve = zeros(max_iter)
 
@@ -97,5 +98,9 @@ function DO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         t += 1
     end
 
-    return Best_fitness, Best_position, Convergence_curve
+    # return Best_fitness, Best_position, Convergence_curve
+    return OptimizationResult(
+        Best_position,
+        Best_fitness,
+        Convergence_curve)
 end

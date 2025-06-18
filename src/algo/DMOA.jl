@@ -28,7 +28,8 @@ function DMOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     sm = fill(Inf, nAlphaGroup)
 
     for i = 1:nAlphaGroup
-        pop[i].Position = rand(VarSize) .* (ub .- lb) .+ lb
+        # pop[i].Position = rand(VarSize) .* (ub .- lb) .+ lb
+        pop[i].Position = initialization(1, VarSize, ub, lb)
         pop[i].Cost = objfun(pop[i].Position)
         if pop[i].Cost <= BestSol.Cost
             BestSol = pop[i]
@@ -126,5 +127,9 @@ function DMOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         BestCost[it] = BestSol.Cost
     end
 
-    return BestSol.Cost, BestSol.Position, BestCost
+    # return BestSol.Cost, BestSol.Position, BestCost
+    return OptimizationResult(
+        BestSol.Position,
+        BestSol.Cost,
+        BestCost)
 end

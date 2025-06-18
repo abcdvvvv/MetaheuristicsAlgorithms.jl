@@ -19,7 +19,8 @@ function DDAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     BestSol = Dict("Phase" => [], "Cost" => Inf)
 
     for i = 1:npop
-        pop[i]["Phase"] = lb .+ rand(VarLength) .* (ub - lb)
+        # pop[i]["Phase"] = lb .+ rand(VarLength) .* (ub - lb)
+        pop[i]["Phase"] = initialization(1,dim, ub, lb)
 
         pop[i]["Cost"] = objfun(pop[i]["Phase"])
 
@@ -79,5 +80,9 @@ function DDAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     y = BestSol["Cost"]
 
-    return BestSol["Cost"], BestSol["Phase"], BestCost
+    # return BestSol["Cost"], BestSol["Phase"], BestCost
+    return OptimizationResult(
+        BestSol["Phase"],
+        BestSol["Cost"],
+        BestCost)
 end

@@ -77,5 +77,9 @@ function FOX(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         l += 1
     end
 
-    return Best_score, Best_pos, convergence_curve
+    # return Best_score, Best_pos, convergence_curve
+    return OptimizationResult(
+        Best_pos,
+        Best_score,
+        convergence_curve)
 end

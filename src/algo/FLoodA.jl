@@ -100,5 +100,9 @@ function FLoodA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{
     Destination_fitness = BestSolCost
     Destination_position = BestSolPosition
 
-    return Destination_fitness, Destination_position, Convergence_curve
+    # return Destination_fitness, Destination_position, Convergence_curve
+    return OptimizationResult(
+        Destination_position,
+        Destination_fitness,
+        Convergence_curve)
 end

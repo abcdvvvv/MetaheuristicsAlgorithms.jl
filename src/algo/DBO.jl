@@ -12,7 +12,8 @@ function DBO(npop::Integer, max_iter::Integer, c::Union{Real,AbstractVector{<:Re
     lb = fill(c, dim)
     ub = fill(d, dim)
 
-    x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    # x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    x = initialization(npop,dim, ub, lb)
     fit = [objfun(x[i]) for i = 1:npop]
     pFit = copy(fit)
     pX = copy(x)
@@ -81,5 +82,9 @@ function DBO(npop::Integer, max_iter::Integer, c::Union{Real,AbstractVector{<:Re
         Convergence_curve[t] = fMin
     end
 
-    return fMin, bestX, Convergence_curve
+    # return fMin, bestX, Convergence_curve
+    return OptimizationResult(
+        bestX,
+        fMin,
+        Convergence_curve)
 end
