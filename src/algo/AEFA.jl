@@ -6,7 +6,7 @@
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 
-function AEFA_1(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function AEFA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     FCheck, Rpower, tag = 1, 1, 1
 
     Rnorm = 2

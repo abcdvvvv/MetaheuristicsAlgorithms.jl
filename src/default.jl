@@ -1,5 +1,5 @@
 include("algo/AEFA.jl")
-include("algo/AEFA_1.jl")
+include("algo/AEFA_struct.jl")
 include("algo/AEO.jl")
 include("algo/AFT.jl")
 include("algo/AHA.jl")
@@ -117,5 +117,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = AEFA_1(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+BestPosition, BestValue, ConvergenceCurve = AEFA(npop, max_iter, lb, ub, dim, Chung_Reynolds)
 println("BestValue: ", BestPosition)
