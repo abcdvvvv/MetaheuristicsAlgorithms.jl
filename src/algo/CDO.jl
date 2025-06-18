@@ -74,5 +74,9 @@ function CDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[l] = Alpha_score
     end
 
-    return Alpha_score, Alpha_pos, Convergence_curve
+    # return Alpha_score, Alpha_pos, Convergence_curve
+    return OptimizationResult(
+        Alpha_pos,
+        Alpha_score,
+        Convergence_curve)
 end

@@ -94,5 +94,9 @@ function CapSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<
         cg_curve[t] = fitCapSA
     end
 
-    return fitCapSA, gFoodPos, cg_curve
+    # return fitCapSA, gFoodPos, cg_curve
+    return OptimizationResult(
+        gFoodPos,
+        fitCapSA,
+        cg_curve)
 end

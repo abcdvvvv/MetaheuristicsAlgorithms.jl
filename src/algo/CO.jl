@@ -24,7 +24,8 @@ function CO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
     end
 
     for i = 1:npop
-        pop[i].Position = lb .+ rand(dim) .* (ub .- lb)
+        # pop[i].Position = lb .+ rand(dim) .* (ub .- lb)
+        pop[i].Position = initialization(1, dim, ub, lb)
         pop[i].Cost = objfun(pop[i].Position)
         if pop[i].Cost < BestSol.Cost
             BestSol = pop[i]
@@ -143,5 +144,9 @@ function CO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         push!(Globest, X_best.Cost)
     end
 
-    return X_best.Cost, X_best.Position, BestCost
+    # return X_best.Cost, X_best.Position, BestCost
+    return OptimizationResult(
+        X_best.Position,
+        X_best.Cost,
+        BestCost)
 end

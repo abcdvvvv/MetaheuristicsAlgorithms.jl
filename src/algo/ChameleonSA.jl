@@ -87,5 +87,9 @@ function ChameleonSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVe
         cg_curve[t] = fmin0
     end
 
-    return fmin0, gPosition, cg_curve
+    # return fmin0, gPosition, cg_curve
+    return OptimizationResult(
+        gPosition,
+        fmin0,
+        cg_curve)
 end

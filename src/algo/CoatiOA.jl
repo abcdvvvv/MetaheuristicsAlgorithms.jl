@@ -85,5 +85,9 @@ function CoatiOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector
         average = mean(fit)
     end
 
-    return fbest, Xbest, best_so_far
+    # return fbest, Xbest, best_so_far
+    return OptimizationResult(
+        Xbest,
+        fbest,
+        best_so_far)
 end

@@ -104,5 +104,9 @@ function COOT(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         l += 1
     end
 
-    return gBestScore, gBest, Convergence_curve
+    # return gBestScore, gBest, Convergence_curve
+    return OptimizationResult(
+        gBest,
+        gBestScore,
+        Convergence_curve)
 end

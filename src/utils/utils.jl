@@ -27,3 +27,14 @@ function levy(n::Integer, m::Integer, beta::AbstractFloat)
 
     return z
 end
+
+function levy(beta_base::AbstractFloat, dim::Integer, t::Integer, max_iter::Integer)
+    beta = beta_base + 0.5 * sin(pi / 2 * t / max_iter)
+    beta = clamp(beta, 0.1, 2.0)
+    sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
+             (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
+    u = randn(dim) * sigma^2
+    v = randn(dim)
+    w = abs.(u ./ abs.(v) .^ (1 / beta))
+    return w ./ (maximum(w) + eps())
+end
