@@ -4,7 +4,7 @@
 "A novel metaheuristic optimizer inspired by behavior of jellyfish in ocean." 
 Applied Mathematics and Computation 389 (2021): 125535.
 """
-function JS(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim, objfun)
+function JS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim, objfun)
     dim = dim
     VarSize = (dim)
     if length(lb) == 1

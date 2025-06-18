@@ -5,7 +5,7 @@
 Neural Computing and Applications 35, no. 5 (2023): 4099-4131.
 """
 
-function GazelleOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GazelleOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Top_gazelle_pos = zeros(dim)
     Top_gazelle_fit = Inf
 

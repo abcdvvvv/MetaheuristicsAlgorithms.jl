@@ -4,7 +4,7 @@
 "Salp Swarm Algorithm: A bio-inspired optimizer for engineering design problems." 
 Advances in engineering software 114 (2017): 163-191.
 """
-function SSA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun::Function)#(npop, max_iter, lb, ub, dim, objfun)#(npop, max_iter, objfun, dim, lb, ub)
+function SSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)#(npop, max_iter, lb, ub, dim, objfun)#(npop, max_iter, objfun, dim, lb, ub)
     if size(ub, 1) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb

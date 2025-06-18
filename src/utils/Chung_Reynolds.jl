@@ -1,3 +1,1 @@
-function Chung_Reynolds(x::AbstractVector)
-    return sum(x .^ 2)
-end
+Chung_Reynolds(x::AbstractVector) = sum(xi^2 for xi in x)

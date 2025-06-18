@@ -17,7 +17,7 @@ Expert Systems with Applications 239 (2024): 122413.
 #     return step
 # end
 
-function WO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function WO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     best_pos = zeros(Float64, dim)
     Second_Pos = zeros(Float64, dim)
     best_score = Inf

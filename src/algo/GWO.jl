@@ -4,7 +4,7 @@
 "Grey wolf optimizer." 
 Advances in engineering software 69 (2014): 46-61.
 """
-function GWO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GWO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Alpha_pos = zeros(1, dim)
     Alpha_score = Inf
 

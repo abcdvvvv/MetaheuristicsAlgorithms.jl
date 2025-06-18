@@ -6,7 +6,7 @@ continuous optimization and engineering applications."
 Expert Systems with Applications 238 (2024): 121744.
 """
 
-function TTAO(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function TTAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     N = floor(Int, npop / 3)
     X1 = rand(N, dim) .* (ub - lb) .+ lb
     convergence_curve = zeros(max_iter)

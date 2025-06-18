@@ -5,43 +5,43 @@
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """
 
-function SBOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun) 
+function SBOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 
     X = initialization(npop, dim, lb, ub)
-    fit = zeros(npop) 
+    fit = zeros(npop)
     Bast_P = zeros(dim)
-    for i in 1:npop
+    for i = 1:npop
         fit[i] = objfun(vec(X[i, :]))
     end
     SBOA_curve = zeros(max_iter)
     fbest = Inf
 
-    for t in 1:max_iter
+    for t = 1:max_iter
         CF = (1 - t / max_iter)^(2 * t / max_iter)
-        
+
         best, location = findmin(fit)
         if t == 1
-            Bast_P = X[location, :]     
-            fbest = best                
+            Bast_P = X[location, :]
+            fbest = best
         elseif best < fbest
             fbest = best
             Bast_P = X[location, :]
         end
 
-        for i in 1:npop
-            if t < max_iter / 3  
+        for i = 1:npop
+            if t < max_iter / 3
                 X_random_1 = X[rand(1:npop), :]
                 X_random_2 = X[rand(1:npop), :]
                 R1 = rand(dim)
                 X1 = X[i, :] .+ (X_random_1 .- X_random_2) .* R1
                 X1 = clamp.(X1, lb, ub)
-            elseif t > max_iter / 3 && t < 2 * max_iter / 3  
+            elseif t > max_iter / 3 && t < 2 * max_iter / 3
                 RB = randn(dim)
                 X1 = Bast_P .+ exp((t / max_iter)^4) .* (RB .- 0.5) .* (Bast_P .- X[i, :])
                 X1 = clamp.(X1, lb, ub)
-            else  
+            else
                 RL = 0.5 * levy(dim)
                 X1 = Bast_P .+ CF .* X[i, :] .* RL
                 X1 = clamp.(X1, lb, ub)
@@ -56,7 +56,7 @@ function SBOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Unio
 
         r = rand()
         Xrandom = X[rand(1:npop), :]
-        for i in 1:npop
+        for i = 1:npop
             if r < 0.5
                 RB = rand(dim)
                 X2 = Bast_P .+ (1 - t / max_iter)^2 .* (2 * RB .- 1) .* X[i, :]

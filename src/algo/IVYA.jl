@@ -5,7 +5,7 @@
 Knowledge-Based Systems 295 (2024): 111850.
 """
 
-function IVYA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function IVYA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Position = rand(npop, dim) .* (ub .- lb) .+ lb
     GV = Position ./ (ub .- lb)
     Cost = [objfun(Position[i, :]) for i = 1:npop]

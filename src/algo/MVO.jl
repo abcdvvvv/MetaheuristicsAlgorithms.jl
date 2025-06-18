@@ -22,7 +22,7 @@ end
 Neural Computing and Applications 27 (2016): 495-513.
 """
 
-function MVO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function MVO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)

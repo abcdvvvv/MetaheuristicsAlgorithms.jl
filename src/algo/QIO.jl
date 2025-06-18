@@ -57,7 +57,7 @@ end
 Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
 """
 
-function QIO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function QIO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     IndividualsPos = zeros(npop, dim)
     IndividualsFit = zeros(npop)
 

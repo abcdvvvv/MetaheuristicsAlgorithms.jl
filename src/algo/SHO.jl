@@ -21,7 +21,7 @@ function noh(best_hyena_fitness)
     return count
 end
 
-function SHO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function SHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     hyena_pos = initialization(npop, dim, ub, lb)
     convergence_curve = zeros(max_iter)
     Iteration = 1

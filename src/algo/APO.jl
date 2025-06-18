@@ -4,7 +4,7 @@
 - Wang, Xiaopeng, Václav Snášel, Seyedali Mirjalili, Jeng-Shyang Pan, Lingping Kong, and Hisham A. Shehadeh. "Artificial Protozoa Optimizer (APO): A novel bio-inspired metaheuristic algorithm for engineering optimization." Knowledge-Based Systems 295 (2024): 111737.
 
 """
-function APO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)#(objfun, dim, npop, max_iter, lb, ub, Fid::Int, runid::Int)
+function APO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)#(objfun, dim, npop, max_iter, lb, ub, Fid::Int, runid::Int)
     # Random seeds
     stm = sum(100 .* [year(now()), month(now()), day(now()), hour(now()), minute(now()), second(now())])
     Random.seed!(stm)

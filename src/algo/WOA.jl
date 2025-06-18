@@ -4,7 +4,7 @@
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
-function WOA(npop::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun)
+function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     leader_pos = zeros(1, dim)
     leader_score = Inf
 

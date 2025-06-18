@@ -5,7 +5,7 @@
 International Journal of Industrial Engineering Computations 7, no. 1 (2016): 19-34.
 """
 
-function Jaya(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function Jaya(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
 
     # Parameters
     # npop = 1000                # Population size

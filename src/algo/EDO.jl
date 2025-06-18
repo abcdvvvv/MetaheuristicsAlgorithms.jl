@@ -6,7 +6,7 @@
 Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 """
 
-function EDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function EDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     BestSol = zeros(dim)
     BestFitness = Inf
     Xwinners = initialization(npop, dim, ub, lb)

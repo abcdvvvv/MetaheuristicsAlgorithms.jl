@@ -5,7 +5,7 @@
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """
 
-function MossGO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function MossGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     FEs = 0
     MaxFEs = npop * max_iter
     best_cost = Inf

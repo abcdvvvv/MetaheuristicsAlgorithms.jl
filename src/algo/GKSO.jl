@@ -4,7 +4,7 @@
 "Genghis Khan shark optimizer: a novel nature-inspired algorithm for engineering optimization." 
 Advanced Engineering Informatics 58 (2023): 102210.
 """
-function GKSO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function GKSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     lb = ones(dim) .* lb
     ub = ones(dim) .* ub
     VarSize = (dim)

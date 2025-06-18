@@ -5,7 +5,7 @@ A novel meta-heuristic optimization algorithm inspired by water uptake and trans
 Neural Computing and Applications, 1-82.
 """
 
-function WUTP(no_particles::Int, max_iter::Int, lb::Union{Real, AbstractVector}, ub::Union{Real, AbstractVector}, dim::Int, objfun::Function)
+function WUTP(no_particles::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Preallocate
     ccurve = zeros(max_iter)
     # Initialize population

@@ -1,5 +1,4 @@
 
-
 function Coefficient_Vector(dim, Iter, max_iter)
     a2 = -1 + Iter * (-1 / max_iter)
     u = randn(dim)
@@ -32,7 +31,7 @@ end
 Advances in Engineering Software 174 (2022): 103282.
 """
 
-function MountainGO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function MountainGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     lb = ones(dim) .* lb    # Lower Bound
     ub = ones(dim) .* ub    # Upper Bound
 

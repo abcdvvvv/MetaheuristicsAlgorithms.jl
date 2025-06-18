@@ -5,7 +5,7 @@
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """
 
-function FOX(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
+function FOX(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Best_pos = zeros(dim)
     Best_score = Inf
     MinT = Inf
