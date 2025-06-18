@@ -97,7 +97,11 @@ function HEOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         Best_score = curve[end]
     end
 
-    return Best_score, Best_pos, curve
+    # return Best_score, Best_pos, curve
+    return OptimizationResult(
+        Best_pos,
+        Best_score,
+        curve)
 end
 
 function initializationLogistic(pop::Int, dim::Int, ub, lb)

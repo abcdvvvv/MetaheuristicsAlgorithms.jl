@@ -67,5 +67,9 @@ function GJO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[l] = Male_Jackal_score
     end
 
-    return Male_Jackal_score, Male_Jackal_pos, Convergence_curve
+    # return Male_Jackal_score, Male_Jackal_pos, Convergence_curve
+    return OptimizationResult(
+        Male_Jackal_pos,
+        Male_Jackal_score,
+        Convergence_curve)
 end

@@ -91,5 +91,9 @@ function GTO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         convergence_curve[It] = Silverback_Score
     end
 
-    return Silverback_Score, Silverback, convergence_curve
+    # return Silverback_Score, Silverback, convergence_curve
+    return OptimizationResult(
+        Silverback,
+        Silverback_Score,
+        convergence_curve)
 end

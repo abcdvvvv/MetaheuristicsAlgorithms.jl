@@ -12,8 +12,9 @@ function GKSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)
+    PopPos[i, :] = initialization(npop, dim, ub, lb)
     for i = 1:npop
-        PopPos[i, :] = rand(dim) .* (ub - lb) + lb
+        # PopPos[i, :] = rand(dim) .* (ub - lb) + lb
         PopFit[i] = objfun(vec(PopPos[i, :]'))
     end
 
@@ -125,5 +126,9 @@ function GKSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         curve[it] = Best_score
     end
 
-    return Best_score, Best_pos, curve
+    # return Best_score, Best_pos, curve
+    return OptimizationResult(
+        Best_pos,
+        Best_score,
+        curve)
 end

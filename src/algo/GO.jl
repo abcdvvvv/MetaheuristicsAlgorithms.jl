@@ -12,7 +12,8 @@ function GO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
     P3 = 0.3
     MaxFEs = max_iter * npop
 
-    x = lb .+ rand(npop, dim) .* (ub - lb)
+    # x = lb .+ rand(npop, dim) .* (ub - lb)
+    x = initialization(npop, dim, ub, lb)
     gbestX = zeros(dim)
     gbestfitness = Inf
     fitness = zeros(npop)
@@ -132,7 +133,11 @@ function GO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         gbesthistory = gbesthistory[1:MaxFEs]
     end
 
-    return gbestfitness, gbestX, gbesthistory
+    # return gbestfitness, gbestX, gbesthistory
+    return OptimizationResult(
+        gbestX,
+        gbestfitness,
+        gbesthistory)
 end
 
 function selectID(npop, i, k)

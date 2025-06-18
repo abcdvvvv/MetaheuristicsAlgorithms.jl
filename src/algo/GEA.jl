@@ -9,7 +9,8 @@ function GEA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     Nc = Int(floor(npop / 3))
     FEs = npop * max_iter
 
-    Positions = rand(npop, dim) * (ub - lb) .+ lb
+    # Positions = rand(npop, dim) * (ub - lb) .+ lb
+    Positions = initialization(npop, dim, ub, lb)
     Costs = zeros(Float64, npop)
     for i = 1:npop
         Costs[i] = objfun(Positions[i, :])
@@ -85,7 +86,11 @@ function GEA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Positions = Positions[sorted_indices, :]
         Costs = Costs[sorted_indices]
     end
-    return BestCost, BestPosition, BestCosts
+    # return BestCost, BestPosition, BestCosts
+    return OptimizationResult(
+        BestPosition,
+        BestCost,
+        BestCosts)
 end
 
 function RouletteWheelSelectionFun(p)

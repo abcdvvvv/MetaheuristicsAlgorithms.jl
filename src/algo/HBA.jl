@@ -10,7 +10,8 @@ function HBA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     C = 2                         
     vec_flag = [1.0, -1.0]
 
-    X = lb .+ rand(npop, dim) .* (ub .- lb)
+    # X = lb .+ rand(npop, dim) .* (ub .- lb)
+    X = initialization(npop, dim, ub, lb)
     fitness = ones(npop) * Inf
     
     for i in 1:npop
@@ -73,7 +74,11 @@ function HBA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     end
     
 
-    return GYbest, Xprey, CNVG
+    # return GYbest, Xprey, CNVG
+    return OptimizationResult(
+        Xprey,
+        GYbest,
+        CNVG)
 end
 
 function fun_calcobjfunc(func, X)

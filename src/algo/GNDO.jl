@@ -5,7 +5,8 @@
 Energy Conversion and Management 224 (2020): 113301.
 """
 function GNDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    x = lb .+ (ub .- lb) .* rand(npop, dim)
+    # x = lb .+ (ub .- lb) .* rand(npop, dim)
+    x = initialization(npop, dim, ub, lb)
 
     bestFitness = Inf
     bestSol = zeros(dim)
@@ -81,5 +82,9 @@ function GNDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         cgcurve[it] = bestFitness
     end
 
-    return bestFitness, bestSol, cgcurve
+    # return bestFitness, bestSol, cgcurve
+    return OptimizationResult(
+        bestSol,
+        bestFitness,
+        cgcurve)
 end

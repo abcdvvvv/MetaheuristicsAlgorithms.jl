@@ -114,7 +114,11 @@ function GazelleOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVect
         Convergence_curve[Iter] = Top_gazelle_fit
     end
 
-    return Top_gazelle_fit, Top_gazelle_pos, Convergence_curve
+    # return Top_gazelle_fit, Top_gazelle_pos, Convergence_curve
+    return OptimizationResult(
+        Top_gazelle_pos,
+        Top_gazelle_fit,
+        Convergence_curve)
 end
 
 # function levyFun(n, m, beta)

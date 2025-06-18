@@ -112,5 +112,9 @@ function GOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         TargetPosition = TargetPosition[1:dim-1]
     end
 
-    return TargetFitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, position_history
+    # return TargetFitness, TargetPosition, Convergence_curve, Trajectories, fitness_history, position_history
+    return OptimizationResult(
+        TargetPosition,
+        TargetFitness,
+        Convergence_curve)
 end

@@ -101,7 +101,11 @@ function GBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[it] = Best_Cost
     end
 
-    return Best_Cost, Best_X, Convergence_curve
+    # return Best_Cost, Best_X, Convergence_curve
+    return OptimizationResult(
+        Best_X,
+        Best_Cost,
+        Convergence_curve)
 end
 
 function GradientSearchRule(ro1, Best_X, Worst_X, X, Xr1, DM, eps, Xm, Flag)

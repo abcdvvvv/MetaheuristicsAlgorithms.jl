@@ -134,5 +134,9 @@ function HBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[it] = Leader_score
     end
 
-    return Leader_score, Leader_pos, Convergence_curve
+    # return Leader_score, Leader_pos, Convergence_curve
+    return OptimizationResult(
+        Leader_pos,
+        Leader_score,
+        Convergence_curve)
 end

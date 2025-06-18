@@ -6,7 +6,8 @@
 Expert Systems with Applications 238 (2024): 122147.
 """
 function GGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    population = lb .+ rand(npop, dim) .* (ub .- lb)
+    # population = lb .+ rand(npop, dim) .* (ub .- lb)
+    population = initialization(npop, dim, ub, lb)
     fitness = zeros(Float64, npop)
     Convergence = zeros(max_iter,1)
 
@@ -36,5 +37,9 @@ function GGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     best_fitness, best_index = findmin(fitness)
     best_solution = population[best_index, :]
     
-    return best_fitness, best_solution, Convergence
+    # return best_fitness, best_solution, Convergence
+    return OptimizationResult(
+        best_solution,
+        best_fitness,
+        Convergence)
 end
