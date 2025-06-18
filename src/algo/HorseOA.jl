@@ -1,10 +1,10 @@
 """
 # References:
+
 -  MiarNaeimi, Farid, Gholamreza Azizyan, and Mohsen Rashki. 
 "Horse herd optimization algorithm: A nature-inspired algorithm for high-dimensional optimization problems." 
 Knowledge-Based Systems 213 (2021): 106711.
 """
-
 function HorseOA(nHourse::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     VarSize = (1, dim)  # Size of Decision Variables Matrix
 

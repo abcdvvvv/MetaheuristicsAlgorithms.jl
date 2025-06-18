@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Hashim, Fatma A., and Abdelazim G. Hussien. 
 "Snake Optimizer: A novel meta-heuristic optimization algorithm." 
 Knowledge-Based Systems 242 (2022): 108320.
 """
-
 function SO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
     vec_flag = [1, -1]
     Threshold = 0.25

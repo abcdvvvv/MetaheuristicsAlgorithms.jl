@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri. 
 "Satin bowerbird optimizer: A new optimization algorithm to optimize ANFIS for software development effort estimation." 
 Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 """
-
 function SBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     alpha = 0.94
 

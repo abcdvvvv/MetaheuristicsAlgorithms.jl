@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Ghasemi, Mojtaba, Mohsen Zare, Pavel Trojovský, Ravipudi Venkata Rao, Eva Trojovská, and Venkatachalam Kandasamy. 
 "Optimization based on the smart behavior of plants with its engineering applications: Ivy algorithm." 
 Knowledge-Based Systems 295 (2024): 111850.
 """
-
 function IVYA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     Position = rand(npop, dim) .* (ub .- lb) .+ lb
     GV = Position ./ (ub .- lb)

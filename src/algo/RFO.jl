@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Braik, M., & Al-Hiary, H. (2025). 
 Rüppell’s fox optimizer: A novel meta-heuristic approach for solving global optimization problems. 
 Cluster Computing, 28(5), 1-77.
 """
-
 function RFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
     # Preallocate
     ccurve = zeros(max_iter)

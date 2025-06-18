@@ -1,6 +1,7 @@
 """
 # References:
--  Mirjalili, Seyedali, Amir H. Gandomi, Seyedeh Zahra Mirjalili, Shahrzad Saremi, Hossam Faris, and Seyed Mohammad Mirjalili. 
+
+- Mirjalili, Seyedali, Amir H. Gandomi, Seyedeh Zahra Mirjalili, Shahrzad Saremi, Hossam Faris, and Seyed Mohammad Mirjalili. 
 "Salp Swarm Algorithm: A bio-inspired optimizer for engineering design problems." 
 Advances in engineering software 114 (2017): 163-191.
 """

@@ -1,10 +1,10 @@
 """
 # References:
+
 - Fu, Shengwei, et al. 
 "Red-billed blue magpie optimizer: a novel metaheuristic algorithm for 2D/3D UAV path planning and engineering design problems." 
 Artificial Intelligence Review 57.6 (2024): 134.
 """
-
 function RBMO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, D::Int, objfun)
     Xfood = zeros(D)
     BestValue = Inf

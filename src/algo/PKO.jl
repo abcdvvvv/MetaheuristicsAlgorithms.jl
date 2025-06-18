@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien. 
 "Pied kingfisher optimizer: a new bio-inspired algorithm for solving numerical optimization and industrial engineering problems." 
 Neural Computing and Applications (2024): 1-59.
 """
-
 function PKO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
     BF = 8
     Crest_angles = 2 * π * rand()

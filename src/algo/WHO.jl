@@ -1,9 +1,3 @@
-"""
-# References:
--  Naruei, Iraj, and Farshid Keynia. 
-"Wild horse optimizer: A new meta-heuristic algorithm for solving engineering optimization problems." 
-Engineering with computers 38, no. Suppl 4 (2022): 3025-3056.
-"""
 function exchange(Stallion)
     nStallion = length(Stallion)
 
@@ -21,6 +15,13 @@ function exchange(Stallion)
     return Stallion
 end
 
+"""
+# References:
+
+- Naruei, Iraj, and Farshid Keynia. 
+"Wild horse optimizer: A new meta-heuristic algorithm for solving engineering optimization problems." 
+Engineering with computers 38, no. Suppl 4 (2022): 3025-3056.
+"""
 function WHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)

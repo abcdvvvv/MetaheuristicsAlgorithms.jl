@@ -11,11 +11,11 @@ function S_func(r)
 end
 
 """
-Saremi, Shahrzad, Seyedali Mirjalili, and Andrew Lewis. 
+# References:
+- Saremi, Shahrzad, Seyedali Mirjalili, and Andrew Lewis. 
 "Grasshopper optimisation algorithm: theory and application." 
 Advances in engineering software 105 (2017): 30-47.
 """
-
 function GOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     flag = false
     if length(ub) == 1

@@ -4,7 +4,6 @@
 "Supply-demand-based optimization: A novel economics-inspired algorithm for global optimization." 
 Ieee Access 7 (2019): 73182-73206.
 """
-
 function SupplyDO(marketsize::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     OneMarket = Dict(
         "CommPrice" => zeros(dim),
@@ -92,8 +91,6 @@ function SupplyDO(marketsize::Integer, max_iter::Integer, lb::Union{Real,Abstrac
                 market[i]["CommPriceFit"] = market[i]["CommQuantityFit"]
                 market[i]["CommPrice"] = market[i]["CommQuantity"]
             end
-
-
 
             if market[i]["CommPriceFit"] <= best_f
                 best_x = market[i]["CommPrice"]

@@ -1,11 +1,10 @@
 """
 # References:
+
 -  Trojovská, Eva, Mohammad Dehghani, and Pavel Trojovský. 
 "Zebra optimization algorithm: A new bio-inspired optimization algorithm for solving optimization algorithm." 
 Ieee Access 10 (2022): 49445-49473.
-
 """
-
 function ZOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)

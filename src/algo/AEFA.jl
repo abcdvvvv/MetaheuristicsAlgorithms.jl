@@ -5,7 +5,6 @@
 "AEFA: Artificial electric field algorithm for global optimization." 
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
-
 function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     FCheck, Rpower, tag = 1, 1, 1 
 

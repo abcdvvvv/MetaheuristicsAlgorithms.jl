@@ -1,5 +1,6 @@
 """
 # References:
+
 -  Chopra, Nitish, and Muhammad Mohsin Ansari. 
 "Golden jackal optimization: A novel nature-inspired optimizer for engineering applications." 
 Expert Systems with Applications 198 (2022): 116924.

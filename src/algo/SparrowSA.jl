@@ -1,12 +1,11 @@
 """
 # References:
--  Jiankai Xue & Bo Shen 
-A novel swarm intelligence optimization approach: sparrow search algorithm
-Systems Science & Control Engineering, 8:1, 22-34, 
-DOI: 10.1080/21642583.2019.1708830
-(2020) 
-"""
 
+- Jiankai Xue & Bo Shen 
+A novel swarm intelligence optimization approach: sparrow search algorithm
+Systems Science & Control Engineering, 8:1 (2020), 22-34.
+DOI: 10.1080/21642583.2019.1708830
+"""
 function SparrowSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)

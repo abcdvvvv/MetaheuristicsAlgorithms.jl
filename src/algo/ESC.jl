@@ -1,10 +1,10 @@
 """
 # References:
+
 - Ouyang, K., Fu, S., Chen, Y., Cai, Q., Heidari, A. A., & Chen, H. (2024). 
 Escape: an optimization method based on crowd evacuation behaviors. 
 Artificial Intelligence Review, 58(1), 19.
 """
-
 function ESC(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)

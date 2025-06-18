@@ -4,7 +4,6 @@
 "Harris hawks optimization: Algorithm and applications." 
 Future generation computer systems 97 (2019): 849-872.
 """
-
 function HHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}},
     dim::Int, objfun::Function)
     Rabbit_Location = zeros(dim)

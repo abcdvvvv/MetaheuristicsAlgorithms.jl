@@ -110,7 +110,6 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         his_best_fit[It] = BestF
     end
 
-    #return BestF, BestX, his_best_fit
     return OptimizationResult(
         BestX,
         BestF,

@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Askari, Qamar, Irfan Younas, and Mehreen Saeed. 
 "Political Optimizer: A novel socio-inspired meta-heuristic for global optimization." 
 Knowledge-based systems 195 (2020): 105709.
 """
-
 function PoliticalO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     parties = 8
     lambda = 1.0

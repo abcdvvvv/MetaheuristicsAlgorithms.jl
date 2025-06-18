@@ -1,11 +1,3 @@
-"""
-# References:
--  Han, Muxuan, Zunfeng Du, Kum Fai Yuen, Haitao Zhu, Yancang Li, and Qiuyu Yuan. 
-"Walrus optimizer: A novel nature-inspired metaheuristic algorithm." 
-Expert Systems with Applications 239 (2024): 122413.
-"""
-
-
 # function levyFlight(d::Int)
 #     beta = 3/2
 
@@ -17,6 +9,13 @@ Expert Systems with Applications 239 (2024): 122413.
 #     return step
 # end
 
+"""
+# References:
+
+- Han, Muxuan, Zunfeng Du, Kum Fai Yuen, Haitao Zhu, Yancang Li, and Qiuyu Yuan.
+"Wave optimization algorithm: A new metaheuristic algorithm for solving optimization problems." 
+Knowledge-Based Systems 236 (2022): 107760.
+"""
 function WO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     best_pos = zeros(Float64, dim)
     Second_Pos = zeros(Float64, dim)

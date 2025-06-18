@@ -52,11 +52,11 @@ end
 
 """
 # References:
+
 -  Zhao, Weiguo, Liying Wang, Zhenxing Zhang, Seyedali Mirjalili, Nima Khodadadi, and Qiang Ge. 
 "Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
 """
-
 function QIO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     IndividualsPos = zeros(npop, dim)
     IndividualsFit = zeros(npop)

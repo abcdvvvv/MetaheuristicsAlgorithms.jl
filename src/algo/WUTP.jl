@@ -1,10 +1,10 @@
 """
 # References:
+
 -  Braik, M., & Al-Hiary, H. (2025). 
 A novel meta-heuristic optimization algorithm inspired by water uptake and transport in plants. 
 Neural Computing and Applications, 1-82.
 """
-
 function WUTP(no_particles::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     # Preallocate
     ccurve = zeros(max_iter)
