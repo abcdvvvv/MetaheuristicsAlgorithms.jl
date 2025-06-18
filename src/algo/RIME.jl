@@ -1,5 +1,6 @@
 """
-Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, and Huiling Chen. 
+# References:
+-  Su, Hang, Dong Zhao, Ali Asghar Heidari, Lei Liu, Xiaoqin Zhang, Majdi Mafarja, and Huiling Chen. 
 "RIME: A physics-based optimization." 
 Neurocomputing 532 (2023): 183-214.
 """

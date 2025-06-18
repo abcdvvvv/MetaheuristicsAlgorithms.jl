@@ -1,5 +1,6 @@
 """
-MiarNaeimi, Farid, Gholamreza Azizyan, and Mohsen Rashki. 
+# References:
+-  MiarNaeimi, Farid, Gholamreza Azizyan, and Mohsen Rashki. 
 "Horse herd optimization algorithm: A nature-inspired algorithm for high-dimensional optimization problems." 
 Knowledge-Based Systems 213 (2021): 106711.
 """

@@ -1,5 +1,6 @@
 """
-Ahmadianfar, Iman, Ali Asghar Heidari, Saeed Noshadian, Huiling Chen, and Amir H. Gandomi. 
+# References:
+-  Ahmadianfar, Iman, Ali Asghar Heidari, Saeed Noshadian, Huiling Chen, and Amir H. Gandomi. 
 "INFO: An efficient optimization algorithm based on weighted mean of vectors." 
 Expert Systems with Applications 195 (2022): 116516.
 """

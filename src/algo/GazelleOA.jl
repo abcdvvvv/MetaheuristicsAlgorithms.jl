@@ -1,5 +1,6 @@
 """
-Agushaka, Jeffrey O., Absalom E. Ezugwu, and Laith Abualigah. 
+# References:
+-  Agushaka, Jeffrey O., Absalom E. Ezugwu, and Laith Abualigah. 
 "Gazelle optimization algorithm: a novel nature-inspired metaheuristic optimizer." 
 Neural Computing and Applications 35, no. 5 (2023): 4099-4131.
 """

@@ -1,5 +1,6 @@
 """
-Jiankai Xue & Bo Shen 
+# References:
+-  Jiankai Xue & Bo Shen 
 A novel swarm intelligence optimization approach: sparrow search algorithm
 Systems Science & Control Engineering, 8:1, 22-34, 
 DOI: 10.1080/21642583.2019.1708830

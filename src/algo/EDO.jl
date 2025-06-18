@@ -1,5 +1,7 @@
 """
-Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash. 
+# References:
+
+- Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash. 
 "Exponential distribution optimizer (EDO): a novel math-inspired algorithm for global optimization and engineering problems." 
 Artificial Intelligence Review 56, no. 9 (2023): 9329-9400.
 """

@@ -1,8 +1,4 @@
-"""
-Saremi, Shahrzad, Seyedali Mirjalili, and Andrew Lewis. 
-"Grasshopper optimisation algorithm: theory and application." 
-Advances in engineering software 105 (2017): 30-47.
-"""
+
 
 function distance(a, b)
     return sqrt((a[1] - b[1])^2 + (a[2] - b[2])^2)
@@ -14,6 +10,12 @@ function S_func(r)
     o = f * exp(-r / l) - exp(-r)
     return o
 end
+
+"""
+Saremi, Shahrzad, Seyedali Mirjalili, and Andrew Lewis. 
+"Grasshopper optimisation algorithm: theory and application." 
+Advances in engineering software 105 (2017): 30-47.
+"""
 
 function GOA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     flag = false

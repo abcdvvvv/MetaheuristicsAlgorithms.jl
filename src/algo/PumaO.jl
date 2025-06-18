@@ -1,8 +1,4 @@
-"""
-Abdollahzadeh, Benyamin, Nima Khodadadi, Saeid Barshandeh, Pavel Trojovský, Farhad Soleimanian Gharehchopogh, El-Sayed M. El-kenawy, Laith Abualigah, and Seyedali Mirjalili. 
-"Puma optimizer (PO): A novel metaheuristic optimization algorithm and its application in machine learning." 
-Cluster Computing (2024): 1-49.
-"""
+
 function Exploration(Sol, lb, ub, dim, npop, objfun)
     sorted_indices = sortperm([s[:Cost] for s in Sol])
     Sol = [Sol[i] for i in sorted_indices]
@@ -96,6 +92,13 @@ function Exploitation(Sol, lb, ub, dim, npop, Best, max_iter, Iter, objfun)
 
     return Sol
 end
+
+"""
+# References:
+- Abdollahzadeh, Benyamin, Nima Khodadadi, Saeid Barshandeh, Pavel Trojovský, Farhad Soleimanian Gharehchopogh, El-Sayed M. El-kenawy, Laith Abualigah, and Seyedali Mirjalili. 
+"Puma optimizer (PO): A novel metaheuristic optimization algorithm and its application in machine learning." 
+Cluster Computing (2024): 1-49.
+"""
 
 function PumaO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     UnSelected = ones(Float64, 2)

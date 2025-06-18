@@ -1,5 +1,7 @@
 """
-Al-Betar, M.A., Awadallah, M.A., Braik, M.S. et al. 
+# References:
+
+- Al-Betar, M.A., Awadallah, M.A., Braik, M.S. et al. 
 Elk herd optimizer: a novel nature-inspired metaheuristic algorithm. 
 Artif Intell Rev 57, 48 (2024). 
 https://doi.org/10.1007/s10462-023-10680-4

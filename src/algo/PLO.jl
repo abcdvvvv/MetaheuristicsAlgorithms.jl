@@ -1,5 +1,6 @@
 """
-Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen. 
+# References:
+-  Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, and Huiling Chen. 
 "Polar lights optimizer: Algorithm and applications in image segmentation and feature selection." 
 Neurocomputing 607 (2024): 128427.
 """

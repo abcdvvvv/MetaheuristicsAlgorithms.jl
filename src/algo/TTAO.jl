@@ -1,5 +1,6 @@
 """
-Zhao, Shijie, Tianran Zhang, Liang Cai, and Ronghua Yang. 
+# References:
+-  Zhao, Shijie, Tianran Zhang, Liang Cai, and Ronghua Yang. 
 "Triangulation topology aggregation optimizer: A novel mathematics-based meta-heuristic algorithm for 
 continuous optimization and engineering applications." 
 Expert Systems with Applications 238 (2024): 121744.

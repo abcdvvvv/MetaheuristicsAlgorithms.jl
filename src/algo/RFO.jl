@@ -1,5 +1,6 @@
 """
-Braik, M., & Al-Hiary, H. (2025). 
+# References:
+-  Braik, M., & Al-Hiary, H. (2025). 
 Rüppell’s fox optimizer: A novel meta-heuristic approach for solving global optimization problems. 
 Cluster Computing, 28(5), 1-77.
 """

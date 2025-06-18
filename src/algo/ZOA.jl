@@ -1,5 +1,6 @@
 """
-Trojovská, Eva, Mohammad Dehghani, and Pavel Trojovský. 
+# References:
+-  Trojovská, Eva, Mohammad Dehghani, and Pavel Trojovský. 
 "Zebra optimization algorithm: A new bio-inspired optimization algorithm for solving optimization algorithm." 
 Ieee Access 10 (2022): 49445-49473.
 

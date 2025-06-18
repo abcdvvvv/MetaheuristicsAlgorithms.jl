@@ -1,5 +1,6 @@
 """
-Hashim, Fatma A., Reham R. Mostafa, Abdelazim G. Hussien, Seyedali Mirjalili, and Karam M. Sallam. 
+# References:
+-   Hashim, Fatma A., Reham R. Mostafa, Abdelazim G. Hussien, Seyedali Mirjalili, and Karam M. Sallam. 
 "Fick’s Law Algorithm: A physical law-based algorithm for numerical optimization." 
 Knowledge-Based Systems 260 (2023): 110146.
 """

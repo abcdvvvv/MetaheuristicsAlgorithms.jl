@@ -1,5 +1,6 @@
 """
-Heidari, Ali Asghar, Seyedali Mirjalili, Hossam Faris, Ibrahim Aljarah, Majdi Mafarja, and Huiling Chen. 
+# References:
+-  Heidari, Ali Asghar, Seyedali Mirjalili, Hossam Faris, Ibrahim Aljarah, Majdi Mafarja, and Huiling Chen. 
 "Harris hawks optimization: Algorithm and applications." 
 Future generation computer systems 97 (2019): 849-872.
 """

@@ -1,8 +1,4 @@
-"""
-Askari, Qamar, Mehreen Saeed, and Irfan Younas. 
-"Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
-Expert Systems with Applications 161 (2020): 113702.
-"""
+
 function colleaguesLimitsGenerator(degree::Int, npop::Int)
     colleaguesLimits = zeros(Float64, npop, 2)
     for c = npop:-1:1
@@ -15,6 +11,13 @@ function colleaguesLimitsGenerator(degree::Int, npop::Int)
 
     return colleaguesLimits
 end
+
+"""
+# References:
+-  Askari, Qamar, Mehreen Saeed, and Irfan Younas. 
+"Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
+Expert Systems with Applications 161 (2020): 113702.
+"""
 
 function HBO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     cycles = floor(Int, max_iter / 25)

@@ -1,8 +1,4 @@
-"""
-Mirjalili, Seyedali, Seyed Mohammad Mirjalili, and Abdolreza Hatamlou. 
-"Multi-verse optimizer: a nature-inspired algorithm for global optimization." 
-Neural Computing and Applications 27 (2016): 495-513.
-"""
+
 function RouletteWheelSelection(weights)
     accumulation = cumsum(weights)  # Cumulative sum of weights
     p = rand() * accumulation[end]   # Random value in the range of total weights
@@ -18,6 +14,13 @@ function RouletteWheelSelection(weights)
 
     return chosen_index
 end
+
+"""
+# References:
+-  Mirjalili, Seyedali, Seyed Mohammad Mirjalili, and Abdolreza Hatamlou. 
+"Multi-verse optimizer: a nature-inspired algorithm for global optimization." 
+Neural Computing and Applications 27 (2016): 495-513.
+"""
 
 function MVO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
 

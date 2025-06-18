@@ -1,5 +1,6 @@
 """
-Ahmadianfar, Iman, Omid Bozorg-Haddad, and Xuefeng Chu. 
+# References:
+-  Ahmadianfar, Iman, Omid Bozorg-Haddad, and Xuefeng Chu. 
 "Gradient-based optimizer: A new metaheuristic optimization algorithm." 
 Information Sciences 540 (2020): 131-159.
 

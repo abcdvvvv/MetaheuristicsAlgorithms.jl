@@ -1,5 +1,6 @@
 """
-Braik, M., & Al-Hiary, H. (2025). 
+# References:
+-  Braik, M., & Al-Hiary, H. (2025). 
 A novel meta-heuristic optimization algorithm inspired by water uptake and transport in plants. 
 Neural Computing and Applications, 1-82.
 """

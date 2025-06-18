@@ -1,8 +1,4 @@
-"""
-Zhao, Weiguo, Liying Wang, Zhenxing Zhang, Seyedali Mirjalili, Nima Khodadadi, and Qiang Ge. 
-"Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
-Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
-"""
+
 function Interpolation(xi, xj, xk, fi, fj, fk, l, u)
     a = (xj^2 - xk^2) * fi + (xk^2 - xi^2) * fj + (xi^2 - xj^2) * fk
     b = 2 * ((xj - xk) * fi + (xk - xi) * fj + (xi - xj) * fk)
@@ -53,6 +49,13 @@ function GQI(a, b, c, fa, fb, fc, low, up)
     end
     return (dim == 1) ? L[1] : L
 end
+
+"""
+# References:
+-  Zhao, Weiguo, Liying Wang, Zhenxing Zhang, Seyedali Mirjalili, Nima Khodadadi, and Qiang Ge. 
+"Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
+Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
+"""
 
 function QIO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     IndividualsPos = zeros(npop, dim)

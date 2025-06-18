@@ -1,5 +1,6 @@
 """
-Lian, Junbo, Ting Zhu, Ling Ma, Xincan Wu, Ali Asghar Heidari, Yi Chen, Huiling Chen, and Guohua Hui. 
+# References: 
+- Lian, Junbo, Ting Zhu, Ling Ma, Xincan Wu, Ali Asghar Heidari, Yi Chen, Huiling Chen, and Guohua Hui. 
 "The educational competition optimizer." 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """

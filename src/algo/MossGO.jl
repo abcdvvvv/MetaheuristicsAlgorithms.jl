@@ -1,5 +1,6 @@
 """
-Zheng, Boli, Yi Chen, Chaofan Wang, Ali Asghar Heidari, Lei Liu, and Huiling Chen. 
+# References:
+-  Zheng, Boli, Yi Chen, Chaofan Wang, Ali Asghar Heidari, Lei Liu, and Huiling Chen. 
 "The moss growth optimization (MGO): concepts and performance." 
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """

@@ -1,8 +1,4 @@
-"""
-Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, Nima Khodadadi, and Seyedali Mirjalili. 
-"Mountain gazelle optimizer: a new nature-inspired metaheuristic algorithm for global optimization problems." 
-Advances in Engineering Software 174 (2022): 103282.
-"""
+
 
 function Coefficient_Vector(dim, Iter, max_iter)
     a2 = -1 + Iter * (-1 / max_iter)
@@ -28,6 +24,13 @@ function Solution_Imp(X, BestX, lb, ub, npop, cofi, M, A, D, i)
 
     return NewX
 end
+
+"""
+# References:
+-  Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, Nima Khodadadi, and Seyedali Mirjalili. 
+"Mountain gazelle optimizer: a new nature-inspired metaheuristic algorithm for global optimization problems." 
+Advances in Engineering Software 174 (2022): 103282.
+"""
 
 function MountainGO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     lb = ones(dim) .* lb    # Lower Bound

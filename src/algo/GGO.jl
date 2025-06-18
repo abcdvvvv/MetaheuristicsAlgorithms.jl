@@ -1,5 +1,6 @@
 """
-El-Kenawy, El-Sayed M., Nima Khodadadi, Seyedali Mirjalili, Abdelaziz A. Abdelhamid, Marwa M. Eid, and Abdelhameed Ibrahim. 
+# References:
+-  El-Kenawy, El-Sayed M., Nima Khodadadi, Seyedali Mirjalili, Abdelaziz A. Abdelhamid, Marwa M. Eid, and Abdelhameed Ibrahim. 
 "Greylag goose optimization: nature-inspired optimization algorithm." 
 Expert Systems with Applications 238 (2024): 122147.
 """

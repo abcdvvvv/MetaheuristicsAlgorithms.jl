@@ -1,5 +1,6 @@
 """
-Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, and Seyedali Mirjalili. 
+# References:
+-  Abdollahzadeh, Benyamin, Farhad Soleimanian Gharehchopogh, and Seyedali Mirjalili. 
 "Artificial gorilla troops optimizer: a new nature‐inspired metaheuristic algorithm for global optimization problems." 
 International Journal of Intelligent Systems 36, no. 10 (2021): 5887-5958.
 """

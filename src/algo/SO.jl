@@ -1,5 +1,6 @@
 """
-Hashim, Fatma A., and Abdelazim G. Hussien. 
+# References:
+-  Hashim, Fatma A., and Abdelazim G. Hussien. 
 "Snake Optimizer: A novel meta-heuristic optimization algorithm." 
 Knowledge-Based Systems 242 (2022): 108320.
 """

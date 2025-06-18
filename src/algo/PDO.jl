@@ -1,8 +1,4 @@
-"""
-Ezugwu, Absalom E., Jeffrey O. Agushaka, Laith Abualigah, Seyedali Mirjalili, and Amir H. Gandomi. 
-"Prairie dog optimization algorithm." 
-Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
-"""
+
 
 # function levym(n, m, beta)
 #     num = gamma(1 + beta) * sin(pi * beta / 2)
@@ -15,6 +11,13 @@ Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 #     z = u ./ (abs.(v) .^ (1 / beta))
 #     return z
 # end
+
+"""
+# References:
+-  Ezugwu, Absalom E., Jeffrey O. Agushaka, Laith Abualigah, Seyedali Mirjalili, and Amir H. Gandomi. 
+"Prairie dog optimization algorithm." 
+Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
+"""
 
 function PDO(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
     PDBest_P = zeros(dim)

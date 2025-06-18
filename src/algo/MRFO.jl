@@ -1,5 +1,6 @@
 """
-Zhao, Weiguo, Zhenxing Zhang, and Liying Wang. 
+# References:
+-  Zhao, Weiguo, Zhenxing Zhang, and Liying Wang. 
 "Manta ray foraging optimization: An effective bio-inspired optimizer for engineering applications." 
 Engineering Applications of Artificial Intelligence 87 (2020): 103300.
 """

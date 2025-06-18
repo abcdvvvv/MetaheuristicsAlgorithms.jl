@@ -1,5 +1,8 @@
 """
-Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abualigah, and Magd Abdel Wahab. 
+
+
+# References:
+-  Bai, Jianfu, Yifei Li, Mingpo Zheng, Samir Khatir, Brahim Benaissa, Laith Abualigah, and Magd Abdel Wahab. 
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
 """

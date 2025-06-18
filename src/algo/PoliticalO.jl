@@ -1,5 +1,6 @@
 """
-Askari, Qamar, Irfan Younas, and Mehreen Saeed. 
+# References:
+-  Askari, Qamar, Irfan Younas, and Mehreen Saeed. 
 "Political Optimizer: A novel socio-inspired meta-heuristic for global optimization." 
 Knowledge-based systems 195 (2020): 105709.
 """

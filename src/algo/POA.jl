@@ -1,5 +1,6 @@
 """
-Trojovský, Pavel, and Mohammad Dehghani. 
+# References:
+-  Trojovský, Pavel, and Mohammad Dehghani. 
 "Pelican optimization algorithm: A novel nature-inspired algorithm for engineering applications." 
 Sensors 22, no. 3 (2022): 855.
 """

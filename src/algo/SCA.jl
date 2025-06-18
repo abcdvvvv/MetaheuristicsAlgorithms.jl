@@ -1,5 +1,6 @@
 """
-Mirjalili, Seyedali. 
+# References:
+-  Mirjalili, Seyedali. 
 "SCA: a sine cosine algorithm for solving optimization problems." 
 Knowledge-based systems 96 (2016): 120-133.
 """

@@ -1,5 +1,6 @@
 """
-Ouyang, K., Fu, S., Chen, Y., Cai, Q., Heidari, A. A., & Chen, H. (2024). 
+# References:
+- Ouyang, K., Fu, S., Chen, Y., Cai, Q., Heidari, A. A., & Chen, H. (2024). 
 Escape: an optimization method based on crowd evacuation behaviors. 
 Artificial Intelligence Review, 58(1), 19.
 """

@@ -1,5 +1,6 @@
 """
-Mohammed, Hardi, and Tarik Rashid. 
+# References:
+-  Mohammed, Hardi, and Tarik Rashid. 
 "FOX: a FOX-inspired optimization algorithm." 
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """

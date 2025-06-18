@@ -1,5 +1,6 @@
 """
-Amiri, M.H., Mehrabi Hashjin, N., Montazeri, M., Mirjalili, S. and Khodadadi, N., 2024. 
+# References:
+-  Amiri, M.H., Mehrabi Hashjin, N., Montazeri, M., Mirjalili, S. and Khodadadi, N., 2024. 
 Hippopotamus optimization algorithm: a novel nature-inspired optimization algorithm. 
 Scientific Reports, 14(1), p.5032.
 """

@@ -1,5 +1,6 @@
 """
-Braik, Malik, Abdelaziz Hammouri, Jaffar Atwan, Mohammed Azmi Al-Betar, and Mohammed A. Awadallah. 
+# References:
+-  Braik, Malik, Abdelaziz Hammouri, Jaffar Atwan, Mohammed Azmi Al-Betar, and Mohammed A. Awadallah. 
 "White Shark Optimizer: A novel bio-inspired meta-heuristic algorithm for global optimization problems." 
 Knowledge-Based Systems 243 (2022): 108457.
 

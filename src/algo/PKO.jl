@@ -1,5 +1,6 @@
 """
-Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien. 
+# References:
+-  Bouaouda, Anas, Fatma A. Hashim, Yassine Sayouti, and Abdelazim G. Hussien. 
 "Pied kingfisher optimizer: a new bio-inspired algorithm for solving numerical optimization and industrial engineering problems." 
 Neural Computing and Applications (2024): 1-59.
 """

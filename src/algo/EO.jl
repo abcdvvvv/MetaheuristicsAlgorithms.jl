@@ -1,5 +1,7 @@
 """
-Faramarzi, Afshin, Mohammad Heidarinejad, Brent Stephens, and Seyedali Mirjalili. 
+# References:
+
+-  Faramarzi, Afshin, Mohammad Heidarinejad, Brent Stephens, and Seyedali Mirjalili. 
 "Equilibrium optimizer: A novel optimization algorithm." 
 Knowledge-based systems 191 (2020): 105190.
 """

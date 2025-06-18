@@ -1,5 +1,7 @@
 """
-Yadav, Anupam. 
+# References:
+
+- Yadav, Anupam. 
 "AEFA: Artificial electric field algorithm for global optimization." 
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """

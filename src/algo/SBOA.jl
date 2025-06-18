@@ -1,5 +1,6 @@
 """
-Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He. 
+# References:
+-  Fu, Youfa, Dan Liu, Jiadui Chen, and Ling He. 
 "Secretary bird optimization algorithm: a new metaheuristic for solving global optimization problems." 
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """

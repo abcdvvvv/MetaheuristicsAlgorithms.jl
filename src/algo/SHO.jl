@@ -1,5 +1,6 @@
 """
-Dhiman, Gaurav, and Vijay Kumar. 
+# References:
+-  Dhiman, Gaurav, and Vijay Kumar. 
 "Spotted hyena optimizer: a novel bio-inspired based metaheuristic technique for engineering applications." 
 Advances in Engineering Software 114 (2017): 48-70.
 """

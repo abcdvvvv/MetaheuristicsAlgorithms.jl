@@ -1,5 +1,6 @@
 """
-Houssein, Essam H., Diego Oliva, Nagwan Abdel Samee, Noha F. Mahmoud, and Marwa M. Emam. 
+# References:
+-  Houssein, Essam H., Diego Oliva, Nagwan Abdel Samee, Noha F. Mahmoud, and Marwa M. Emam. 
 "Liver Cancer Algorithm: A novel bio-inspired optimizer." 
 Computers in Biology and Medicine 165 (2023): 107389.
 """

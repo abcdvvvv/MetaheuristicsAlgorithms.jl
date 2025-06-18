@@ -1,5 +1,6 @@
 """
-Oladejo, Sunday O., Stephen O. Ekwe, and Seyedali Mirjalili. 
+# References:
+-  Oladejo, Sunday O., Stephen O. Ekwe, and Seyedali Mirjalili. 
 "The Hiking Optimization Algorithm: A novel human-based metaheuristic approach." 
 Knowledge-Based Systems 296 (2024): 111880.
 """

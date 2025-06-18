@@ -1,5 +1,6 @@
 """
-Deng, Lingyun, and Sanyang Liu. 
+# References:
+-  Deng, Lingyun, and Sanyang Liu. 
 "Snow ablation optimizer: A novel metaheuristic technique for numerical optimization and engineering design." 
 Expert Systems with Applications 225 (2023): 120069.
 """

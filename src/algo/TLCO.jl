@@ -1,5 +1,6 @@
 """
-Minh, Hoang-Le, Thanh Sang-To, Guy Theraulaz, Magd Abdel Wahab, and Thanh Cuong-Le. 
+# References:
+-  Minh, Hoang-Le, Thanh Sang-To, Guy Theraulaz, Magd Abdel Wahab, and Thanh Cuong-Le. 
 "Termite life cycle optimizer." 
 Expert Systems with Applications 213 (2023): 119211.
 """

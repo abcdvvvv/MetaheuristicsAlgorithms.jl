@@ -1,5 +1,6 @@
 """
-Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri. 
+# References:
+-  Moosavi, Seyyed Hamid Samareh, and Vahid Khatibi Bardsiri. 
 "Poor and rich optimization algorithm: A new human-based and multi populations algorithm." 
 Engineering applications of artificial intelligence 86 (2019): 165-181.
 """

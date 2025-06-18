@@ -1,8 +1,4 @@
-"""
-Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. 
-"Novel meta-heuristic bald eagle search optimisation algorithm." 
-Artificial Intelligence Review 53 (2020): 2237-2264.
-"""
+
 
 function polr(a, R, N)
     th = a * π * rand(N)  # Generate theta
@@ -130,6 +126,12 @@ function select_space(objfun, popPos, popCost, npop, BestPos, BestCost, lb, ub, 
 
     return popPos, popCost, BestPos, BestCost, s1
 end
+
+"""
+Alsattar, Hassan A., A. A. Zaidan, and B. B. Zaidan. 
+"Novel meta-heuristic bald eagle search optimisation algorithm." 
+Artificial Intelligence Review 53 (2020): 2237-2264.
+"""
 
 function BES(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union{Real,AbstractVector}, dim::Int, objfun)
 

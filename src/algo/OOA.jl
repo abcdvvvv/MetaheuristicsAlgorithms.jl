@@ -1,5 +1,6 @@
 """
-Dehghani, Mohammad, and Pavel Trojovský. 
+# References:
+-  Dehghani, Mohammad, and Pavel Trojovský. 
 "Osprey optimization algorithm: A new bio-inspired metaheuristic algorithm for solving engineering optimization problems." 
 Frontiers in Mechanical Engineering 8 (2023): 1126450.
 """

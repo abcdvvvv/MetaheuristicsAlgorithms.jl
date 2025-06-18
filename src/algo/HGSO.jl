@@ -1,5 +1,6 @@
 """
-Hashim, F.A., Houssein, E.H., Mabrouk, M.S., Al-Atabany, W. and Mirjalili, S., 2019. 
+# References:
+-  Hashim, F.A., Houssein, E.H., Mabrouk, M.S., Al-Atabany, W. and Mirjalili, S., 2019. 
 Henry gas solubility optimization: A novel physics-based algorithm. 
 Future Generation Computer Systems, 101, pp.646-667.
 """

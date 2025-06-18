@@ -1,5 +1,6 @@
 """
-Lian, Junbo, Guohua Hui, Ling Ma, Ting Zhu, Xincan Wu, Ali Asghar Heidari, Yi Chen, and Huiling Chen. 
+# References:
+-  Lian, Junbo, Guohua Hui, Ling Ma, Ting Zhu, Xincan Wu, Ali Asghar Heidari, Yi Chen, and Huiling Chen. 
 "Parrot optimizer: Algorithm and applications to medical problems." 
 Computers in Biology and Medicine 172 (2024): 108064.
 """

@@ -1,5 +1,6 @@
 """
-Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
+# References:
+-  Abdel-Basset, Mohamed, Doaa El-Shahat, Mohammed Jameel, and Mohamed Abouhawwash.
 "Young’s double-slit experiment optimizer: A novel metaheuristic optimization algorithm for global and constraint optimization problems." 
 Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 """

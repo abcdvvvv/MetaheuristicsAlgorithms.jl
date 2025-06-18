@@ -1,5 +1,6 @@
 """
-Naruei, Iraj, and Farshid Keynia. 
+# References:
+-  Naruei, Iraj, and Farshid Keynia. 
 "Wild horse optimizer: A new meta-heuristic algorithm for solving engineering optimization problems." 
 Engineering with computers 38, no. Suppl 4 (2022): 3025-3056.
 """

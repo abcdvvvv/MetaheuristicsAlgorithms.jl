@@ -1,5 +1,6 @@
 """
-Mirjalili, Seyedali, and Andrew Lewis. 
+# References:
+-  Mirjalili, Seyedali, and Andrew Lewis. 
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
