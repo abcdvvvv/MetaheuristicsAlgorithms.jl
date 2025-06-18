@@ -6,9 +6,10 @@
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
 function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    FCheck, Rpower, tag = 1, 1, 1
+    FCheck, Rpower, tag = 1, 1, 1 
 
     Rnorm = 2
+    
     X = rand(npop, dim) .* (ub - lb) .+ lb
     V = zeros(npop, dim)
     BestValues = Float64[]
