@@ -1,6 +1,8 @@
 # Algorithms
-
-
+<!--
+```@docs 
+MetaheuristicsAlgorithms.AEFA
+```
 
 ```@docs 
 MetaheuristicsAlgorithms.AEO
@@ -464,3 +466,4 @@ MetaheuristicsAlgorithms.YDSE
 ```@docs
 MetaheuristicsAlgorithms.ZOA
 ```
+-->
