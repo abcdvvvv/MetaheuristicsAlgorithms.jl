@@ -10,7 +10,8 @@ function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     Rnorm = 2   
 
-    X = rand(npop, dim) .* (ub - lb) .+ lb
+    # X = rand(npop, dim) .* (ub - lb) .+ lb
+    X = initialization(npop, dim, ub, lb)
     V = zeros(npop, dim)
     BestValues = Float64[]
     MeanValues = Float64[]
@@ -20,7 +21,6 @@ function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     for iteration = 1:max_iter
         # Evaluate fitness
-        # fitness = [benchmark(X[i, :], objfun, D) for i in 1:N]
         fitness = [objfun(X[i, :]) for i = 1:npop]
 
         if tag == 1
@@ -93,5 +93,9 @@ function AEFA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         # end
     end
 
-    return Fbest, Lbest, BestValues, MeanValues
+    # return Fbest, Lbest, BestValues, MeanValues
+    return OptimizationResult(
+        Lbest,
+        Fbest,
+        BestValues)
 end

@@ -29,8 +29,9 @@ function APO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     protozoa_Fit = zeros(Float64, npop)
 
     # Initialization
+    protozoa = initialization(npop, dim, ub, lb)
     for i = 1:ps
-        protozoa[i, :] = lb .+ rand(dim) .* (ub .- lb)
+        # protozoa[i, :] = lb .+ rand(dim) .* (ub .- lb)
         protozoa_Fit[i] = objfun(vec(protozoa[i, :]'))
     end
 

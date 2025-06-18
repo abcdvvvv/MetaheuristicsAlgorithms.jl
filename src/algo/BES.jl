@@ -138,7 +138,8 @@ function BES(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     BestPos = zeros(dim)
 
     # Population initialization
-    popPos = lb .+ (ub - lb) .* rand(npop, dim)
+    # popPos = lb .+ (ub - lb) .* rand(npop, dim)
+    popPos = initialization(npop, dim, ub, lb)
     popCost = [objfun(popPos[i, :]) for i = 1:npop]
 
     for i = 1:npop
@@ -162,5 +163,9 @@ function BES(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[t] = BestCost
     end
 
-    return BestCost, BestPos, Convergence_curve
+    # return BestCost, BestPos, Convergence_curve
+    return OptimizationResult(
+        BestPos,
+        BestCost,
+        Convergence_curve)
 end

@@ -34,8 +34,10 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     PopFit = zeros(npop)
 
     newPopFit = zeros(npop, dim)
+    PopPos = initialization(npop, dim, ub, lb)
     for i = 1:npop
-        PopPos[i, :] = rand(dim) .* (ub - lb) .+ lb
+        # PopPos[i, :] = rand(dim) .* (ub - lb) .+ lb
+        # PopPos[i, :] = initialization(1, dim, ub, lb)
         PopFit[i] = objfun(PopPos[i, :])
     end
 

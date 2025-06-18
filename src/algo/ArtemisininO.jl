@@ -104,5 +104,9 @@ function ArtemisininO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractV
     end
     println("MaxFEs ", MaxFEs)
 
-    return bestfitness, best, Convergence_curve
+    # return bestfitness, best, Convergence_curve
+    return OptimizationResult(
+        best,
+        bestfitness,
+        Convergence_curve)
 end

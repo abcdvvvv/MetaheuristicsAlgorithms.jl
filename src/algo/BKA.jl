@@ -67,5 +67,9 @@ function BKA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[t] = Best_Fitness_BKA
     end
 
-    return Best_Fitness_BKA, Best_Pos_BKA, Convergence_curve
+    # return Best_Fitness_BKA, Best_Pos_BKA, Convergence_curve
+    return OptimizationResult(
+        Best_Pos_BKA,
+        Best_Fitness_BKA,
+        Convergence_curve)
 end

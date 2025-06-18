@@ -144,5 +144,9 @@ function BO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         it += 1
     end
 
-    return bestcost, alphabonobo, convergence
+    # return bestcost, alphabonobo, convergence
+    return OptimizationResult(
+        alphabonobo,
+        bestcost,
+        convergence)
 end

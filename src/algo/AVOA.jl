@@ -142,5 +142,10 @@ function AVOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         X = clamp.(X, lb, ub)
     end
 
-    return Best_vulture1_F, Best_vulture1_X, convergence_curve
+    # return Best_vulture1_F, Best_vulture1_X, convergence_curve
+    return OptimizationResult(
+        Best_vulture1_X,
+        Best_vulture1_F,
+        convergence_curve)
+    
 end

@@ -5,7 +5,8 @@
 
 """
 function ARO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
+    PopPos = initialization(npop, dim, ub, lb)
+    # PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
     PopFit = [objfun(PopPos[i]) for i = 1:npop]
 
     BestF = Inf

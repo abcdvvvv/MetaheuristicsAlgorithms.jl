@@ -34,7 +34,8 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
 
     ccurve = zeros(1, max_iter)
 
-    xth = lb .- rand(noThieves, dim) .* (lb .- ub)  # Position of the thieves in the space
+    # xth = lb .- rand(noThieves, dim) .* (lb .- ub)  # Position of the thieves in the space
+    xth = initialization(noThieves, dim, ub, lb)  # Position of the thieves in the space
 
     # Evaluate fitness of the initial population
     fit = zeros(noThieves)

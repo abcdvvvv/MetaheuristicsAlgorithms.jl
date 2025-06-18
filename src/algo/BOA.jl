@@ -58,14 +58,13 @@ function BOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         sensory_modality = sensory_modality_NEW(sensory_modality, max_iter)
     end
 
-    return fmin, best_pos, Convergence_curve
+    # return fmin, best_pos, Convergence_curve
+    return OptimizationResult(
+        best_pos,
+        fmin,
+        Convergence_curve)
 end
 
 function sensory_modality_NEW(x, Ngen)
     return x + (0.025 / (x * Ngen))
-end
-
-# Initialization of agents within bounds
-function initialization(npop, dim, ub, lb)
-    return rand(npop, dim) .* (ub - lb) .+ lb
 end
