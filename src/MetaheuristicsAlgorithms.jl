@@ -11,8 +11,8 @@ using Random,
 # abstract type OptimizationResult end 
 
 struct OptimizationResult
-	Best_Position::Vector
-	Best_Cost::Float64
+	bestX::Vector
+	bestF::Float64
       his_best_fit::Vector{Float64}
 end
 export OptimizationResult
