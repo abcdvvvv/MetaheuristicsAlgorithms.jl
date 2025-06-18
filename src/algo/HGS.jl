@@ -90,7 +90,7 @@ function HGS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
                     end
                 end
             end
-        end
+        end 
 
         Convergence_curve[it] = Destination_fitness
         it += 1
