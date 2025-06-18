@@ -133,7 +133,9 @@ include("utils/initialization.jl")
 # addpath(joinpath(@__DIR__, "algorithms"))
 
 ##
-using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
+# using .AEFA, .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
+using .AEO, .AFT, .AHA, .ALO, .AOArithmetic, .APO, .ARO, .ArtemisininO, .AVOA
+using 
 using .BES, .BKA, .BO, .BOA
 using .CDO, .Chameleon, .ChOA, .CO, .CoatiOA, .COOT, .CSBO
 using .DBO, .DDAO, .DMOA, .DO, .DSO
