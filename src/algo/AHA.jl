@@ -136,7 +136,7 @@ function AHA(npop::Int, max_iter::Int, lb::Union{Real,AbstractVector}, ub::Union
 
     # return  BestF, BestX,HisBestFit
     return OptimizationResult(
-        BestF,
         BestX,
+        BestF,
         HisBestFit)
 end
