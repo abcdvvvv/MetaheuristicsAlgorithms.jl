@@ -3,7 +3,7 @@
 
 # export OptimizationProblem
 
-struct OptimizationProblem{F}
+struct OptimizationProblem
     f::Function
     lb::Union{Real, AbstractVector{<:Real}}
     ub::Union{Real, AbstractVector{<:Real}}
