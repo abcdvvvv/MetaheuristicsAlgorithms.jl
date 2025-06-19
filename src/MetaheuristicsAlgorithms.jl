@@ -17,6 +17,10 @@ struct OptimizationResult
 end
 export OptimizationResult
 
+
+using .ProblemDefinition
+export OptimizationProblem
+
 include("algo/AEFA.jl")
 include("algo/AEO.jl")
 include("algo/AFT.jl")
@@ -180,7 +184,6 @@ export SFOA, SHO, SMA, SSA, STOA, SupplyDO
 export TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
 export update_state!
 
-using .ProblemDefinition
-export OptimizationProblem
+
 end
 
