@@ -18,7 +18,7 @@
     @testset "Griewank with AEO_struct, p = 2" verbose = true begin 
         lb = [-600 for i in 1:2]
         ub = [600 for i in 1:2]
-        # result = AEO(100, 500, lb, ub, Griewank)
+        problem = MyOptimization_Problem(Griewank, lb, ub, 2)
         result = AEO(problem, 100, 500)
         @test isapprox(result.bestX, [0.0 for i in 1:2], atol=1e-5)
         @test isapprox(result.bestF, 0.0, atol=1e-5)
