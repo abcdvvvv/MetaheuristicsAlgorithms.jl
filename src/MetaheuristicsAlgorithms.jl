@@ -164,8 +164,6 @@ include("problem.jl")
 # using .WHO, .WO, .WOA, .WSO
 # using .YDSE
 # using .ZOA
-using .ProblemDefinition
-export OptimizationProblem
 # This list of exports include 
 # repeated items and should be cleaned up.
 # some of the algorithms are missing and didn't get exported.
@@ -182,5 +180,7 @@ export SFOA, SHO, SMA, SSA, STOA, SupplyDO
 export TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
 export update_state!
 
+using .ProblemDefinition
+export OptimizationProblem
 end
 

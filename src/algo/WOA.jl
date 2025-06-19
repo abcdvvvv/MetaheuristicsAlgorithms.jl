@@ -70,3 +70,12 @@ function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         leader_score,
         convergence_curve)
 end
+
+function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+# function WOA(npop::Integer, max_iter::function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+    dim = problem.dim
+    problem = problem.objfun
+    lb = problem.lb
+    ub = problem.ub
+    return WOA(npop, max_iter, lb, ub, dim, problem)
+end

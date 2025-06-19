@@ -11,5 +11,7 @@ include("testaeo.jl")
 # include("testaha.jl")
 # include("testaft.jl")
 
+include("testwoastruct.jl")
+
 
 
