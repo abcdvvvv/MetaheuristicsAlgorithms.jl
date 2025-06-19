@@ -4,7 +4,7 @@
 # export OptimizationProblem
 
 struct OptimizationProblem
-    f::Function
+    objfun::Function
     lb::Union{Real, AbstractVector{<:Real}}
     ub::Union{Real, AbstractVector{<:Real}}
     dim::Int
