@@ -138,6 +138,7 @@ using SpecialFunctions: gamma
 include("utils/utils.jl")
 include("utils/Chung_Reynolds.jl")
 include("utils/initialization.jl")
+include("problem.jl")
 # addpath(joinpath(@__DIR__, "algorithms"))
 
 ##
@@ -163,7 +164,8 @@ include("utils/initialization.jl")
 # using .WHO, .WO, .WOA, .WSO
 # using .YDSE
 # using .ZOA
-
+using .ProblemDefinition
+export OptimizationProblem
 # This list of exports include 
 # repeated items and should be cleaned up.
 # some of the algorithms are missing and didn't get exported.
@@ -181,3 +183,4 @@ export TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
 export update_state!
 
 end
+
