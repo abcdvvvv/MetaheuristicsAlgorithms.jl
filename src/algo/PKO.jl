@@ -103,5 +103,9 @@ function PKO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         t += 1
     end
 
-    return Best_fitness, Best_position, Convergence_curve
+    # return Best_fitness, Best_position, Convergence_curve
+    return OptimizationResult(
+        Best_position,
+        Best_fitness,
+        Convergence_curve)
 end

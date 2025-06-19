@@ -10,9 +10,10 @@ function CoatiOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector
 
     # INITIALIZATION
     X = zeros(npop, dim)
-    for i = 1:dim
-        X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])
-    end
+    X = initialization(npop, dim, ub, lb)
+    # for i = 1:dim
+    #     X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])
+    # end
 
     fit = [objfun(X[i, :]) for i = 1:npop]
 

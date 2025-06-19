@@ -70,5 +70,9 @@ function RSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         t += 1
     end
     
-    return Best_F, Best_P, Conv  
+    # return Best_F, Best_P, Conv  
+    return OptimizationResult(
+        Best_P,
+        Best_F,
+        Conv)
 end

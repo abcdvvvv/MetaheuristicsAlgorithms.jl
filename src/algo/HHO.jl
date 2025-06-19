@@ -100,5 +100,9 @@ function HHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         t += 1
         CNVG[t] = Rabbit_Energy
     end
-    return Rabbit_Energy, Rabbit_Location, CNVG
+    # return Rabbit_Energy, Rabbit_Location, CNVG
+    return OptimizationResult(
+        Rabbit_Location,
+        best_vRabbit_Energyalue,
+        CNVG)
 end

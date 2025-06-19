@@ -99,7 +99,11 @@ function LFD(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         conver_iter[l] = TargetFitness
         l += 1
     end
-    return TargetFitness, TargetPosition, conver_iter
+    # return TargetFitness, TargetPosition, conver_iter
+    return OptimizationResult(
+        TargetPosition,
+        TargetFitness,
+        conver_iter)
 end
 
 function LF(pos, Pos_target, dim)

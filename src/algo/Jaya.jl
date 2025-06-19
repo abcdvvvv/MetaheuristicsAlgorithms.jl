@@ -32,9 +32,10 @@ function Jaya(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     end
 
     # Generate and Initialize the positions
-    for i = 1:dim
-        x[:, i] = lb[i] .+ (ub[i] - lb[i]) .* rand(npop)
-    end
+    x = initializationLogistic(npop, dim, ub, lb)
+    # for i = 1:dim
+    #     x[:, i] = lb[i] .+ (ub[i] - lb[i]) .* rand(npop)
+    # end
 
     for i = 1:npop
         f[i] = objfun(x[i, :])
@@ -87,5 +88,9 @@ function Jaya(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     best_value = minimum(fopt)
     best_position = xopt[argmin(fopt), :]
 
-    return best_value, best_position, convergence
+    # return best_value, best_position, convergence
+    return OptimizationResult(
+        best_position,
+        best_value,
+        convergence)
 end

@@ -65,5 +65,9 @@ function RIME(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         it += 1
     end
 
-    return Best_rime_rate, Best_rime, Convergence_curve
+    # return Best_rime_rate, Best_rime, Convergence_curve
+    return OptimizationResult(
+        Best_rime,
+        Best_rime_rate,
+        Convergence_curve)
 end

@@ -80,5 +80,9 @@ function SBOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     Best_score = fbest
     Best_pos = Bast_P
-    return Best_score, Best_pos, SBOA_curve
+    # return Best_score, Best_pos, SBOA_curve
+    return OptimizationResult(
+        Best_pos,
+        Best_score,
+        SBOA_curve)
 end

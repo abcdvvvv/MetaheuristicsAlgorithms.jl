@@ -87,5 +87,9 @@ function JS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
 
     u = BestSol
     fval = fbestvl[end]
-    return fval, u, fbestvl
+    # return fval, u, fbestvl
+    return OptimizationResult(
+        u,
+        fval,
+        fbestvl)
 end

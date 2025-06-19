@@ -16,7 +16,8 @@ function SBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     pop = [Dict("Position" => zeros(dim), "Cost" => Inf) for _ = 1:npop]
 
     for i = 1:npop
-        pop[i]["Position"] = rand(dim) .* (ub - lb) .+ lb
+        # pop[i]["Position"] = rand(dim) .* (ub - lb) .+ lb
+        pop[i]["Position"] = initialization(1, dim, lb, ub)
         pop[i]["Cost"] = objfun(pop[i]["Position"])
     end
 
@@ -66,5 +67,9 @@ function SBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
 
         BestCost[it] = BestSol["Cost"]
     end
-    return BestSol["Cost"], BestSol["Position"], BestCost
+    # return BestSol["Cost"], BestSol["Position"], BestCost
+    return OptimizationResult(
+        BestSol["Position"],
+        BestSol["Cost"],
+        BestCost)
 end

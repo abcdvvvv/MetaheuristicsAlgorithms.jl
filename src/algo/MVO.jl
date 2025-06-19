@@ -124,5 +124,9 @@ function MVO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Time += 1
     end
 
-    return Best_universe_Inflation_rate, Best_universe, Convergence_curve
+    # return Best_universe_Inflation_rate, Best_universe, Convergence_curve
+    return OptimizationResult(
+        Best_universe,
+        Best_universe_Inflation_rate,
+        Convergence_curve)
 end

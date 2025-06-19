@@ -15,7 +15,8 @@ function HikingOA(hiker::Integer, max_iter::Integer, lb::Union{Real,AbstractVect
     Best_iteration = zeros(max_iter + 1)
 
     # Initialize population
-    Pop = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    # Pop = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    position = initialization(npop, dim, ub, lb)
 
     # Evaluate initial fitness
     for q = 1:npop
@@ -54,5 +55,9 @@ function HikingOA(hiker::Integer, max_iter::Integer, lb::Union{Real,AbstractVect
     Best_Hike, idx = findmin(fit)
     Best_Position = Pop[idx]
 
-    return Best_Hike, Best_Position, Best_iteration
+    # return Best_Hike, Best_Position, Best_iteration
+    return OptimizationResult(
+        Best_Position,
+        Best_Hike,
+        Best_iteration)
 end

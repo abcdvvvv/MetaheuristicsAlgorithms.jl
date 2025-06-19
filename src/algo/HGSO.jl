@@ -21,7 +21,8 @@ function HGSO(var_n_gases::Integer, max_iter::Integer, lb::Union{Real,AbstractVe
     P = l2 * rand(var_n_gases)
     C = l3 * rand(var_n_types)
 
-    X = lb .+ rand(var_n_gases, dim) .* (ub - lb)
+    # X = lb .+ rand(var_n_gases, dim) .* (ub - lb)
+    X = initialization(var_n_gases, dim, ub, lb)
 
     Group = Create_Groups(var_n_gases, var_n_types, X)
 
@@ -56,7 +57,11 @@ function HGSO(var_n_gases::Integer, max_iter::Integer, lb::Union{Real,AbstractVe
         end
     end
 
-    return var_Gbest, vec_Xbest, vec_Gbest_iter
+    # return var_Gbest, vec_Xbest, vec_Gbest_iter
+    return OptimizationResult(
+        vec_Xbest,
+        var_Gbest,
+        vec_Gbest_iter)
 end
 
 function Create_Groups(var_n_gases, var_n_types, X)

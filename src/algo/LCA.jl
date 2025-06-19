@@ -87,5 +87,9 @@ function LCA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         CNVG[t] = Tumor_Energy
     end
 
-    return Tumor_Energy, Tumor_Location, CNVG
+    # return Tumor_Energy, Tumor_Location, CNVG
+    return OptimizationResult(
+        Tumor_Location,
+        Tumor_Energy,
+        CNVG)
 end

@@ -87,5 +87,9 @@ function PDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         t += 1
     end
 
-    return Best_PD, PDBest_P, PDConv
+    # return Best_PD, PDBest_P, PDConv
+    return OptimizationResult(
+        PDBest_P,
+        Best_PD,
+        PDConv)
 end

@@ -96,5 +96,9 @@ function HGS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         it += 1
     end
 
-    return Destination_fitness, bestPositions, Convergence_curve
+    # return Destination_fitness, bestPositions, Convergence_curve
+    return OptimizationResult(
+        bestPositions,
+        Destination_fitness,
+        Convergence_curve)
 end

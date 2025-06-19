@@ -103,7 +103,11 @@ function ChOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         Convergence_curve[l] = Attacker_score
     end
 
-    return Attacker_score, Attacker_pos, Convergence_curve
+    # return Attacker_score, Attacker_pos, Convergence_curve
+    return OptimizationResult(
+        Attacker_pos,
+        Attacker_score,
+        Convergence_curve)
 end
 
 function chaos(index, max_iter, Value)

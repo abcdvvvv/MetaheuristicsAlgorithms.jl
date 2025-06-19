@@ -46,5 +46,9 @@ function RSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence[l] = Score
     end
 
-    return Score, Position, Convergence
+    # return Score, Position, Convergence
+    return OptimizationResult(
+        Position,
+        Score,
+        Convergence)
 end

@@ -64,5 +64,9 @@ function ROA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[t] = Best_score
     end
 
-    return Best_score, Best_pos, Convergence_curve
+    # return Best_score, Best_pos, Convergence_curve
+    return OptimizationResult(
+        BestX,
+        Best_pos,
+        Convergence_curve)
 end

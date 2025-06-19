@@ -85,5 +85,9 @@ function MountainGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
         BestF = BestFitness
     end
 
-    return BestF, BestX, cnvg
+    # return BestF, BestX, cnvg
+    return OptimizationResult(
+        BestX,
+        BestF,
+        cnvg)
 end

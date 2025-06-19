@@ -13,9 +13,10 @@ function OOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
 
     # INITIALIZATION
     X = zeros(npop, dim)  # Initialize the population matrix
-    for i = 1:dim
-        X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])  # Initial population
-    end
+    IndividualsPos = initialization(npop, dim, lb, ub)
+    # for i = 1:dim
+    #     X[:, i] = lb[i] .+ rand(npop) .* (ub[i] - lb[i])  # Initial population
+    # end
 
     fit = zeros(npop)  # Initialize fitness array
     for i = 1:npop
@@ -90,5 +91,9 @@ function OOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         # println("It $t = $fbest")
     end
 
-    return fbest, xbest, best_so_far
+    # return fbest, xbest, best_so_far
+    return OptimizationResult(
+        xbest,
+        fbest,
+        best_so_far)
 end

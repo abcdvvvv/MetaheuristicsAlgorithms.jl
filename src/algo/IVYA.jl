@@ -6,7 +6,8 @@
 Knowledge-Based Systems 295 (2024): 111850.
 """
 function IVYA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    Position = rand(npop, dim) .* (ub .- lb) .+ lb
+    # Position = rand(npop, dim) .* (ub .- lb) .+ lb
+    Position = initialization(npop, dim, ub, lb) 
     GV = Position ./ (ub .- lb)
     Cost = [objfun(Position[i, :]) for i = 1:npop]
 
@@ -64,5 +65,9 @@ function IVYA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     Destination_fitness = Cost[1]
     Destination_position = Position[1, :]
 
-    return Destination_fitness, Destination_position, Convergence_curve
+    # return Destination_fitness, Destination_position, Convergence_curve
+    return OptimizationResult(
+        Destination_position,
+        Destination_fitness,
+        Convergence_curve)
 end

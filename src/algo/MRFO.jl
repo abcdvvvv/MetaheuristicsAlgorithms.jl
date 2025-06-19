@@ -6,7 +6,8 @@
 Engineering Applications of Artificial Intelligence 87 (2020): 103300.
 """
 function MRFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
+    # PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
+    PopPos = initialization(npop, dim, lb, ub)
     PopFit = [objfun(PopPos[i]) for i = 1:npop]
 
     BestF = Inf
@@ -90,5 +91,9 @@ function MRFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
         his_best_fit[It] = BestF
     end
-    return BestF, BestX, his_best_fit
+    # return BestF, BestX, his_best_fit
+    return OptimizationResult(
+        BestX,
+        BestF,
+        his_best_fit)
 end

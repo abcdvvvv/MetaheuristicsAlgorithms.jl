@@ -116,7 +116,11 @@ function MossGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{
         it += 1
     end
 
-    return best_cost, best_M, Convergence_curve
+    # return best_cost, best_M, Convergence_curve
+    return OptimizationResult(
+        best_M,
+        best_cost,
+        Convergence_curve)
 end
 
 function actCal(X)

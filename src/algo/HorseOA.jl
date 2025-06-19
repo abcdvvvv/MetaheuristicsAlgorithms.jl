@@ -22,7 +22,9 @@ function HorseOA(nHourse::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
     CostPositionCounter = zeros(nHourse, 2 + dim)
 
     for i = 1:nHourse
-        Hourse[i][:Position] = lb .+ (ub .- lb) .* rand(dim)
+        # Hourse[i][:Position] = lb .+ (ub .- lb) .* rand(dim)
+        Hourse[i][:Position] = initialization(1, dim, ub, lb)
+
 
         Hourse[i][:Velocity] = zeros(VarSize)
 
@@ -137,5 +139,9 @@ function HorseOA(nHourse::Integer, max_iter::Integer, lb::Union{Real,AbstractVec
         r_Delta *= w
         g_Delta *= w
     end
-    return GlobalBest[:Cost], GlobalBest[:Position], BestCost
+    # return GlobalBest[:Cost], GlobalBest[:Position], BestCost
+    return OptimizationResult(
+        GlobalBest[:Position],
+        GlobalBest[:Cost],
+        BestCost)
 end

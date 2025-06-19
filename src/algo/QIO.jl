@@ -66,8 +66,10 @@ function QIO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         ub = ones(dim) .* ub
     end
 
+    IndividualsPos = initialization(npop, dim, lb, ub)
+
     for i = 1:npop
-        IndividualsPos[i, :] .= rand(dim) .* (ub .- lb) .+ lb
+        # IndividualsPos[i, :] .= rand(dim) .* (ub .- lb) .+ lb
         IndividualsFit[i] = objfun(IndividualsPos[i, :])
     end
 
@@ -148,5 +150,9 @@ function QIO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         HisBestF[It] = BestF
     end
 
-    return BestF, BestX, HisBestF
+    # return BestF, BestX, HisBestF
+    return OptimizationResult(
+        BestX,
+        BestF,
+        HisBestF)
 end

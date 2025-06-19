@@ -159,7 +159,11 @@ function RFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         ccurve[ite] = fmin0
     end
 
-    return fmin0, fbest, ccurve
+    # return fmin0, fbest, ccurve
+    return OptimizationResult(
+        fbest,
+        fmin0,
+        ccurve)
 end
 
 function frotate(x::Vector{T}, y::Vector{T}, θ::T, dim::Int) where {T<:Real}

@@ -81,5 +81,9 @@ function LPO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
 
     Result = Convergence
 
-    return BestCost, BestPosition, Convergence
+    # return BestCost, BestPosition, Convergence
+    return OptimizationResult(
+        BestPosition,
+        BestCost,
+        Convergence)
 end

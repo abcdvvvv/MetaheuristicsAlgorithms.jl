@@ -12,7 +12,9 @@ function PRO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     nrich = div(npop, 2)
     pmut = 0.06
 
-    pop = [Dict("Position" => rand(dim) .* (ub - lb) .+ lb,
+    # pop = [Dict("Position" => rand(dim) .* (ub - lb) .+ lb,
+    #     "Cost" => Inf) for _ = 1:npop]
+    pop = [Dict("Position" => initialization(1, dim, ub, lb),
         "Cost" => Inf) for _ = 1:npop]
 
     for i = 1:npop
@@ -73,5 +75,9 @@ function PRO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         BestCost[it] = BestSol["Cost"]
     end
 
-    return BestSol["Cost"], BestSol, BestCost[end]
+    # return BestSol["Cost"], BestSol, BestCost[end]
+    return OptimizationResult(
+        BestSol,
+        BestSol["Cost"],
+        BestCost[end])
 end

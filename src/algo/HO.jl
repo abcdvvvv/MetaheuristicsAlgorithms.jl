@@ -116,5 +116,9 @@ function HO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Re
         best_so_far[t] = fbest
     end
 
-    return fbest, Xbest, best_so_far
+    # return fbest, Xbest, best_so_farx
+    return OptimizationResult(
+        Xbest,
+        fbest,
+        best_so_farx)
 end

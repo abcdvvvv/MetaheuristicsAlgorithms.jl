@@ -124,5 +124,9 @@ function MPA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[Iter] = Top_predator_fit
     end
 
-    return Top_predator_fit, Top_predator_pos, Convergence_curve
+    # return Top_predator_fit, Top_predator_pos, Convergence_curve
+    return OptimizationResult(
+        Top_predator_pos,
+        Top_predator_fit,
+        Convergence_curve)
 end

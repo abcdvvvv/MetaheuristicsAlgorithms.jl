@@ -95,7 +95,11 @@ function RBMO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
         t += 1
     end
 
-    return BestValue, Xfood, Conv, FES
+    # return BestValue, Xfood, Conv, FES
+    return OptimizationResult(
+        Xfood,
+        BestValue,
+        Conv)
 end
 
 function Food_storage(fit, X, fit_old, X_old)

@@ -15,7 +15,8 @@ function SFOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     fvalbest = Inf
     Curve = zeros(max_iter)
-    Xpos = [lb .+ rand(dim) .* (ub .- lb) for _ = 1:npop]
+    # Xpos = [lb .+ rand(dim) .* (ub .- lb) for _ = 1:npop]
+    Xpos = initialization(npop, dim, ub, lb)
     Fitness = [objfun(X) for X in Xpos]
 
     fvalbest, order = findmin(Fitness)

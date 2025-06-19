@@ -20,8 +20,9 @@ function CSBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
     pop = Vector{Plant}(undef, npop)
     sigma1 = [rand(dim) for _ = 1:npop]
 
+    position = initializationLogistic(npop, dim, ub, lb)
     for i = 1:npop
-        position = rand(lb:ub, dim)
+        # position = rand(lb:ub, dim)
         cost = objfun(position)
         pop[i] = Plant(position, cost)
 

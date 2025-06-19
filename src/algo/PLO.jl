@@ -83,5 +83,10 @@ function PLO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         push!(Convergence_curve, Bestscore)
     end
 
-    return Bestscore, Bestpos, Convergence_curve
+    # return Bestscore, Bestpos, Convergence_curve
+    return OptimizationResult(
+        Bestpos,
+        Bestscore,
+        Convergence_curve
+)
 end

@@ -174,5 +174,9 @@ function ECO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         X = copy(X0)
     end
 
-    return Best_score, Best_pos, curve
+    # return Best_score, Best_pos, curve
+    return OptimizationResult(
+        Best_pos,
+        Best_score,
+        curve)
 end

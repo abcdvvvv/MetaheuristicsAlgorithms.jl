@@ -19,7 +19,8 @@ function TLCO(npop::Integer, cycle::Integer, lb::Union{Real,AbstractVector{<:Rea
     Int_Population = [deepcopy(empt) for _ = 1:npop]
 
     for i = 1:npop
-        Int_Population[i]["pos"] = lb .+ rand(dim) .* (ub - lb)
+        # Int_Population[i]["pos"] = lb .+ rand(dim) .* (ub - lb)
+        Int_Population[i]["pos"] = initialization(1, dim, ub, lb) 
         Int_Population[i]["cost"] = objfun(Int_Population[i]["pos"])
     end
 

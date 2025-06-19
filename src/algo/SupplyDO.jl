@@ -17,7 +17,8 @@ function SupplyDO(marketsize::Integer, max_iter::Integer, lb::Union{Real,Abstrac
     best_x = []
 
     for i = 1:marketsize
-        market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
+        # market[i]["CommPrice"] = rand(dim) .* (ub - lb) .+ lb
+        market[i]["CommPrice"] = initialization(1, dim, lb, ub)
         market[i]["CommPriceFit"] = objfun(market[i]["CommPrice"])
         market[i]["CommQuantity"] = rand(dim) .* (ub - lb) .+ lb
         market[i]["CommQuantityFit"] = objfun(market[i]["CommQuantity"])

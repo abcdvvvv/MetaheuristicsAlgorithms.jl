@@ -119,7 +119,7 @@ function PumaO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<
 
     Sol = Vector{Any}(undef, npop)
     for i = 1:npop
-        Sol[i] = Dict(:X => rand(lb:ub, dim), :Cost => objfun(rand(lb:ub, dim)))
+        Sol[i] = Dict(:X => initialization(1, dim, ub, lb), :Cost => objfun(rand(lb:ub, dim)))
     end
 
     ind = argmin([s[:Cost] for s in Sol])
@@ -237,5 +237,9 @@ function PumaO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<
         Convergence[Iter] = Best[:Cost]
     end
 
-    return Best[:Cost], Best[:X], Convergence
+    # return Best[:Cost], Best[:X], Convergence
+    return OptimizationResult(
+        Best[:X],
+        Best[:Cost],
+        Convergence)
 end

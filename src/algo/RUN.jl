@@ -137,7 +137,11 @@ function RUN(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         Convergence_curve[it] = Best_Cost
         # println("it : ", it, ", Best Cost = ", Convergence_curve[it])
     end
-    return Best_Cost, Best_X, Convergence_curve
+    # return Best_Cost, Best_X, Convergence_curve
+    return OptimizationResult(
+        Best_X,
+        Best_Cost,
+        Convergence_curve)
 end
 
 function Unifrnd(a, b, c, dim)

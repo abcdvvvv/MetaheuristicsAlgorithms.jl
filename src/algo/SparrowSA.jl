@@ -15,7 +15,8 @@ function SparrowSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVect
         ub = fill(ub, dim)
     end
 
-    x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    # x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
+    x = initialization(npop, dim, lb, ub)
     fit = [objfun(xi) for xi in x]
     pFit = copy(fit)
     pX = copy(x)
