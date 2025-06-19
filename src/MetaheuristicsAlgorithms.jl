@@ -19,7 +19,7 @@ export OptimizationResult
 include("problem.jl")
 
 # using .ProblemDefinition
-export OptimizationProblem
+export MyOptimization_Problem 
 
 
 include("algo/AEFA.jl")
