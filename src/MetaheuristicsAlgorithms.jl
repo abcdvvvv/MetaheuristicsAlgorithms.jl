@@ -16,10 +16,11 @@ struct OptimizationResult
     his_best_fit::Vector{Float64}
 end
 export OptimizationResult
+include("problem.jl")
 
-
-using .ProblemDefinition
+# using .ProblemDefinition
 export OptimizationProblem
+
 
 include("algo/AEFA.jl")
 include("algo/AEO.jl")

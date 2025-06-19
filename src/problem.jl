@@ -1,10 +1,10 @@
 
-module ProblemDefinition
+# module ProblemDefinition
 
-export OptimizationProblem
+# export OptimizationProblem
 
 struct OptimizationProblem{F}
-    f::F
+    f::Function
     lb::Union{Real, AbstractVector{<:Real}}
     ub::Union{Real, AbstractVector{<:Real}}
     dim::Int
@@ -14,4 +14,4 @@ function OptimizationProblem(f::Function, lb, ub, dim::Int)
     return OptimizationProblem{typeof(f)}(f, lb, ub, dim)
 end
 
-end
+# end
