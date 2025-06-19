@@ -1,7 +1,7 @@
 
 # module ProblemDefinition
 
-# export MyOptimization_Problem
+
 
 struct MyOptimization_Problem
     objfun::Function
@@ -15,6 +15,4 @@ struct MyOptimization_Problem
     
 end
 
-
-
-# end
+export MyOptimization_Problem
