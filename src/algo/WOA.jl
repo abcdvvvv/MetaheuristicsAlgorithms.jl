@@ -71,8 +71,8 @@ function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         convergence_curve)
 end
 
-function WOA(problem::MyOptimization_Problem, npop::Integer, max_iter::Integer)
-# function WOA(npop::Integer, max_iter::function WOA(problem::MyOptimization_Problem, npop::Integer, max_iter::Integer)Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+# function WOA(npop::Integer, max_iter::function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
     dim = problem.dim
     objfun = problem.objfun
     lb = problem.lb

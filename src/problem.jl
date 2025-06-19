@@ -3,16 +3,16 @@
 
 
 
-struct MyOptimization_Problem
+struct OptimizationProblem
     objfun::Function
     lb::Union{Real, AbstractVector{<:Real}}
     ub::Union{Real, AbstractVector{<:Real}}
     dim::Int
 
-    # function MyOptimization_Problem(f::Function, lb, ub, dim::Int)
-    #     return MyOptimization_Problem(f, lb, ub, dim)
+    # function OptimizationProblem(f::Function, lb, ub, dim::Int)
+    #     return OptimizationProblem(f, lb, ub, dim)
     # end
     
 end
 
-export MyOptimization_Problem
+export OptimizationProblem
