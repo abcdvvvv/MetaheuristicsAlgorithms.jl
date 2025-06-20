@@ -3,7 +3,7 @@ using Test
 using Random
 using Plots
 
-include("benchmark.jl")
+include("benchfunctions.jl")
 
 # include("testbenchmark.jl")
 # include("testdso.jl")
@@ -13,7 +13,7 @@ include("benchmark.jl")
 # include("testaha.jl")
 # include("testaft.jl")
 
-include("testaeostruct.jl")
+include("testalgo/testaeostruct.jl")
 # include("testwoastruct.jl")
 
 

@@ -182,9 +182,5 @@ export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
 export RBMO, RFO, RIME
 export SFOA, SHO, SMA, SSA, STOA, SupplyDO
 export TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
-export update_state!
-
-
 
 end
-
