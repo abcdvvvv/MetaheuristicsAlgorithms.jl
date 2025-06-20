@@ -1,7 +1,7 @@
 using MetaheuristicsAlgorithms, Plots
 
 include("../src/plotting/convergence.jl")
-include("../test/benchmark.jl")
+include("../test/benchfunctions.jl")
 
 lb = [-512., -512.]
 ub = [512., 512.]
