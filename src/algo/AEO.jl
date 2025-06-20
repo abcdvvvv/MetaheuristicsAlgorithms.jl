@@ -45,7 +45,7 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     indF = sortperm(PopFit, rev=true)
     PopPos = PopPos[indF, :]
     PopFit = PopFit[indF]
-  @show  his_best_fit[1] = BestF = PopFit[end]
+    his_best_fit[1] = BestF = PopFit[end]
     BestX = PopPos[end, :]
 
     Matr = [1, dim]
