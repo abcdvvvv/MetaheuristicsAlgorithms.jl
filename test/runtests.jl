@@ -1,6 +1,7 @@
 using MetaheuristicsAlgorithms
 using Test
 using Random
+using Plots
 
 include("benchmark.jl")
 

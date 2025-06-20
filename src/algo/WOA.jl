@@ -25,7 +25,8 @@ function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
 
             if fitness < leader_score
                 leader_score = fitness
-                leader_pos = Positions[i, :]
+                # leader_pos = Positions[i, :]
+                leader_pos = vec(Positions[i, :])
             end
         end
 

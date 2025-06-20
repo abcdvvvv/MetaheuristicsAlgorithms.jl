@@ -118,7 +118,7 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         his_best_fit)
 end
 
-function AEO(problem::MyOptimization_Problem, npop::Integer, max_iter::Integer)
+function AEO(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
     dim = problem.dim
     objfun = problem.objfun
     lb = problem.lb
