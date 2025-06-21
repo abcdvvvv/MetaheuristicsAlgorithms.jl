@@ -18,6 +18,8 @@ makedocs(;
         "Home" => "index.md",
         "Reference" => "reference.md",
         "List" => "AlgList.md",
+        "Enginnering Problems" => "constrainenginnering.md",
+        "CEC" => "cec.md",
         "Examples" => "example.md"
     ],
 )
