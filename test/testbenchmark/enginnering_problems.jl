@@ -123,7 +123,7 @@ Seven nonlinear inequality constraints.
 # Returns
 - Penalized objective function value (Float64)
 """
-function F7(x)
+function Engineering_F7(x)
     x[3] = round(x[3])
     γ = x[2]/x[1]
     fc = 37.91*((1 + 1.04*((1 - γ)/(1 + γ))^1.72 * ((x[4]*(2x[5] - 1) / (x[5]*(2x[4] - 1)))^0.41))^(10/3))^-0.3 *

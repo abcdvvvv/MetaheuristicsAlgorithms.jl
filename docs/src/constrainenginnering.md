@@ -1,5 +1,5 @@
 
-```@docs 
+<!-- ```@docs 
 MetaheuristicsAlgorithms.F1
 ```
 
@@ -21,16 +21,16 @@ MetaheuristicsAlgorithms.F5
 
 ```@docs 
 MetaheuristicsAlgorithms.F6
-```
+```-->
 
 ```@docs 
-MetaheuristicsAlgorithms.F7
+MetaheuristicsAlgorithms.Engineering_F7
 ```
-
+<!--
 ```@docs 
 MetaheuristicsAlgorithms.F8
 ```
 
 ```@docs
 MetaheuristicsAlgorithms.F9
-```
+``` -->
