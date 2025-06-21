@@ -6,18 +6,21 @@
 Advances in engineering software 69 (2014): 46-61.
 """
 function GWO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    Alpha_pos = zeros(1, dim)
+    # Alpha_pos = zeros(1, dim)
+    Alpha_pos = zeros(dim)
     Alpha_score = Inf
 
-    Beta_pos = zeros(1, dim)
+    # Beta_pos = zeros(1, dim)
+    Beta_pos = zeros(dim)
     Beta_score = Inf
 
-    Delta_pos = zeros(1, dim)
+    # Delta_pos = zeros(1, dim)
+    Delta_pos = zeros(dim)
     Delta_score = Inf
 
     Positions = initialization(npop, dim, ub, lb)
 
-    Convergence_curve = zeros(max_iter, 1)
+    Convergence_curve = zeros(max_iter)
 
     l = 0
     while l < max_iter
@@ -83,5 +86,13 @@ function GWO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     return OptimizationResult(
         Alpha_pos,
         Alpha_score,
-        Convergence_curve)
+        vec(Convergence_curve))
 end
+
+function GWO(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+        dim = problem.dim
+        objfun = problem.objfun
+        lb = problem.lb
+        ub = problem.ub
+        return GWO(npop, max_iter, lb, ub, dim, objfun)
+    end

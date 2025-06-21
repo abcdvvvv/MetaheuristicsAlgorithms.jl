@@ -1,7 +1,7 @@
 
-# module ProblemDefinition
+module ProblemDefinition
 
-
+export OptimizationProblem
 
 struct OptimizationProblem
     objfun::Function
@@ -15,4 +15,5 @@ struct OptimizationProblem
     
 end
 
-export OptimizationProblem
+
+end
