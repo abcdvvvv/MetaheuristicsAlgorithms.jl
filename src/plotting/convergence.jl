@@ -10,6 +10,8 @@ function convergence_curve(result::OptimizationResult)
         # markercolor=:yellow3,
         xlabel="Iterations",
         ylabel="Objective Function Value")
+        # display(fig)
+        plot(1:10,1:10)
 end
 
 export convergence_curve

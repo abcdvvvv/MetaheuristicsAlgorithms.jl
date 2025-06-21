@@ -101,6 +101,28 @@ function F6(x)
 end
 
 # F7: Rolling element bearing design
+"""
+    F3(x::Vector{Float64}) -> Float64
+
+Welded Beam Design Optimization.
+
+Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
+
+# Problem Source
+This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
+
+# Variables
+- `x[1]`: Thickness of weld
+- `x[2]`: Length of welded joint
+- `x[3]`: Height of the beam
+- `x[4]`: Width of the beam
+
+# Constraints
+Seven nonlinear inequality constraints.
+
+# Returns
+- Penalized objective function value (Float64)
+"""
 function F7(x)
     x[3] = round(x[3])
     γ = x[2]/x[1]
