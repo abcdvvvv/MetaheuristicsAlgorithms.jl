@@ -3,7 +3,7 @@ function getH(g)
 end
 
 # F1: Tension/compression spring design
-function F1(x)
+function Engineering_F1(x)
     cost = (x[3] + 2) * x[2] * x[1]^2
     g = [
         1 - ((x[3] * x[2]^3) / (71785 * x[1]^4)),
@@ -17,7 +17,7 @@ function F1(x)
 end
 
 # F2: Pressure vessel design
-function F2(x)
+function Engineering_F2(x)
     cost = 0.6224*x[1]*x[3]*x[4] + 1.7781*x[2]*x[3]^2 + 3.1661*x[1]^2*x[4] + 19.84*x[1]^2*x[3]
     g = [
         -x[1] + 0.0193*x[3],
@@ -31,7 +31,7 @@ function F2(x)
 end
 
 # F3: Welded beam design
-function F3(x)
+function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
     Q = 6000 * (14 + x[2]/2)
     D = sqrt(x[2]^2 / 4 + (x[1] + x[3])^2 / 4)
@@ -57,7 +57,7 @@ function F3(x)
 end
 
 # F4: Speed reducer design
-function F4(x)
+function Engineering_F4(x)
     cost = 0.7854*x[1]*x[2]^2*(3.3333*x[3]^2 + 14.9334*x[3] - 43.0934) -
            1.508*x[1]*(x[6]^2 + x[7]^2) +
            7.4777*(x[6]^3 + x[7]^3) +
@@ -81,14 +81,14 @@ function F4(x)
 end
 
 # F5: Gear train design
-function F5(x)
+function Engineering_F5(x)
     x = round.(x)
     cost = (1/6.931 - (x[3]*x[2]) / (x[1]*x[4]))^2
     return cost
 end
 
 # F6: Three-bar truss design
-function F6(x)
+function Engineering_F6(x)
     cost = (2*sqrt(2)*x[1] + x[2]) * 100
     g = [
         (sqrt(2)*x[1] + x[2]) / (sqrt(2)*x[1]^2 + 2*x[1]*x[2])*2 - 2,
@@ -151,7 +151,7 @@ function Engineering_F7(x)
 end
 
 # F8: Cantilever beam design
-function F8(x)
+function Engineering_F8(x)
     cost = 0.0624 * sum(x)
     g = 61/x[1]^3 + 37/x[2]^3 + 19/x[3]^3 + 7/x[4]^3 + 1/x[5]^3 - 1
     lam = 1e15
@@ -160,7 +160,7 @@ function F8(x)
 end
 
 # F9: I-beam deflection
-function F9(x)
+function Engineering_F9(x)
     term1 = x[3] * (x[1] - 2*x[4])^3 / 12
     term2 = x[2] * x[4]^3 / 6
     term3 = 2 * x[2] * x[4] * ((x[1] - x[4])/2)^2
