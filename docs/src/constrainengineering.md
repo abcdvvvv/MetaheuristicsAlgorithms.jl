@@ -6,8 +6,4 @@
 MetaheuristicsAlgorithms.Engineering_F7
 ```
 
-
-
-<!-- ![My Plot](assets/WeldedBeam.png) -->
-
-![Welded Beam](pictures/WeldedBeam.png)
+![Welded Beam](assets/WeldedBeam.png)
