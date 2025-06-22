@@ -22,6 +22,7 @@ makedocs(;
         "CEC" => "cec.md",
         "Examples" => "example.md"
     ],
+    html = Documenter.HTMLWriter.HTML(size_threshold=300_000),
 )
 
 deploydocs(;
