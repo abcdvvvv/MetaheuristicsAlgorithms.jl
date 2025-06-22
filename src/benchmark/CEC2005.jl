@@ -2,11 +2,19 @@
 function Ufun(x, a, k, m)
     return k .* ((x .- a).^m) .* (x .> a) + k .* ((-x .- a).^m) .* (x .< -a)
 end
-
+"""
+    F1()
+"""
 F1(x) = sum(x .^ 2)
 
+"""
+    F2()
+"""
 F2(x) = sum(abs.(x)) + prod(abs.(x))
 
+"""
+    F3()
+"""
 function F3(x)
     o = 0.0
     for i in 1:length(x)
@@ -15,37 +23,64 @@ function F3(x)
     return o
 end
 
+"""
+    F4()
+"""
 F4(x) = maximum(abs.(x))
 
+"""
+    F5()
+"""
 function F5(x)
     return sum(100 .* (x[2:end] .- x[1:end-1].^2).^2 + (x[1:end-1] .- 1).^2)
 end
 
+"""
+    F6()
+"""
 F6(x) = sum(abs.(x .+ 0.5).^2)
 
+"""
+    F7()
+"""
 function F7(x)
     dim = length(x)
     return sum((1:dim) .* (x.^4)) + rand()
 end
 
+"""
+    F8()
+"""
 F8(x) = sum(-x .* sin.(sqrt.(abs.(x))))
 
+"""
+    F9()
+"""
 function F9(x)
     dim = length(x)
     return sum(x.^2 .- 10 .* cos.(2π .* x)) + 10 * dim
 end
 
+"""
+    F10()
+"""
 function F10(x)
     dim = length(x)
     return -20 * exp(-0.2 * sqrt(sum(x.^2) / dim)) -
            exp(sum(cos.(2π .* x)) / dim) + 20 + exp(1)
 end
 
+"""
+    F11()
+"""
 function F11(x)
     dim = length(x)
     return sum(x.^2) / 4000 - prod(cos.(x ./ sqrt.(1:dim))) + 1
 end
 
+"""
+    F12()
+"""
 function F12(x)
     dim = length(x)
     term1 = (π / dim) * (10 * sin(π * (1 + (x[1] + 1) / 4))^2)
@@ -54,6 +89,10 @@ function F12(x)
     return term1 + term2 + term3 + sum(Ufun(x, 10, 100, 4))
 end
 
+
+"""
+    F13()
+"""
 function F13(x)
     dim = length(x)
     term1 = sin(3π * x[1])^2
@@ -62,6 +101,10 @@ function F13(x)
     return 0.1 * (term1 + term2 + term3) + sum(Ufun(x, 5, 100, 4))
 end
 
+
+"""
+    F14()
+"""
 function F14(x)
     aS = hcat([-32, -16, 0, 16, 32,
                -32, -16, 0, 16, 32,
@@ -77,27 +120,42 @@ function F14(x)
     return (1 / (0.002 + sum(1 ./ (1:25 .+ bS))))^(-1)
 end
 
+"""
+    F15()
+"""
 function F15(x)
     aK = [.1957, .1947, .1735, .16, .0844, .0627, .0456, .0342, .0323, .0235, .0246]
     bK = 1 ./ [.25, .5, 1, 2, 4, 6, 8, 10, 12, 14, 16]
     return sum((aK .- (x[1] .* (bK.^2 .+ x[2] .* bK)) ./ (bK.^2 .+ x[3] .* bK .+ x[4])).^2)
 end
 
+"""
+    F16()
+"""
 function F16(x)
     return 4*x[1]^2 - 2.1*x[1]^4 + (x[1]^6)/3 + x[1]*x[2] - 4*x[2]^2 + 4*x[2]^4
 end
 
+"""
+    F17()
+"""
 function F17(x)
     return (x[2] - x[1]^2 * 5.1 / (4π^2) + 5 / π * x[1] - 6)^2 +
            10 * (1 - 1 / (8π)) * cos(x[1]) + 10
 end
 
+"""
+    F18()
+"""
 function F18(x)
     return (1 + (x[1] + x[2] + 1)^2 * (19 - 14x[1] + 3x[1]^2 - 14x[2] +
             6x[1]*x[2] + 3x[2]^2)) * (30 + (2x[1] - 3x[2])^2 * (18 - 32x[1] +
             12x[1]^2 + 48x[2] - 36x[1]*x[2] + 27x[2]^2))
 end
 
+"""
+    F19()
+"""
 function F19(x)
     aH = [3 10 30; .1 10 35; 3 10 30; .1 10 35]
     cH = [1, 1.2, 3, 3.2]
@@ -108,6 +166,9 @@ function F19(x)
     return -sum(cH[i] * exp(-sum(aH[i, :] .* (x .- pH[i, :]).^2)) for i in 1:4)
 end
 
+"""
+    F20()
+"""
 function F20(x)
     aH = [10 3 17 3.5 1.7 8;
           .05 10 17 .1 8 14;
@@ -121,6 +182,9 @@ function F20(x)
     return -sum(cH[i] * exp(-sum(aH[i, :] .* (x .- pH[i, :]).^2)) for i in 1:4)
 end
 
+"""
+    F21()
+"""
 function F21(x)
     aSH = [4 4 4 4;
            1 1 1 1;
@@ -136,6 +200,9 @@ function F21(x)
     return -sum((dot(x .- aSH[i, :], x .- aSH[i, :]) + cSH[i])^(-1) for i in 1:5)
 end
 
+"""
+    F22()
+"""
 function F22(x)
     aSH = [4 4 4 4;
            1 1 1 1;
@@ -151,6 +218,9 @@ function F22(x)
     return -sum((dot(x .- aSH[i, :], x .- aSH[i, :]) + cSH[i])^(-1) for i in 1:7)
 end
 
+"""
+    F23()
+"""
 function F23(x)
     aSH = [4 4 4 4;
            1 1 1 1;
