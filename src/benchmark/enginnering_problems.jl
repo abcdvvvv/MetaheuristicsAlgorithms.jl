@@ -4,7 +4,29 @@ end
 
 # F1: Tension/compression spring design
 """
-    F1()
+    F1(x::Vector{Float64}) -> Float64
+
+Tension/Compression Spring Design Optimization.
+
+Minimizes the weight of a tension/compression spring subject to constraints on shear stress, surge frequency, minimum deflection, and geometric limits.
+
+# Problem Source
+A well-known benchmark in constrained engineering design, commonly used in metaheuristic optimization literature.
+
+# Variables
+- `x[1]`: Wire diameter (d)
+- `x[2]`: Mean coil diameter (D)
+- `x[3]`: Number of active coils (N)
+
+# Constraints
+Four nonlinear inequality constraints:
+- Shear stress constraint
+- Surge frequency constraint
+- Minimum deflection constraint
+- Geometry-related limits
+
+# Returns
+- Penalized objective function value (Float64)
 """
 function Engineering_F1(x)
     cost = (x[3] + 2) * x[2] * x[1]^2
@@ -205,7 +227,33 @@ end
 
 # F4: Speed reducer design
 """
-    F4()
+    F4(x::Vector{Float64}) -> Float64
+
+Speed Reducer Design Optimization.
+
+Minimizes the weight of a speed reducer subject to constraints on bending stress, surface stress, transverse deflections, and geometry.
+
+# Problem Source
+A standard benchmark problem in engineering design, commonly used to test constrained optimization algorithms.
+
+# Variables
+- `x[1]`: Face width (in)
+- `x[2]`: Module of teeth (in)
+- `x[3]`: Number of teeth
+- `x[4]`: Length of the first shaft between bearings (in)
+- `x[5]`: Length of the second shaft between bearings (in)
+- `x[6]`: Diameter of the first shaft (in)
+- `x[7]`: Diameter of the second shaft (in)
+
+# Constraints
+- Bending stress
+- Surface stress
+- Deflection of shafts
+- Geometric and design constraints
+- Seven nonlinear inequality constraints in total
+
+# Returns
+- Penalized objective function value (Float64)
 """
 function Engineering_F4(x)
     cost = 0.7854*x[1]*x[2]^2*(3.3333*x[3]^2 + 14.9334*x[3] - 43.0934) -
@@ -232,7 +280,27 @@ end
 
 # F5: Gear train design
 """
-    F5()
+    F5(x::Vector{Float64}) -> Float64
+
+Gear Train Design Optimization.
+
+Minimizes the error between an actual and a desired gear ratio in a simple four-gear train. All variables must be integers.
+
+# Problem Source
+A discrete constrained engineering design problem widely used to evaluate optimization algorithms that handle integer variables.
+
+# Variables
+- `x[1]`: Number of teeth on gear 1 (integer)
+- `x[2]`: Number of teeth on gear 2 (integer)
+- `x[3]`: Number of teeth on gear 3 (integer)
+- `x[4]`: Number of teeth on gear 4 (integer)
+
+# Constraints
+- Each variable must be an integer in the range [12, 60]
+- The gear ratio error must be minimized
+
+# Returns
+- Squared error between actual and desired gear ratio (Float64)
 """
 function Engineering_F5(x)
     x = round.(x)
@@ -242,7 +310,26 @@ end
 
 # F6: Three-bar truss design
 """
-    F6()
+    F6(x::Vector{Float64}) -> Float64
+
+Three-Bar Truss Design Optimization.
+
+Minimizes the weight of a three-bar truss structure subject to stress and displacement constraints.
+
+# Problem Source
+A classical structural optimization benchmark problem used in metaheuristic algorithm research.
+
+# Variables
+- `x[1]`: Cross-sectional area of the first bar (continuous)
+- `x[2]`: Cross-sectional area of the second bar (continuous)
+
+# Constraints
+- Stress in each member must not exceed allowable limits
+- Displacement constraints on the structure
+- Variable bounds typically in the range [0.1, 10]
+
+# Returns
+- Penalized objective function value (Float64) representing the weight of the truss
 """
 function Engineering_F6(x)
     cost = (2*sqrt(2)*x[1] + x[2]) * 100
@@ -258,7 +345,29 @@ end
 
 # F7: Rolling element bearing design
 """
-    F3() 
+    F7(x::Vector{Float64}) -> Float64
+
+Rolling Element Bearing Design Optimization.
+
+Minimizes the bearing’s weight subject to constraints on stress, deflection, and geometry.
+
+# Problem Source
+A standard constrained engineering design problem often used to benchmark metaheuristic algorithms.
+
+# Variables
+- `x[1]`: Bearing inner radius
+- `x[2]`: Bearing outer radius
+- `x[3]`: Width of the bearing
+- `x[4]`: Shaft diameter
+- `x[5]`: Number of rolling elements
+
+# Constraints
+- Stress limits on the bearing components
+- Deflection limits
+- Geometric and manufacturing constraints
+
+# Returns
+- Penalized objective function value (Float64) reflecting the bearing weight or cost
 """
 function Engineering_F7(x)
     x[3] = round(x[3])
@@ -289,7 +398,30 @@ end
 
 # F8: Cantilever beam design
 """
-    F8()
+    F8(x::Vector{Float64}) -> Float64
+
+Cantilever Beam Design Optimization.
+
+Minimizes the weight of a cantilever beam subject to constraints on bending stress, deflection, and geometric dimensions.
+
+# Problem Source
+A classical constrained engineering design problem used in metaheuristic algorithm research.
+
+# Variables
+- `x[1]`: Width of the beam cross-section
+- `x[2]`: Height of the beam cross-section
+- `x[3]`: Length of the beam segment 1
+- `x[4]`: Length of the beam segment 2
+- `x[5]`: Length of the beam segment 3
+- `x[6]`: Length of the beam segment 4
+
+# Constraints
+- Maximum bending stress constraints
+- Deflection limits at the beam’s free end
+- Geometric bounds on variables
+
+# Returns
+- Penalized objective function value (Float64), representing the beam weight
 """
 function Engineering_F8(x)
     cost = 0.0624 * sum(x)
@@ -301,7 +433,29 @@ end
 
 # F9: I-beam deflection
 """
-    F9()
+    F9(x::Vector{Float64}) -> Float64
+
+I-Beam Deflection Optimization.
+
+Minimizes the weight of an I-beam subject to constraints on bending stress, shear stress, and deflection under load.
+
+# Problem Source
+A classical engineering design benchmark widely used in metaheuristic algorithm literature.
+
+# Variables
+- `x[1]`: Web height
+- `x[2]`: Flange width
+- `x[3]`: Web thickness
+- `x[4]`: Flange thickness
+
+# Constraints
+- Bending stress limits
+- Shear stress limits
+- Maximum deflection allowed
+- Geometric constraints
+
+# Returns
+- Penalized objective function value (Float64), representing the beam weight
 """
 function Engineering_F9(x)
     term1 = x[3] * (x[1] - 2*x[4])^3 / 12
