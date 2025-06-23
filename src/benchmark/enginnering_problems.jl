@@ -307,7 +307,6 @@ P_c(z) = \\frac{4.013 E \\sqrt{z_3^2 z_4^5 / 36}}{L^2} \\left( 1 - \\frac{z_3}{2
 
 - Penalized objective function value (`Float64`)
 """
-
 function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
     Q = 6000 * (14 + x[2]/2)
