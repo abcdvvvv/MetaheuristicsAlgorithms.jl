@@ -10,8 +10,8 @@ It includes a wide range of **Swarm-based Algorithms**, **Physical-based Algorit
 
 
 These algorithms belongs to the category of **Population-based Algorithms**, which are among the most common algorithms in the field of metaheuristic due to many reasons such as  
-- Simplicity
-- Robustness
+- Simplicity.
+- Robustness.
 - Effectiveness.
 
 
