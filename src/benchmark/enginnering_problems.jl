@@ -253,7 +253,7 @@ min_{\\vec{z}} f(\\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
 \vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\
 min_{\vec{z}} f(\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
 ```
-
+ 
 # Constraints
  
 ```math
