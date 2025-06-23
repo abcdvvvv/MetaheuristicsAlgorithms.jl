@@ -104,7 +104,79 @@ end
 # - Penalized objective function value (Float64)
 # """
 """
-F3
+    Engineering_F3(x::Vector{Float64}) -> Float64
+
+Welded Beam Design Optimization Problem.
+
+Minimizes the cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometric properties.
+
+# Objective
+
+``\\[
+\\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\\\
+\\min_{\\vec{z}} f(\\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
+\\]``
+
+# Constraints
+
+``\\[
+\\begin{aligned}
+g_1(\\vec{z}) &= \\tau(z) - \\tau_{\\max} \\leq 0 \\\\
+g_2(\\vec{z}) &= \\sigma(z) - \\sigma_{\\max} \\leq 0 \\\\
+g_3(\\vec{z}) &= z_1 - z_4 \\leq 0 \\\\
+g_4(\\vec{z}) &= 0.10471 z_1^2 + 0.04811 z_3 z_4 (14 + z_2) - 5 \\leq 0 \\\\
+g_5(\\vec{z}) &= 0.125 - z_1 \\leq 0 \\\\
+g_6(\\vec{z}) &= \\delta(z) - \\delta_{\\max} \\leq 0 \\\\
+g_7(\\vec{z}) &= P - P_c(z) \\leq 0
+\\end{aligned}
+\\]``
+
+# Definitions
+
+``\\[
+\\tau(z) = \\sqrt{(\\tau')^2 + 2\\tau'\\tau''\\frac{z_2}{2R} + (\\tau'')^2},\\quad
+\\tau' = \\frac{P}{\\sqrt{2} z_1 z_2},\\quad
+\\tau'' = \\frac{MR}{J}
+\\]``
+
+``\\[
+M = P \\left( L + \\frac{z_2}{2} \\right),\\quad
+R = \\sqrt{ \\frac{z_2^2}{4} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 }
+\\]``
+
+``\\[
+J = 2 \\sqrt{2} z_1 z_2 \\left[ \\frac{z_2^2}{12} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 \\right]
+\\]``
+
+``\\[
+\\sigma(z) = \\frac{6PL}{z_4 z_3^2},\\quad
+\\delta(z) = \\frac{4PL^3}{E z_3^3 z_4}
+\\]``
+
+``\\[
+P_c(z) = \\frac{4.013 E \\sqrt{z_3^2 z_4^5 / 36}}{L^2} \\left( 1 - \\frac{z_3}{2L} \\sqrt{\\frac{E}{4G}} \\right)
+\\]``
+
+# Constants
+
+- `P = 6000` lb
+- `L = 14` in
+- `E = 30×10⁶` psi
+- `G = 12×10⁶` psi
+- `τₘₐₓ = 13600` psi
+- `σₘₐₓ = 30000` psi
+- `δₘₐₓ = 0.25` in
+
+# Decision Variables
+
+- `x[1] = z₁`: Thickness of weld (h)
+- `x[2] = z₂`: Length of weld (l)
+- `x[3] = z₃`: Height of beam (t)
+- `x[4] = z₄`: Width of beam (b)
+
+# Returns
+
+- Penalized objective function value (`Float64`)
 """
 function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
