@@ -125,12 +125,121 @@ end
 # # Returns
 # - Penalized objective function value (Float64)
 # """
-"""
+
+
+
+
+# """
+#     Engineering_F3(x::Vector{Float64}) -> Float64
+
+# Welded Beam Design Optimization Problem.
+
+# Minimizes the cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometric properties.
+
+# # Objective
+
+# ``\\[
+# \\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\\\
+# \\min_{\\vec{z}} f(\\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
+# \\]``
+
+# # Constraints
+ 
+# ``\\[
+# \\begin{aligned}
+# g_1(\\vec{z}) &= \\tau(z) - \\tau_{\\max} \\leq 0 \\\\
+# g_2(\\vec{z}) &= \\sigma(z) - \\sigma_{\\max} \\leq 0 \\\\
+# g_3(\\vec{z}) &= z_1 - z_4 \\leq 0 \\\\
+# g_4(\\vec{z}) &= 0.10471 z_1^2 + 0.04811 z_3 z_4 (14 + z_2) - 5 \\leq 0 \\\\
+# g_5(\\vec{z}) &= 0.125 - z_1 \\leq 0 \\\\
+# g_6(\\vec{z}) &= \\delta(z) - \\delta_{\\max} \\leq 0 \\\\
+# g_7(\\vec{z}) &= P - P_c(z) \\leq 0
+# \\end{aligned}
+# \\]``
+
+# # Definitions
+
+# ``\\[
+# \\tau(z) = \\sqrt{(\\tau')^2 + 2\\tau'\\tau''\\frac{z_2}{2R} + (\\tau'')^2},\\quad
+# \\tau' = \\frac{P}{\\sqrt{2} z_1 z_2},\\quad
+# \\tau'' = \\frac{MR}{J}
+# \\]``
+
+# ``\\[
+# M = P \\left( L + \\frac{z_2}{2} \\right),\\quad
+# R = \\sqrt{ \\frac{z_2^2}{4} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 }
+# \\]``
+
+# ``\\[
+# J = 2 \\sqrt{2} z_1 z_2 \\left[ \\frac{z_2^2}{12} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 \\right]
+# \\]``
+
+# ``\\[
+# \\sigma(z) = \\frac{6PL}{z_4 z_3^2},\\quad
+# \\delta(z) = \\frac{4PL^3}{E z_3^3 z_4}
+# \\]``
+
+# ``\\[
+# P_c(z) = \\frac{4.013 E \\sqrt{z_3^2 z_4^5 / 36}}{L^2} \\left( 1 - \\frac{z_3}{2L} \\sqrt{\\frac{E}{4G}} \\right)
+# \\]``
+
+# # Constants
+
+# - `P = 6000` lb
+# - `L = 14` in
+# - `E = 30×10⁶` psi
+# - `G = 12×10⁶` psi
+# - `τₘₐₓ = 13600` psi
+# - `σₘₐₓ = 30000` psi
+# - `δₘₐₓ = 0.25` in
+
+# # Decision Variables
+
+# - `x[1] = z₁`: Thickness of weld (h)
+# - `x[2] = z₂`: Length of weld (l)
+# - `x[3] = z₃`: Height of beam (t)
+# - `x[4] = z₄`: Width of beam (b)
+
+# # Returns
+
+# - Penalized objective function value (`Float64`)
+# """
+
+
+
+raw"""
     Engineering_F3(x::Vector{Float64}) -> Float64
 
 Welded Beam Design Optimization Problem.
 
 Minimizes the cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometric properties.
+\begin{equation}\label{eq:WBD}
+	\begin{aligned}
+		&\text{Consider variable}& & \vec{z}=[z_{1},z_{2},z_{3},z_{4}]=[h,l,t,b].\\
+		& \underset{\vec{z}}{\text{Minimize}}
+		& & f(\vec{z})=1.10471 z_{1}^{2} z_{2}+0.04811 z_{3} z_{4}\left(14+z_{2}\right). \\
+		& \text{Subject to} & & g_{1}(\vec{z})=\tau(z)-\tau_{\max } \leqslant 0.\\
+		& & & g_{2}(\vec{z})=\sigma(z)-\sigma_{\max } \leqslant 0.\\
+		& & & g_{3}(\vec{z})=z_{1}-z_{4} \leqslant 0.\\
+		& & & g_{4}(\vec{z})=0.10471 z_{1}^{2}+ 0.04811 z_{3} z_{4}\left(14+z_{2}\right)-5 \leqslant 0.\\
+		& & & g_{5}(\vec{z})=0.125-z_{1} \leqslant 0. \\
+		& & & g_{6}(\vec{z})=\delta(z)-\delta_{\max } \leqslant 0. \\
+		& & & g_{7}(\vec{z})=P-P_{c}(z) \leqslant 0. \\
+		& \text{Variable range} & & 0.1 \leqslant z_{1},z_{4} \leqslant 2.\\
+		& & & 0.1 \leqslant z_{2},z_{3} \leqslant 10.\\
+		& \text{Where} & & \tau(z)=\sqrt{\left(\tau^{\prime}\right)^{2}+2 \tau^{\prime} \tau^{\prime \prime} \frac{z_{2}}{2 R}+\left(\tau^{\prime \prime}\right)^{2}}. \\
+		& & & \tau^{\prime}=\frac{P}{\sqrt{2} z_{1} z_{2}},\quad
+		\tau^{\prime \prime}=\frac{M R}{J}. \\
+		& & & M=P\left(L+\frac{z_{2}}{2}\right). \\ 
+		& & & R=\sqrt{\frac{z_{2}^{2}}{4}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}}. \\
+		& & & J=2\left\{\sqrt{2} z_{1} z_{2}\left[\frac{z_{2}^{2}}{12}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}\right]\right\}. \\
+		& & & \sigma(z)=\frac{6 P L}{z_{4} \chi_{3}^{2}}, \quad \delta(z)=\frac{4 P L^{3}}{E z_{3}^{3} z_{4}}. \\
+		& & & P_{c}(z)=\frac{4.013 E \sqrt{\frac{z^{2} z^{5}}{36}}}{L^{2}}\left(1-\frac{z_{3}}{2 L} \sqrt{\frac{E}{4 G}}\right). \\
+		& & & P=6000 lb, \quad L=14 in, \quad E=30 \times 10^{6} \mathrm{psi}. \\
+		& & & G=12 \times 10^{6} \mathrm{psi}, \quad \tau_{\max }=13,600 ps. \\
+		& & & \sigma_{\max }=30,000 \mathrm{psi}, \quad \delta_{\max }=0.25 in. \\
+	\end{aligned}
+\end{equation}
 
 # Objective
 
@@ -200,6 +309,7 @@ P_c(z) = \\frac{4.013 E \\sqrt{z_3^2 z_4^5 / 36}}{L^2} \\left( 1 - \\frac{z_3}{2
 
 - Penalized objective function value (`Float64`)
 """
+
 function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
     Q = 6000 * (14 + x[2]/2)
