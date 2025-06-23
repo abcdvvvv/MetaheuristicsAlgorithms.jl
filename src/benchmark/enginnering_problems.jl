@@ -37,8 +37,53 @@ function Engineering_F2(x)
 end
 
 # F3: Welded beam design
-"""
-    F3()
+raw"""
+    F7(x::Vector{Float64}) -> Float64
+
+Welded Beam Design Optimization.
+
+Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
+
+```math
+\begin{aligned}
+&\text{Consider variable} & & \vec{z}=[z_{1},z_{2},z_{3},z_{4}]=[h,l,t,b].\\
+& \underset{\vec{z}}{\text{Minimize}} & & f(\vec{z})=1.10471 z_{1}^{2} z_{2}+0.04811 z_{3} z_{4}(14+z_{2}). \\
+& \text{Subject to} & & g_{1}(\vec{z})=\tau(z)-\tau_{\max } \leqslant 0. \\
+& & & g_{2}(\vec{z})=\sigma(z)-\sigma_{\max } \leqslant 0. \\
+& & & g_{3}(\vec{z})=z_{1}-z_{4} \leqslant 0. \\
+& & & g_{4}(\vec{z})=0.10471 z_{1}^{2}+ 0.04811 z_{3} z_{4}(14+z_{2})-5 \leqslant 0. \\
+& & & g_{5}(\vec{z})=0.125-z_{1} \leqslant 0. \\
+& & & g_{6}(\vec{z})=\delta(z)-\delta_{\max } \leqslant 0. \\
+& & & g_{7}(\vec{z})=P-P_{c}(z) \leqslant 0. \\
+& \text{Variable range} & & 0.1 \leqslant z_{1},z_{4} \leqslant 2,\quad
+0.1 \leqslant z_{2},z_{3} \leqslant 10. \\
+& \text{Where} & & \tau(z)=\sqrt{(\tau^{\prime})^{2}+2 \tau^{\prime} \tau^{\prime \prime} \frac{z_{2}}{2 R}+(\tau^{\prime \prime})^{2}}. \\
+& & & \tau^{\prime}=\frac{P}{\sqrt{2} z_{1} z_{2}},\quad
+\tau^{\prime \prime}=\frac{M R}{J}. \\
+& & & M=P(L+\frac{z_{2}}{2}),\quad 
+R=\sqrt{\frac{z_{2}^{2}}{4}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}}. \\
+& & & J=2\sqrt{2} z_{1} z_{2}\left[\frac{z_{2}^{2}}{12}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}\right]. \\
+& & & \sigma(z)=\frac{6 P L}{z_{4} \chi_{3}^{2}},\quad \delta(z)=\frac{4 P L^{3}}{E z_{3}^{3} z_{4}}. \\
+& & & P_{c}(z)=\frac{4.013 E \sqrt{z_{3}^{2} z_{4}^{5} / 36}}{L^{2}}\left(1-\frac{z_{3}}{2 L} \sqrt{\frac{E}{4 G}}\right). \\
+& & & P=6000~\text{lb},\quad L=14~\text{in},\quad E=30\times10^{6}~\text{psi}. \\
+& & & G=12\times10^{6}~\text{psi},\quad \tau_{\max }=13600~\text{psi},\quad
+\sigma_{\max }=30000~\text{psi},\quad \delta_{\max }=0.25~\text{in}.
+\end{aligned}
+
+# Problem Source
+This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
+
+# Variables
+- `x[1]`: Thickness of weld
+- `x[2]`: Length of welded joint
+- `x[3]`: Height of the beam
+- `x[4]`: Width of the beam
+
+# Constraints
+Seven nonlinear inequality constraints.
+
+# Returns
+- Penalized objective function value (Float64)
 """
 function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
@@ -120,26 +165,7 @@ end
 
 # F7: Rolling element bearing design
 """
-    F3(x::Vector{Float64}) -> Float64
-
-Welded Beam Design Optimization.
-
-Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
-
-# Problem Source
-This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
-
-# Variables
-- `x[1]`: Thickness of weld
-- `x[2]`: Length of welded joint
-- `x[3]`: Height of the beam
-- `x[4]`: Width of the beam
-
-# Constraints
-Seven nonlinear inequality constraints.
-
-# Returns
-- Penalized objective function value (Float64)
+    F3() 
 """
 function Engineering_F7(x)
     x[3] = round(x[3])
