@@ -20,4 +20,3 @@ fig = plot(result.his_best_fit,
     # markercolor=:yellow3,
     xlabel="Iterations",
     ylabel="Objective Function Value")
-display(fig)
