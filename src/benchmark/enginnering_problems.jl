@@ -59,49 +59,52 @@ function Engineering_F2(x)
 end
 
 # F3: Welded beam design
-raw"""
-    F3(x::Vector{Float64}) -> Float64
+# raw"""
+#     F3(x::Vector{Float64}) -> Float64
 
-Welded Beam Design Optimization.
+# Welded Beam Design Optimization.
 
-Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
+# Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
 
-$$
-\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\
-\min_{\vec{z}} f(\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2) \\
-\text{s.t.} \\
-g_1(\vec{z}) = \tau(z) - \tau_{\max} \leq 0 \\
-g_2(\vec{z}) = \sigma(z) - \sigma_{\max} \leq 0 \\
-g_3(\vec{z}) = z_1 - z_4 \leq 0 \\
-g_4(\vec{z}) = 0.10471 z_1^2 + 0.04811 z_3 z_4 (14 + z_2) - 5 \leq 0 \\
-g_5(\vec{z}) = 0.125 - z_1 \leq 0 \\
-g_6(\vec{z}) = \delta(z) - \delta_{\max} \leq 0 \\
-g_7(\vec{z}) = P - P_c(z) \leq 0 \\
-0.1 \leq z_1, z_4 \leq 2,\quad 0.1 \leq z_2, z_3 \leq 10 \\
-\tau(z) = \sqrt{(\tau')^2 + 2\tau'\tau''\frac{z_2}{2R} + (\tau'')^2} \\
-\tau' = \frac{P}{\sqrt{2} z_1 z_2},\quad \tau'' = \frac{MR}{J} \\
-M = P \left( L + \frac{z_2}{2} \right),\quad R = \sqrt{ \frac{z_2^2}{4} + \left( \frac{z_1 + z_3}{2} \right)^2 } \\
-J = 2 \sqrt{2} z_1 z_2 \left[ \frac{z_2^2}{12} + \left( \frac{z_1 + z_3}{2} \right)^2 \right] \\
-\sigma(z) = \frac{6PL}{z_4 z_3^2},\quad \delta(z) = \frac{4PL^3}{E z_3^3 z_4} \\
-P_c(z) = \frac{4.013 E \sqrt{z_3^2 z_4^5 / 36}}{L^2} \left( 1 - \frac{z_3}{2L} \sqrt{\frac{E}{4G}} \right) \\
-P=6000~\text{lb},\quad L=14~\text{in},\quad E=30\times10^6~\text{psi} \\
-G=12\times10^6~\text{psi},\quad \tau_{\max}=13600~\text{psi},\quad \sigma_{\max}=30000~\text{psi},\quad \delta_{\max}=0.25~\text{in}
-$$
+# $$
+# \vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\
+# \min_{\vec{z}} f(\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2) \\
+# \text{s.t.} \\
+# g_1(\vec{z}) = \tau(z) - \tau_{\max} \leq 0 \\
+# g_2(\vec{z}) = \sigma(z) - \sigma_{\max} \leq 0 \\
+# g_3(\vec{z}) = z_1 - z_4 \leq 0 \\
+# g_4(\vec{z}) = 0.10471 z_1^2 + 0.04811 z_3 z_4 (14 + z_2) - 5 \leq 0 \\
+# g_5(\vec{z}) = 0.125 - z_1 \leq 0 \\
+# g_6(\vec{z}) = \delta(z) - \delta_{\max} \leq 0 \\
+# g_7(\vec{z}) = P - P_c(z) \leq 0 \\
+# 0.1 \leq z_1, z_4 \leq 2,\quad 0.1 \leq z_2, z_3 \leq 10 \\
+# \tau(z) = \sqrt{(\tau')^2 + 2\tau'\tau''\frac{z_2}{2R} + (\tau'')^2} \\
+# \tau' = \frac{P}{\sqrt{2} z_1 z_2},\quad \tau'' = \frac{MR}{J} \\
+# M = P \left( L + \frac{z_2}{2} \right),\quad R = \sqrt{ \frac{z_2^2}{4} + \left( \frac{z_1 + z_3}{2} \right)^2 } \\
+# J = 2 \sqrt{2} z_1 z_2 \left[ \frac{z_2^2}{12} + \left( \frac{z_1 + z_3}{2} \right)^2 \right] \\
+# \sigma(z) = \frac{6PL}{z_4 z_3^2},\quad \delta(z) = \frac{4PL^3}{E z_3^3 z_4} \\
+# P_c(z) = \frac{4.013 E \sqrt{z_3^2 z_4^5 / 36}}{L^2} \left( 1 - \frac{z_3}{2L} \sqrt{\frac{E}{4G}} \right) \\
+# P=6000~\text{lb},\quad L=14~\text{in},\quad E=30\times10^6~\text{psi} \\
+# G=12\times10^6~\text{psi},\quad \tau_{\max}=13600~\text{psi},\quad \sigma_{\max}=30000~\text{psi},\quad \delta_{\max}=0.25~\text{in}
+# $$
 
-# Problem Source
-This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
+# # Problem Source
+# This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
 
-# Variables
-- `x[1]`: Thickness of weld
-- `x[2]`: Length of welded joint
-- `x[3]`: Height of the beam
-- `x[4]`: Width of the beam
+# # Variables
+# - `x[1]`: Thickness of weld
+# - `x[2]`: Length of welded joint
+# - `x[3]`: Height of the beam
+# - `x[4]`: Width of the beam
 
-# Constraints
-Seven nonlinear inequality constraints.
+# # Constraints
+# Seven nonlinear inequality constraints.
 
-# Returns
-- Penalized objective function value (Float64)
+# # Returns
+# - Penalized objective function value (Float64)
+# """
+"""
+F3
 """
 function Engineering_F3(x)
     cost = 1.10471 * x[1]^2 * x[2] + 0.04811 * x[3] * x[4] * (14 + x[2])
