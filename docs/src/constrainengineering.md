@@ -12,6 +12,9 @@ MetaheuristicsAlgorithms.Engineering_F2
 MetaheuristicsAlgorithms.Engineering_F3
 ```
 
+![Welded Beam](assets/WeldedBeam.png)
+
+
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F4
 ```
@@ -28,8 +31,6 @@ MetaheuristicsAlgorithms.Engineering_F6
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F7
 ```
-
-![Welded Beam](assets/WeldedBeam.png)
 
 
 ```@docs 
