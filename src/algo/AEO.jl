@@ -34,7 +34,7 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     PopFit = zeros(npop)
 
     newPopFit = zeros(npop, dim)
-    his_best_fit = zeros(max_iter+1)
+    his_best_fit = zeros(max_iter + 1)
     PopPos = initialization(npop, dim, ub, lb)
     for i = 1:npop
         # PopPos[i, :] = rand(dim) .* (ub - lb) .+ lb
@@ -109,7 +109,7 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
             BestX = PopPos[end, :]
         end
 
-       @show his_best_fit[it+1] = BestF
+        his_best_fit[it+1] = BestF
     end
 
     return OptimizationResult(
