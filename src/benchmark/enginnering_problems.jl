@@ -21,8 +21,31 @@ end
 
 # F2: Pressure vessel design
 """
-    F2()
+    F2(x::Vector{Float64}) -> Float64
+
+Pressure Vessel Design Optimization.
+
+Minimizes the total cost of a cylindrical pressure vessel, which includes material, forming, and welding costs, subject to constraints on thickness, volume, and stress.
+
+# Problem Source
+A classical benchmark problem in constrained engineering design, widely used in metaheuristic algorithm evaluations.
+
+# Variables
+- `x[1]`: Thickness of the shell (Ts)
+- `x[2]`: Thickness of the head (Th)
+- `x[3]`: Inner radius (R)
+- `x[4]`: Length of the cylindrical section without head (L)
+
+# Constraints
+Four nonlinear inequality constraints:
+- Stress constraints on thickness
+- Volume constraint
+- Geometrical bounds
+
+# Returns
+- Penalized objective function value (Float64)
 """
+
 function Engineering_F2(x)
     cost = 0.6224*x[1]*x[3]*x[4] + 1.7781*x[2]*x[3]^2 + 3.1661*x[1]^2*x[4] + 19.84*x[1]^2*x[3]
     g = [
@@ -38,37 +61,33 @@ end
 
 # F3: Welded beam design
 raw"""
-    F7(x::Vector{Float64}) -> Float64
+    F3(x::Vector{Float64}) -> Float64
 
 Welded Beam Design Optimization.
 
 Minimizes cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometry.
 
-```math
-\begin{aligned}
-&\text{Consider variable} & & \vec{z}=[z_{1},z_{2},z_{3},z_{4}]=[h,l,t,b].\\
-& \underset{\vec{z}}{\text{Minimize}} & & f(\vec{z})=1.10471 z_{1}^{2} z_{2}+0.04811 z_{3} z_{4}(14+z_{2}). \\
-& \text{Subject to} & & g_{1}(\vec{z})=\tau(z)-\tau_{\max } \leqslant 0. \\
-& & & g_{2}(\vec{z})=\sigma(z)-\sigma_{\max } \leqslant 0. \\
-& & & g_{3}(\vec{z})=z_{1}-z_{4} \leqslant 0. \\
-& & & g_{4}(\vec{z})=0.10471 z_{1}^{2}+ 0.04811 z_{3} z_{4}(14+z_{2})-5 \leqslant 0. \\
-& & & g_{5}(\vec{z})=0.125-z_{1} \leqslant 0. \\
-& & & g_{6}(\vec{z})=\delta(z)-\delta_{\max } \leqslant 0. \\
-& & & g_{7}(\vec{z})=P-P_{c}(z) \leqslant 0. \\
-& \text{Variable range} & & 0.1 \leqslant z_{1},z_{4} \leqslant 2,\quad
-0.1 \leqslant z_{2},z_{3} \leqslant 10. \\
-& \text{Where} & & \tau(z)=\sqrt{(\tau^{\prime})^{2}+2 \tau^{\prime} \tau^{\prime \prime} \frac{z_{2}}{2 R}+(\tau^{\prime \prime})^{2}}. \\
-& & & \tau^{\prime}=\frac{P}{\sqrt{2} z_{1} z_{2}},\quad
-\tau^{\prime \prime}=\frac{M R}{J}. \\
-& & & M=P(L+\frac{z_{2}}{2}),\quad 
-R=\sqrt{\frac{z_{2}^{2}}{4}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}}. \\
-& & & J=2\sqrt{2} z_{1} z_{2}\left[\frac{z_{2}^{2}}{12}+\left(\frac{z_{1}+z_{3}}{2}\right)^{2}\right]. \\
-& & & \sigma(z)=\frac{6 P L}{z_{4} \chi_{3}^{2}},\quad \delta(z)=\frac{4 P L^{3}}{E z_{3}^{3} z_{4}}. \\
-& & & P_{c}(z)=\frac{4.013 E \sqrt{z_{3}^{2} z_{4}^{5} / 36}}{L^{2}}\left(1-\frac{z_{3}}{2 L} \sqrt{\frac{E}{4 G}}\right). \\
-& & & P=6000~\text{lb},\quad L=14~\text{in},\quad E=30\times10^{6}~\text{psi}. \\
-& & & G=12\times10^{6}~\text{psi},\quad \tau_{\max }=13600~\text{psi},\quad
-\sigma_{\max }=30000~\text{psi},\quad \delta_{\max }=0.25~\text{in}.
-\end{aligned}
+$$
+\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\
+\min_{\vec{z}} f(\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2) \\
+\text{s.t.} \\
+g_1(\vec{z}) = \tau(z) - \tau_{\max} \leq 0 \\
+g_2(\vec{z}) = \sigma(z) - \sigma_{\max} \leq 0 \\
+g_3(\vec{z}) = z_1 - z_4 \leq 0 \\
+g_4(\vec{z}) = 0.10471 z_1^2 + 0.04811 z_3 z_4 (14 + z_2) - 5 \leq 0 \\
+g_5(\vec{z}) = 0.125 - z_1 \leq 0 \\
+g_6(\vec{z}) = \delta(z) - \delta_{\max} \leq 0 \\
+g_7(\vec{z}) = P - P_c(z) \leq 0 \\
+0.1 \leq z_1, z_4 \leq 2,\quad 0.1 \leq z_2, z_3 \leq 10 \\
+\tau(z) = \sqrt{(\tau')^2 + 2\tau'\tau''\frac{z_2}{2R} + (\tau'')^2} \\
+\tau' = \frac{P}{\sqrt{2} z_1 z_2},\quad \tau'' = \frac{MR}{J} \\
+M = P \left( L + \frac{z_2}{2} \right),\quad R = \sqrt{ \frac{z_2^2}{4} + \left( \frac{z_1 + z_3}{2} \right)^2 } \\
+J = 2 \sqrt{2} z_1 z_2 \left[ \frac{z_2^2}{12} + \left( \frac{z_1 + z_3}{2} \right)^2 \right] \\
+\sigma(z) = \frac{6PL}{z_4 z_3^2},\quad \delta(z) = \frac{4PL^3}{E z_3^3 z_4} \\
+P_c(z) = \frac{4.013 E \sqrt{z_3^2 z_4^5 / 36}}{L^2} \left( 1 - \frac{z_3}{2L} \sqrt{\frac{E}{4G}} \right) \\
+P=6000~\text{lb},\quad L=14~\text{in},\quad E=30\times10^6~\text{psi} \\
+G=12\times10^6~\text{psi},\quad \tau_{\max}=13600~\text{psi},\quad \sigma_{\max}=30000~\text{psi},\quad \delta_{\max}=0.25~\text{in}
+$$
 
 # Problem Source
 This problem is a classical constrained engineering design problem used in various metaheuristic algorithm papers.
