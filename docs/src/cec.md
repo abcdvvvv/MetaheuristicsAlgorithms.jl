@@ -29,8 +29,6 @@ MetaheuristicsAlgorithms.F6
 MetaheuristicsAlgorithms.F7
 ```
 
-![Welded Beam](assets/WeldedBeam.png)
-
 
 ```@docs 
 MetaheuristicsAlgorithms.F8

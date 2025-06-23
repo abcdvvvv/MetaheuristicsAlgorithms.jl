@@ -19,7 +19,7 @@ MetaheuristicsAlgorithms.Engineering_F3
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F4
 ```
-![Welded Beam](assets/Spead.PNG)
+![Welded Beam](assets/Speed.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F5
 ```
