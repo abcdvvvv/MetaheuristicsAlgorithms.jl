@@ -118,7 +118,7 @@ Minimizes the cost of a welded beam subject to constraints on shear stress, norm
 \\]``
 
 # Constraints
-
+ 
 ``\\[
 \\begin{aligned}
 g_1(\\vec{z}) &= \\tau(z) - \\tau_{\\max} \\leq 0 \\\\
