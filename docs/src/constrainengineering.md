@@ -4,30 +4,30 @@
 MetaheuristicsAlgorithms.Engineering_F1
 ```
 
-![Welded Beam](assets/Tension.png)
+![Welded Beam](assets/Tension.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F2
 ```
-![Welded Beam](assets/Pressure.png)
+![Welded Beam](assets/Pressure.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F3
 ```
 
-![Welded Beam](assets/Welded.png)
+![Welded Beam](assets/Welded.PNG)
 
 
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F4
 ```
-![Welded Beam](assets/Spead.png)
+![Welded Beam](assets/Spead.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F5
 ```
-![Welded Beam](assets/Gear.png)
+![Welded Beam](assets/Gear.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F6
 ```
-![Welded Beam](assets/Three.png)
+![Welded Beam](assets/Three.PNG)
 
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F7
@@ -37,8 +37,8 @@ MetaheuristicsAlgorithms.Engineering_F7
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F8
 ```
-![Welded Beam](assets/Cantilever.png)
+![Welded Beam](assets/Cantilever.PNG)
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F9
 ```
-![Welded Beam](assets/I_beam.png)
+![Welded Beam](assets/I_beam.jpg)
