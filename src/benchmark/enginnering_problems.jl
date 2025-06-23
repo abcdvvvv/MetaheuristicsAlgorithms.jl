@@ -248,11 +248,6 @@ Minimizes the cost of a welded beam subject to constraints on shear stress, norm
 \\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\\\
 min_{\\vec{z}} f(\\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
 ```
-(doubled) 
-```math
-\vec{z} = [z_1, z_2, z_3, z_4] = [h, l, t, b] \\
-min_{\vec{z}} f(\vec{z}) = 1.10471 z_1^2 z_2 + 0.04811 z_3 z_4 (14 + z_2)
-```
  
 # Constraints
  
@@ -273,18 +268,22 @@ g_7(\\vec{z}) &= P - P_c(z) \\leq 0
 ```math
 \\tau(z) = \\sqrt{(\\tau')^2 + 2\\tau'\\tau''\\frac{z_2}{2R} + (\\tau'')^2},\\quad
 \\tau' = \\frac{P}{\\sqrt{2} z_1 z_2},\\quad
-\\tau'' = \\frac{MR}{J}```
+\\tau'' = \\frac{MR}{J}
+```
 
 ```math
 M = P \\left( L + \\frac{z_2}{2} \\right),\\quad
-R = \\sqrt{ \\frac{z_2^2}{4} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 }```
+R = \\sqrt{ \\frac{z_2^2}{4} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 }
+```
 
 ```math
-J = 2 \\sqrt{2} z_1 z_2 \\left[ \\frac{z_2^2}{12} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 \\right]```
+J = 2 \\sqrt{2} z_1 z_2 \\left[ \\frac{z_2^2}{12} + \\left( \\frac{z_1 + z_3}{2} \\right)^2 \\right]
+```
 
 ```math
 \\sigma(z) = \\frac{6PL}{z_4 z_3^2},\\quad
-\\delta(z) = \\frac{4PL^3}{E z_3^3 z_4}```
+\\delta(z) = \\frac{4PL^3}{E z_3^3 z_4}
+```
 
 ```math
 P_c(z) = \\frac{4.013 E \\sqrt{z_3^2 z_4^5 / 36}}{L^2} \\left( 1 - \\frac{z_3}{2L} \\sqrt{\\frac{E}{4G}} \\right)
