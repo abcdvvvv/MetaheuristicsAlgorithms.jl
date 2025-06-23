@@ -213,8 +213,7 @@ raw"""
 Welded Beam Design Optimization Problem.
 
 Minimizes the cost of a welded beam subject to constraints on shear stress, normal stress, deflection, and geometric properties.
-```math\begin{equation}\label{eq:WBD}
-	\begin{aligned}
+```math\begin{aligned}
 		&\text{Consider variable}& & \vec{z}=[z_{1},z_{2},z_{3},z_{4}]=[h,l,t,b].\\
 		& \underset{\vec{z}}{\text{Minimize}}
 		& & f(\vec{z})=1.10471 z_{1}^{2} z_{2}+0.04811 z_{3} z_{4}\left(14+z_{2}\right). \\
@@ -238,8 +237,7 @@ Minimizes the cost of a welded beam subject to constraints on shear stress, norm
 		& & & P=6000 lb, \quad L=14 in, \quad E=30 \times 10^{6} \mathrm{psi}. \\
 		& & & G=12 \times 10^{6} \mathrm{psi}, \quad \tau_{\max }=13,600 ps. \\
 		& & & \sigma_{\max }=30,000 \mathrm{psi}, \quad \delta_{\max }=0.25 in. \\
-	\end{aligned}
-\end{equation}```
+	\end{aligned}```
 
 # Objective
 
