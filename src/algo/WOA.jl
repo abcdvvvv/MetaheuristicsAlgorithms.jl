@@ -5,7 +5,8 @@
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
-function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+# function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, dim::Integer, objfun)
     leader_pos = zeros(dim)
     leader_score = Inf
 
@@ -72,11 +73,14 @@ function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         convergence_curve)
 end
 
+# function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+#     dim = problem.dim
+#     objfun = problem.objfun
+#     lb = problem.lb
+#     ub = problem.ub
+#     return WOA(npop, max_iter, lb, ub, dim, objfun)
+# end
+
 function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
-# function WOA(npop::Integer, max_iter::function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
-    dim = problem.dim
-    objfun = problem.objfun
-    lb = problem.lb
-    ub = problem.ub
-    return WOA(npop, max_iter, lb, ub, dim, objfun)
+    return WOA(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
 end
