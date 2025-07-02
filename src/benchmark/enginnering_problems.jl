@@ -27,7 +27,6 @@ Four nonlinear inequality constraints:
 
 # Returns
 - Penalized objective function value (Float64)
-![Tension/compression spring design!](docs/src/assets/Tension.PNG)
 """
 function Engineering_F1(x)
     cost = (x[3] + 2) * x[2] * x[1]^2
