@@ -11,6 +11,7 @@ This is a basic unimodal test function used in benchmarking optimization algorit
 
 **Equation:**
 
+```math
 f(\\mathbf{x}) = \\sum_{i=1}^n x_i^2
 
 """
