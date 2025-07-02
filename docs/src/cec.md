@@ -75,35 +75,44 @@ MetaheuristicsAlgorithms.F14
 ```@docs 
 MetaheuristicsAlgorithms.F15
 ```
+![F15](assets/F15_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F16
 ```
+![F16](assets/F16_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F17
 ```
+![F17](assets/F17_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F18
 ```
+![F18](assets/F18_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F19
 ```
+![F19](assets/F19_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F20
 ```
+![F20](assets/F20_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F21
 ```
+![F21](assets/F21_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F22
 ```
+![F22](assets/F22_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F23
 ```
+![F23](assets/F23_CEC2005.png) 
