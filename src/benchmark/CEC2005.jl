@@ -24,7 +24,7 @@ Sum of Absolute Values and Product of Absolute Values.
 
 This is a basic test function used in optimization, combining both the sum and product of the absolute values of the input vector elements.
 
-# Equation
+**Equation:**
 
 ```math
 f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| + \\prod_{i=1}^n |x_i|
