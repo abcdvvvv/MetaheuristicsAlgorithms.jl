@@ -226,6 +226,15 @@ end
 
 """
     F14()
+Shekel's Foxholes Function.
+
+A challenging multimodal benchmark function used to test optimization algorithms. The function has many local minima, making it useful for assessing global search capability.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\left[ 0.002 + \\sum_{j=1}^{25} \\frac{1}{j + \\sum_{i=1}^{2} (x_i - a_{ij})^6} \\right]^{-1}
+```
 """
 function F14(x)
     aS = hcat([-32, -16, 0, 16, 32,
@@ -244,6 +253,15 @@ end
 
 """
     F15()
+Kowalik and Osborne Function.
+
+A nonlinear least squares problem used in parameter estimation and optimization. It is known for its narrow, curved valley structure, which poses a challenge for optimization algorithms.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{k=1}^{11} \\left[ a_k - \\frac{x_1 (b_k^2 + x_2 b_k)}{b_k^2 + x_3 b_k + x_4} \\right]^2
+```
 """
 function F15(x)
     aK = [.1957, .1947, .1735, .16, .0844, .0627, .0456, .0342, .0323, .0235, .0246]
@@ -253,6 +271,15 @@ end
 
 """
     F16()
+Six-Hump Camel Function.
+
+A well-known multimodal benchmark function with six local minima, two of which are global. Often used to evaluate global optimization algorithms.
+
+# Equation
+
+```math
+f(x_1, x_2) = 4x_1^2 - 2.1x_1^4 + \\frac{1}{3}x_1^6 + x_1 x_2 - 4x_2^2 + 4x_2^4
+```
 """
 function F16(x)
     return 4*x[1]^2 - 2.1*x[1]^4 + (x[1]^6)/3 + x[1]*x[2] - 4*x[2]^2 + 4*x[2]^4
@@ -260,6 +287,16 @@ end
 
 """
     F17()
+Branin Function (also known as Branin-Hoo Function).
+
+A widely used benchmark function for optimization algorithms. It has multiple global minima and is commonly used for testing the performance of global optimizers in 2D.
+
+# Equation
+
+```math
+f(x_1, x_2) = \\left(x_2 - \\frac{5.1}{4\\pi^2}x_1^2 + \\frac{5}{\\pi}x_1 - 6\\right)^2 +
+              10 \\left(1 - \\frac{1}{8\\pi}\\right)\\cos(x_1) + 10
+              ```
 """
 function F17(x)
     return (x[2] - x[1]^2 * 5.1 / (4π^2) + 5 / π * x[1] - 6)^2 +
@@ -268,6 +305,16 @@ end
 
 """
     F18()
+Goldstein–Price Function.
+
+A classic two-dimensional test function for global optimization with a complex landscape containing many local minima and a known global minimum.
+
+# Equation
+
+```math
+f(x_1, x_2) = [1 + (x_1 + x_2 + 1)^2 (19 - 14x_1 + 3x_1^2 - 14x_2 + 6x_1x_2 + 3x_2^2)] \\\\
+\\quad\\times [30 + (2x_1 - 3x_2)^2 (18 - 32x_1 + 12x_1^2 + 48x_2 - 36x_1x_2 + 27x_2^2)]
+```
 """
 function F18(x)
     return (1 + (x[1] + x[2] + 1)^2 * (19 - 14x[1] + 3x[1]^2 - 14x[2] +
@@ -277,6 +324,15 @@ end
 
 """
     F19()
+Hartmann 3D Function.
+
+A common multimodal benchmark function used to test the performance of global optimization algorithms in 3 dimensions. It is characterized by several local minima and one known global minimum.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -\\sum_{i=1}^4 c_i \\exp\\left(-\\sum_{j=1}^3 a_{ij} (x_j - p_{ij})^2\\right)
+```
 """
 function F19(x)
     aH = [3 10 30; .1 10 35; 3 10 30; .1 10 35]
@@ -290,6 +346,15 @@ end
 
 """
     F20()
+Hartmann 6D Function.
+
+A widely used multimodal benchmark function in 6 dimensions for testing the performance of global optimization algorithms. It features a complex landscape with several local minima and a known global minimum.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -\\sum_{i=1}^4 c_i \\exp\\left(-\\sum_{j=1}^6 a_{ij} (x_j - p_{ij})^2\\right)
+```
 """
 function F20(x)
     aH = [10 3 17 3.5 1.7 8;
@@ -306,6 +371,14 @@ end
 
 """
     F21()
+Shekel’s Foxholes Function (m = 5).
+
+A multimodal benchmark function often used to test optimization algorithms' ability to avoid local optima. This version uses `m = 5` terms in the summation.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -\\sum_{i=1}^m \\left[ \\sum_{j=1}^4 (x_j - a_{ij})^2 + c_i \\right]^{-1}
 """
 function F21(x)
     aSH = [4 4 4 4;
@@ -324,6 +397,15 @@ end
 
 """
     F22()
+Shekel’s Foxholes Function (m = 7).
+
+A multimodal benchmark function commonly used for testing the ability of optimization algorithms to navigate complex landscapes with many local minima. This is a variant of the Shekel function with `m = 7` terms.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -\\sum_{i=1}^m \\left[ \\sum_{j=1}^4 (x_j - a_{ij})^2 + c_i \\right]^{-1}
+```
 """
 function F22(x)
     aSH = [4 4 4 4;
@@ -342,6 +424,16 @@ end
 
 """
     F23()
+Shekel’s Foxholes Function (m = 10).
+
+A classic multimodal benchmark function designed to test an optimization algorithm’s ability to avoid numerous local optima and find the global minimum. This version uses `m = 10` terms in the summation.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -\\sum_{i=1}^{10} \\left[ \\sum_{j=1}^4 (x_j - a_{ij})^2 + c_i \\right]^{-1}
+```
+
 """
 function F23(x)
     aSH = [4 4 4 4;
