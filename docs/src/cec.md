@@ -3,6 +3,7 @@
 ```@docs 
 MetaheuristicsAlgorithms.F1
 ```
+![F1](assets/F1_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F2
