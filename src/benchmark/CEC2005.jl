@@ -3,7 +3,7 @@ function Ufun(x, a, k, m)
     return k .* ((x .- a).^m) .* (x .> a) + k .* ((-x .- a).^m) .* (x .< -a)
 end
 """
-    F1()
+F1()
 
 Sphere function.
 
@@ -12,7 +12,7 @@ This is a basic unimodal test function used in benchmarking optimization algorit
 **Equation:**
 
 ```math
-f(x) = \\sum_{i=1}^{n} x_i^2```
+f(x) = \sum_{i=1}^{n} x_i^2```
 
 """
 F1(x) = sum(x .^ 2)
