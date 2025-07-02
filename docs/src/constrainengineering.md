@@ -1,19 +1,9 @@
 # Engineering Problems
 
-<!-- ```@docs 
+```@docs 
 MetaheuristicsAlgorithms.Engineering_F1
 ```
 
-![Welded Beam](assets/Tension.PNG) -->
-## Tension/Compression Spring Design (F1)
-
-<!-- ```@autodocs
-Modules = [MetaheuristicsAlgorithms]
-Pages = ["functions/myfunction.md"] -->
-```julia
-@autodocs 
-Modules = [MetaheuristicsAlgorithms] 
-Pages = ["functions/myfunction.md"]
 
 
 ```@docs 
