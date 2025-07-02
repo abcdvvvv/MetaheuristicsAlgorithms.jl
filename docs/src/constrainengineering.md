@@ -7,9 +7,15 @@ MetaheuristicsAlgorithms.Engineering_F1
 ![Welded Beam](assets/Tension.PNG) -->
 ## Tension/Compression Spring Design (F1)
 
-```@autodocs
+<!-- ```@autodocs
 Modules = [MetaheuristicsAlgorithms]
+Pages = ["functions/myfunction.md"] -->
+```julia
+@autodocs 
+Modules = [MetaheuristicsAlgorithms] 
 Pages = ["functions/myfunction.md"]
+
+
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F2
 ```
