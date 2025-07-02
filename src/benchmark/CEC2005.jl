@@ -27,7 +27,8 @@ This is a basic test function used in optimization, combining both the sum and p
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| + \\prod_{i=1}^n |x_i|```
+f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| + \\prod_{i=1}^n |x_i|
+```
 """
 F2(x) = sum(abs.(x)) + prod(abs.(x))
 
@@ -40,7 +41,8 @@ This test function computes the sum of the squares of cumulative sums of the inp
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n \\left( \\sum_{j=1}^i x_j \\right)^2```
+f(\\mathbf{x}) = \\sum_{i=1}^n \\left( \\sum_{j=1}^i x_j \\right)^2
+```
 """
 function F3(x)
     o = 0.0
@@ -59,7 +61,8 @@ This function returns the maximum of the absolute values of the input vector ele
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\max_{1 \\leq i \\leq n} |x_i|```
+f(\\mathbf{x}) = \\max_{1 \\leq i \\leq n} |x_i|
+```
 """
 F4(x) = maximum(abs.(x))
 
@@ -72,7 +75,8 @@ A classic, non-convex test problem for optimization algorithms. It has a narrow,
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^{n-1} \\left[ 100(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]```
+f(\\mathbf{x}) = \\sum_{i=1}^{n-1} \\left[ 100(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]
+```
 """
 function F5(x)
     return sum(100 .* (x[2:end] .- x[1:end-1].^2).^2 + (x[1:end-1] .- 1).^2)
@@ -87,7 +91,8 @@ This function is a variation of the Sphere function where each variable is shift
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n (x_i + 0.5)^2```
+f(\\mathbf{x}) = \\sum_{i=1}^n (x_i + 0.5)^2
+```
 """
 F6(x) = sum(abs.(x .+ 0.5).^2)
 
@@ -100,7 +105,8 @@ This function adds a random noise term to a weighted sum of the fourth powers of
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n i \\cdot x_i^4 + \\text{rand}()```
+f(\\mathbf{x}) = \\sum_{i=1}^n i \\cdot x_i^4 + \\text{rand}()
+```
 """
 function F7(x)
     dim = length(x)
@@ -116,7 +122,8 @@ A widely used multimodal benchmark function with many local minima. It poses a c
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n -x_i \\cdot \\sin(\\sqrt{|x_i|})```
+f(\\mathbf{x}) = \\sum_{i=1}^n -x_i \\cdot \\sin(\\sqrt{|x_i|})
+```
 """
 F8(x) = sum(-x .* sin.(sqrt.(abs.(x))))
 
@@ -129,7 +136,8 @@ A highly multimodal benchmark function commonly used to evaluate the performance
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n \\left( x_i^2 - 10 \\cos(2\\pi x_i) + 10 \\right)```
+f(\\mathbf{x}) = \\sum_{i=1}^n \\left( x_i^2 - 10 \\cos(2\\pi x_i) + 10 \\right)
+```
 """
 function F9(x)
     dim = length(x)
@@ -147,7 +155,8 @@ A popular multimodal benchmark function used to test optimization algorithms. It
 ```math
 f(\\mathbf{x}) = -20 \\exp\\left(-0.2 \\sqrt{\\frac{1}{n} \\sum_{i=1}^n x_i^2}\\right)
                 - \\exp\\left(\\frac{1}{n} \\sum_{i=1}^n \\cos(2\\pi x_i)\\right)
-                + 20 + e```
+                + 20 + e
+                ```
 """
 function F10(x)
     dim = length(x)
@@ -164,7 +173,8 @@ A widely used multimodal test function with many widespread local minima, but a 
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\frac{1}{4000} \\sum_{i=1}^n x_i^2 - \\prod_{i=1}^n \\cos\\left( \\frac{x_i}{\\sqrt{i}} \\right) + 1```
+f(\\mathbf{x}) = \\frac{1}{4000} \\sum_{i=1}^n x_i^2 - \\prod_{i=1}^n \\cos\\left( \\frac{x_i}{\\sqrt{i}} \\right) + 1
+```
 """
 function F11(x)
     dim = length(x)
@@ -180,7 +190,8 @@ A multimodal benchmark function with penalization terms to enforce constraints, 
 # Equation
 
 ```math
-f(\\mathbf{x}) = \\frac{\\pi}{n} \\left[ 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_1 + 1}{4} \\right) \\right) + \\sum_{i=1}^{n-1} \\left( \\frac{x_i + 1}{4} \\right)^2 \\left( 1 + 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_{i+1} + 1}{4} \\right) \\right) \\right) + \\left( \\frac{x_n + 1}{4} \\right)^2 \\right] + \\sum_{i=1}^n U(x_i, 10, 100, 4)```
+f(\\mathbf{x}) = \\frac{\\pi}{n} \\left[ 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_1 + 1}{4} \\right) \\right) + \\sum_{i=1}^{n-1} \\left( \\frac{x_i + 1}{4} \\right)^2 \\left( 1 + 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_{i+1} + 1}{4} \\right) \\right) \\right) + \\left( \\frac{x_n + 1}{4} \\right)^2 \\right] + \\sum_{i=1}^n U(x_i, 10, 100, 4)
+```
 """
 function F12(x)
     dim = length(x)
@@ -200,7 +211,8 @@ A multimodal benchmark function with penalization terms used to test optimizatio
 # Equation
 
 ```math
-f(\\mathbf{x}) = 0.1 \\left[ \\sin^2(3 \\pi x_1) + \\sum_{i=1}^{n-1} (x_i - 1)^2 (1 + \\sin^2(3 \\pi x_{i+1})) + (x_n - 1)^2 (1 + \\sin^2(2 \\pi x_n)) \\right] + \\sum_{i=1}^n U(x_i, 5, 100, 4)```
+f(\\mathbf{x}) = 0.1 \\left[ \\sin^2(3 \\pi x_1) + \\sum_{i=1}^{n-1} (x_i - 1)^2 (1 + \\sin^2(3 \\pi x_{i+1})) + (x_n - 1)^2 (1 + \\sin^2(2 \\pi x_n)) \\right] + \\sum_{i=1}^n U(x_i, 5, 100, 4)
+```
 """
 function F13(x)
     dim = length(x)
