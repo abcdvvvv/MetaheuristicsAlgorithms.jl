@@ -296,7 +296,7 @@ A widely used benchmark function for optimization algorithms. It has multiple gl
 ```math
 f(x_1, x_2) = \\left(x_2 - \\frac{5.1}{4\\pi^2}x_1^2 + \\frac{5}{\\pi}x_1 - 6\\right)^2 +
               10 \\left(1 - \\frac{1}{8\\pi}\\right)\\cos(x_1) + 10
-              ```
+```
 """
 function F17(x)
     return (x[2] - x[1]^2 * 5.1 / (4π^2) + 5 / π * x[1] - 6)^2 +
@@ -379,6 +379,7 @@ A multimodal benchmark function often used to test optimization algorithms' abil
 
 ```math
 f(\\mathbf{x}) = -\\sum_{i=1}^m \\left[ \\sum_{j=1}^4 (x_j - a_{ij})^2 + c_i \\right]^{-1}
+```
 """
 function F21(x)
     aSH = [4 4 4 4;
