@@ -8,27 +8,33 @@ MetaheuristicsAlgorithms.F1
 ```@docs 
 MetaheuristicsAlgorithms.F2
 ```
+![F2](assets/F2_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F3
 ```
+![F3](assets/F3_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F4
 ```
+![F4](assets/F4_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F5
 ```
+![F5](assets/F5_CEC2005.png) 
 
 ```@docs 
 MetaheuristicsAlgorithms.F6
 ```
+![F6](assets/F6_CEC2005.png) 
 
 
 ```@docs 
 MetaheuristicsAlgorithms.F7
 ```
+![F7](assets/F7_CEC2005.png) 
 
 
 ```@docs 
