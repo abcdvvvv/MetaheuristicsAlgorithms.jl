@@ -9,11 +9,12 @@ MetaheuristicsAlgorithms.Engineering_F1
 
 ```@autodocs
 Modules = [MetaheuristicsAlgorithms]
-Pages = ["src/benchmark/engineering_problems.jl"]
+Pages = ["functions/myfunction.md"]
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F2
 ```
 ![Welded Beam](assets/Pressure.PNG) 
+
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F3
 ```
