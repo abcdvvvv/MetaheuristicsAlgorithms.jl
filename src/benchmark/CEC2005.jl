@@ -20,11 +20,27 @@ F1(x) = sum(x .^ 2)
 
 """
     F2()
+Sum of Absolute Values and Product of Absolute Values.
+
+This is a basic test function used in optimization, combining both the sum and product of the absolute values of the input vector elements.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| + \\prod_{i=1}^n |x_i|```
 """
 F2(x) = sum(abs.(x)) + prod(abs.(x))
 
 """
     F3()
+Cumulative Sum of Squares Function.
+
+This test function computes the sum of the squares of cumulative sums of the input vector. It increases the dependency between variables and is used to test an algorithm’s ability to handle variable interactions.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n \\left( \\sum_{j=1}^i x_j \\right)^2```
 """
 function F3(x)
     o = 0.0
@@ -36,11 +52,27 @@ end
 
 """
     F4()
+Maximum Absolute Value Function.
+
+This function returns the maximum of the absolute values of the input vector elements. It is used to test an optimizer's ability to minimize the worst-case (largest-magnitude) variable.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\max_{1 \\leq i \\leq n} |x_i|```
 """
 F4(x) = maximum(abs.(x))
 
 """
     F5()
+Rosenbrock Function.
+
+A classic, non-convex test problem for optimization algorithms. It has a narrow, curved valley leading to the global minimum, which makes convergence difficult.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^{n-1} \\left[ 100(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]```
 """
 function F5(x)
     return sum(100 .* (x[2:end] .- x[1:end-1].^2).^2 + (x[1:end-1] .- 1).^2)
@@ -48,11 +80,27 @@ end
 
 """
     F6()
+Shifted Sphere Function.
+
+This function is a variation of the Sphere function where each variable is shifted by 0.5 before squaring. It remains unimodal but shifts the global minimum from the origin.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n (x_i + 0.5)^2```
 """
 F6(x) = sum(abs.(x .+ 0.5).^2)
 
 """
     F7()
+Weighted Quartic Function with Noise.
+
+This function adds a random noise term to a weighted sum of the fourth powers of the input variables. The noise introduces stochasticity, making it useful for testing robustness of optimization algorithms.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n i \\cdot x_i^4 + \\text{rand}()```
 """
 function F7(x)
     dim = length(x)
@@ -61,11 +109,27 @@ end
 
 """
     F8()
+Schwefel Function.
+
+A widely used multimodal benchmark function with many local minima. It poses a challenge for optimization algorithms due to its deceptive landscape and large search space.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n -x_i \\cdot \\sin(\\sqrt{|x_i|})```
 """
 F8(x) = sum(-x .* sin.(sqrt.(abs.(x))))
 
 """
     F9()
+Rastrigin Function.
+
+A highly multimodal benchmark function commonly used to evaluate the performance of global optimization algorithms. Its large number of local minima makes it particularly challenging.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\sum_{i=1}^n \\left( x_i^2 - 10 \\cos(2\\pi x_i) + 10 \\right)```
 """
 function F9(x)
     dim = length(x)
@@ -74,6 +138,16 @@ end
 
 """
     F10()
+Ackley Function.
+
+A popular multimodal benchmark function used to test optimization algorithms. It features a nearly flat outer region and a large number of local minima, making convergence difficult.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = -20 \\exp\\left(-0.2 \\sqrt{\\frac{1}{n} \\sum_{i=1}^n x_i^2}\\right)
+                - \\exp\\left(\\frac{1}{n} \\sum_{i=1}^n \\cos(2\\pi x_i)\\right)
+                + 20 + e```
 """
 function F10(x)
     dim = length(x)
@@ -83,6 +157,14 @@ end
 
 """
     F11()
+Griewank Function.
+
+A widely used multimodal test function with many widespread local minima, but a simple global minimum at the origin.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\frac{1}{4000} \\sum_{i=1}^n x_i^2 - \\prod_{i=1}^n \\cos\\left( \\frac{x_i}{\\sqrt{i}} \\right) + 1```
 """
 function F11(x)
     dim = length(x)
@@ -91,6 +173,14 @@ end
 
 """
     F12()
+Penalized Function #1.
+
+A multimodal benchmark function with penalization terms to enforce constraints, often used in optimization testing.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = \\frac{\\pi}{n} \\left[ 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_1 + 1}{4} \\right) \\right) + \\sum_{i=1}^{n-1} \\left( \\frac{x_i + 1}{4} \\right)^2 \\left( 1 + 10 \\sin^2 \\left( \\pi \\left(1 + \\frac{x_{i+1} + 1}{4} \\right) \\right) \\right) + \\left( \\frac{x_n + 1}{4} \\right)^2 \\right] + \\sum_{i=1}^n U(x_i, 10, 100, 4)```
 """
 function F12(x)
     dim = length(x)
@@ -103,6 +193,14 @@ end
 
 """
     F13()
+Penalized Function #2.
+
+A multimodal benchmark function with penalization terms used to test optimization algorithms, featuring sine and quadratic terms.
+
+# Equation
+
+```math
+f(\\mathbf{x}) = 0.1 \\left[ \\sin^2(3 \\pi x_1) + \\sum_{i=1}^{n-1} (x_i - 1)^2 (1 + \\sin^2(3 \\pi x_{i+1})) + (x_n - 1)^2 (1 + \\sin^2(2 \\pi x_n)) \\right] + \\sum_{i=1}^n U(x_i, 5, 100, 4)```
 """
 function F13(x)
     dim = length(x)
