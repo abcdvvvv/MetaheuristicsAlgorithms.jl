@@ -13,7 +13,7 @@ MetaheuristicsAlgorithms.Engineering_F2
 MetaheuristicsAlgorithms.Engineering_F3
 ```
 
-![Welded Beam](docs/src/assets/Welded.PNG)
+<!-- ![Welded Beam](docs/src/assets/Welded.PNG) -->
 
 
 ```@docs 
