@@ -8,7 +8,7 @@ MetaheuristicsAlgorithms.Engineering_F1
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F2
 ```
-![Welded Beam](../Pressure.PNG)
+<!-- ![Welded Beam](../Pressure.PNG) -->
 ```@docs 
 MetaheuristicsAlgorithms.Engineering_F3
 ```
