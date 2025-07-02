@@ -157,7 +157,7 @@ A popular multimodal benchmark function used to test optimization algorithms. It
 f(\\mathbf{x}) = -20 \\exp\\left(-0.2 \\sqrt{\\frac{1}{n} \\sum_{i=1}^n x_i^2}\\right)
                 - \\exp\\left(\\frac{1}{n} \\sum_{i=1}^n \\cos(2\\pi x_i)\\right)
                 + 20 + e
-                ```
+```
 """
 function F10(x)
     dim = length(x)
@@ -294,8 +294,7 @@ A widely used benchmark function for optimization algorithms. It has multiple gl
 # Equation
 
 ```math
-f(x_1, x_2) = \\left(x_2 - \\frac{5.1}{4\\pi^2}x_1^2 + \\frac{5}{\\pi}x_1 - 6\\right)^2 +
-              10 \\left(1 - \\frac{1}{8\\pi}\\right)\\cos(x_1) + 10
+f(x_1, x_2) = \\left(x_2 - \\frac{5.1}{4\\pi^2}x_1^2 + \\frac{5}{\\pi}x_1 - 6\\right)^2 + 10 \\left(1 - \\frac{1}{8\\pi}\\right)\\cos(x_1) + 10
 ```
 """
 function F17(x)
