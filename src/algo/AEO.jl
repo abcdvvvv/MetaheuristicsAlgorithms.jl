@@ -4,29 +4,72 @@
 #     HisBestFit::Any
 # end
 
+# """
+#     AEO(npop, max_iter, lb, ub, objfun)
+
+#     Artificial Ecosystem-based Optimization (AEO) algorithm implementation in Julia.
+
+# # Arguments:
+
+# - `npop`: Number of individuals in the population.
+# - `max_iter`: Maximum number of iterations.
+# - `lb`: Lower bounds for the search space.
+# - `ub`: Upper bounds for the search space.
+# - `objfun`: Function to evaluate the fitness of individuals.
+
+# # Returns:
+
+# - `AEOResult`: A struct containing:
+#   - `BestF`: The best fitness value found.
+#   - `BestX`: The position corresponding to the best fitness.
+#   - `his_best_fit`: A vector of best fitness values at each iteration.
+
+# # References: 
+
+# - Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
+# """
 """
+
     AEO(npop, max_iter, lb, ub, objfun)
+    AEO(problem::OptimizationProblem, npop, max_iter)
 
-    Artificial Ecosystem-based Optimization (AEO) algorithm implementation in Julia.
+Run the Artificial Ecosystem-based Optimization (AEO) algorithm.
 
-# Arguments:
+This function supports two ways to define the optimization problem:
+- Pass the population size, iteration count, bounds, and objective function directly.
+- Pass an `OptimizationProblem` struct along with `npop` and `max_iter`.
 
-- `npop`: Number of individuals in the population.
-- `max_iter`: Maximum number of iterations.
-- `lb`: Lower bounds for the search space.
-- `ub`: Upper bounds for the search space.
-- `objfun`: Function to evaluate the fitness of individuals.
+# Arguments
 
-# Returns:
+## Common
+- `npop::Integer`: Number of individuals in the population.
+- `max_iter::Integer`: Maximum number of iterations.
 
-- `AEOResult`: A struct containing:
-  - `BestF`: The best fitness value found.
-  - `BestX`: The position corresponding to the best fitness.
-  - `his_best_fit`: A vector of best fitness values at each iteration.
+## For `AEO(npop, max_iter, lb, ub, objfun)`
+- `lb::Union{Real, AbstractVector}`: Lower bounds of the search space.
+- `ub::Union{Real, AbstractVector}`: Upper bounds of the search space.
+- `objfun::Function`: Objective function to minimize.
 
-# References: 
+## For `AEO(problem::OptimizationProblem, npop, max_iter)`
+- `problem::OptimizationProblem`: A struct containing `objfun`, `lb`, `ub`, and `dim`.
 
-- Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
+# Returns
+
+- `OptimizationResult`: A struct containing:
+  - `bestX::Vector`: The best solution found.
+  - `bestF::Float64`: The best fitness value.
+  - `his_best_fit::Vector{Float64}`: History of best fitness value at each iteration.
+
+# Example
+
+```julia
+# Signature 1
+result = AEO(30, 100, -5.12, 5.12, rastrigin)
+
+# Signature 2
+problem = OptimizationProblem(rastrigin, -5.12, 5.12, 10)
+result = AEO(problem, 30, 100)
+```
 """
 function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)#::AEOResult
     dim = length(lb)
