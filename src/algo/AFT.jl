@@ -1,13 +1,33 @@
-# struct AFTResult <: OptimizationResult
-#     fitness
-#     gbest
-#     ccurve
-# end 
 
+
+# """
+#     AFT(noThieves, max_iter, lb, ub, objfun)
+
+# The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimization algorithm inspired by the story of Ali Baba and the Forty Thieves. It is designed to solve numerical optimization problems by simulating the behavior of thieves searching for treasures.
+
+# # Arguments:
+
+# - `noThieves`: Number of thieves in the algorithm.
+# - `max_iter`: Maximum number of iterations.
+# - `lb`: Lower bounds for the search space.
+# - `ub`: Upper bounds for the search space.
+# - `objfun`: Objective function to evaluate the fitness of solutions.
+
+# # Returns: 
+
+# - `AFTResult`: A struct containing:
+#   - `fitness`: The best fitness value found.
+#   - `gbest`: The position corresponding to the best fitness.
+#   - `ccurve`: A vector of best fitness values at each iteration.
+
+# # References:
+
+# - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
+# """
 """
     AFT(noThieves, max_iter, lb, ub, objfun)
 
-The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimization algorithm inspired by the story of Ali Baba and the Forty Thieves. It is designed to solve numerical optimization problems by simulating the behavior of thieves searching for treasures.
+    Ali Baba and the Forty Thieves (AFT) meta-heuristic optimization algorithm implementation in Julia.
 
 # Arguments:
 
@@ -15,9 +35,9 @@ The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimizat
 - `max_iter`: Maximum number of iterations.
 - `lb`: Lower bounds for the search space.
 - `ub`: Upper bounds for the search space.
-- `objfun`: Objective function to evaluate the fitness of solutions.
+- `objfun`: Function to evaluate the fitness of solutions.
 
-# Returns: 
+# Returns:
 
 - `AFTResult`: A struct containing:
   - `fitness`: The best fitness value found.
@@ -28,13 +48,12 @@ The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimizat
 
 - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
 """
-function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)
+function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
 
-    dim = length(lb)  # Dimension of the problem
+    dim = length(lb) 
 
     ccurve = zeros(1, max_iter)
 
-    # xth = lb .- rand(noThieves, dim) .* (lb .- ub)  # Position of the thieves in the space
     xth = initialization(noThieves, dim, ub, lb)  # Position of the thieves in the space
 
     # Evaluate fitness of the initial population
@@ -101,9 +120,16 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
     gbestSol = best[bestThieves[1], :]
     fitness = objfun(gbestSol)
 
-    #return fitness, gbest, ccurve
     return OptimizationResult(
         fitness, 
         gbestSol, 
         ccurve)
+end
+
+function AFT(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)::OptimizationResult
+    dim = problem.dim
+    objfun = problem.objfun
+    lb = problem.lb
+    ub = problem.ub
+    return AFT(npop, max_iter, lb, ub, objfun)
 end
