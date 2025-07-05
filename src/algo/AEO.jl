@@ -1,33 +1,3 @@
-# struct AEOResult <: OptimizationResult
-#     BestF::Any
-#     BestX::Any
-#     HisBestFit::Any
-# end
-
-# """
-#     AEO(npop, max_iter, lb, ub, objfun)
-
-#     Artificial Ecosystem-based Optimization (AEO) algorithm implementation in Julia.
-
-# # Arguments:
-
-# - `npop`: Number of individuals in the population.
-# - `max_iter`: Maximum number of iterations.
-# - `lb`: Lower bounds for the search space.
-# - `ub`: Upper bounds for the search space.
-# - `objfun`: Function to evaluate the fitness of individuals.
-
-# # Returns:
-
-# - `AEOResult`: A struct containing:
-#   - `BestF`: The best fitness value found.
-#   - `BestX`: The position corresponding to the best fitness.
-#   - `his_best_fit`: A vector of best fitness values at each iteration.
-
-# # References: 
-
-# - Zhao, Weiguo, Liying Wang, and Zhenxing Zhang. "Artificial ecosystem-based optimization: a novel nature-inspired meta-heuristic algorithm." Neural Computing and Applications 32, no. 13 (2020): 9383-9425.
-# """
 """
 
     AEO(npop, max_iter, lb, ub, objfun)
@@ -64,14 +34,14 @@ This function supports two ways to define the optimization problem:
 
 ```julia
 # Signature 1
-result = AEO(30, 100, -5.12, 5.12, rastrigin)
+result = AEO(30, 100, -5.12, 5.12, Ackley)
 
 # Signature 2
-problem = OptimizationProblem(rastrigin, -5.12, 5.12, 10)
+problem = OptimizationProblem(Ackley, -5.12, 5.12, 10)
 result = AEO(problem, 30, 100)
 ```
 """
-function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)#::AEOResult
+function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
     dim = length(lb)
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)
@@ -80,8 +50,6 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     his_best_fit = zeros(max_iter + 1)
     PopPos = initialization(npop, dim, ub, lb)
     for i = 1:npop
-        # PopPos[i, :] = rand(dim) .* (ub - lb) .+ lb
-        # PopPos[i, :] = initialization(1, dim, ub, lb)
         PopFit[i] = objfun(PopPos[i, :])
     end
 
@@ -161,7 +129,7 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         his_best_fit)
 end
 
-function AEO(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+function AEO(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)::OptimizationResult
     dim = problem.dim
     objfun = problem.objfun
     lb = problem.lb
