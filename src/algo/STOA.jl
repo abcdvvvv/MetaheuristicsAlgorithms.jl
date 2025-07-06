@@ -5,7 +5,8 @@
 "STOA: a bio-inspired based optimization algorithm for industrial engineering problems." 
 Engineering Applications of Artificial Intelligence 82 (2019): 148-174.
 """
-function STOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function STOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     position = zeros(Float64, dim)
     score = Inf
 

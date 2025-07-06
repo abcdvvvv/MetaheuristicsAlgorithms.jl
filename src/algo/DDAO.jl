@@ -6,7 +6,8 @@
     Applied Soft Computing, 93, 106392.
     
 """
-function DDAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function DDAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     VarLength = dim
 
     MaxSubIt = 1000
@@ -20,7 +21,7 @@ function DDAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:
 
     for i = 1:npop
         # pop[i]["Phase"] = lb .+ rand(VarLength) .* (ub - lb)
-        pop[i]["Phase"] = initialization(1,dim, ub, lb)
+        pop[i]["Phase"] = initialization(1, dim, ub, lb)
 
         pop[i]["Cost"] = objfun(pop[i]["Phase"])
 

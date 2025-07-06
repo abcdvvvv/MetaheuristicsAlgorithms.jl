@@ -5,7 +5,8 @@
 "Superb Fairy-wren Optimization Algorithm: a novel metaheuristic algorithm for solving feature selection problems." 
 Cluster Computing 28.4 (2025): 246.
 """
-function SuperbFOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SuperbFOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     MaxFEs = max_iter * npop
     curve = zeros(MaxFEs)
     X = initialization(npop, dim, ub, lb)

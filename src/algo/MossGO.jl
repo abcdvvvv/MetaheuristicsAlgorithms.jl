@@ -5,7 +5,8 @@
 "The moss growth optimization (MGO): concepts and performance." 
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """
-function MossGO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function MossGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     FEs = 0
     MaxFEs = npop * max_iter
     best_cost = Inf

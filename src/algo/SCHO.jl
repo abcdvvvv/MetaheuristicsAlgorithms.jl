@@ -5,7 +5,8 @@
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
 """
-function SCHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SCHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Destination_position = zeros(1, dim)
     Destination_fitness = Inf
     Destination_position_second = zeros(1, dim)

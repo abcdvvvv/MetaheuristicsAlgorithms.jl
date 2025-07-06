@@ -5,7 +5,8 @@
 "Fick's Law Algorithm: A physical law-based algorithm for numerical optimization." 
 Knowledge-Based Systems 260 (2023): 110146.
 """
-function FLA(NoMolecules::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function FLA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, NoMolecules::Integer, max_iter::Integer)
+    dim = length(lb)
     C1 = 0.5
     C2 = 2
     c3 = 0.1

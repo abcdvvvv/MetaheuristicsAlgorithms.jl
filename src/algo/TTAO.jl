@@ -6,7 +6,8 @@
 continuous optimization and engineering applications." 
 Expert Systems with Applications 238 (2024): 121744.
 """
-function TTAO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function TTAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     N = floor(Int, npop / 3)
     # X1 = rand(N, dim) .* (ub - lb) .+ lb
     X1 = initialization(N, dim, ub, lb)

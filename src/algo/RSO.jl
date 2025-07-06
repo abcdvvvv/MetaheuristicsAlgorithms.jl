@@ -5,7 +5,8 @@
 "A novel algorithm for global optimization: rat swarm optimizer." 
 Journal of Ambient Intelligence and Humanized Computing 12 (2021): 8457-8482.
 """
-function RSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function RSO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Position = zeros(dim)
     Score = Inf
     Positions = initialization(npop, dim, ub, lb)

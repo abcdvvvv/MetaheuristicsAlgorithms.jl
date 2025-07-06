@@ -5,7 +5,8 @@
 "Secretary bird optimization algorithm: a new metaheuristic for solving global optimization problems." 
 Artificial Intelligence Review 57, no. 5 (2024): 1-102.
 """
-function SBOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SBOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     lb = fill(lb, dim)
     ub = fill(ub, dim)
 

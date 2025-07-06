@@ -5,7 +5,8 @@
 "Polar lights optimizer: Algorithm and applications in image segmentation and feature selection." 
 Neurocomputing 607 (2024): 128427.
 """
-function PLO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
+function PLO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     FEs = 0
     it = 1
     MaxFEs = npop * max_iter
@@ -87,6 +88,6 @@ function PLO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
     return OptimizationResult(
         Bestpos,
         Bestscore,
-        Convergence_curve
-)
+        Convergence_curve,
+    )
 end

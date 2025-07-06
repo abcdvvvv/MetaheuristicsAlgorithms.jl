@@ -5,16 +5,16 @@
 "Marine Predators Algorithm: A nature-inspired metaheuristic." 
 Expert systems with applications 152 (2020): 113377.
 """
-function MPA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
+function MPA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Top_predator_pos = zeros(dim)
     Top_predator_fit = Inf
 
     Convergence_curve = zeros(max_iter)
     stepsize = zeros(npop, dim)
     fitness = fill(Inf, npop, 1)
-    #
+
     fit_old = zeros(npop)
-    #
 
     Prey = initialization(npop, dim, ub, lb)
     Prey_old = zeros(size(Prey))

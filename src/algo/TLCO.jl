@@ -5,7 +5,8 @@
 "Termite life cycle optimizer." 
 Expert Systems with Applications 213 (2023): 119211.
 """
-function TLCO(npop::Integer, cycle::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function TLCO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, cycle::Integer)
+    dim = length(lb)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)
         ub = fill(ub, dim)
@@ -20,7 +21,7 @@ function TLCO(npop::Integer, cycle::Integer, lb::Union{Real,AbstractVector{<:Rea
 
     for i = 1:npop
         # Int_Population[i]["pos"] = lb .+ rand(dim) .* (ub - lb)
-        Int_Population[i]["pos"] = initialization(1, dim, ub, lb) 
+        Int_Population[i]["pos"] = initialization(1, dim, ub, lb)
         Int_Population[i]["cost"] = objfun(Int_Population[i]["pos"])
     end
 

@@ -5,7 +5,8 @@
 "Remora optimization algorithm." 
 Expert Systems with Applications 185 (2021): 115665.
 """
-function ROA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
+function ROA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Best_pos = zeros(Float64, dim)
     Best_score = Inf
 

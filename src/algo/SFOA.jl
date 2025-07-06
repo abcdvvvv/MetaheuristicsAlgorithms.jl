@@ -5,7 +5,8 @@
 Starfish optimization algorithm (SFOA): a bio-inspired metaheuristic algorithm for global optimization compared with 100 optimizers. 
 Neural Computing and Applications, 37(5), 3641-3683.
 """
-function SFOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim, objfun)
+function SFOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # Starfish Optimization Algorithm (SFOA)
     GP = 0.5  # parameter
 

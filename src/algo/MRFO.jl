@@ -5,7 +5,8 @@
 "Manta ray foraging optimization: An effective bio-inspired optimizer for engineering applications." 
 Engineering Applications of Artificial Intelligence 87 (2020): 103300.
 """
-function MRFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function MRFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # PopPos = [rand(dim) .* (ub - lb) .+ lb for _ = 1:npop]
     PopPos = initialization(npop, dim, lb, ub)
     PopFit = [objfun(PopPos[i]) for i = 1:npop]

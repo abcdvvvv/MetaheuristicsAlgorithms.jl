@@ -5,9 +5,10 @@
 "Optimization based on the smart behavior of plants with its engineering applications: Ivy algorithm." 
 Knowledge-Based Systems 295 (2024): 111850.
 """
-function IVYA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function IVYA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # Position = rand(npop, dim) .* (ub .- lb) .+ lb
-    Position = initialization(npop, dim, ub, lb) 
+    Position = initialization(npop, dim, ub, lb)
     GV = Position ./ (ub .- lb)
     Cost = [objfun(Position[i, :]) for i = 1:npop]
 

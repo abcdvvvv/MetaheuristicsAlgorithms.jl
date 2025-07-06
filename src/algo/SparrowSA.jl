@@ -6,7 +6,8 @@ A novel swarm intelligence optimization approach: sparrow search algorithm
 Systems Science & Control Engineering, 8:1 (2020), 22-34.
 DOI: 10.1080/21642583.2019.1708830
 """
-function SparrowSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SparrowSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)
 

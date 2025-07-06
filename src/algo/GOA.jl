@@ -16,7 +16,8 @@ end
 "Grasshopper optimisation algorithm: theory and application." 
 Advances in engineering software 105 (2017): 30-47.
 """
-function GOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function GOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     flag = false
     if length(ub) == 1
         ub = ones(dim) * ub
