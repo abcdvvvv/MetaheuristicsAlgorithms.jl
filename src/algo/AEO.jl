@@ -151,9 +151,5 @@ function AEO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
 end
 
 function AEO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
-    dim = problem.dim
-    objfun = problem.objfun
-    lb = problem.lb
-    ub = problem.ub
-    return AEO(npop, max_iter, lb, ub, objfun)
+    return AEO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
