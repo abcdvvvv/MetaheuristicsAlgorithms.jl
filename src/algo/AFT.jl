@@ -1,5 +1,4 @@
 
-
 # """
 #     AFT(noThieves, max_iter, lb, ub, objfun)
 
@@ -48,9 +47,8 @@
 
 - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
 """
-function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
-
-    dim = length(lb) 
+function AFT(objfun, lb::Vector{Float64}, ub::Vector{Float64}, noThieves::Integer, max_iter::Integer)::OptimizationResult
+    dim = length(lb)
 
     ccurve = zeros(1, max_iter)
 
@@ -58,7 +56,7 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
 
     # Evaluate fitness of the initial population
     fit = zeros(noThieves)
-    for i in 1:noThieves
+    for i = 1:noThieves
         fit[i] = objfun(xth[i, :])
     end
 
@@ -66,44 +64,44 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
     fitness = fit
     sorted_indexes = sortperm(fit)
     sorted_thieves_fitness = fit[sorted_indexes]
-    
-    Sorted_thieves = xth[sorted_indexes, :]  
-    gbest = Sorted_thieves[1, :]  
+
+    Sorted_thieves = xth[sorted_indexes, :]
+    gbest = Sorted_thieves[1, :]
     fit0 = sorted_thieves_fitness[1]
 
     best = xth  # Best positions of thieves
     xab = xth   # Position of Ali Baba
 
     # Start the AFT main loop
-    for ite in 1:max_iter
-        Pp = 0.1 * log(2.75 * (ite / max_iter)^0.1)  
-        Td = 2 * exp(-2 * (ite / max_iter)^2)       
+    for ite = 1:max_iter
+        Pp = 0.1 * log(2.75 * (ite / max_iter)^0.1)
+        Td = 2 * exp(-2 * (ite / max_iter)^2)
 
         a = Int.(ceil.((noThieves - 1) .* rand(noThieves))')
-        
-        for i in 1:noThieves
-            if rand() >= 0.5  
+
+        for i = 1:noThieves
+            if rand() >= 0.5
                 if rand() > Pp
                     xth[i, :] = gbest .+ (Td .* (best[i, :] .- xab[i, :]) .* rand() .+ Td .* (xab[i, :] .- best[a[i], :]) .* rand()) .* sign(rand() - 0.50)
                 else
                     xth[i, :] .= Td * ((ub .- lb) .* rand(dim) .+ lb)  # Case 3
                 end
-            else  
-                for j in 1:dim
+            else
+                for j = 1:dim
                     xth[i, j] = gbest[j] .- (Td .* (best[i, j] .- xab[i, j]) .* rand() .+ Td .* (xab[i, j] .- best[a[i], j]) .* rand()) .* sign(rand() - 0.50)
                 end
             end
         end
 
-        for i in 1:noThieves
+        for i = 1:noThieves
             fit[i] = objfun(xth[i, :])
 
             if all(xth[i, :] .>= lb) && all(xth[i, :] .<= ub)
-                xab[i, :] = xth[i, :] 
-                
+                xab[i, :] = xth[i, :]
+
                 if fit[i] < fitness[i]
-                    best[i, :] = xth[i, :]  
-                    fitness[i] = fit[i]     
+                    best[i, :] = xth[i, :]
+                    fitness[i] = fit[i]
                 end
 
                 if fitness[i] < fit0
@@ -129,13 +127,13 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
     #     fitness,
     #     ccurve)
 
-    return OptimizationResult( 
-        gbestSol, 
+    return OptimizationResult(
+        gbestSol,
         fit0,
         ccurve)
 end
 
-function AFT(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)::OptimizationResult
+function AFT(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
     dim = problem.dim
     objfun = problem.objfun
     lb = problem.lb

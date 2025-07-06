@@ -5,7 +5,8 @@
 "Hunger games search: Visions, conception, implementation, deep analysis, perspectives, and towards performance shifts." 
 Expert Systems with Applications 177 (2021): 114864.
 """
-function HGS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function HGS(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     bestPositions = zeros(Float64, dim)
     tempPosition = zeros(Float64, npop, dim)
     Destination_fitness = Inf
@@ -90,7 +91,7 @@ function HGS(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
                     end
                 end
             end
-        end 
+        end
 
         Convergence_curve[it] = Destination_fitness
         it += 1

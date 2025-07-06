@@ -5,7 +5,8 @@
 "Artificial gorilla troops optimizer: a new nature‐inspired metaheuristic algorithm for global optimization problems." 
 International Journal of Intelligent Systems 36, no. 10 (2021): 5887-5958.
 """
-function GTO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function GTO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Silverback = []
     Silverback_Score = Inf
 

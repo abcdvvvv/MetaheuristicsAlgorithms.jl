@@ -11,7 +11,8 @@ end
   Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
 
 """
-function CSBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function CSBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     MaxFE = npop * max_iter
     NR = div(npop, 3)
     BestSolPosition = zeros(dim)

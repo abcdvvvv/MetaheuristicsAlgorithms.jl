@@ -5,7 +5,8 @@
 - Abualigah, Laith, Ali Diabat, Seyedali Mirjalili, Mohamed Abd Elaziz, and Amir H. Gandomi. "The arithmetic optimization algorithm." Computer methods in applied mechanics and engineering 376 (2021): 113609.
 
 """
-function AOArithmetic(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun) # AOArithmetic(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+function AOArithmetic(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb) # AOArithmetic(npop, max_iter, lb, ub, dim, Chung_Reynolds)
 
     # Two variables to keep the positions and the fitness value of the best-obtained solution
     Best_P = zeros(dim)

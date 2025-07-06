@@ -5,7 +5,8 @@
 "Optimization based on performance of lungs in body: Lungs performance-based optimization (LPO)." 
 Computer Methods in Applied Mechanics and Engineering 419 (2024): 116582.
 """
-function LPO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function LPO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Positions = initialization(npop, dim, lb, ub)
     Fitness = fill(Inf, npop)
     BestPosition = zeros(dim)

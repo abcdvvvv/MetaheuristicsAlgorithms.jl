@@ -53,12 +53,12 @@ result = AEO(30, 100, lb, ub, 10, Ackley)
 problem = OptimizationProblem(Ackley, -5.12, 5.12, 10)
 result = AEO(problem, 30, 100)
 """
-function AEO(npop::Integer, max_iter::Integer, lb::Real, ub::Real, dim::Integer, objfun)
-    AEO(npop, max_iter, fill(lb, dim), fill(ub, dim), dim, objfun)
+function AEO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    AEO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
 end
 
-function AEO(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, objfun)
-# function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
+function AEO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    # function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
     dim = length(lb)
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)
@@ -150,10 +150,6 @@ function AEO(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{F
         his_best_fit)
 end
 
-function AEO(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)::OptimizationResult
-    dim = problem.dim
-    objfun = problem.objfun
-    lb = problem.lb
-    ub = problem.ub
-    return AEO(npop, max_iter, lb, ub, objfun)
+function AEO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return AEO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

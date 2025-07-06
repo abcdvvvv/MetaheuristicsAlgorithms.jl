@@ -5,7 +5,8 @@
 "Snake Optimizer: A novel meta-heuristic optimization algorithm." 
 Knowledge-Based Systems 242 (2022): 108320.
 """
-function SO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
+function SO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb) #(npop, max_iter, objfun, dim, lb, ub) #npop, max_iter, lb, ub, dim, Chung_Reynolds #function SO(npop, max_iter, objfun, dim, lb, ub)
     vec_flag = [1, -1]
     Threshold = 0.25
     Thresold2 = 0.6

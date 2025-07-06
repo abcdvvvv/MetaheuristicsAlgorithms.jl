@@ -5,7 +5,8 @@
 "Reptile Search Algorithm (RSA): A nature-inspired meta-heuristic optimizer." 
 Expert Systems with Applications 191 (2022): 116158.
 """
-function RSA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function RSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Best_P = zeros(dim)           
     Best_F = Inf                   
     X = initialization(npop, dim, ub, lb) 

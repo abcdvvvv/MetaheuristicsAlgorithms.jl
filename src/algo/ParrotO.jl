@@ -5,7 +5,8 @@
 "Parrot optimizer: Algorithm and applications to medical problems." 
 Computers in Biology and Medicine 172 (2024): 108064.
 """
-function ParrotO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function ParrotO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     if length(ub) == 1
         ub = fill(ub, dim)
         lb = fill(lb, dim)

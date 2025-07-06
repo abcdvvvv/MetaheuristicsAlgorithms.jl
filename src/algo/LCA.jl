@@ -5,7 +5,8 @@
 "Liver Cancer Algorithm: A novel bio-inspired optimizer." 
 Computers in Biology and Medicine 165 (2023): 107389.
 """
-function LCA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function LCA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     println("LCA is now tackling your problem")
 
     Tumor_Location = zeros(Float64, dim)

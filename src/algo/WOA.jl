@@ -6,7 +6,8 @@
 Advances in engineering software 95 (2016): 51-67.
 """
 function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, dim::Integer, objfun)
-# function WOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+    # function WOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
 
     leader_pos = zeros(dim)
     leader_score = Inf
@@ -86,6 +87,6 @@ end
 #     return WOA(npop, max_iter, lb, ub, dim, objfun)
 # end
 
-function WOA(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)
+function WOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
     return WOA(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
 end

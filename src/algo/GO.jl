@@ -5,7 +5,8 @@
 "Growth Optimizer: A powerful metaheuristic algorithm for solving continuous and discrete global optimization problems." 
 Knowledge-Based Systems 261 (2023): 110206.
 """
-function GO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function GO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     FEs = 0
     P1 = 5
     P2 = 0.001

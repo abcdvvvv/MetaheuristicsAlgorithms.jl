@@ -4,7 +4,8 @@
 "Generalized normal distribution optimization and its applications in parameter extraction of photovoltaic models." 
 Energy Conversion and Management 224 (2020): 113301.
 """
-function GNDO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function GNDO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # x = lb .+ (ub .- lb) .* rand(npop, dim)
     x = initialization(npop, dim, ub, lb)
 

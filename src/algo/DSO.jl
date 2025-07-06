@@ -30,7 +30,8 @@ The Deep Sleep Optimiser (DSO) is a human-inspired metaheuristic optimization al
     The deep sleep optimiser: A human-based metaheuristic approach., IEEE Access (2023).
     
 """
-function DSO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)#::DSOResult
+function DSO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     prob = objfun
 
     if length(ub) != length(lb)

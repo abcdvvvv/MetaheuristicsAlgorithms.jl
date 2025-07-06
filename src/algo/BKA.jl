@@ -6,7 +6,8 @@
 Artificial Intelligence Review 57, no. 4 (2024): 98.
 
 """
-function BKA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function BKA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # Initialize the locations of Blue Sheep
     p = 0.9
     r = rand()

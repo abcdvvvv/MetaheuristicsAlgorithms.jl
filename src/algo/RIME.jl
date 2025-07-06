@@ -5,7 +5,8 @@
 "RIME: A physics-based optimization." 
 Neurocomputing 532 (2023): 183-214.
 """
-function RIME(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function RIME(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     println("RIME is now tackling your problem")
 
     Best_rime = zeros(dim)

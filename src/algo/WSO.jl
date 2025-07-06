@@ -5,7 +5,8 @@
 "White Shark Optimizer: A novel bio-inspired meta-heuristic algorithm for global optimization problems." 
 Knowledge-Based Systems 243 (2022): 108457.
 """
-function WSO(whiteSharks::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function WSO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, whiteSharks::Integer, max_iter::Integer)
+    dim = length(lb)
     ccurve = zeros(max_iter)
 
     WSO_Positions = initialization(whiteSharks, dim, ub, lb)

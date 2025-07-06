@@ -18,7 +18,8 @@ end
 "Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
 Expert Systems with Applications 161 (2020): 113702.
 """
-function HBO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function HBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     cycles = floor(Int, max_iter / 25)
     degree = 3
 

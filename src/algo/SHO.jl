@@ -22,7 +22,8 @@ end
 "Spotted hyena optimizer: a novel bio-inspired based metaheuristic technique for engineering applications." 
 Advances in Engineering Software 114 (2017): 48-70.
 """
-function SHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     hyena_pos = initialization(npop, dim, ub, lb)
     convergence_curve = zeros(max_iter)
     Iteration = 1
