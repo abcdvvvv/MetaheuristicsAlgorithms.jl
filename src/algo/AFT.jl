@@ -120,9 +120,18 @@ function AFT(noThieves::Integer, max_iter::Integer, lb::Union{Real,AbstractVecto
     gbestSol = best[bestThieves[1], :]
     fitness = objfun(gbestSol)
 
-    return OptimizationResult(
-        fitness, 
+    println("Type of gbestSol: ", typeof(gbestSol))
+    println("Type of fitness: ", typeof(fitness))
+    println("Type of ccurve: ", typeof(ccurve))
+
+    # return OptimizationResult( 
+    #     gbestSol, 
+    #     fitness,
+    #     ccurve)
+
+    return OptimizationResult( 
         gbestSol, 
+        fit0,
         ccurve)
 end
 

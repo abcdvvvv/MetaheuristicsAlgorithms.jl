@@ -5,6 +5,7 @@ using Plots
 
 include("benchfunctions.jl")
 
+
 # include("testbenchmark.jl")
 # include("testdso.jl")
 # include("testaeo.jl")
@@ -13,8 +14,12 @@ include("benchfunctions.jl")
 # include("testaha.jl")
 # include("testaft.jl")
 
+
+###
 include("testalgo/testaeostruct.jl")
+include("testoptimize.jl")
 include("testplot.jl")
+include("testcompare_algorithms.jl")
 
 # include("testwoastruct.jl")
 

@@ -31,4 +31,4 @@ default(fontfamily="arial",
     legendfontsize=11,
     legendfontcolor=RGB(0),
     legend_foreground_color=RGB(0))
-plotlyjs()
+# plotlyjs()

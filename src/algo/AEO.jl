@@ -1,13 +1,15 @@
 """
-
-    AEO(npop, max_iter, lb, ub, objfun)
-    AEO(problem::OptimizationProblem, npop, max_iter)
+    AEO(npop, max_iter, lb::Real, ub::Real, dim, objfun)
+    AEO(npop, max_iter, lb::Vector{Float64}, ub::Vector{Float64}, objfun)
+    AEO(problem::OptimizationProblem, npop=30, max_iter=1000)
 
 Run the Artificial Ecosystem-based Optimization (AEO) algorithm.
 
-This function supports two ways to define the optimization problem:
-- Pass the population size, iteration count, bounds, and objective function directly.
-- Pass an `OptimizationProblem` struct along with `npop` and `max_iter`.
+This function supports three ways to define the optimization problem:
+
+1. By passing scalar bounds and problem dimensionality.
+2. By passing vector bounds explicitly.
+3. By using an `OptimizationProblem` struct that encapsulates the problem definition.
 
 # Arguments
 
@@ -15,33 +17,48 @@ This function supports two ways to define the optimization problem:
 - `npop::Integer`: Number of individuals in the population.
 - `max_iter::Integer`: Maximum number of iterations.
 
-## For `AEO(npop, max_iter, lb, ub, objfun)`
-- `lb::Union{Real, AbstractVector}`: Lower bounds of the search space.
-- `ub::Union{Real, AbstractVector}`: Upper bounds of the search space.
+## For scalar bounds:
+- `lb::Real`: Lower bound (same for all dimensions).
+- `ub::Real`: Upper bound (same for all dimensions).
+- `dim::Integer`: Dimensionality of the problem.
 - `objfun::Function`: Objective function to minimize.
 
-## For `AEO(problem::OptimizationProblem, npop, max_iter)`
+## For vector bounds:
+- `lb::Vector{Float64}`: Lower bounds for each dimension.
+- `ub::Vector{Float64}`: Upper bounds for each dimension.
+- `objfun::Function`: Objective function to minimize.
+
+## For `OptimizationProblem` form:
 - `problem::OptimizationProblem`: A struct containing `objfun`, `lb`, `ub`, and `dim`.
 
 # Returns
 
 - `OptimizationResult`: A struct containing:
-  - `bestX::Vector`: The best solution found.
-  - `bestF::Float64`: The best fitness value.
-  - `his_best_fit::Vector{Float64}`: History of best fitness value at each iteration.
+  - `bestX::Vector{Float64}`: The best solution found.
+  - `bestF::Float64`: The best objective value.
+  - `his_best_fit::Vector{Float64}`: History of the best fitness value at each iteration.
 
-# Example
+# Examples
 
 ```julia
-# Signature 1
-result = AEO(30, 100, -5.12, 5.12, Ackley)
+# Using scalar bounds and dimension
+result = AEO(30, 100, -5.12, 5.12, 10, Ackley)
 
-# Signature 2
+# Using vector bounds
+lb = fill(-5.12, 10)
+ub = fill(5.12, 10)
+result = AEO(30, 100, lb, ub, 10, Ackley)
+
+# Using OptimizationProblem struct
 problem = OptimizationProblem(Ackley, -5.12, 5.12, 10)
 result = AEO(problem, 30, 100)
-```
 """
-function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
+function AEO(npop::Integer, max_iter::Integer, lb::Real, ub::Real, dim::Integer, objfun)
+    AEO(npop, max_iter, fill(lb, dim), fill(ub, dim), dim, objfun)
+end
+
+function AEO(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, objfun)
+# function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
     dim = length(lb)
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)
@@ -122,6 +139,10 @@ function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
 
         his_best_fit[it+1] = BestF
     end
+
+    println("Type of BestX: ", typeof(BestX))
+    println("Type of BestF: ", typeof(BestF))
+    println("Type of his_best_fit: ", typeof(his_best_fit))
 
     return OptimizationResult(
         BestX,

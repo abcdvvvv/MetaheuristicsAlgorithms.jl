@@ -89,7 +89,7 @@ function GWO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         vec(Convergence_curve))
 end
 
-function GWO(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+function GWO(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)
         dim = problem.dim
         objfun = problem.objfun
         lb = problem.lb

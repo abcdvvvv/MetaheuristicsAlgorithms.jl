@@ -21,6 +21,17 @@ include("problem.jl")
 # using .ProblemDefinition
 export OptimizationProblem 
 
+include("plotting/convergence.jl")
+export convergence_curve
+
+
+include("core/optimize.jl")
+export optimize
+
+
+include("compare_algorithms.jl")
+export compare_algorithms
+
 include("benchmark/CEC2005.jl")
 include("benchmark/enginnering_problems.jl")
 export  Engineering_F1, Engineering_F2, Engineering_F3, Engineering_F4, Engineering_F5, Engineering_F6, Engineering_F7, Engineering_F8, Engineering_F9

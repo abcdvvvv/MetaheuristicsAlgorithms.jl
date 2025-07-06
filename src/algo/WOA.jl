@@ -67,6 +67,10 @@ function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{F
         t += 1
         convergence_curve[t] = leader_score
     end
+
+    println("Type of leader_pos: ", typeof(leader_pos))
+    println("Type of leader_score: ", typeof(leader_score))
+    println("Type of convergence_curve: ", typeof(convergence_curve))
     # return leader_score, leader_pos, convergence_curve
     return OptimizationResult(
         leader_pos,
@@ -82,6 +86,6 @@ end
 #     return WOA(npop, max_iter, lb, ub, dim, objfun)
 # end
 
-function WOA(problem::OptimizationProblem, npop::Integer, max_iter::Integer)
+function WOA(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)
     return WOA(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
 end

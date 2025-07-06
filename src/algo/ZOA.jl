@@ -83,3 +83,8 @@ function ZOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         best_score,
         ZOA_curve)
 end
+
+
+function ZOA(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)
+    return ZOA(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
+end
