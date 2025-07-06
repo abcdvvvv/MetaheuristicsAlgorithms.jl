@@ -5,7 +5,8 @@
 Expert Systems with Applications 241 (2024): 122638.
 
 """
-function HEOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function HEOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     jump_factor = abs(lb[1] - ub[1]) / 1000
 
     A = 0.6

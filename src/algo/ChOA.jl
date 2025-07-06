@@ -4,7 +4,8 @@
 - Khishe, Mohammad, and Mohammad Reza Mosavi. "Chimp optimization algorithm." Expert systems with applications 149 (2020): 113338.
 
 """
-function ChOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function ChOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Attacker_pos = zeros(dim)
     Attacker_score = Inf
 

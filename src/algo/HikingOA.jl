@@ -5,7 +5,8 @@
 "The Hiking Optimization Algorithm: A novel human-based metaheuristic approach." 
 Knowledge-Based Systems 296 (2024): 111880.
 """
-function HikingOA(hiker::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function HikingOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, hiker::Integer, max_iter::Integer)
+    dim = length(lb)
     # Problem Parameters
     prob = objfun
     npop = hiker

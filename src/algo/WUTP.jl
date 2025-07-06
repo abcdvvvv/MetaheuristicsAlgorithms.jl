@@ -5,7 +5,8 @@
 A novel meta-heuristic optimization algorithm inspired by water uptake and transport in plants. 
 Neural Computing and Applications, 1-82.
 """
-function WUTP(no_particles::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function WUTP(objfun, lb::Vector{Float64}, ub::Vector{Float64}, no_particles::Integer, max_iter::Integer)
+    dim = length(lb)
     # Preallocate
     ccurve = zeros(max_iter) 
     # Initialize population

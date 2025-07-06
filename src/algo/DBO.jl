@@ -5,15 +5,13 @@
     The Journal of Supercomputing. 2023 May;79(7):7305-36.
     
 """
-function DBO(npop::Integer, max_iter::Integer, c::Union{Real,AbstractVector{<:Real}}, d::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function DBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     P_percent = 0.2
     pNum = round(Int, npop * P_percent)
 
-    lb = fill(c, dim)
-    ub = fill(d, dim)
-
     # x = [lb .+ (ub .- lb) .* rand(dim) for _ = 1:npop]
-    x = initialization(npop,dim, ub, lb)
+    x = initialization(npop, dim, ub, lb)
     fit = [objfun(x[i]) for i = 1:npop]
     pFit = copy(fit)
     pX = copy(x)

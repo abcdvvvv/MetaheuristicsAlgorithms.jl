@@ -5,7 +5,8 @@
 "The educational competition optimizer." 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """
-function ECO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun::Function)
+function ECO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
         m = copy(X[1, :])
 

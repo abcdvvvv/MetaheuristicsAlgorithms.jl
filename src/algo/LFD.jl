@@ -5,7 +5,8 @@
 "Lévy flight distribution: A new metaheuristic algorithm for solving engineering optimization problems." 
 Engineering Applications of Artificial Intelligence 94 (2020): 103731.
 """
-function LFD(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function LFD(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     threshold = 2
     lb = lb * ones(dim)
     ub = ub * ones(dim)

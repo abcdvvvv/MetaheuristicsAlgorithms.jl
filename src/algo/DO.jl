@@ -14,7 +14,8 @@
     Engineering Applications of Artificial Intelligence 114 (2022): 105075.
     
 """
-function DO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function DO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # dandelions = rand(npop, dim) .* (ub - lb) .+ lb
     dandelions = initialization(npop, dim, ub, lb)
     dandelionsFitness = zeros(npop)

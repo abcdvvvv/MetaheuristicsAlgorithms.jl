@@ -5,7 +5,8 @@
 "INFO: An efficient optimization algorithm based on weighted mean of vectors." 
 Expert Systems with Applications 195 (2022): 116516.
 """
-function INFO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function INFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     # Initialization
     Cost = zeros(npop)
     M = zeros(npop)

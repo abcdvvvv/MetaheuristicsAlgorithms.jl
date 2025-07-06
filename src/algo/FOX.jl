@@ -5,7 +5,8 @@
 "FOX: a FOX-inspired optimization algorithm." 
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """
-function FOX(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function FOX(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Best_pos = zeros(dim)
     Best_score = Inf
     MinT = Inf

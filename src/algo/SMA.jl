@@ -5,7 +5,8 @@
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
-function SMA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SMA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     best_positions = zeros(1, dim)
     destination_fitness = Inf
     AllFitness = fill(Inf, npop)

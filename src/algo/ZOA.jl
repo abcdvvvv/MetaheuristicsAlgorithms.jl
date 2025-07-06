@@ -5,7 +5,8 @@
 "Zebra optimization algorithm: A new bio-inspired optimization algorithm for solving optimization algorithm." 
 Ieee Access 10 (2022): 49445-49473.
 """
-function ZOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function ZOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     if length(lb) == 1 && length(ub) == 1
         lb = fill(lb, dim)
         ub = fill(ub, dim)
@@ -84,7 +85,6 @@ function ZOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:R
         ZOA_curve)
 end
 
-
-function ZOA(problem::OptimizationProblem, npop::Integer = 30, max_iter::Integer = 1000)
+function ZOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
     return ZOA(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
 end

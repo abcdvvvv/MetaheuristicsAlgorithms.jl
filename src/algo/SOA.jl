@@ -5,7 +5,8 @@
 "Seagull optimization algorithm: Theory and its applications for large-scale industrial engineering problems." 
 Knowledge-based systems 165 (2019): 169-196.
 """
-function SOA(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function SOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     position = zeros(dim)
     score = Inf
     positions = initialization(npop, dim, ub, lb)

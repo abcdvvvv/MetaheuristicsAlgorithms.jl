@@ -5,7 +5,8 @@
 "Political Optimizer: A novel socio-inspired meta-heuristic for global optimization." 
 Knowledge-based systems 195 (2020): 105709.
 """
-function PoliticalO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function PoliticalO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     parties = 8
     lambda = 1.0
 

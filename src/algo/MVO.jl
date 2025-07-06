@@ -22,7 +22,8 @@ end
 "Multi-verse optimizer: a nature-inspired algorithm for global optimization." 
 Neural Computing and Applications 27 (2016): 495-513.
 """
-function MVO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function MVO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
 
     # Initialize the best universe and its inflation rate (fitness)
     Best_universe = zeros(1, dim)

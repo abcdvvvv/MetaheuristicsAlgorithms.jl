@@ -6,7 +6,8 @@ Elk herd optimizer: a novel nature-inspired metaheuristic algorithm.
 Artif Intell Rev 57, 48 (2024). 
 https://doi.org/10.1007/s10462-023-10680-4
 """
-function ElkHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, dim::Integer, objfun)
+function ElkHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     if length(ub) == 1
         ub = ones(dim) * ub
         lb = ones(dim) * lb

@@ -4,8 +4,8 @@
 "Harris hawks optimization: Algorithm and applications." 
 Future generation computer systems 97 (2019): 849-872.
 """
-function HHO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}},
-    dim::Int, objfun::Function)
+function HHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+    dim = length(lb)
     Rabbit_Location = zeros(dim)
     Rabbit_Energy = Inf
 
