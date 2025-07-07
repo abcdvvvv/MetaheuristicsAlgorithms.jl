@@ -5,6 +5,10 @@
 "RIME: A physics-based optimization." 
 Neurocomputing 532 (2023): 183-214.
 """
+function RIME(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return RIME(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function RIME(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     println("RIME is now tackling your problem")
@@ -71,4 +75,7 @@ function RIME(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Best_rime,
         Best_rime_rate,
         Convergence_curve)
+end
+function RIME(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return RIME(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

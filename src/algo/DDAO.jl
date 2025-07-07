@@ -6,6 +6,10 @@
     Applied Soft Computing, 93, 106392.
     
 """
+function DDAO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return DDAO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function DDAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     VarLength = dim
@@ -86,4 +90,8 @@ function DDAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         BestSol["Phase"],
         BestSol["Cost"],
         BestCost)
+end
+
+function DDAO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return DDAO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

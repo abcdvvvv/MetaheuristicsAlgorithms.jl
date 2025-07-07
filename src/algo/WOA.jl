@@ -5,8 +5,12 @@
 "The whale optimization algorithm." 
 Advances in engineering software 95 (2016): 51-67.
 """
-function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, dim::Integer, objfun)
-    # function WOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+function WOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return WOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
+# function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{Float64}, dim::Integer, objfun)
+function WOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
 
     leader_pos = zeros(dim)
@@ -69,9 +73,6 @@ function WOA(npop::Integer, max_iter::Integer, lb::Vector{Float64}, ub::Vector{F
         convergence_curve[t] = leader_score
     end
 
-    println("Type of leader_pos: ", typeof(leader_pos))
-    println("Type of leader_score: ", typeof(leader_score))
-    println("Type of convergence_curve: ", typeof(convergence_curve))
     # return leader_score, leader_pos, convergence_curve
     return OptimizationResult(
         leader_pos,

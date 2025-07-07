@@ -1,20 +1,14 @@
 
-# function levy(d)
-#     beta = 1.5
-#     sigma = (gamma(1 + beta) * sin(pi * beta / 2) /
-#              (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-#     u = randn(d) * sigma
-#     v = randn(d)
-#     step = u ./ abs.(v) .^ (1 / beta)
-#     return step
-# end
-
 """
 # References:
 
 - Xiao, Y., Cui, H., Khurma, R. A., & Castillo, P. A. (2025). Artificial lemming algorithm: a novel bionic meta-heuristic technique for solving real-world engineering optimization problems. Artificial Intelligence Review, 58(3), 84.
 
 """
+function ALA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ALA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function ALA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     X = initialization(npop, dim, ub, lb)
@@ -86,4 +80,8 @@ function ALA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         score,
         position,
         convergence_curve)
+end
+
+function ALA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ALA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

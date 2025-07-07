@@ -4,6 +4,9 @@
 "Harris hawks optimization: Algorithm and applications." 
 Future generation computer systems 97 (2019): 849-872.
 """
+function HHO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HHO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
 function HHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Rabbit_Location = zeros(dim)
@@ -105,4 +108,8 @@ function HHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Rabbit_Location,
         best_vRabbit_Energyalue,
         CNVG)
+end
+
+function HHO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HHO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

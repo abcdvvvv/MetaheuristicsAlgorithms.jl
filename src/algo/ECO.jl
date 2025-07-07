@@ -5,6 +5,10 @@
 "The educational competition optimizer." 
 International Journal of Systems Science 55, no. 15 (2024): 3185-3222.
 """
+function ECO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ECO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ECO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     function close(t::Vector{Float64}, G::Int, X::Matrix{Float64})
@@ -180,4 +184,8 @@ function ECO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_pos,
         Best_score,
         curve)
+end
+
+function ECO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ECO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

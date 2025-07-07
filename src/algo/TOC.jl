@@ -5,6 +5,10 @@
 Tornado optimizer with Coriolis force: a novel bio-inspired meta-heuristic algorithm for solving engineering problems. 
 Artificial Intelligence Review, 58(4), 1-99.
 """
+function TOC(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return TOC(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function TOC(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer, nto=4, nt=3)
     dim = length(lb)
     ccurve = zeros(max_iter)
@@ -77,4 +81,9 @@ function TOC(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         tornadoposition,
         tornadocost,
         ccurve)
+end
+
+
+function TOC(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return TOC(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

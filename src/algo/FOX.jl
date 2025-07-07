@@ -5,6 +5,10 @@
 "FOX: a FOX-inspired optimization algorithm." 
 Applied Intelligence 53, no. 1 (2023): 1030-1050.
 """
+function FOX(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return FOX(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function FOX(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Best_pos = zeros(dim)
@@ -83,4 +87,8 @@ function FOX(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_pos,
         Best_score,
         convergence_curve)
+end
+
+function FOX(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return FOX(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

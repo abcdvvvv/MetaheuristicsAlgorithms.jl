@@ -5,6 +5,10 @@
 "RUN beyond the metaphor: An efficient optimization algorithm based on Runge Kutta method." 
 Expert Systems with Applications 181 (2021): 115079.
 """
+function RUN(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return RUN(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function RUN(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Cost = zeros(npop)                
@@ -143,6 +147,10 @@ function RUN(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_X,
         Best_Cost,
         Convergence_curve)
+end
+
+function RUN(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return RUN(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function Unifrnd(a, b, c, dim)

@@ -5,6 +5,10 @@
 Escape: an optimization method based on crowd evacuation behaviors. 
 Artificial Intelligence Review, 58(1), 19.
 """
+function ESC(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ESC(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ESC(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(lb) == 1 && length(ub) == 1
@@ -141,6 +145,9 @@ function ESC(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         best_solution,
         best_fitness,
         fitness_history)
+end
+function ESC(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ESC(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 # function adaptive_levy_weight(beta_base, dim, t, max_iter)

@@ -36,17 +36,6 @@ function exploitation(current_vulture_X, Best_vulture1_X, Best_vulture2_X, rando
     return current_vulture_X
 end
 
-# function levyFlight(d)
-#     beta = 3 / 2
-
-#     sigma = (gamma(1 + beta) * sin(π * beta / 2) / (gamma((1 + beta) / 2) * beta * 2^((beta - 1) / 2)))^(1 / beta)
-#     u = randn(d) * sigma
-#     v = randn(d)
-#     step = u ./ abs.(v) .^ (1 / beta)
-
-#     return step
-# end
-
 function random_select(Best_vulture1_X, Best_vulture2_X, alpha, betha)
     probabilities = [alpha, betha]
 
@@ -78,6 +67,10 @@ end
 - Abdollahzadeh, B., Gharehchopogh, F. S., & Mirjalili, S. (2021). African vultures optimization algorithm: A new nature-inspired metaheuristic algorithm for global optimization problems.  Computers & Industrial Engineering, 158, 107408.
 
 """
+function AVOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return AVOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function AVOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
 
@@ -148,4 +141,8 @@ function AVOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Best_vulture1_X,
         Best_vulture1_F,
         convergence_curve)
+end
+
+function AVOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return AVOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

@@ -5,6 +5,9 @@
 "Red-billed blue magpie optimizer: a novel metaheuristic algorithm for 2D/3D UAV path planning and engineering design problems." 
 Artificial Intelligence Review 57.6 (2024): 134.
 """
+function RBMO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return RBMO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
 function RBMO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     D = length(lb)
     Xfood = zeros(D)
@@ -103,6 +106,10 @@ function RBMO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Conv)
 end
 
+function RBMO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return RBMO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
+end
+
 function Food_storage(fit, X, fit_old, X_old)
     Inx = fit_old .< fit
     Indx = repeat(Inx, 1, size(X, 2))
@@ -115,3 +122,4 @@ function Food_storage(fit, X, fit_old, X_old)
 
     return fit, X, fit_old, X_old
 end
+

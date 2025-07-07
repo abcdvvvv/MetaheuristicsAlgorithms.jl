@@ -5,7 +5,11 @@
 "INFO: An efficient optimization algorithm based on weighted mean of vectors." 
 Expert Systems with Applications 195 (2022): 116516.
 """
-function INFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
+function INFO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return INFO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
+function INFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)::OptimizationResult
     dim = length(lb)
     # Initialization
     Cost = zeros(npop)
@@ -144,5 +148,13 @@ function INFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         # println("Iteration $it: Best Cost = $Best_Cost")
     end
 
-    return Best_Cost, Best_X, Convergence_curve
+    # return Best_Cost, Best_X, Convergence_curve
+    return OptimizationResult(
+        Best_X,
+        Best_Cost,
+        Convergence_curve)
+end
+
+function INFO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return INFO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

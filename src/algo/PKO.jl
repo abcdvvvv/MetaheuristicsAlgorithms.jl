@@ -5,6 +5,10 @@
 "Pied kingfisher optimizer: a new bio-inspired algorithm for solving numerical optimization and industrial engineering problems." 
 Neural Computing and Applications (2024): 1-59.
 """
+function PKO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return PKO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function PKO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     BF = 8
@@ -109,4 +113,8 @@ function PKO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_position,
         Best_fitness,
         Convergence_curve)
+end
+
+function PKO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return PKO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

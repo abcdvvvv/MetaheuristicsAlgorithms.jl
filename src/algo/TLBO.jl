@@ -10,6 +10,10 @@ end
 "Teaching–learning-based optimization: a novel method for constrained mechanical design optimization problems." 
 Computer-aided design 43, no. 3 (2011): 303-315.
 """
+function TLBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return TLBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function TLBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     VarSize = (dim)
@@ -91,4 +95,8 @@ function TLBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         best_sol,
         best_sol.cost,
         best_costs)
+end
+
+function TLBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return TLBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

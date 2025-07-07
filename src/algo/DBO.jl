@@ -5,6 +5,10 @@
     The Journal of Supercomputing. 2023 May;79(7):7305-36.
     
 """
+function DBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return DBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function DBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     P_percent = 0.2
@@ -85,4 +89,8 @@ function DBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         bestX,
         fMin,
         Convergence_curve)
+end
+
+function DBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return DBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

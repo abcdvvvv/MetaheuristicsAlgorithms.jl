@@ -4,6 +4,10 @@
 - Braik, Malik, Alaa Sheta, and Heba Al-Hiary. "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." Neural computing and applications 33, no. 7 (2021): 2515-2547.
 
 """
+function CoatiOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return CoatiOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function CoatiOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     lb = ones(dim) .* lb
@@ -92,4 +96,8 @@ function CoatiOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer
         Xbest,
         fbest,
         best_so_far)
+end
+
+function CoatiOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return CoatiOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

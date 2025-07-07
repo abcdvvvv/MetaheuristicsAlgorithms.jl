@@ -5,6 +5,10 @@
 "Parrot optimizer: Algorithm and applications to medical problems." 
 Computers in Biology and Medicine 172 (2024): 108064.
 """
+function ParrotO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return ParrotO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ParrotO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(ub) == 1
@@ -106,4 +110,9 @@ function ParrotO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer
         Best_pos,
         Best_score,
         curve)
+end
+
+
+function ParrotO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ParrotO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

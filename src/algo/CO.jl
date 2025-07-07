@@ -9,6 +9,10 @@ end
 - Akbari, Mohammad Amin, Mohsen Zare, Rasoul Azizipanah-Abarghooee, Seyedali Mirjalili, and Mohamed Deriche. "The cheetah optimizer: A nature-inspired metaheuristic algorithm for large-scale optimization problems." Scientific reports 12, no. 1 (2022): 10953.
 
 """
+function CO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return CO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function CO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     empty_individual = Individual([], Inf)
@@ -150,4 +154,8 @@ function CO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max
         X_best.Position,
         X_best.Cost,
         BestCost)
+end
+
+function CO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return CO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

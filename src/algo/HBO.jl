@@ -18,6 +18,10 @@ end
 "Heap-based optimizer inspired by corporate rank hierarchy for global optimization." 
 Expert Systems with Applications 161 (2020): 113702.
 """
+function HBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function HBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     cycles = floor(Int, max_iter / 25)
@@ -140,4 +144,8 @@ function HBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Leader_pos,
         Leader_score,
         Convergence_curve)
+end
+
+function HBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

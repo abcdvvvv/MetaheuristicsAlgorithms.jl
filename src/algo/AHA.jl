@@ -29,6 +29,10 @@ The Artificial Hummingbird Algorithm (AHA) is a meta-heuristic optimization algo
 
 - Zhao, Weiguo, Liying Wang, and Seyedali Mirjalili. "Artificial hummingbird algorithm: A new bio-inspired optimizer with its engineering applications." Computer Methods in Applied Mechanics and Engineering 388 (2022): 114194.
 """
+function AHA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return AHA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function AHA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
 
@@ -140,4 +144,8 @@ function AHA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestX,
         BestF,
         his_best_fit)
+end
+
+function AHA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return AHA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

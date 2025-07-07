@@ -5,6 +5,10 @@
 "Pelican optimization algorithm: A novel nature-inspired algorithm for engineering applications." 
 Sensors 22, no. 3 (2022): 855.
 """
+function POA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return POA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function POA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     lb = ones(dim) * lb
@@ -66,4 +70,8 @@ function POA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Xbest,
         fbest,
         best_so_far)
+end
+
+function POA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return POA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

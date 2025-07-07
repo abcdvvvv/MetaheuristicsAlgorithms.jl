@@ -5,6 +5,10 @@
 "Gradient-based optimizer: A new metaheuristic optimization algorithm." 
 Information Sciences 540 (2020): 131-159.
 """
+function GBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return GBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function GBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     nV = dim
@@ -127,4 +131,8 @@ function GradientSearchRule(ro1, Best_X, Worst_X, X, Xr1, DM, eps, Xm, Flag)
     GSR = randn() .* ro1 .* (2 .* DelX .* X) ./ (yp - yq .+ eps)
 
     return GSR
+end
+
+function GBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return GBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

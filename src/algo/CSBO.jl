@@ -11,6 +11,10 @@ end
   Engineering Applications of Computational Fluid Mechanics 16, no. 1 (2022): 1483-1525.
 
 """
+function CSBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return CSBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function CSBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     MaxFE = npop * max_iter
@@ -120,4 +124,8 @@ function CSBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         BestSolPosition,
         BestSolCost,
         BestCost)
+end
+
+function CSBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return CSBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

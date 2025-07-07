@@ -6,6 +6,10 @@ Elk herd optimizer: a novel nature-inspired metaheuristic algorithm.
 Artif Intell Rev 57, 48 (2024). 
 https://doi.org/10.1007/s10462-023-10680-4
 """
+function ElkHO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ElkHO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ElkHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(ub) == 1
@@ -104,4 +108,8 @@ function ElkHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, 
         BestBull,
         BestBullFitness,
         Convergence_curve)
+end
+
+function ElkHO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ElkHO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

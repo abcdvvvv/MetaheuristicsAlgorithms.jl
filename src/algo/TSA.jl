@@ -5,6 +5,10 @@
 "Tunicate Swarm Algorithm: A new bio-inspired based metaheuristic paradigm for global optimization." 
 Engineering Applications of Artificial Intelligence 90 (2020): 103541.
 """
+function TSA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return TSA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function TSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     score = Inf
@@ -71,4 +75,8 @@ function TSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         position,
         score,
         convergence)
+end
+
+function TSA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return TSA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

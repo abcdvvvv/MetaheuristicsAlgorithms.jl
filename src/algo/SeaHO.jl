@@ -5,6 +5,10 @@
 "A modified seahorse optimization algorithm based on chaotic maps for solving global optimization and engineering problems." 
 Engineering Science and Technology, an International Journal 41 (2023): 101408.
 """
+function SeaHO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SeaHO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SeaHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # function SeaHO(npop::Int, max_iter::Int, lb, ub, dim::Int, objfun)
@@ -111,4 +115,8 @@ function SeaHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, 
         TargetPosition,
         target_fitness,
         Convergence_curve)
+end
+
+function SeaHO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SeaHO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

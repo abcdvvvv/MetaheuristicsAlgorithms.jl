@@ -5,6 +5,10 @@
 "AEFA: Artificial electric field algorithm for global optimization." 
 Swarm and Evolutionary Computation 48 (2019): 93-108.
 """
+function AEFA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return AEFA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function AEFA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     FCheck, Rpower, tag = 1, 1, 1
@@ -99,4 +103,9 @@ function AEFA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Lbest,
         Fbest,
         BestValues)
+end
+
+
+function AEFA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return AEFA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

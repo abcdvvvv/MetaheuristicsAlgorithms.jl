@@ -23,7 +23,6 @@ algos = Dict(
 # Run comparison
 # results = compare_algorithms(algos, problem; npop=30, max_iter=100)
 results = compare_algorithms([AEO, GWO], problem; npop=30, max_iter=100)
-println("hhhhhhh ", typeof(results))
 
 # Plot all convergence curves
 p = plot()

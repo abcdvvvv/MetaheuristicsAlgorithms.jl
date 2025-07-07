@@ -5,6 +5,10 @@
 "Growth Optimizer: A powerful metaheuristic algorithm for solving continuous and discrete global optimization problems." 
 Knowledge-Based Systems 261 (2023): 110206.
 """
+function GO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return GO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function GO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     FEs = 0
@@ -139,6 +143,10 @@ function GO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max
         gbestX,
         gbestfitness,
         gbesthistory)
+end
+
+function GO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return GO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function selectID(npop, i, k)

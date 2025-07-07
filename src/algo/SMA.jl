@@ -5,6 +5,10 @@
 "Slime mould algorithm: A new method for stochastic optimization." 
 Future generation computer systems 111 (2020): 300-323.
 """
+function SMA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SMA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SMA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     best_positions = zeros(1, dim)
@@ -80,4 +84,8 @@ function SMA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         best_positions,
         destination_fitness,
         convergence_curve)
+end
+
+function SMA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SMA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

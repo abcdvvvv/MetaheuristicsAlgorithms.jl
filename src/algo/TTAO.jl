@@ -6,6 +6,10 @@
 continuous optimization and engineering applications." 
 Expert Systems with Applications 238 (2024): 121744.
 """
+function TTAO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return TTAO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function TTAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     N = floor(Int, npop / 3)
@@ -117,4 +121,8 @@ function TTAO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         xbest,
         fbest,
         convergence_curve)
+end
+
+function TTAO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return TTAO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

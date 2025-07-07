@@ -100,6 +100,10 @@ end
 "Puma optimizer (PO): A novel metaheuristic optimization algorithm and its application in machine learning." 
 Cluster Computing (2024): 1-49.
 """
+function PumaO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return PumaO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function PumaO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     UnSelected = ones(Float64, 2)
@@ -243,4 +247,8 @@ function PumaO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, 
         Best[:X],
         Best[:Cost],
         Convergence)
+end
+
+function PumaO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return PumaO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

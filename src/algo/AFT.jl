@@ -1,28 +1,3 @@
-
-# """
-#     AFT(noThieves, max_iter, lb, ub, objfun)
-
-# The Ali Baba and the Forty Thieves (AFT) algorithm is a meta-heuristic optimization algorithm inspired by the story of Ali Baba and the Forty Thieves. It is designed to solve numerical optimization problems by simulating the behavior of thieves searching for treasures.
-
-# # Arguments:
-
-# - `noThieves`: Number of thieves in the algorithm.
-# - `max_iter`: Maximum number of iterations.
-# - `lb`: Lower bounds for the search space.
-# - `ub`: Upper bounds for the search space.
-# - `objfun`: Objective function to evaluate the fitness of solutions.
-
-# # Returns: 
-
-# - `AFTResult`: A struct containing:
-#   - `fitness`: The best fitness value found.
-#   - `gbest`: The position corresponding to the best fitness.
-#   - `ccurve`: A vector of best fitness values at each iteration.
-
-# # References:
-
-# - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
-# """
 """
     AFT(noThieves, max_iter, lb, ub, objfun)
 
@@ -47,6 +22,10 @@
 
 - Braik, Malik, Mohammad Hashem Ryalat, and Hussein Al-Zoubi. "A novel meta-heuristic algorithm for solving numerical optimization problems: Ali Baba and the forty thieves." Neural Computing and Applications 34, no. 1 (2022): 409-455.
 """
+function AFT(objfun, lb::Real, ub::Real, noThieves::Integer, max_iter::Integer, dim::Integer)
+    return AFT(objfun, fill(lb, dim), fill(ub, dim), noThieves, max_iter)
+end
+
 function AFT(objfun, lb::Vector{Float64}, ub::Vector{Float64}, noThieves::Integer, max_iter::Integer)::OptimizationResult
     dim = length(lb)
 
@@ -118,9 +97,6 @@ function AFT(objfun, lb::Vector{Float64}, ub::Vector{Float64}, noThieves::Intege
     gbestSol = best[bestThieves[1], :]
     fitness = objfun(gbestSol)
 
-    println("Type of gbestSol: ", typeof(gbestSol))
-    println("Type of fitness: ", typeof(fitness))
-    println("Type of ccurve: ", typeof(ccurve))
 
     # return OptimizationResult( 
     #     gbestSol, 
@@ -134,9 +110,5 @@ function AFT(objfun, lb::Vector{Float64}, ub::Vector{Float64}, noThieves::Intege
 end
 
 function AFT(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
-    dim = problem.dim
-    objfun = problem.objfun
-    lb = problem.lb
-    ub = problem.ub
-    return AFT(npop, max_iter, lb, ub, objfun)
+    return AFT(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

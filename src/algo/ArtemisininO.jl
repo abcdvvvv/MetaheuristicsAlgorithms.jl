@@ -26,6 +26,10 @@ end
 - Yuan, Chong, Dong Zhao, Ali Asghar Heidari, Lei Liu, Yi Chen, Zongda Wu, and Huiling Chen. "Artemisinin optimization based on malaria therapy: Algorithm and applications to medical image segmentation." Displays 84 (2024): 102740.
 
 """
+function ArtemisininO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ArtemisininO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function ArtemisininO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb) # (objfun, lb, ub, dim, npop, MaxFEs)
     # Initialization parameters
@@ -110,4 +114,8 @@ function ArtemisininO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::In
         best,
         bestfitness,
         Convergence_curve)
+end
+
+function ArtemisininO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ArtemisininO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

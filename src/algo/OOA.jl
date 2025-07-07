@@ -5,6 +5,10 @@
 "Osprey optimization algorithm: A new bio-inspired metaheuristic algorithm for solving engineering optimization problems." 
 Frontiers in Mechanical Engineering 8 (2023): 1126450.
 """
+function OOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return OOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function OOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # Lower limit for variables
@@ -97,4 +101,8 @@ function OOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         xbest,
         fbest,
         best_so_far)
+end
+
+function OOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return OOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

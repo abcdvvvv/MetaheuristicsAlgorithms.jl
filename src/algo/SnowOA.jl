@@ -5,6 +5,10 @@
 "Snow ablation optimizer: A novel metaheuristic technique for numerical optimization and engineering design." 
 Expert Systems with Applications 225 (2023): 120069.
 """
+function SnowOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SnowOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SnowOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(ub) == 1
@@ -117,4 +121,8 @@ function SnowOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer,
         best_pos,
         best_score,
         convergence_curve)
+end
+
+function SnowOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SnowOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

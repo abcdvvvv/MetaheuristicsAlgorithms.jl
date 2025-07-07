@@ -5,6 +5,10 @@
 "Grey wolf optimizer." 
 Advances in engineering software 69 (2014): 46-61.
 """
+function GWO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return GWO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function GWO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # Alpha_pos = zeros(1, dim)
@@ -90,10 +94,6 @@ function GWO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         vec(Convergence_curve))
 end
 
-function GWO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
-    dim = problem.dim
-    objfun = problem.objfun
-    lb = problem.lb
-    ub = problem.ub
-    return GWO(npop, max_iter, lb, ub, dim, objfun)
+function GWO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return GWO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

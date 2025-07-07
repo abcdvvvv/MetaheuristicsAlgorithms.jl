@@ -5,6 +5,10 @@
 "Optimization based on the smart behavior of plants with its engineering applications: Ivy algorithm." 
 Knowledge-Based Systems 295 (2024): 111850.
 """
+function IVYA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return IVYA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function IVYA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # Position = rand(npop, dim) .* (ub .- lb) .+ lb
@@ -71,4 +75,8 @@ function IVYA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Destination_position,
         Destination_fitness,
         Convergence_curve)
+end
+
+function IVYA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return IVYA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

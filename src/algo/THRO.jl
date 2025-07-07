@@ -267,11 +267,11 @@ function THRO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         His_BestFit)
 end
 
-function Levy(d)
-    b = 1.5
-    s = (gamma(1 + b) * sin(pi * b / 2) / (gamma((1 + b) / 2) * b * 2^((b - 1) / 2)))^(1 / b)
-    u = randn(d) * s
-    v = randn(d)
-    sigma = u ./ abs.(v) .^ (1 / b)
-    return sigma
-end
+# function Levy(d)
+#     b = 1.5
+#     s = (gamma(1 + b) * sin(pi * b / 2) / (gamma((1 + b) / 2) * b * 2^((b - 1) / 2)))^(1 / b)
+#     u = randn(d) * s
+#     v = randn(d)
+#     sigma = u ./ abs.(v) .^ (1 / b)
+#     return sigma
+# end

@@ -5,6 +5,10 @@
 "Exponential-trigonometric optimization algorithm for solving complicated engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 432 (2024): 117411.
 """
+function ETO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ETO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ETO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Destination_position = zeros(dim)
@@ -142,4 +146,8 @@ function ETO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Destination_position,
         Destination_fitness,
         Convergence_curve)
+end
+
+function ETO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ETO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

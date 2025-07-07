@@ -4,6 +4,9 @@
 Henry gas solubility optimization: A novel physics-based algorithm. 
 Future Generation Computer Systems, 101, pp.646-667.
 """
+function HGSO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HGSO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
 function HGSO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, var_n_gases::Integer, max_iter::Integer)
     dim = length(lb)
     var_n_types = 5
@@ -106,7 +109,15 @@ function Evaluate(objfun, var_n_types, var_n_gases, X, Xnew, init_flag)
     best_fit, index_best = findmin(X[:fitness])
     best_pos = X[:Position][index_best, :]
 
-    return X, best_fit, best_pos
+    # return X, best_fit, best_pos
+    return OptimizationResult(
+        X,
+        best_fit,
+        best_pos)
+end
+
+function HGSO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HGSO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function update_variables(var_iter, max_iter, K, P, C, var_n_types, var_n_gases)

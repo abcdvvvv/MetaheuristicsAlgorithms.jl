@@ -4,6 +4,10 @@
 - Braik, Malik Shehadeh. "Chameleon Swarm Algorithm: A bio-inspired optimizer for solving engineering design problems." Expert Systems with Applications 174 (2021): 114685.
 
 """
+function ChameleonSA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ChameleonSA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ChameleonSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(ub) == 1
@@ -93,4 +97,8 @@ function ChameleonSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Int
         gPosition,
         fmin0,
         cg_curve)
+end
+
+function ChameleonSA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ChameleonSA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

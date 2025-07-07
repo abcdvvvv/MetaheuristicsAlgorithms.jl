@@ -5,6 +5,10 @@
 "A sinh cosh optimizer." 
 Knowledge-Based Systems 282 (2023): 111081.
 """
+function SCHO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SCHO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SCHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Destination_position = zeros(1, dim)
@@ -117,4 +121,8 @@ function SCHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Destination_position,
         Destination_fitness,
         Convergence_curve)
+end
+
+function SCHO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SCHO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

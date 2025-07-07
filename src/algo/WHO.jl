@@ -22,6 +22,10 @@ end
 "Wild horse optimizer: A new meta-heuristic algorithm for solving engineering optimization problems." 
 Engineering with computers 38, no. Suppl 4 (2022): 3025-3056.
 """
+function WHO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return WHO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function WHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     if length(lb) == 1 && length(ub) == 1
@@ -129,4 +133,8 @@ function WHO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         gBest,
         gBestScore,
         convergence_curve)
+end
+
+function WHO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
+    return WHO(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
 end

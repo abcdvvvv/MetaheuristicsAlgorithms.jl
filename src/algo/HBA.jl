@@ -5,6 +5,10 @@
 "Honey Badger Algorithm: New metaheuristic algorithm for solving optimization problems." 
 Mathematics and Computers in Simulation 192 (2022): 84-110.
 """
+function HBA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HBA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function HBA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb) 
     beta = 6                      
@@ -80,6 +84,10 @@ function HBA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Xprey,
         GYbest,
         CNVG)
+end
+
+function HBA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HBA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function fun_calcobjfunc(func, X)

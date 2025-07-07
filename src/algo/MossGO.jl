@@ -5,6 +5,10 @@
 "The moss growth optimization (MGO): concepts and performance." 
 Journal of Computational Design and Engineering 11, no. 5 (2024): 184-221.
 """
+function MossGO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return MossGO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function MossGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     FEs = 0
@@ -122,6 +126,10 @@ function MossGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer,
         best_M,
         best_cost,
         Convergence_curve)
+end
+
+function MossGO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return MossGO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function actCal(X)

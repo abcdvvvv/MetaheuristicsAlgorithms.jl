@@ -5,6 +5,10 @@
 "Liver Cancer Algorithm: A novel bio-inspired optimizer." 
 Computers in Biology and Medicine 165 (2023): 107389.
 """
+function LCA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return LCA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function LCA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     println("LCA is now tackling your problem")
@@ -93,4 +97,8 @@ function LCA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Tumor_Location,
         Tumor_Energy,
         CNVG)
+end
+
+function LCA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return LCA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

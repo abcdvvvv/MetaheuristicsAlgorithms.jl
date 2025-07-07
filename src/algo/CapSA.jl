@@ -4,6 +4,10 @@
 - Braik, Malik, Alaa Sheta, and Heba Al-Hiary. "A novel meta-heuristic search algorithm for solving optimization problems: capuchin search algorithm." Neural computing and applications 33, no. 7 (2021): 2515-2547.
 
 """
+function CapSA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return CapSA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function CapSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     cg_curve = zeros(max_iter)
@@ -100,4 +104,8 @@ function CapSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, 
         gFoodPos,
         fitCapSA,
         cg_curve)
+end
+
+function CapSA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return CapSA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

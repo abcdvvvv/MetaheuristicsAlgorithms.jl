@@ -5,6 +5,10 @@
 "Young's double-slit experiment optimizer: A novel metaheuristic optimization algorithm for global and constraint optimization problems." 
 Computer Methods in Applied Mechanics and Engineering 403 (2023): 115652.
 """
+function YDSE(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return YDSE(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function YDSE(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     L = 1
@@ -123,4 +127,8 @@ function YDSE(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         best_fringe,
         best_fringe_fitness,
         cgcurve)
+end
+
+function YDSE(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return YDSE(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

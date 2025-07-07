@@ -5,6 +5,10 @@
 "Poor and rich optimization algorithm: A new human-based and multi populations algorithm." 
 Engineering applications of artificial intelligence 86 (2019): 165-181.
 """
+function PRO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return PRO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function PRO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     VarSize = (1, dim)
@@ -81,4 +85,8 @@ function PRO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestSol,
         BestSol["Cost"],
         BestCost[end])
+end
+
+function PRO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return PRO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

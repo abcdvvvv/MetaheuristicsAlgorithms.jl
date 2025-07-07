@@ -4,6 +4,10 @@
 - Wang, Liying, Qingjiao Cao, Zhenxing Zhang, Seyedali Mirjalili, and Weiguo Zhao. "Artificial rabbits optimization: A new bio-inspired meta-heuristic algorithm for solving engineering optimization problems." Engineering Applications of Artificial Intelligence 114 (2022): 105082.
 
 """
+function ARO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return ARO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function ARO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     PopPos = initialization(npop, dim, ub, lb)
@@ -79,4 +83,8 @@ function ARO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestF,
         BestX,
         HisBestF)
+end
+
+function ARO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ARO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

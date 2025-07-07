@@ -6,6 +6,10 @@ A novel swarm intelligence optimization approach: sparrow search algorithm
 Systems Science & Control Engineering, 8:1 (2020), 22-34.
 DOI: 10.1080/21642583.2019.1708830
 """
+function SparrowSA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SparrowSA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SparrowSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     P_percent = 0.2
@@ -92,4 +96,8 @@ function SparrowSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integ
         bestX,
         fMin,
         convergence_curve)
+end
+
+function SparrowSA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SparrowSA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

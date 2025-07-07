@@ -6,6 +6,10 @@
 Artificial Intelligence Review 57, no. 4 (2024): 98.
 
 """
+function BKA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return BKA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function BKA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # Initialize the locations of Blue Sheep
@@ -73,4 +77,8 @@ function BKA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_Pos_BKA,
         Best_Fitness_BKA,
         Convergence_curve)
+end
+
+function BKA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return BKA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

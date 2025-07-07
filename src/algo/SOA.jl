@@ -5,6 +5,10 @@
 "Seagull optimization algorithm: Theory and its applications for large-scale industrial engineering problems." 
 Knowledge-based systems 165 (2019): 169-196.
 """
+function SOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     position = zeros(dim)
@@ -54,4 +58,8 @@ function SOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         position,
         score,
         convergence)
+end
+
+function SOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

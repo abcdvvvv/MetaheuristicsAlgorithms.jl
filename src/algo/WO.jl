@@ -16,6 +16,10 @@
 "Wave optimization algorithm: A new metaheuristic algorithm for solving optimization problems." 
 Knowledge-Based Systems 236 (2022): 107760.
 """
+function WO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return WO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function WO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     best_pos = zeros(Float64, dim)
@@ -125,6 +129,9 @@ function WO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max
         convergence_curve)
 end
 
+function WO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
+    return WO(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
+end
 function hal(index, base)
     result = 0.0
     f = 1.0 / base

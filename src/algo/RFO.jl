@@ -5,6 +5,10 @@
 Rüppell’s fox optimizer: A novel meta-heuristic approach for solving global optimization problems. 
 Cluster Computing, 28(5), 1-77.
 """
+function RFO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return RFO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function RFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     # Preallocate
@@ -165,6 +169,10 @@ function RFO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         fbest,
         fmin0,
         ccurve)
+end
+
+function RFO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return RFO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function frotate(x::Vector{T}, y::Vector{T}, θ::T, dim::Int) where {T<:Real}

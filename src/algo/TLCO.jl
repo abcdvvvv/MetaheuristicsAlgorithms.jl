@@ -5,6 +5,10 @@
 "Termite life cycle optimizer." 
 Expert Systems with Applications 213 (2023): 119211.
 """
+function TLCO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return TLCO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function TLCO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, cycle::Integer)
     dim = length(lb)
     if length(lb) == 1 && length(ub) == 1
@@ -153,6 +157,10 @@ function TLCO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, c
         gbest["pos"],
         gbest["cost"],
         best_TLCO)
+end
+
+function TLCO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return TLCO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 # function levy_fun_TLCO(n::Int, m::Int, beta::Float64)

@@ -5,6 +5,10 @@
 "Golden jackal optimization: A novel nature-inspired optimizer for engineering applications." 
 Expert Systems with Applications 198 (2022): 116924.
 """
+function GJO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return GJO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function GJO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Male_Jackal_pos = zeros(1, dim)
@@ -73,4 +77,8 @@ function GJO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Male_Jackal_pos,
         Male_Jackal_score,
         Convergence_curve)
+end
+
+function GJO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return GJO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

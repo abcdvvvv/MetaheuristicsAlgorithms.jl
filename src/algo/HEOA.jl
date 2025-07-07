@@ -5,6 +5,10 @@
 Expert Systems with Applications 241 (2024): 122638.
 
 """
+function HEOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HEOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function HEOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     jump_factor = abs(lb[1] - ub[1]) / 1000
@@ -103,6 +107,10 @@ function HEOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         Best_pos,
         Best_score,
         curve)
+end
+
+function HEOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HEOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function initializationLogistic(pop::Int, dim::Int, ub, lb)

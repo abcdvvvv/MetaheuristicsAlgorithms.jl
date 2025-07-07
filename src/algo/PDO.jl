@@ -18,6 +18,10 @@
 "Prairie dog optimization algorithm." 
 Neural Computing and Applications 34, no. 22 (2022): 20017-20065.
 """
+function PDO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return PDO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function PDO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     PDBest_P = zeros(dim)
@@ -93,4 +97,8 @@ function PDO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         PDBest_P,
         Best_PD,
         PDConv)
+end
+
+function PDO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return PDO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

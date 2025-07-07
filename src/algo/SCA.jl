@@ -5,6 +5,10 @@
 "SCA: a sine cosine algorithm for solving optimization problems." 
 Knowledge-based systems 96 (2016): 120-133.
 """
+function SCA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SCA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SCA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     println("SCA is optimizing your problem")
@@ -69,4 +73,8 @@ function SCA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Destination_position,
         Destination_fitness,
         Convergence_curve)
+end
+
+function SCA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SCA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

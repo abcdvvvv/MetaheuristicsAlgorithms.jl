@@ -5,6 +5,9 @@
 Hippopotamus optimization algorithm: a novel nature-inspired optimization algorithm. 
 Scientific Reports, 14(1), p.5032.
 """
+function HO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
 function HO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     lb = fill(lb, dim)
@@ -122,4 +125,8 @@ function HO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max
         Xbest,
         fbest,
         best_so_farx)
+end
+
+function HO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

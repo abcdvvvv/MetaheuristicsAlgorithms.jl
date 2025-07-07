@@ -57,6 +57,10 @@ end
 "Quadratic Interpolation Optimization (QIO): A new optimization algorithm based on generalized quadratic interpolation and its applications to real-world engineering problems." 
 Computer Methods in Applied Mechanics and Engineering 417 (2023): 116446.
 """
+function QIO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return QIO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function QIO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     IndividualsPos = zeros(npop, dim)
@@ -156,4 +160,8 @@ function QIO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestX,
         BestF,
         HisBestF)
+end
+
+function QIO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return QIO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

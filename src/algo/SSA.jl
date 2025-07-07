@@ -5,6 +5,10 @@
 "Salp Swarm Algorithm: A bio-inspired optimizer for engineering design problems." 
 Advances in engineering software 114 (2017): 163-191.
 """
+function SSA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SSA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)#(npop, max_iter, lb, ub, dim, objfun)#(npop, max_iter, objfun, dim, lb, ub)
     if size(ub, 1) == 1
@@ -74,4 +78,8 @@ function SSA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         food_position,
         food_fitness,
         Convergence_curve)
+end
+
+function SSA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SSA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

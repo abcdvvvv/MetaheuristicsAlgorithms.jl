@@ -5,6 +5,10 @@
 "Satin bowerbird optimizer: A new optimization algorithm to optimize ANFIS for software development effort estimation." 
 Engineering Applications of Artificial Intelligence 60 (2017): 1-15.
 """
+function SBO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return SBO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function SBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     alpha = 0.94
@@ -73,4 +77,8 @@ function SBO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestSol["Position"],
         BestSol["Cost"],
         BestCost)
+end
+
+function SBO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return SBO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

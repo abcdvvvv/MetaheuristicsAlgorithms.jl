@@ -5,6 +5,10 @@
 "Horse herd optimization algorithm: A nature-inspired algorithm for high-dimensional optimization problems." 
 Knowledge-Based Systems 213 (2021): 106711.
 """
+function HorseOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return HorseOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function HorseOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, nHourse::Integer, max_iter::Integer)
     dim = length(lb)
     VarSize = (1, dim)  # Size of Decision Variables Matrix
@@ -144,4 +148,8 @@ function HorseOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, nHourse::Inte
         GlobalBest[:Position],
         GlobalBest[:Cost],
         BestCost)
+end
+
+function HorseOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return HorseOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

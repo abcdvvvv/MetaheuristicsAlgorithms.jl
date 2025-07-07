@@ -118,5 +118,5 @@ ub = 100
 tlt = "Chung Reynolds"
 i = 1
 #
-BestPosition, BestValue, ConvergenceCurve = THRO(npop, max_iter, lb, ub, dim, Chung_Reynolds)
-println("BestValue: ", BestPosition)
+# BestPosition, BestValue, ConvergenceCurve = THRO(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+# println("BestValue: ", BestPosition)

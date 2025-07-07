@@ -5,6 +5,10 @@
 "FATA: an efficient optimization method based on geophysics." 
 Neurocomputing 607 (2024): 128289.
 """
+function FATA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return FATA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function FATA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     worstInte = 0
@@ -81,4 +85,8 @@ function FATA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         bestPos,
         gBestScore,
         cg_curve)
+end
+
+function FATA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return FATA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

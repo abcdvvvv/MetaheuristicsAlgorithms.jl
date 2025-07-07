@@ -54,7 +54,7 @@ problem = OptimizationProblem(Ackley, -5.12, 5.12, 10)
 result = AEO(problem, 30, 100)
 """
 function AEO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
-    AEO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+    return AEO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
 end
 
 function AEO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
@@ -139,10 +139,6 @@ function AEO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
 
         his_best_fit[it+1] = BestF
     end
-
-    println("Type of BestX: ", typeof(BestX))
-    println("Type of BestF: ", typeof(BestF))
-    println("Type of his_best_fit: ", typeof(his_best_fit))
 
     return OptimizationResult(
         BestX,

@@ -4,6 +4,10 @@
 - Das, Amit Kumar, and Dilip Kumar Pratihar. "Bonobo optimizer (BO): an intelligent heuristic with self-adjusting parameters over continuous spaces and its applications to engineering problems." Applied Intelligence 52, no. 3 (2022): 2942-2974.
 
 """
+function BO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return BO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function BO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     p_xgm_initial = 0.001
@@ -150,4 +154,8 @@ function BO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max
         alphabonobo,
         bestcost,
         convergence)
+end
+
+function BO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return BO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

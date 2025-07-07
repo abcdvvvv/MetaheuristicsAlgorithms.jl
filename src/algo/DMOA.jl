@@ -11,6 +11,10 @@ end
     Computer methods in applied mechanics and engineering 391 (2022): 114570.
     
 """
+function DMOA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return DMOA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function DMOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     VarSize = dim
@@ -133,4 +137,8 @@ function DMOA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         BestSol.Position,
         BestSol.Cost,
         BestCost)
+end
+
+function DMOA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return DMOA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

@@ -131,6 +131,10 @@ end
 "Novel meta-heuristic bald eagle search optimisation algorithm." 
 Artificial Intelligence Review 53 (2020): 2237-2264.
 """
+function BES(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return BES(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
+end
+
 function BES(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
 
@@ -169,4 +173,8 @@ function BES(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestPos,
         BestCost,
         Convergence_curve)
+end
+
+function BES(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return BES(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

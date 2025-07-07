@@ -5,6 +5,10 @@
 "Remora optimization algorithm." 
 Expert Systems with Applications 185 (2021): 115665.
 """
+function ROA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return ROA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function ROA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     Best_pos = zeros(Float64, dim)
@@ -70,4 +74,8 @@ function ROA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestX,
         Best_pos,
         Convergence_curve)
+end
+
+function ROA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return ROA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

@@ -31,6 +31,10 @@ end
 "Mountain gazelle optimizer: a new nature-inspired metaheuristic algorithm for global optimization problems." 
 Advances in Engineering Software 174 (2022): 103282.
 """
+function MountainGO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return MountainGO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function MountainGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     lb = ones(dim) .* lb    # Lower Bound
@@ -91,4 +95,8 @@ function MountainGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Inte
         BestX,
         BestF,
         cnvg)
+end
+
+function MountainGO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return MountainGO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

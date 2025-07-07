@@ -5,6 +5,10 @@
 "Political Optimizer: A novel socio-inspired meta-heuristic for global optimization." 
 Knowledge-based systems 195 (2020): 105709.
 """
+function PoliticalO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)::OptimizationResult
+    return PoliticalO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function PoliticalO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     parties = 8
@@ -51,6 +55,10 @@ function PoliticalO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Inte
         Leader_pos,
         Leader_score,
         Convergence_curve)
+end
+
+function PoliticalO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return PoliticalO(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function Election(Positions, fitness, Leader_score, Leader_pos, ub, lb, objfun)

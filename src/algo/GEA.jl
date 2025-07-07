@@ -4,6 +4,10 @@
 "Geyser inspired algorithm: a new geological-inspired meta-heuristic for real-parameter and constrained engineering optimization." 
 Journal of Bionic Engineering 21, no. 1 (2024): 374-408.
 """
+function GEA(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+    return GEA(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter) 
+end
+
 function GEA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
     dim = length(lb)
     VarSize = (1, dim)
@@ -92,6 +96,10 @@ function GEA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         BestPosition,
         BestCost,
         BestCosts)
+end
+
+function GEA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+    return GEA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function RouletteWheelSelectionFun(p)
