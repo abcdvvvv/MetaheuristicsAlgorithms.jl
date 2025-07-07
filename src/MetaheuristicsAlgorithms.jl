@@ -188,14 +188,13 @@ include("utils/initialization.jl")
 # repeated items and should be cleaned up.
 # some of the algorithms are missing and didn't get exported.
 export AEFA, AEO, AFT, AHA, ALA, ALO, AOArithmetic, APO, ARO, AVOA
-export AEO, AFT, AHA, ALO, AOArithmetic, APO, ARO, AVOA
 export BES, BKA, BO, BOA
 export CapSA, ChOA, CO, CoatiOA, COOT, CSBO
 export DBO, DDAO, DMOA, DO, DSO
 export ECO, EDO, ElkHO, EO, ETO, ESC
 export FLA, FLoodA, FOX
 export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
-export RBMO, RFO, RIME
+export RBMO, RFO, RIME, ROA, RSA, RSO, RUN
 export SFOA, SHO, SMA, SSA, STOA, SupplyDO
 export THRO, TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA
 
