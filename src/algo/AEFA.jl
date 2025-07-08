@@ -15,7 +15,6 @@ function AEFA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
 
     Rnorm = 2
 
-    # X = rand(npop, dim) .* (ub - lb) .+ lb
     X = initialization(npop, dim, ub, lb)
     V = zeros(npop, dim)
     BestValues = Float64[]
@@ -98,14 +97,15 @@ function AEFA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, m
         # end
     end
 
-    # return Fbest, Lbest, BestValues, MeanValues
-    return OptimizationResult(
-        Lbest,
-        Fbest,
-        BestValues)
+    println("Fbest ", Fbest)
+    println("Lbest ", Lbest)
+    return Fbest, Lbest, BestValues, MeanValues
+    # return OptimizationResult(
+    #     Lbest,
+    #     Fbest,
+    #     BestValues)
 end
 
-
-function AEFA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
+function AEFA(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)#::OptimizationResult
     return AEFA(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end

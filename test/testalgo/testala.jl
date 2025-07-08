@@ -1,22 +1,22 @@
-@testset "AEO" verbose = true begin
-    @testset "Ackley with AEO, p = 2" verbose = true begin
+@testset "ALA" verbose = true begin
+    @testset "Ackley with ALA, p = 2" verbose = true begin
         lb = [-32.768 for i = 1:2]
         ub = [32.768 for i = 1:2]
-        result = AEO(Ackley, lb, ub, 100, 1000)
+        result = ALA(Ackley, lb, ub, 100, 1000)
         @test isapprox(result.bestX, [0.0 for i = 1:2], atol=1e-5)
         @test isapprox(result.bestF, 0.0, atol=1e-5)
     end
-    @testset "Ackley with AEO, p = 5" verbose = true begin
+    @testset "Ackley with ALA, p = 5" verbose = true begin
         lb = [-32.768 for i = 1:5]
         ub = [32.768 for i = 1:5]
-        result = AEO(Ackley, lb, ub, 100, 1000)
+        result = ALA(Ackley, lb, ub, 100, 1000)
         @test isapprox(result.bestX, [0.0 for i = 1:5], atol=1e-5)
         @test isapprox(result.bestF, 0.0, atol=1e-5)
     end
-    @testset "Griewank with AEO, p = 2" verbose = true begin
+    @testset "Griewank with ALA, p = 2" verbose = true begin
         lb = [-600.0 for i = 1:2]
         ub = [600.0 for i = 1:2]
-        result = AEO(Griewank, lb, ub, 100, 1000)
+        result = ALA(Griewank, lb, ub, 100, 1000)
         @test isapprox(result.bestX, [0.0 for i = 1:2], atol=1e-5)
         @test isapprox(result.bestF, 0.0, atol=1e-5)
     end

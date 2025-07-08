@@ -77,8 +77,8 @@ function ALA(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
 
     # return score, position, convergence_curve
     return OptimizationResult(
-        score,
         position,
+        score,
         convergence_curve)
 end
 

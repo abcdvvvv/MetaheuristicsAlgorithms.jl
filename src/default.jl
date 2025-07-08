@@ -1,7 +1,7 @@
 include("algo/AEFA.jl")
 include("algo/AEFA_Struct.jl")
 # include("algo/AEO.jl")
-include("algo/AFT.jl")
+# include("algo/AFT.jl")
 include("algo/AHA.jl")
 include("algo/ALA.jl")
 include("algo/ALO.jl")
@@ -101,7 +101,7 @@ include("algo/TSA.jl")
 include("algo/TTAO.jl")
 include("algo/WHO.jl")
 include("algo/WO.jl")
-include("algo/WOA.jl")
+# include("algo/WOA.jl")
 include("algo/WSO.jl")
 include("algo/WUTP.jl")
 include("algo/YDSE.jl")
@@ -109,14 +109,19 @@ include("algo/ZOA.jl")
 ##
 include("utils/Chung_Reynolds.jl")
 include("utils/initialization.jl")
+include("problem.jl")
+export OptimizationProblem 
 ##
 dim = 30
 max_iter = 1000
 npop = 50
-lb = -100
-ub = 100
+lb = -100.0
+ub = 100.0
 tlt = "Chung Reynolds"
 i = 1
-#
-# BestPosition, BestValue, ConvergenceCurve = THRO(npop, max_iter, lb, ub, dim, Chung_Reynolds)
-# println("BestValue: ", BestPosition)
+# GWO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
+Res = AEFA(Chung_Reynolds, lb, ub, npop, max_iter, dim) 
+#GWO(npop, max_iter, lb, ub, dim, Chung_Reynolds)
+println("BestValue: ", Res.bestF)
+println("BestPosition: ", Res.bestX)
+println("ConvergenceCurve: ", size(Res.his_best_fit))

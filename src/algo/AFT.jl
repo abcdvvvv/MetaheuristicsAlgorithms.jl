@@ -102,6 +102,9 @@ function AFT(objfun, lb::Vector{Float64}, ub::Vector{Float64}, noThieves::Intege
     #     gbestSol, 
     #     fitness,
     #     ccurve)
+    println("gbestSol ", gbestSol)
+    println("fitness ", fitness)
+    println("ccurve ", size(ccurve))
 
     return OptimizationResult(
         gbestSol,

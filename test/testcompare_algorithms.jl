@@ -22,7 +22,7 @@ algos = Dict(
 
 # Run comparison
 # results = compare_algorithms(algos, problem; npop=30, max_iter=100)
-results = compare_algorithms([AEO, GWO], problem; npop=30, max_iter=100)
+results = compare_algorithms([AEO, ALA, BES, BKA, BOA, ChOA], problem; npop=30, max_iter=100)
 
 # Plot all convergence curves
 p = plot()

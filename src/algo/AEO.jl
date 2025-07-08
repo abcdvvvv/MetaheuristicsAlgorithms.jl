@@ -58,7 +58,6 @@ function AEO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::
 end
 
 function AEO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, max_iter::Integer)
-    # function AEO(npop::Integer, max_iter::Integer, lb::Union{Real,AbstractVector{<:Real}}, ub::Union{Real,AbstractVector{<:Real}}, objfun)::OptimizationResult
     dim = length(lb)
     PopPos = zeros(npop, dim)
     PopFit = zeros(npop)

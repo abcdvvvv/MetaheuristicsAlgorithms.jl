@@ -103,10 +103,6 @@ function DSO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
         Best_Position,
         Best_Cost,
         Best_iteration)
-    # return DSOResult(
-    #     Best_Cost,
-    #     Best_Position,
-    #     Best_iteration)
 end
 
 function DSO(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)::OptimizationResult
