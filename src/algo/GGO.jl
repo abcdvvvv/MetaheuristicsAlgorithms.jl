@@ -36,7 +36,7 @@ function GGO(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
             end
         end
         Convergence[iter], _ = findmin(fitness)
-        println(Convergence[iter])
+        # println(Convergence[iter])
     end
 
     best_fitness, best_index = findmin(fitness)

@@ -1,3 +1,5 @@
+using LinearAlgebra
+
 # Ufun used in F12 and F13
 function Ufun(x, a, k, m)
     return k .* ((x .- a).^m) .* (x .> a) + k .* ((-x .- a).^m) .* (x .< -a)
@@ -237,6 +239,9 @@ f(\\mathbf{x}) = \\left[ 0.002 + \\sum_{j=1}^{25} \\frac{1}{j + \\sum_{i=1}^{2} 
 ```
 """
 function F14(x)
+    # println("length(x) ", length(x))
+    # println("(x) ", x)
+    @assert length(x) == 2 "F14 expects x to be a 2D vector"
     aS = hcat([-32, -16, 0, 16, 32,
                -32, -16, 0, 16, 32,
                -32, -16, 0, 16, 32,
@@ -248,7 +253,8 @@ function F14(x)
                16, 16, 16, 16, 16,
                32, 32, 32, 32, 32]...)
     bS = [sum((x .- aS[:, j]).^6) for j in 1:25]
-    return (1 / (0.002 + sum(1 ./ (1:25 .+ bS))))^(-1)
+    # return (1 / (0.002 + sum(1 ./ (1:25 .+ bS))))^(-1)
+    return (1 / (0.002 + sum(1 ./ ((1:25) .+ bS))))^(-1)
 end
 
 """

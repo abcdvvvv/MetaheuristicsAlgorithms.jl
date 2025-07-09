@@ -65,7 +65,7 @@ function LFD(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
                         if R < CSV
                             rand_leader_index = rand(1:npop)
                             X_rand = Positions[rand_leader_index, :]
-                            Positions_temp[j, :] = Levy(Positions[j, :], X_rand, dim)
+                            Positions_temp[j, :] = levy(Positions[j, :], X_rand, dim)
                         else
                             Positions_temp[j, :] = lb[1] .+ rand(1, dim) .* (ub[1] - lb[1])
                         end
@@ -84,7 +84,7 @@ function LFD(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::Integer, ma
             rand_leader_index = rand(1:floor(Int(npop)))
             X_rand = Positions[rand_leader_index, :]
             X_new = TargetPosition + 10 * S_i_total + rand() * 0.00005 * ((TargetPosition + 0.005 * X_rand) / 2 - Positions[i, :])
-            X_new = Levy(X_new, TargetPosition, dim)
+            X_new = levy(X_new, TargetPosition, dim)
             Positions_temp[i, :] = X_new
             NN[i] = NeighborN
         end
