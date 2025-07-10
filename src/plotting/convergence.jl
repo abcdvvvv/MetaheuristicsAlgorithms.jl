@@ -11,7 +11,7 @@ function convergence_curve(result::OptimizationResult)
         xlabel="Iterations",
         ylabel="Objective Function Value")
         # display(fig)
-        plot(1:10,1:10)
+        # plot(1:10,1:10)
 end
 
 export convergence_curve
