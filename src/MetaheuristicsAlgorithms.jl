@@ -103,6 +103,7 @@ include("algo/JS.jl")
 include("algo/LCA.jl")
 include("algo/LFD.jl")
 include("algo/LPO.jl")
+include("algo/LSHADE_cnEpSin.jl")
 include("algo/MossGO.jl")
 include("algo/MountainGO.jl")
 include("algo/MPA.jl")
@@ -194,6 +195,11 @@ export DBO, DDAO, DMOA, DO, DSO
 export ECO, EDO, ElkHO, EO, ETO, ESC
 export FLA, FLoodA, FOX
 export GazelleOA, GBO, GEA, GGO, GJO, GKSO, GNDO, GO, GOA, GTO, GWO
+export HBA, HBO, HEOA, HGS, HGSO, HikingOA, HO, HorseOA
+export INFO, IVYA
+export Jaya, JS
+export LCA, LFD, LPO, LSHADE_cnEpSin
+# export LSHADE_cnEpSin
 export RBMO, RFO, RIME, ROA, RSA, RSO, RUN
 export SFOA, SHO, SMA, SSA, STOA, SupplyDO
 export THRO, TLBO, TLCO, TSA, TTAO, WHO, WO, WOA, WSO, YDSE, ZOA

@@ -69,6 +69,7 @@ include("benchfunctions.jl")
 # #include("testalgo/testLCA.jl")
 # #include("testalgo/testLFD.jl")
 # #include("testalgo/testLPO.jl")
+include("testalgo/testLSHADE_cnEpSin.jl")
 # #include("testalgo/testMossGO.jl")
 # #include("testalgo/testMountainGO.jl")
 # #include("testalgo/testMPA.jl")
@@ -117,7 +118,7 @@ include("benchfunctions.jl")
 # #include("testalgo/testWOA.jl")
 # #include("testalgo/testWUTP.jl")
 # #include("testalgo/testYDSE.jl")
-# include("testalgo/testZOA.jl")
+include("testalgo/testZOA.jl")
 
 
 
