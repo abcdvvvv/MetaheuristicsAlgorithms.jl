@@ -79,6 +79,7 @@ function LSHADE_cnEpSin(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::
         bsf_fit_var = 1e30
         bsf_index = 0
         bsf_solution = zeros(problem_size)
+        his_best_fit = zeros(Float64, max_nfes)
 
         # Initial evaluation count and best solution
         for i in 1:pop_size
@@ -241,6 +242,7 @@ function LSHADE_cnEpSin(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::
 
             nfes += pop_size
 
+
             # Selection and archive update
             goodF1all_ = 0
             goodF2all_ = 0
@@ -351,6 +353,9 @@ function LSHADE_cnEpSin(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::
                     end
                 end
             end
+            # his_best_fit[nfes] = bsf_fit_var 
+            push!(his_best_fit, bsf_fit_var)
+            println("$nfes --> $bsf_fit_var")
 
         end # while nfes < max_nfes
 
@@ -365,6 +370,7 @@ function LSHADE_cnEpSin(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::
 
         # println("Run $run_id best fitness = $bsf_fit_var")
         println("Run  best fitness = $bsf_fit_var")
+        
 
         # end # runs
 
@@ -383,16 +389,26 @@ function LSHADE_cnEpSin(objfun, lb::Vector{Float64}, ub::Vector{Float64}, npop::
         # println("Median error: ", result[func, 5])
 
     # end # num_prbs
+
+    println("bestF: ", typeof(bsf_fit_var))
+    println("bestX: ", typeof(bsf_solution))
+    println("his_best_fit: ", typeof(his_best_fit))
+
+
     return OptimizationResult(
-        bsf_fit_var,
         bsf_solution,
-        bsf_fit_var
+        bsf_fit_var,
+        his_best_fit
     )
 
 end
 
 function LSHADE_cnEpSin(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)
     return LSHADE_cnEpSin(npop, max_iter, problem.lb, problem.ub, problem.dim, problem.objfun)
+end
+
+function LSHADE_cnEpSin(problem::OptimizationProblem, npop::Integer=30, max_iter::Integer=1000)#::OptimizationResult
+    return LSHADE_cnEpSin(problem.objfun, problem.lb, problem.ub, npop, max_iter)
 end
 
 function gnR1R2(NP1::Int, NP2::Int, r0::Vector{Int})
@@ -448,6 +464,7 @@ function updateArchive(archive, pop, funvalue)
     # popAll = popAll[sort(IX), :]
 
     popAll, IX = unique(popAll; dims=1, return_index=true)
+    # popAll, IX = unique(popAll, dims=1, returninds=true)
     popAll = popAll[sortperm(IX), :]
 
     funvalues = funvalues[sort(IX), :]
@@ -465,22 +482,6 @@ function updateArchive(archive, pop, funvalue)
     return archive
 end
 
-
-# function boundConstraint(vi::Matrix{Float64}, pop::Matrix{Float64}, lu::Matrix{Float64})
-#     # lu is expected to be a 2×D matrix: [lower_bounds; upper_bounds]
-#     NP, D = size(pop)
-    
-#     xl = repeat(lu[1:1, :], NP, 1)
-#     xu = repeat(lu[2:2, :], NP, 1)
-
-#     pos_lower = vi .< xl
-#     vi[pos_lower] .= (pop[pos_lower] + xl[pos_lower]) ./ 2
-
-#     pos_upper = vi .> xu
-#     vi[pos_upper] .= (pop[pos_upper] + xu[pos_upper]) ./ 2
-
-#     return vi
-# end
 
 function boundConstraint(vi, pop, lu::AbstractVector{<:Real})
     # Convert lu to 2×D matrix if it is a flat vector (concatenated lb and ub)

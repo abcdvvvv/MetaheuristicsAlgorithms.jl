@@ -16,10 +16,12 @@ ub = [512.0, 512.0]
 problem = OptimizationProblem(Ackley, lb, ub, 2)
 
 # Select algorithms to compare
-algos = [AEO, ALA, BES, BKA, BOA, ChOA]
+# algos = [AEO, ALA, BES, BKA, BOA, ChOA]
+algos =[AEO, ALA, LSHADE_cnEpSin]
 
 # Run comparison with multiple runs
 results = compare_algorithms(algos, problem; npop=30, max_iter=100, runs=30)
+# results = compare_algorithms(algos, problem; npop=3, max_iter=10, runs=30)
 
 mean_fitnesses = Dict{String, Float64}()
 
