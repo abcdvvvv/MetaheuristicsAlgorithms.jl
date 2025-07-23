@@ -10,8 +10,8 @@
 [![Compatible with Julia](https://img.shields.io/badge/Compatible%20with-Julia%201.6+-blue.svg)](https://julialang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 <!-- [![Downloads](https://img.shields.io/endpoint?url=https://pkgs.genie.julialang.org/api/v1/badge/MetaheuristicsAlgorithms)](https://juliahub.com/ui/Packages/MetaheuristicsAlgorithms) -->
-[![Downloads](https://img.shields.io/badge/julia-downloads-blue.svg)](https://juliahub.com/ui/Packages/MetaheuristicsAlgorithms)
-[![Docs Coverage](https://img.shields.io/badge/docs-coverage-yellowgreen.svg)](https://abdelazimhussien.github.io/MetaheuristicsAlgorithms.jl/dev/)
+<!-- works[![Downloads](https://img.shields.io/badge/julia-downloads-blue.svg)](https://juliahub.com/ui/Packages/MetaheuristicsAlgorithms) -->
+<!-- [![Docs Coverage](https://img.shields.io/badge/docs-coverage-yellowgreen.svg)](https://abdelazimhussien.github.io/MetaheuristicsAlgorithms.jl/dev/) -->
 [![Last Commit](https://img.shields.io/github/last-commit/abdelazimhussien/MetaheuristicsAlgorithms.jl)](https://github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl/commits/main)
 [![Discussions](https://img.shields.io/github/discussions/abdelazimhussien/MetaheuristicsAlgorithms.jl)](https://github.com/abdelazimhussien/MetaheuristicsAlgorithms.jl/discussions)
 
