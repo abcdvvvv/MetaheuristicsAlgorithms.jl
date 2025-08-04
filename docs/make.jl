@@ -1,6 +1,10 @@
 using MetaheuristicsAlgorithms
 using Documenter
 
+using DocstringTranslation
+@switchlang! :Swedish
+DocstringTranslation.switchtargetpackage!(MetaheuristicsAlgorithms)
+
 DocMeta.setdocmeta!(MetaheuristicsAlgorithms, :DocTestSetup, :(using MetaheuristicsAlgorithms); recursive=true)
 
 makedocs(;
