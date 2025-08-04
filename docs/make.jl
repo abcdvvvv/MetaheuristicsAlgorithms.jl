@@ -17,7 +17,7 @@ makedocs(;
         assets=String[],
         prettyurls=false
         # prettyurls = get(ENV, "CI", "false") == "true"
-    ),
+    ), 
     pages=[
         "Home" => "index.md",
         "Reference" => "reference.md",
