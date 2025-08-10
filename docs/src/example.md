@@ -58,5 +58,5 @@ xlabel!("Iterations")
 ylabel!("Objective Function Value")
 title!("Mean Convergence Curves")
 Plots.savefig(p1, "convergence.png")
-# display(p1)
+p1
 ```
