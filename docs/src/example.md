@@ -10,23 +10,21 @@ with a = 20, b = 0.2, c = $2\pi$
 
 ```@example
 using MetaheuristicsAlgorithms
+using Statistics: mean
 
 function Ackley(x::Vector{Float64})::Float64
-    n = length(x)
     a = 20.0
     b = 0.2
     c = 2 * π
 
-    sum1 = sum(xi^2 for xi in x)
-    sum2 = sum(cos(c * xi) for xi in x)
-
-    term1 = -a * exp(-b * sqrt(sum1 / n))
-    term2 = -exp(sum2 / n)
+    term1 = -a * exp(-b * sqrt(mean(x.^2)))
+    term2 = -exp(mean(cos.(c * x)))
 
     return term1 + term2 + a + exp(1)
 end
-lb = [-32.768 for i = 1:5]
-ub = [32.768 for i = 1:5]
+
+lb = [-32.768 for _ = 1:5]
+ub = [ 32.768 for _ = 1:5]
 result = AEO(Ackley, lb, ub, 100, 1000)
 convergence_curve(result)
 ```
