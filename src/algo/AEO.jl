@@ -52,6 +52,7 @@ result = AEO(30, 100, lb, ub, 10, Ackley)
 # Using OptimizationProblem struct
 problem = OptimizationProblem(Ackley, -5.12, 5.12, 10)
 result = AEO(problem, 30, 100)
+```
 """
 function AEO(objfun, lb::Real, ub::Real, npop::Integer, max_iter::Integer, dim::Integer)
     return AEO(objfun, fill(lb, dim), fill(ub, dim), npop, max_iter)
