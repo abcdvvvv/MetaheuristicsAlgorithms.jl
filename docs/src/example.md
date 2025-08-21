@@ -1,12 +1,11 @@
 # Tutorial
 In this Example, we try to solve **Ackley function**
 ```math
-f(\mathbf{x}) = -a \cdot \exp\left(-b \cdot \sqrt{\frac{1}{n} \sum_{i=1}^{n} x_i^2}\right)
+f(\mathbf{x}) = -a \exp\left(-b \sqrt{\frac{1}{n} \sum_{i=1}^{n} x_i^2}\right)
                - \exp\left(\frac{1}{n} \sum_{i=1}^{n} \cos(c x_i)\right)
                + a + \exp(1)
 ```
-with a = 20, b = 0.2, c = $2\pi$
-, and global minimum at x=0.
+with ``a = 20``, ``b = 0.2``, ``c = 2π``, and global minimum at ``x=0``.
 
 ```@example
 using MetaheuristicsAlgorithms
@@ -15,7 +14,7 @@ function Ackley(x::Vector{Float64})::Float64
     n = length(x)
     a = 20.0
     b = 0.2
-    c = 2 * π
+    c = 2π
 
     sum1 = sum(xi^2 for xi in x)
     sum2 = sum(cos(c * xi) for xi in x)
@@ -59,5 +58,5 @@ xlabel!("Iterations")
 ylabel!("Objective Function Value")
 title!("Mean Convergence Curves")
 Plots.savefig(p1, "convergence.png")
-# display(p1)
+p1
 ```
