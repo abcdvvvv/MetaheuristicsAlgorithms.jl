@@ -6,61 +6,90 @@ function Ufun(x, a, k, m)
 end
 
 """
-    F1(x)
+    sphere(x)
 
 Sphere function.
 
-This is a basic unimodal test function used in benchmarking optimization algorithms.
+A basic unimodal benchmark used in optimization.
 
-**Equation:**
-
+# Equation
 ```math
 f(\\mathbf{x}) = \\sum_{i=1}^n x_i^2
 ```
 
+# Properties
+- Domain: any dimension n; typical bounds xᵢ ∈ [-100, 100].
+- Global minimum: `f(0,…,0) = 0` at `x = 0`.
+- Complex support: if x contains complex or dual numbers, this implementation uses abs2(xᵢ) (the squared modulus), so the result is a real, non-negative scalar.
 """
-F1(x) = sum(x .^ 2)
+sphere(x) = sum(abs2, x)
+
+const F1 = sphere
 
 """
-    F2(x)
+    schwefel_2_22(x)
 
-Sum of Absolute Values and Product of Absolute Values.
+Schwefel’s Problem 2.22 (F2).
 
-This is a basic test function used in optimization, combining both the sum and product of the absolute values of the input vector elements.
+A basic benchmark that combines the sum and the product of absolute values. Often used
+to test robustness to scaling and zero/near-zero components.
 
-# Equation:
-
+# Equation
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| + \\prod_{i=1}^n |x_i|
-```
+f(\\mathbf{x}) = \\sum_{i=1}^n |x_i| \\;+\\; \\prod_{i=1}^n |x_i|
+````
+
+# Properties
+- Domain: any dimension `n`; typical bounds `xᵢ ∈ [-10, 10]` (variants exist).
+- Global minimum: `f(0,…,0) = 0` at `x = 0`.
+- Complex/AD support: this implementation uses `abs(xᵢ)` (modulus), so it works with
+  complex and dual numbers; the result is a real, non-negative scalar.
+- Note: if any `xᵢ = 0`, the product term is `0`.
 """
-F2(x) = sum(abs.(x)) + prod(abs.(x))
+schwefel_2_22(x) = sum(abs, x) + prod(abs, x)
+
+const F2 = schwefel_2_22
 
 """
-    F3(x)
+    schwefel_1_2(x)
 
-Cumulative Sum of Squares Function.
+Schwefel’s Problem 1.2 (F3).
+
+Cumulative-sum-of-squares benchmark.
 
 This test function computes the sum of the squares of cumulative sums of the input vector.
 It increases the dependency between variables and is used to test an algorithm’s ability
 to handle variable interactions.
 
 # Equation
-
 ```math
 f(\\mathbf{x}) = \\sum_{i=1}^n \\left( \\sum_{j=1}^i x_j \\right)^2
 ```
+
+# Properties
+* Domain: any dimension `n`; typical bounds `xᵢ ∈ [-100, 100]`.
+* Global minimum: `f(0,…,0) = 0` at `x = 0`.
+* Structure: convex, **non-separable**, unimodal; conditioning worsens with `n`.
+* Complexity: implemented in O(n) via a single pass of prefix sums (no nested sums).
+* Complex/AD support: uses `abs2(prefix)` so the result is a real, non-negative scalar
+  for complex and dual-number inputs; for real `x` this equals the textbook definition.
 """
-function F3(x)
-    o = 0.0
-    for i in 1:length(x)
-        o += sum(x[1:i])^2
+function schwefel_1_2(x)
+    T = float(eltype(x))
+    s, o = zero(T), zero(T)
+    @inbounds @simd for xi in x
+        s += xi
+        o += abs2(s)
     end
     return o
 end
 
+const F3 = schwefel_1_2
+
 """
-    F4(x)
+    schwefel_2_21(x)
+
+Schwefel’s Problem 2.21 (F4).
 
 Maximum Absolute Value Function.
 
@@ -68,29 +97,53 @@ This function returns the maximum of the absolute values of the input vector ele
 It is used to test an optimizer's ability to minimize the worst-case (largest-magnitude) variable.
 
 # Equation
-
 ```math
-f(\\mathbf{x}) = \\max_{1 \\leq i \\leq n} |x_i|
+f(\\mathbf{x}) = \\max_{1 \\le i \\le n} |x_i|
 ```
+
+# Properties
+* Domain: any dimension `n`; typical bounds `xᵢ ∈ [-100, 100]`.
+* Global minimum: `f(0,…,0) = 0` at `x = 0`.
+* Complex/AD support: uses `abs(xᵢ)` (modulus), so it works with complex and dual numbers; the result is a real, non-negative scalar.
 """
-F4(x) = maximum(abs.(x))
+schwefel_2_21(x) = maximum(abs, x)
+
+const F4 = schwefel_2_21
 
 """
-    F5(x)
+    rosenbrock(x)
 
-Rosenbrock Function.
+Rosenbrock Function (F5).
 
-A classic, non-convex test problem for optimization algorithms. It has a narrow, curved valley leading to the global minimum, which makes convergence difficult.
+A classic, non-convex test problem for optimization algorithms. It has a narrow, curved
+valley leading to the global minimum, which makes convergence difficult.
 
 # Equation
-
 ```math
-f(\\mathbf{x}) = \\sum_{i=1}^{n-1} \\left[ 100(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]
+f(\\mathbf{x}) = \\sum_{i=1}^{n-1} \\left[ 100\\,(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]
 ```
+
+# Properties
+* Domain: any dimension `n`; typical bounds `xᵢ ∈ [-30, 30]`.
+* Global minimum: `f(1,…,1) = 0` at `x = (1,…,1)`.
+* Structure: non-convex, non-separable; narrow, curved valley.
+* Numerical: implemented in **O(n)** with a single pass and no intermediate allocations.
+* AD support: works with dual numbers; intended for real-valued inputs.
 """
-function F5(x)
-    return sum(100 .* (x[2:end] .- x[1:end-1].^2).^2 + (x[1:end-1] .- 1).^2)
+function rosenbrock(x)
+    T = float(eltype(x))
+    n = length(x)
+    @assert n >= 2 "Rosenbrock requires length(x) ≥ 2"
+    s = zero(T)
+    @inbounds @simd for i = 1:(n-1)
+        xi   = x[i]
+        xip1 = x[i+1]
+        s    += 100 * (xip1 - xi*xi)^2 + (xi - 1)^2
+    end
+    return s
 end
+
+const F5 = rosenbrock
 
 """
     F6(x)
