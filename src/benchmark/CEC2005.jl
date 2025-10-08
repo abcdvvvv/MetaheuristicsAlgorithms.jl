@@ -195,23 +195,7 @@ function Ackley(x::AbstractVector{<:Real})::Float64
     return term1 + term2 + a + exp(1)
 end
 
-"""
-    F10(x)
-
-Ackley Function.
-
-A popular multimodal benchmark function used to test optimization algorithms.
-It features a nearly flat outer region and a large number of local minima, making convergence difficult.
-
-# Equation
-
-```math
-f(\\mathbf{x}) = -20 \\exp\\left(-0.2 \\sqrt{\\frac{1}{n} \\sum_{i=1}^n x_i^2}\\right)
-                - \\exp\\left(\\frac{1}{n} \\sum_{i=1}^n \\cos(2\\pi x_i)\\right)
-                + 20 + e
-```
-"""
-F10 = Ackley
+const F10 = Ackley
 
 """
     F11(x)
