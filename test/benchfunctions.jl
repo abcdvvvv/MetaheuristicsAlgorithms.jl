@@ -1,17 +1,4 @@
-function Ackley(x::AbstractVector{<:Real})::Float64
-    n = length(x)
-    a = 20.0
-    b = 0.2
-    c = 2 * π
-
-    sum1 = sum(xi^2 for xi in x)
-    sum2 = sum(cos(c * xi) for xi in x)
-
-    term1 = -a * exp(-b * sqrt(sum1 / n))
-    term2 = -exp(sum2 / n)
-
-    return term1 + term2 + a + exp(1)
-end
+using MetaheuristicsAlgorithms: Ackley
 
 function Griewank(x::AbstractVector{<:Real})::Float64
     sum_term = sum(xi^2 / 4000 for xi in x)
